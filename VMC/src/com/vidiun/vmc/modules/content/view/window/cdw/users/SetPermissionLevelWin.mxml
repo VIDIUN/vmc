@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*" 
+							title="{resourceManager.getString('cms','setPermissionLevel')}"
+							layout="vertical" width="400" height="300"
+							showCloseButton="true" close="closeHandler(event)"
+							showHelpButton="true" help="helpHandler(event)"
+							creationComplete="creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+			import com.vidiun.types.VidiunCategoryUserPermissionLevel;
+			import com.vidiun.vo.VidiunCategoryUser;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			
+			/**
+			 * [CategoryUser]
+			 * */
+			public var users:Array;
+			
+
+			private function creationCompleteHandler(event:FlexEvent):void {
+				var lvls:Array = [
+					{label:resourceManager.getString('cms', 'member'), data:VidiunCategoryUserPermissionLevel.MEMBER},
+					{label:resourceManager.getString('cms', 'contributor'), data:VidiunCategoryUserPermissionLevel.CONTRIBUTOR},
+					{label:resourceManager.getString('cms', 'moderator'), data:VidiunCategoryUserPermissionLevel.MODERATOR},
+					{label:resourceManager.getString('cms', 'manager'), data:VidiunCategoryUserPermissionLevel.MANAGER}
+				];
+				box.dataProvider = lvls;
+				if (users && users.length == 1) {
+					for each(var o:Object in lvls){
+						if (o.data == (users[0] as VidiunCategoryUser).permissionLevel) {
+							box.selectedItem = o;
+							break;
+						}
+					}
+				}
+			}
+
+
+			private function saveHandler(event:MouseEvent):void {
+				var cg:CategoryUserEvent = new CategoryUserEvent(CategoryUserEvent.SET_CATEGORY_USERS_PERMISSION_LEVEL);
+				cg.data = [box.selectedItem.data, users];
+				cg.dispatch();
+				closeHandler(null);
+			}
+
+
+			private function closeHandler(event:CloseEvent):void {
+				PopUpManager.removePopUp(this);
+			}
+
+
+			private function helpHandler(event:Event):void
+			{
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_bulk_cat_user_permission', true));
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Text text="{resourceManager.getString('cms', 'setPermissionLevelDesc')}" styleName="drillDownLabel" />
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString('cms','permissionLevel')}" styleName="feedParamLabel"/>
+		<mx:ComboBox id="box"/>
+	</mx:HBox>	
+	<mx:ControlBar horizontalAlign="center">
+		<mx:Button label="{resourceManager.getString('cms','save')}" 
+				   click="saveHandler(event)"/>
+	</mx:ControlBar>
+</containers:HelpTitleWindow>

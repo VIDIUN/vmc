@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
+						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.types.VidiunBatchJobStatus;
+			
+			import mx.events.FlexEvent;
+			
+			protected function additionalfilter1_creationCompleteHandler(event:FlexEvent):void
+			{
+				_buttons = [allBtn, finishedBtn, finishedErrBtn, failedBtn, otherBtn];
+				friendlyName = resourceManager.getString('filter', 'buStatusTooltip');
+			}
+			
+			override public function get filter():Object {
+				var typesString:String = "";
+				//if non of the items are selected or all selected
+				if ((finishedBtn.selected && finishedErrBtn.selected && failedBtn.selected && otherBtn.selected) 
+					|| (!finishedBtn.selected && !finishedErrBtn.selected && !failedBtn.selected && !otherBtn.selected)) {
+					typesString = "";
+				}
+				else {
+					if (finishedBtn.selected) {
+						typesString += VidiunBatchJobStatus.FINISHED + ",";
+					}
+					if (finishedErrBtn.selected) {
+						typesString += VidiunBatchJobStatus.FINISHED_PARTIALLY + ",";
+					}
+					if (failedBtn.selected) {
+						typesString += VidiunBatchJobStatus.FAILED + "," + VidiunBatchJobStatus.FATAL + ",";
+					}
+					if (otherBtn.selected) {
+						typesString += VidiunBatchJobStatus.ABORTED + "," + 
+							VidiunBatchJobStatus.ALMOST_DONE + "," + VidiunBatchJobStatus.DONT_PROCESS + "," +
+							VidiunBatchJobStatus.MOVEFILE + "," + VidiunBatchJobStatus.PENDING + "," +
+							VidiunBatchJobStatus.PROCESSED + "," + VidiunBatchJobStatus.PROCESSING + "," +
+							VidiunBatchJobStatus.QUEUED + "," + VidiunBatchJobStatus.RETRY + ",";
+					}
+					//remove last , 
+					typesString = typesString.slice(0, typesString.length - 1);
+				}
+				return typesString;
+			}
+			
+			
+			override public function set filter(value:Object):void {
+				if (!value) {
+					// no duration 
+					allBtn.selected = true;
+					finishedBtn.selected = false;
+					finishedErrBtn.selected = false;
+					failedBtn.selected = false;
+					otherBtn.selected = false;
+				}
+				else {
+					//set all duration to unselected
+					allBtn.selected = false;
+					
+					var arr:Array = value.split(',');
+					for each (var code:String in arr) {
+						switch (code) {
+							case VidiunBatchJobStatus.FINISHED:
+								finishedBtn.selected = true;
+								break;
+							
+							case VidiunBatchJobStatus.FINISHED_PARTIALLY:
+								finishedErrBtn.selected = true;
+								break;
+							
+							case VidiunBatchJobStatus.FAILED:
+							case VidiunBatchJobStatus.FATAL:
+								failedBtn.selected = true;
+								break;
+							
+							case VidiunBatchJobStatus.ABORTED:
+							case VidiunBatchJobStatus.ALMOST_DONE:
+							case VidiunBatchJobStatus.DONT_PROCESS:
+							case VidiunBatchJobStatus.MOVEFILE:
+							case VidiunBatchJobStatus.PENDING:
+							case VidiunBatchJobStatus.PROCESSED:
+							case VidiunBatchJobStatus.PROCESSING:
+							case VidiunBatchJobStatus.QUEUED:
+							case VidiunBatchJobStatus.RETRY:
+								otherBtn.selected = true;
+								break;
+						}
+					}
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:CheckBox id="allBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusAllBtn')}"
+				 selected="true" click="onDynamicTitleClicked(event)" styleName="mainFilterGroupButton"/>
+	<mx:CheckBox id="finishedBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFinished')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="finishedErrBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFinishedWErr')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="failedBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFailed')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="otherBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusOther')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+</panels:AdditionalFilter>

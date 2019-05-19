@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--- This window holds a list of available distributors and their distribution state -->
+<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
+								width="550" height="500"
+				title="{resourceManager.getString('drilldown','selectDistributors')}" layout="vertical"
+				showCloseButton="true" close="onClose()"
+				paddingLeft="15" paddingRight="15"
+				styleName="TitleWindowType2"
+				backgroundColor="#f7f7f7"
+				creationComplete="{onCreationComplete()}">
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.events.DistributionProfileEvent;
+			import com.vidiun.edw.control.events.EntryDistributionEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.types.VidiunDistributionProfileActionStatus;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunDistributionProfile;
+			import com.vidiun.vo.VidiunDistributionThumbDimensions;
+			import com.vidiun.vo.VidiunEntryDistribution;
+			import com.vidiun.vo.VidiunThumbAsset;
+			
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			/**
+			 * value of the "type" property for the updateLists event 
+			 * event data is {addDistributors:Array, removeDistributors:Array}
+			 * */
+			public static const UPDATE_LISTS:String = "updateLists";
+			
+			public var selectedEntry:VidiunBaseEntry;
+			
+			[Bindable]
+			private var _distributionDataProvider:Array;
+			
+			public var entryFlavors:ArrayCollection;
+			
+			public var entryThumbs:Array;
+			
+			/**
+			 * permission to add distributions
+			 * */
+			public var enableAddDistribution:Boolean = true;
+			
+			/**
+			 * permission to distribute
+			 * */
+			public var enableDistribution:Boolean = true;
+			
+			/**
+			 * permission to remove distributions
+			 * */
+			public var enableRemoveDistribution:Boolean = true;
+			
+			
+			private function onCreationComplete():void {
+				this.mx_internal::closeButton.buttonMode = true;
+			}
+			
+			private function onClose():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+			/**
+			 * This function sets the given values and builds the window components according
+			 * to its input
+			 * */
+			public function buildDistributorsWindow(distributionProfiles:Array, entryDistributions:Array):void {
+				PermissionManager.getInstance().applyAllAttributes(this, "selectDistributorsWindow");	
+				//containes all profiles that entries weren't distributed to them yet
+				var unusedDistributionProfiles:ArrayCollection = new ArrayCollection(distributionProfiles.concat());
+			
+				_distributionDataProvider = new Array;
+				for each (var distribution:EntryDistributionWithProfile in entryDistributions) {	
+					if ((distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.QUEUED) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.PENDING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.READY) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_DELETING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_SUBMITTING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_UPDATING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.DELETING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.SUBMITTING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.UPDATING)) 
+					{
+						distribution.distributorSelected = distribution.distributorInitState = true;
+					}	
+					setAutomaticDistribute(distribution);
+					_distributionDataProvider.push(distribution);
+					
+					var unusedIndex:int = unusedDistributionProfiles.getItemIndex(distribution.vidiunDistributionProfile);
+					if (unusedIndex != -1){
+						unusedDistributionProfiles.removeItemAt(unusedIndex);					
+					}					
+				}
+				
+				for each (var profile:VidiunDistributionProfile in unusedDistributionProfiles) {
+					var newDistributionWithProfile:EntryDistributionWithProfile = new EntryDistributionWithProfile();
+					var newDistribution:VidiunEntryDistribution = new VidiunEntryDistribution();
+					newDistribution.entryId = selectedEntry.id;
+					newDistribution.distributionProfileId = profile.id;
+					newDistributionWithProfile.vidiunEntryDistribution = newDistribution;
+					newDistributionWithProfile.vidiunDistributionProfile = profile;
+					setAutomaticDistribute(newDistributionWithProfile);
+					_distributionDataProvider.push(newDistributionWithProfile);
+				}	
+			} 
+			
+			/**
+			 * sets whether the entry is automatic distributed or not
+			 * */
+			private function setAutomaticDistribute(distribution:EntryDistributionWithProfile) : void {
+				if ((distribution.vidiunDistributionProfile.submitEnabled == VidiunDistributionProfileActionStatus.AUTOMATIC) ||
+					(distribution.vidiunEntryDistribution.status == VidiunEntryDistributionStatus.QUEUED)) {
+					distribution.distributeAutomatically = true;
+				}
+			}
+			
+			/**
+			 * Sends update to the server with all distribution points that were changed
+			 * */
+			private function apply():void {
+				var addDistributors:Array = new Array();
+				var removeDistributors:Array = new Array();
+				var profilesToUpdate:Array = new Array();
+				for each (var distribution:EntryDistributionWithProfile in _distributionDataProvider) {
+					if (distribution.distributorInitState && !distribution.distributorSelected) {
+						removeDistributors.push(distribution.vidiunEntryDistribution);
+					}
+					else if (!distribution.distributorInitState && distribution.distributorSelected) {
+						if (distribution.distributeAutomatically) {
+							distribution.manualQualityControl = false;
+						}
+						addDistributors.push(distribution);
+					}
+				}
+				
+				var e:VedDataEvent = new VedDataEvent(SelectDistributorsWindow.UPDATE_LISTS);
+				e.data = {addDistributors:addDistributors, removeDistributors:removeDistributors};
+				dispatchEvent(e);
+				
+				PopUpManager.removePopUp(this);
+			}
+			
+			/**
+			 * selects all/none of the given column id
+			 * */
+			public function selectAll(value:Boolean, columnID:int) : void {
+				for each (var entryDis:EntryDistributionWithProfile in _distributionDataProvider) {
+					if (columnID == 0) {
+						if (entryDis.enableSelectingDistributor)
+							entryDis.distributorSelected = value;
+					}
+					else {
+						if (entryDis.enableAutomaticSubmission)
+							entryDis.distributeAutomatically = value;
+					} 
+				}
+			}
+		
+		]]>
+	</mx:Script>
+	<mx:Label text="{resourceManager.getString('drilldown','distributors')}" styleName="drillDownTitleLabel"/>
+	<mx:Text text="{resourceManager.getString('drilldown','selectDistributorsText')}" width="100%"/>
+	<mx:Spacer height="4"/>
+	<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{_distributionDataProvider}" draggableColumns="false" 
+				 sortableColumns="false" selectable="false" rowHeight="40">
+		<mx:columns>
+			<mx:DataGridColumn width="235" itemRenderer="com.vidiun.edw.view.distribution.DistributorComponent">
+				<mx:headerRenderer>
+					<mx:Component>
+						<mx:HBox width="100%" horizontalGap="0" paddingLeft="6" paddingRight="6"  horizontalScrollPolicy="off" paddingTop="0" paddingBottom="0">
+							<mx:Label text="{resourceManager.getString('drilldown','distributorName')}"/>
+							<mx:Spacer width="100%"/>
+							<mx:LinkButton id="allDistributorsBtn" label="{resourceManager.getString('drilldown','allButton')}" styleName="selectionLinkbutton" click="{outerDocument.selectAll(true, 0)}"/>
+							<mx:Label width="10" text="/" styleName="buttonsSeperatorLabel"/>
+							<mx:LinkButton id="noneDistributorsBtn" label="{resourceManager.getString('drilldown','noneButton')}" styleName="selectionLinkbutton" click="{outerDocument.selectAll(false, 0)}"/>
+						</mx:HBox>	
+					</mx:Component>
+				</mx:headerRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="235" itemRenderer="com.vidiun.edw.view.distribution.DistributeWhenReadyComponent">
+				<mx:headerRenderer>
+					<mx:Component>
+						<mx:HBox width="100%" horizontalGap="0" paddingLeft="6" paddingRight="6" horizontalScrollPolicy="off" paddingTop="0" paddingBottom="0">
+							<mx:Label text="{resourceManager.getString('drilldown','notManualQC')}"/>
+							<mx:Spacer width="100%"/>
+							<mx:LinkButton id="allDWRBtn" label="{resourceManager.getString('drilldown','allButton')}" click="{outerDocument.selectAll(true, 1)}"  styleName="selectionLinkbutton"/>
+							<mx:Label width="10" text="/" styleName="buttonsSeperatorLabel"/>
+							<mx:LinkButton id="noneDWRBtn" label="{resourceManager.getString('drilldown','noneButton')}" click="{outerDocument.selectAll(false, 1)}" styleName="selectionLinkbutton"/>
+						</mx:HBox>
+					</mx:Component>
+				</mx:headerRenderer>
+			</mx:DataGridColumn>
+		
+		</mx:columns>
+	</mx:DataGrid>
+
+
+	<mx:ControlBar>
+		<mx:Button id="applyBtn" label="{resourceManager.getString('drilldown', 'apply')}" click="apply()"
+				   buttonMode="true"/>
+	</mx:ControlBar>
+</containers:ConfinedTitleWindow>

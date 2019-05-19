@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.category.CategoryUpdate;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.CategoryUtils;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class UpdateSubCategoriesCommand extends KalturaCommand {
+	public class UpdateSubCategoriesCommand extends VidiunCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
@@ -23,14 +23,14 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var catUpdate:CategoryUpdate;
 			for (var i:int = 0; i<ar.length; i++) {
 				ar[i].setUpdatedFieldsOnly(true);
-				CategoryUtils.resetUnupdateableFields(ar[i] as KalturaCategory);
+				CategoryUtils.resetUnupdateableFields(ar[i] as VidiunCategory);
 				catUpdate = new CategoryUpdate(ar[i].id, ar[i]);
 				mr.addAction(catUpdate);
 			}
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);
 		}
 		
 		
@@ -40,7 +40,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var rm:IResourceManager = ResourceManager.getInstance();
 			
 			// check for errors
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:VidiunError = (data as VidiunEvent).error;
 			if (er) { 
 				Alert.show(getErrorText(er), rm.getString('cms', 'error'));
 				return;
@@ -48,7 +48,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			else {
 				// look iside MR
 				for each (var o:Object in data.data) {
-					er = o as KalturaError;
+					er = o as VidiunError;
 					if (er) {
 						Alert.show(getErrorText(er), rm.getString('cms', 'error'));
 					}

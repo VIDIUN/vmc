@@ -2,7 +2,7 @@
 
 <!--- Crop Thumbnail Window. Enables the user to crop new thumbnails from the existing thumbnails.-->
 
-<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 								layout="vertical" styleName="TitleWindowType2"
 				showCloseButton="true" close="{closeWindow(event)}" creationComplete="{onCreationComplete(event)}"
 				horizontalAlign="center" verticalScrollPolicy="off" horizontalScrollPolicy="off" xmlns:metadata="com.flexspy.imp.metadata.*">
@@ -11,16 +11,16 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.control.events.GenerateThumbAssetEvent;
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.types.KalturaFlavorAssetStatus;
-			import com.kaltura.utils.imageCropper.CropBox;
-			import com.kaltura.utils.imageCropper.ImageCrop;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaThumbParams;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.control.events.GenerateThumbAssetEvent;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.vmvc.control.VMvCController;
+			import com.vidiun.types.VidiunFlavorAssetStatus;
+			import com.vidiun.utils.imageCropper.CropBox;
+			import com.vidiun.utils.imageCropper.ImageCrop;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunThumbParams;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -67,12 +67,12 @@
 			/**
 			 * application controller
 			 * */
-			public var controller:KMvCController;
+			public var controller:VMvCController;
 			
 			[Bindable]
 			private var _maxImageHeight:int;
 			private var _maxImageWidth:int;
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 			
 			[Bindable]
 			/**
@@ -327,7 +327,7 @@
 					var currentThumb:ThumbnailWithDimensions = value[i] as ThumbnailWithDimensions;
 					
 					// save only thumbnails with assets
-					if (currentThumb.thumbAsset && currentThumb.thumbAsset.status == KalturaFlavorAssetStatus.READY)
+					if (currentThumb.thumbAsset && currentThumb.thumbAsset.status == VidiunFlavorAssetStatus.READY)
 						_thumbnailsList.push(currentThumb);
 					
 					// if any distribution profiles use these dimensions 
@@ -369,7 +369,7 @@
 			/**
 			 * returns selected entry
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
@@ -377,7 +377,7 @@
 			/**
 			 * sets the selected entry and builds the window title accrodingly
 			 * */
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				_selectedEntry = value;
 				this.title = resourceManager.getString('drilldown', 'editEntry') + " - " + value.name + " - " + resourceManager.getString('drilldown', 'createThumb');
 			}
@@ -395,7 +395,7 @@
 			 * on saving the new crop
 			 * */
 			private function onSave():void {
-				var thumbParams:KalturaThumbParams = new KalturaThumbParams();
+				var thumbParams:VidiunThumbParams = new VidiunThumbParams();
 				thumbParams.cropWidth = _imageCrop.cropBox.cropWidth;
 				thumbParams.cropHeight = _imageCrop.cropBox.cropHeight;
 				thumbParams.cropX = _imageCrop.cropBox.cropX;
@@ -638,7 +638,7 @@
 								 enabled="{_presetSizesExist}"/>
 					</mx:HBox>
 					<mx:ComboBox id="presetComboBox" width="175" 
-								 itemRenderer="com.kaltura.edw.view.ir.cropThumb.ThumbDimRenderer" 
+								 itemRenderer="com.vidiun.edw.view.ir.cropThumb.ThumbDimRenderer" 
 								 styleName="presetComboBox" enabled="{_isPreSize}" dataProvider="{_presetSizeList}" 
 								 prompt="{resourceManager.getString('drilldown', 'selectValidDimensionsMsg')}"
 								 change="{onPresetSizeChange(event)}" />

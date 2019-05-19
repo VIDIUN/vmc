@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="KMC Compiler" basedir="./.." default="build">
+<project name="VMC Compiler" basedir="./.." default="build">
 	
 	<!-- path to Flex SDK -->
     <property name="FLEX_HOME" value="C:/Program Files (x86)/Adobe/Adobe Flash Builder 4.5/sdks/3.6.0"/>
@@ -8,12 +8,12 @@
 	<!-- directory for the compiled swf -->
     <property name="DEPLOY_DIR" value="${basedir}/bin-release"/>
 	
-	<property name="KMC_VERSION" value="v5.43.14"/>
-	<property name="KDP_VERSION" value="v3.9.9"/>
+	<property name="VMC_VERSION" value="v5.43.14"/>
+	<property name="VDP_VERSION" value="v3.9.9"/>
 	<property name="HTML5_VERSION" value="v1.9.6"/>
-	<property name="KCLIP_VERSION" value="v1.2"/>
-	<property name="KCW_VERSION" value="v2.2.4"/>
-	<property name="KCW_VERSION_ONPREM" value="v2.2.4"/>
+	<property name="VCLIP_VERSION" value="v1.2"/>
+	<property name="VCW_VERSION" value="v2.2.4"/>
+	<property name="VCW_VERSION_ONPREM" value="v2.2.4"/>
 	
 	<!-- include flex tasks -->
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
@@ -22,7 +22,7 @@
 	<target name="build" description="general build" depends="clean, init, compile_locales, compile, pack">
 		
 		<length property="length" mode="each">
-		    <fileset dir="${basedir}/../${KMC_VERSION}" >
+		    <fileset dir="${basedir}/../${VMC_VERSION}" >
 				<exclude name="**/locale/**"/>
 				<include name="**/*.swf"/>
 			</fileset>
@@ -33,7 +33,7 @@
 			<success source="C:/WINDOWS/media/tada.wav"/>
 			<fail source="C:/WINDOWS/media"/>
 		</sound>
-		<echo>WOOHOO! KMC is ready!</echo>
+		<echo>WOOHOO! VMC is ready!</echo>
 	</target>
 	
 	
@@ -42,10 +42,10 @@
 			<property name="basedir" value="${basedir}"/>
 		</ant> 
 		<ant antfile="ant/generateKeysLocaleSources.xml" target="build" > 
-			<property name="basedir" value="${basedir}/../KedLib"/>
+			<property name="basedir" value="${basedir}/../VedLib"/>
 		</ant> 
 		<ant antfile="ant/generateKeysLocaleSources.xml" target="build" > 
-			<property name="basedir" value="${basedir}/../KalturaLib"/>
+			<property name="basedir" value="${basedir}/../VidiunLib"/>
 		</ant> 
 		<ant antfile="ant/generateKeysLocaleSources.xml" target="build" > 
 			<property name="basedir" value="${basedir}/../AutoComplete"/>
@@ -76,11 +76,11 @@
 		</ant> 
 	</target>
 	
-	<target name="compile" description="compile release build of KMC and drilldown panels">
-		<fb.exportReleaseBuild project="KMC" /> 
-		<echo>KMC release build created</echo>
-		<fb.exportReleaseBuild project="KedPanels" destdir="${DEPLOY_DIR}" /> 
-		<echo>Ked Panels release build created</echo>
+	<target name="compile" description="compile release build of VMC and drilldown panels">
+		<fb.exportReleaseBuild project="VMC" /> 
+		<echo>VMC release build created</echo>
+		<fb.exportReleaseBuild project="VedPanels" destdir="${DEPLOY_DIR}" /> 
+		<echo>Ved Panels release build created</echo>
 	</target>
 			
 	<target name="pack" description="copy all version files to version folder">
@@ -101,7 +101,7 @@
 	<target name="init">
 		<mkdir dir="${DEPLOY_DIR}" description="Make sure there is a bin directory"/>
 		<mkdir dir="${DEPLOY_DIR}/modules" description="Make sure there is a bin directory"/>
-		<mkdir dir="${DEPLOY_DIR}/modules/ked" description="Make sure there is a bin directory"/>
+		<mkdir dir="${DEPLOY_DIR}/modules/ved" description="Make sure there is a bin directory"/>
 	</target>
 	
 </project>

@@ -1,11 +1,11 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
-	 * gateway to access the filter model of KMC
+	 * gateway to access the filter model of VMC
 	 * */
 	public class FilterDataPack implements IDataPack {
 		

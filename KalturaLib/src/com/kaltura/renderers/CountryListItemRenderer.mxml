@@ -3,7 +3,7 @@
 	verticalScrollPolicy="off" horizontalScrollPolicy="off" paddingLeft="5" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.utils.KCountriesUtil;
+			import com.vidiun.utils.VCountriesUtil;
 			
 			import mx.controls.Image;
 			
@@ -11,7 +11,7 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				if (value) {
-					flagImg.source = KCountriesUtil.instance.getCountryFlag(data.code);
+					flagImg.source = VCountriesUtil.instance.getCountryFlag(data.code);
 				}
 				else {
 					flagImg.source = null;

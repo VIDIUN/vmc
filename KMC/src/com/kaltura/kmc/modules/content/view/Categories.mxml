@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.kaltura.controls.*"  
-		 xmlns:fltr="com.kaltura.edw.components.fltr.*" 
-		 xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" 
-		 xmlns:bulkactions="com.kaltura.kmc.modules.content.view.controls.bulkactions.*" 
-		 xmlns:categories="com.kaltura.kmc.modules.content.view.categories.*" 
-		 xmlns:filter="com.kaltura.kmc.modules.content.view.categories.filter.*" 
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.vidiun.controls.*"  
+		 xmlns:fltr="com.vidiun.edw.components.fltr.*" 
+		 xmlns:indicators="com.vidiun.edw.components.fltr.indicators.*" 
+		 xmlns:bulkactions="com.vidiun.vmc.modules.content.view.controls.bulkactions.*" 
+		 xmlns:categories="com.vidiun.vmc.modules.content.view.categories.*" 
+		 xmlns:filter="com.vidiun.vmc.modules.content.view.categories.filter.*" 
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel"
 		 creationComplete="creationCompleteHandler(event)" enabled="{!filterModel.categoriesLocked}">
 
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.SelectionEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaAppearInListType;
-			import com.kaltura.types.KalturaContributionPolicyType;
-			import com.kaltura.types.KalturaInheritanceType;
-			import com.kaltura.types.KalturaPrivacyType;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaCategoryFilter;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.types.WindowsStates;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.events.SelectionEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmc.modules.content.model.CategoriesModel;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunAppearInListType;
+			import com.vidiun.types.VidiunContributionPolicyType;
+			import com.vidiun.types.VidiunInheritanceType;
+			import com.vidiun.types.VidiunPrivacyType;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunCategory;
+			import com.vidiun.vo.VidiunCategoryFilter;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -52,14 +52,14 @@
 			/**
 			 * entries-related data
 			 * */
-			public var entryDetailsModel:KMvCModel;
+			public var entryDetailsModel:VMvCModel;
 
 
 			/**
 			 * initialize the panel.
 			 * @param initFilter	filter for initial entry loading. (not relevant for this panel)
 			 * */
-			public function init(initFilter:KalturaBaseEntryFilter = null):void {
+			public function init(initFilter:VidiunBaseEntryFilter = null):void {
 				if (!_isCreationComplete) {
 					return;
 				}
@@ -72,8 +72,8 @@
 						listCategoryMetadata.dispatch();
 					}
 	
-					if (!filter.kalturaFilter) { 
-						filter.kalturaFilter = new KalturaCategoryFilter();
+					if (!filter.vidiunFilter) { 
+						filter.vidiunFilter = new VidiunCategoryFilter();
 					}
 					loadCategories();
 				}
@@ -90,8 +90,8 @@
 			public function loadCategories(resetTree:Boolean = false):void {
 				// dispatch event that will load data according to screen filter
 				var cgEvent:CategoryEvent = new CategoryEvent(CategoryEvent.LIST_CATEGORIES);
-				filter.kalturaFilter.orderBy = categoriesTable.orderBy;
-				cgEvent.data = [filter.kalturaFilter, paging.kalturaFilterPager, resetTree];
+				filter.vidiunFilter.orderBy = categoriesTable.orderBy;
+				cgEvent.data = [filter.vidiunFilter, paging.vidiunFilterPager, resetTree];
 				cgEvent.dispatch();
 			}
 
@@ -108,20 +108,20 @@
 			
 			private function warnHandler(event:GeneralNonCairngormEvent, handler:Function, textKey:String):void
 			{
-				// set the single selected category  (event.data is KalturaCategory)
+				// set the single selected category  (event.data is VidiunCategory)
 				var cgEvent:CairngormEvent = new CategoryEvent(CategoryEvent.SET_SELECTED_CATEGORY);
 				cgEvent.data = event.data;
 				cgEvent.dispatch();
 				
-				var kCat:KalturaCategory = event.data as KalturaCategory;
-				if (kCat.tags && kCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
+				var vCat:VidiunCategory = event.data as VidiunCategory;
+				if (vCat.tags && vCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
 					var txt:String = resourceManager.getString('cms', textKey);
 					var al:Alert = Alert.show(txt, resourceManager.getString('cms', 'attention'), Alert.YES|Alert.NO, null, handler);
-					al.data = kCat;
+					al.data = vCat;
 				}
 				else {
 					var eventush:CloseEvent = new CloseEvent(CloseEvent.CLOSE, false, false, Alert.YES);
-					this.data = kCat;
+					this.data = vCat;
 					this.addEventListener(CloseEvent.CLOSE, handler);
 					dispatchEvent(eventush);
 					this.removeEventListener(CloseEvent.CLOSE, handler);
@@ -146,9 +146,9 @@
 			private function categoriesTable_deleteCategoryHandler(event:CloseEvent):void {
 				var cgEvent:CairngormEvent;
 				if (event.detail == Alert.YES) {
-					var kCat:KalturaCategory = event.target.data as KalturaCategory;
+					var vCat:VidiunCategory = event.target.data as VidiunCategory;
 					cgEvent = new CategoryEvent(CategoryEvent.DELETE_CATEGORIES);
-					cgEvent.data = [[kCat.id], kCat.directSubCategoriesCount > 0];
+					cgEvent.data = [[vCat.id], vCat.directSubCategoriesCount > 0];
 					cgEvent.dispatch();
 				}
 				// clear category selection from model
@@ -194,12 +194,12 @@
 				cgEvent.dispatch();
 			}
 
-			public static function createCategoryObject():KalturaCategory{
-				var cat:KalturaCategory = new KalturaCategory();
-				cat.privacy = KalturaPrivacyType.ALL;
-				cat.appearInList = KalturaAppearInListType.PARTNER_ONLY;
-				cat.contributionPolicy = KalturaContributionPolicyType.ALL;
-				cat.inheritanceType = KalturaInheritanceType.MANUAL;
+			public static function createCategoryObject():VidiunCategory{
+				var cat:VidiunCategory = new VidiunCategory();
+				cat.privacy = VidiunPrivacyType.ALL;
+				cat.appearInList = VidiunAppearInListType.PARTNER_ONLY;
+				cat.contributionPolicy = VidiunContributionPolicyType.ALL;
+				cat.inheritanceType = VidiunInheritanceType.MANUAL;
 
 				return cat;
 			}

@@ -3,10 +3,10 @@
 		 creationComplete="vbox1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.vo.KalturaConversionProfile;
-			import com.kaltura.vo.KalturaLiveStreamBitrate;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.business.EntryLiveStreamingHelper;
+			import com.vidiun.vo.VidiunConversionProfile;
+			import com.vidiun.vo.VidiunLiveStreamBitrate;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -16,7 +16,7 @@
 			public var profiles:ArrayCollection;
 			
 				
-			public var selectedEntry:KalturaLiveStreamEntry;
+			public var selectedEntry:VidiunLiveStreamEntry;
 			
 			public function getSelectedProfile():int {
 				if (convProf.selectedItem) {
@@ -39,14 +39,14 @@
 			
 			/**
 			 * build the bitrates array.
-			 * @return array of <code>KalturaLiveStreamBitrate</code>
+			 * @return array of <code>VidiunLiveStreamBitrate</code>
 			 * 		(possibly empty), or null if failed validation
 			 * */
 			public function getBitrates():Array {
 
 				return selectedEntry.bitrates;
 //				var result:Array = [];
-//				var br:KalturaLiveStreamBitrate = new KalturaLiveStreamBitrate();
+//				var br:VidiunLiveStreamBitrate = new VidiunLiveStreamBitrate();
 //				br.bitrate = 900;
 //				br.width = 640;
 //				br.height = 480;
@@ -62,9 +62,9 @@
 			
 			private function selectInitialProfile(value:*):void {
 				if (profiles && selectedEntry) {
-					for each (var kcp:KalturaConversionProfile in profiles) {
-						if (kcp.id == selectedEntry.conversionProfileId) {
-							convProf.selectedItem = kcp;
+					for each (var vcp:VidiunConversionProfile in profiles) {
+						if (vcp.id == selectedEntry.conversionProfileId) {
+							convProf.selectedItem = vcp;
 							break;
 						}
 					}

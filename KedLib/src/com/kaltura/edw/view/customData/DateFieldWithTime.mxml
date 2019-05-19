@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.kaltura.controls.*" verticalAlign="middle"
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.vidiun.controls.*" verticalAlign="middle"
 		 creationComplete="onCreationComplete()" paddingBottom="0" paddingTop="0">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.utils.DateFieldWithTimeStepperLogic;
+			import com.vidiun.utils.DateFieldWithTimeStepperLogic;
 
 			private var _timeManager:DateFieldWithTimeStepperLogic;
 

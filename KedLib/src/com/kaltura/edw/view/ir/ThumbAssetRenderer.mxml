@@ -3,8 +3,8 @@
 		 horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
-			import com.kaltura.types.KalturaFlavorAssetStatus;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.types.VidiunFlavorAssetStatus;
 			
 			import mx.controls.Image;
 			
@@ -28,12 +28,12 @@
 				var thumb:ThumbnailWithDimensions = value as ThumbnailWithDimensions;
 				if (thumb.thumbAsset) {
 					thumbAssetExist = true;
-					if ((thumb.thumbAsset.status == KalturaFlavorAssetStatus.CONVERTING) ||
-						(thumb.thumbAsset.status == KalturaFlavorAssetStatus.QUEUED)) 
+					if ((thumb.thumbAsset.status == VidiunFlavorAssetStatus.CONVERTING) ||
+						(thumb.thumbAsset.status == VidiunFlavorAssetStatus.QUEUED)) 
 					{
 						setImageAndDimensions(progressImage, THUMB_WIDTH/2, THUMB_HEIGHT/2);
 					}
-					else if (thumb.thumbAsset.status == KalturaFlavorAssetStatus.ERROR) {
+					else if (thumb.thumbAsset.status == VidiunFlavorAssetStatus.ERROR) {
 						setImageAndDimensions(errorImage, THUMB_WIDTH/2, THUMB_HEIGHT/2);
 					}
 					else

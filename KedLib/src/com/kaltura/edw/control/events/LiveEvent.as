@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class LiveEvent extends KMvCEvent
+	public class LiveEvent extends VMvCEvent
 	{
 		/**
 		 * regenerate live stream security token

@@ -1,22 +1,22 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.DuplicateEntryDetailsModelCommand;
-	import com.kaltura.edw.control.commands.GetEntryCategoriesCommand;
-	import com.kaltura.edw.control.commands.GetLivestreamStatusCommand;
-	import com.kaltura.edw.control.commands.GetSingleEntryCommand;
-	import com.kaltura.edw.control.commands.ListEntriesCommand;
-	import com.kaltura.edw.control.commands.LoadFilterDataCommand;
-	import com.kaltura.edw.control.commands.UpdateEntryCategoriesCommand;
-	import com.kaltura.edw.control.commands.customData.*;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.LoadEvent;
-	import com.kaltura.edw.control.events.MetadataDataEvent;
-	import com.kaltura.edw.control.events.MetadataProfileEvent;
-	import com.kaltura.edw.control.events.ModelEvent;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.DuplicateEntryDetailsModelCommand;
+	import com.vidiun.edw.control.commands.GetEntryCategoriesCommand;
+	import com.vidiun.edw.control.commands.GetLivestreamStatusCommand;
+	import com.vidiun.edw.control.commands.GetSingleEntryCommand;
+	import com.vidiun.edw.control.commands.ListEntriesCommand;
+	import com.vidiun.edw.control.commands.LoadFilterDataCommand;
+	import com.vidiun.edw.control.commands.UpdateEntryCategoriesCommand;
+	import com.vidiun.edw.control.commands.customData.*;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.LoadEvent;
+	import com.vidiun.edw.control.events.MetadataDataEvent;
+	import com.vidiun.edw.control.events.MetadataProfileEvent;
+	import com.vidiun.edw.control.events.ModelEvent;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class DataTabController extends KMvCController {
+	public class DataTabController extends VMvCController {
 		
 		private static var _instance:DataTabController;
 		
@@ -44,12 +44,12 @@ package com.kaltura.edw.control
 			addCommand(LoadEvent.LOAD_FILTER_DATA, LoadFilterDataCommand);
 			
 			addCommand(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL, DuplicateEntryDetailsModelCommand);
-			addCommand(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, GetSingleEntryCommand);	
-			addCommand(KedEntryEvent.GET_ENTRY_CATEGORIES, GetEntryCategoriesCommand);	
-			addCommand(KedEntryEvent.RESET_ENTRY_CATEGORIES, GetEntryCategoriesCommand);	
-			addCommand(KedEntryEvent.UPDATE_ENTRY_CATEGORIES, UpdateEntryCategoriesCommand);	
-			addCommand(KedEntryEvent.GET_LIVESTREAM_STATUS, GetLivestreamStatusCommand);	
-			addCommand(KedEntryEvent.RESET_LIVESTREAM_STATUS, GetLivestreamStatusCommand);	
+			addCommand(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, GetSingleEntryCommand);	
+			addCommand(VedEntryEvent.GET_ENTRY_CATEGORIES, GetEntryCategoriesCommand);	
+			addCommand(VedEntryEvent.RESET_ENTRY_CATEGORIES, GetEntryCategoriesCommand);	
+			addCommand(VedEntryEvent.UPDATE_ENTRY_CATEGORIES, UpdateEntryCategoriesCommand);	
+			addCommand(VedEntryEvent.GET_LIVESTREAM_STATUS, GetLivestreamStatusCommand);	
+			addCommand(VedEntryEvent.RESET_LIVESTREAM_STATUS, GetLivestreamStatusCommand);	
 		}
 	}
 }

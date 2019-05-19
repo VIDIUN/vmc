@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="noVGap"
-		   implements="com.kaltura.edw.business.IDrilldownPanel"
-		   xmlns:controls="com.kaltura.controls.*" 
-		   xmlns:et="com.kaltura.edw.components.et.*" xmlns:control="com.kaltura.edw.control.*"
+		   implements="com.vidiun.edw.business.IDrilldownPanel"
+		   xmlns:controls="com.vidiun.controls.*" 
+		   xmlns:et="com.vidiun.edw.components.et.*" xmlns:control="com.vidiun.edw.control.*"
 		   label="{resourceManager.getString('drilldown', 'mixesTab')}">
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.ContentDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
-			import com.kaltura.vo.KalturaMixEntry;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.et.EntryTableColumns;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.datapacks.ContentDataPack;
+			import com.vidiun.edw.model.datapacks.EntryDataPack;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
+			import com.vidiun.vo.VidiunMixEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -36,7 +36,7 @@
 			/**
 			 * @copy #selectedEntry
 			 * */
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 
 			private var _model:ContentDataPack;
 
@@ -52,15 +52,15 @@
 
 			private var _dpModel:IDataPackRepository;
 
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				_selectedEntry = value;
 
-				var resourceName:String = (_selectedEntry is KalturaMixEntry) ? 'content' : 'mixesTab';
+				var resourceName:String = (_selectedEntry is VidiunMixEntry) ? 'content' : 'mixesTab';
 				label = resourceManager.getString('drilldown', resourceName);
 			}
 
@@ -85,12 +85,12 @@
 
 
 			public function save():void {
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 
 
 			public function clear():void {
-				var e:KedEntryEvent = new KedEntryEvent(KedEntryEvent.RESET_PARTS, null);
+				var e:VedEntryEvent = new VedEntryEvent(VedEntryEvent.RESET_PARTS, null);
 				controller.dispatch(e);
 			}
 
@@ -109,9 +109,9 @@
 			public function init():void {
 				// monitor data change if needed
 				if (!_cw) {
-					var e:KedEntryEvent = new KedEntryEvent(KedEntryEvent.RESET_PARTS, null);
+					var e:VedEntryEvent = new VedEntryEvent(VedEntryEvent.RESET_PARTS, null);
 					controller.dispatch(e);
-					_model = KMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
+					_model = VMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
 					_cw = BindingUtils.bindSetter(removeTab, _model, "contentParts");
 				}
 
@@ -125,21 +125,21 @@
 			private function onPaging():void {
 				loadEntries();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
 			}
 
 			/**
 			 * load all mix entries or load mixes that uses this entry if it is not a mix
 			 */
 			private function loadEntries():void {
-				if (_selectedEntry is KalturaMixEntry) {
+				if (_selectedEntry is VidiunMixEntry) {
 					//get all mix entries
-					var cgEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_ALL_ENTRIES, _selectedEntry);
+					var cgEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_ALL_ENTRIES, _selectedEntry);
 					controller.dispatch(cgEvent);
 				} 
-				else if (loadRoughcuts && !(_selectedEntry is KalturaLiveStreamEntry)) {
+				else if (loadRoughcuts && !(_selectedEntry is VidiunLiveStreamEntry)) {
 					//get all entries that uses this mix 
-					var getRoughcuts:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_ENTRY_ROUGHCUTS, _selectedEntry);
+					var getRoughcuts:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_ENTRY_ROUGHCUTS, _selectedEntry);
 					controller.dispatch(getRoughcuts);
 				}
 

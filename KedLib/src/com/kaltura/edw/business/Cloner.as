@@ -1,13 +1,13 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaLiveStreamAdminEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlayableEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunLiveStreamAdminEntry;
+	import com.vidiun.vo.VidiunLiveStreamEntry;
+	import com.vidiun.vo.VidiunMediaEntry;
+	import com.vidiun.vo.VidiunMixEntry;
+	import com.vidiun.vo.VidiunPlayableEntry;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	public class Cloner
 	{
@@ -18,31 +18,31 @@ package com.kaltura.edw.business
 		/**
 		 * clone according to entry type
 		 * */
-		public static function cloneByEntryType(entry:KalturaBaseEntry):KalturaBaseEntry {
-			var copy:KalturaBaseEntry;
+		public static function cloneByEntryType(entry:VidiunBaseEntry):VidiunBaseEntry {
+			var copy:VidiunBaseEntry;
 			
-			if (entry is KalturaPlaylist) {
-				copy = cloneKalturaPlaylist(entry as KalturaPlaylist);
+			if (entry is VidiunPlaylist) {
+				copy = cloneVidiunPlaylist(entry as VidiunPlaylist);
 			}
-			else if (entry is KalturaMixEntry) {
-				copy = cloneKalturaMixEntry(entry as KalturaMixEntry);
+			else if (entry is VidiunMixEntry) {
+				copy = cloneVidiunMixEntry(entry as VidiunMixEntry);
 			}
-			else if (entry is KalturaLiveStreamEntry || entry is KalturaLiveStreamAdminEntry) {
-				copy = cloneKalturaStreamAdminEntry(entry as KalturaLiveStreamEntry);
+			else if (entry is VidiunLiveStreamEntry || entry is VidiunLiveStreamAdminEntry) {
+				copy = cloneVidiunStreamAdminEntry(entry as VidiunLiveStreamEntry);
 			}
-			else if (entry is KalturaMediaEntry) {
-				copy = cloneKalturaMediaEntry(entry as KalturaMediaEntry);
+			else if (entry is VidiunMediaEntry) {
+				copy = cloneVidiunMediaEntry(entry as VidiunMediaEntry);
 			}
 			return copy;
 		}
 		
 		
 		/**
-		 * Return a new KalturaBaseEntry object with same attributes as source attributes
+		 * Return a new VidiunBaseEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaBaseEntry(source:KalturaBaseEntry):KalturaBaseEntry
+		public static function cloneVidiunBaseEntry(source:VidiunBaseEntry):VidiunBaseEntry
 		{
-			var be:KalturaBaseEntry = new KalturaBaseEntry();
+			var be:VidiunBaseEntry = new VidiunBaseEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				be[atts[i]] = source[atts[i]];
@@ -52,25 +52,25 @@ package com.kaltura.edw.business
 		}
 		
 		/**
-		 * Return a new KalturaPlayableEntry object with same attributes as source attributes
+		 * Return a new VidiunPlayableEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaPlayableEntry(source:KalturaPlayableEntry):KalturaPlayableEntry
+		public static function cloneVidiunPlayableEntry(source:VidiunPlayableEntry):VidiunPlayableEntry
 		{
-			var kpe:KalturaPlayableEntry = new KalturaPlayableEntry();
+			var vpe:VidiunPlayableEntry = new VidiunPlayableEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
-				kpe[atts[i]] = source[atts[i]];
+				vpe[atts[i]] = source[atts[i]];
 			} 
-			return kpe;
+			return vpe;
 		}
 		
 		
 		/**
-		 * Return a new KalturaMediaEntry object with same attributes as source attributes
+		 * Return a new VidiunMediaEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaMediaEntry(source:KalturaMediaEntry):KalturaMediaEntry
+		public static function cloneVidiunMediaEntry(source:VidiunMediaEntry):VidiunMediaEntry
 		{
-			var me:KalturaMediaEntry = new KalturaMediaEntry();
+			var me:VidiunMediaEntry = new VidiunMediaEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				me[atts[i]] = source[atts[i]];
@@ -79,11 +79,11 @@ package com.kaltura.edw.business
 		}
 
 		/**
-		 * Return a new KalturaPlaylist object with same attributes as source attributes
+		 * Return a new VidiunPlaylist object with same attributes as source attributes
 		 */
-		public static function cloneKalturaPlaylist(source:KalturaPlaylist):KalturaPlaylist
+		public static function cloneVidiunPlaylist(source:VidiunPlaylist):VidiunPlaylist
 		{
-			var pl:KalturaPlaylist = new KalturaPlaylist();
+			var pl:VidiunPlaylist = new VidiunPlaylist();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				pl[atts[i]] = source[atts[i]];
@@ -91,11 +91,11 @@ package com.kaltura.edw.business
 			return pl;
 		}
 		/**
-		 * Return a new KalturaMixEntry object with same attributes as source attributes
+		 * Return a new VidiunMixEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaMixEntry(source:KalturaMixEntry):KalturaMixEntry
+		public static function cloneVidiunMixEntry(source:VidiunMixEntry):VidiunMixEntry
 		{
-			var mix:KalturaMixEntry = new KalturaMixEntry();
+			var mix:VidiunMixEntry = new VidiunMixEntry();
 			
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
@@ -105,15 +105,15 @@ package com.kaltura.edw.business
 			return mix;
 		}
 		
-		public static function cloneKalturaStreamAdminEntry(source:KalturaLiveStreamEntry):KalturaLiveStreamEntry
+		public static function cloneVidiunStreamAdminEntry(source:VidiunLiveStreamEntry):VidiunLiveStreamEntry
 		{
-			var klsae:KalturaLiveStreamEntry = new KalturaLiveStreamEntry();
+			var vlsae:VidiunLiveStreamEntry = new VidiunLiveStreamEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
-				klsae[atts[i]] = source[atts[i]];
+				vlsae[atts[i]] = source[atts[i]];
 			} 
 			
-			return klsae
+			return vlsae
 		}
 	}
 }

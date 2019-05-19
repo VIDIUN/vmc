@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- change category owner popup window -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							creationComplete="onInit(event)" showCloseButton="true" showHelpButton="true"
 							help="helpHandler(event)"
 							title="{resourceManager.getString('cms','changeOwner')}" 
 							layout="vertical" width="400" height="170"
-							xmlns:controllers="com.kaltura.autocomplete.controllers.*"
+							xmlns:controllers="com.vidiun.autocomplete.controllers.*"
 							xmlns:components="com.hillelcoren.components.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaUser;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACUsersController;
+			import com.vidiun.autocomplete.itemRenderers.selection.UserSelectedItem;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+			import com.vidiun.vo.VidiunCategory;
+			import com.vidiun.vo.VidiunUser;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -23,12 +23,12 @@
 			import mx.managers.PopUpManager;
 
 			
-			public var ownerUser:KalturaUser;
+			public var ownerUser:VidiunUser;
 
 
 			private function onInit(event:FlexEvent):void {
 				// Create a new Controler that wrap the Auto Complete component
-				new KACUsersController(usersComplete, CmsModelLocator.getInstance().context.kc);
+				new VACUsersController(usersComplete, CmsModelLocator.getInstance().context.vc);
 				
 //				if (ownerId) {
 //					// only set if there is actual value
@@ -57,7 +57,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cats_owner", true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, "section_cats_owner", true));
 			}
 
 		]]>

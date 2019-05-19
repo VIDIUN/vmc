@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true"
 				 title="{resourceManager.getString('windows', 'addNewIPTitle')}" layout="vertical"
 				 close="closeWindow(event)" showHelpButton="false" defaultButton="{saveBtn}"
 				 creationComplete="helptitlewindow1_creationCompleteHandler(event)">

@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.dist
+package com.vidiun.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionSubmitAdd;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.vidiun.commands.entryDistribution.EntryDistributionSubmitAdd;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.EntryDistributionEvent;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunEntryDistribution;
 
 
-	public class SubmitEntryDistributionCommand extends KedCommand
+	public class SubmitEntryDistributionCommand extends VedCommand
 	{
-		private var _entryDis:KalturaEntryDistribution;
+		private var _entryDis:VidiunEntryDistribution;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_entryDis = (event as EntryDistributionEvent).entryDistribution;
 			var submit:EntryDistributionSubmitAdd = new EntryDistributionSubmitAdd(_entryDis.id);
-			submit.addEventListener(KalturaEvent.COMPLETE, result);
-			submit.addEventListener(KalturaEvent.FAILED, fault);
+			submit.addEventListener(VidiunEvent.COMPLETE, result);
+			submit.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(submit);
 		}
@@ -28,7 +28,7 @@ package com.kaltura.edw.control.commands.dist
 		{
 			_model.decreaseLoadCounter();
 			super.result(data);
-			var resultEntry:KalturaEntryDistribution = data.data as KalturaEntryDistribution;
+			var resultEntry:VidiunEntryDistribution = data.data as VidiunEntryDistribution;
 			_entryDis.status =  resultEntry.status;
 			_entryDis.dirtyStatus = resultEntry.dirtyStatus;
 			//for data binding

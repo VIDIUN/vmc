@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.admin.business {
+package com.vidiun.vmc.modules.admin.business {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	

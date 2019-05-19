@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:live="com.kaltura.edw.view.live.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:live="com.vidiun.edw.view.live.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.types.KalturaSourceType;
-			import com.kaltura.vo.KalturaLiveStreamConfiguration;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.business.EntryLiveStreamingHelper;
+			import com.vidiun.types.VidiunSourceType;
+			import com.vidiun.vo.VidiunLiveStreamConfiguration;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			
 			[Bindable]
-			private var _selectedEntry:KalturaLiveStreamEntry;
+			private var _selectedEntry:VidiunLiveStreamEntry;
 
-			public function get selectedEntry():KalturaLiveStreamEntry
+			public function get selectedEntry():VidiunLiveStreamEntry
 			{
 				return _selectedEntry;
 			}
 
-			public function set selectedEntry(value:KalturaLiveStreamEntry):void
+			public function set selectedEntry(value:VidiunLiveStreamEntry):void
 			{
 				_selectedEntry = value;
 				
@@ -25,7 +25,7 @@
 				while (numChildren > 1) {
 					removeChildAt(numChildren-1);
 				}
-				if (_selectedEntry.sourceType == KalturaSourceType.MANUAL_LIVE_STREAM) {
+				if (_selectedEntry.sourceType == VidiunSourceType.MANUAL_LIVE_STREAM) {
 					populateManualBox(_selectedEntry.liveStreamConfigurations);
 				}
 			}
@@ -33,7 +33,7 @@
 			
 			/**
 			 * add lines for each stream url
-			 * @param cfgs	list of KalturaLiveStreamConfiguration to present 
+			 * @param cfgs	list of VidiunLiveStreamConfiguration to present 
 			 * */
 			private function populateManualBox(cfgs:Array):void
 			{
@@ -41,7 +41,7 @@
 				var i:int;
 				
 				// create all lines
-				for each (var cfg:KalturaLiveStreamConfiguration in cfgs) {
+				for each (var cfg:VidiunLiveStreamConfiguration in cfgs) {
 					line = new FormLine();
 					//line.prefixesWidth = 160; 
 					// allow protocol name override by locale:

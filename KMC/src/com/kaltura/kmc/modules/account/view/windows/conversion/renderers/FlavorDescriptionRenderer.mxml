@@ -3,9 +3,9 @@
 		 horizontalScrollPolicy="off" paddingLeft="4">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.FlavorVO;
+			import com.vidiun.vo.FlavorVO;
 		]]>
 	</mx:Script>
-	<mx:Label text="{(data as FlavorVO).kFlavor.description}" width="100%"
-			  toolTip="{(data as FlavorVO).kFlavor.description}"/>
+	<mx:Label text="{(data as FlavorVO).vFlavor.description}" width="100%"
+			  toolTip="{(data as FlavorVO).vFlavor.description}"/>
 </mx:HBox>

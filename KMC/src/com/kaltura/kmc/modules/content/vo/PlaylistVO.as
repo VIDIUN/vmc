@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.vo
+package com.vidiun.vmc.modules.content.vo
 {
-	import com.kaltura.kmc.modules.content.model.types.PlaylistTypes;
+	import com.vidiun.vmc.modules.content.model.types.PlaylistTypes;
 	
 	import mx.collections.ArrayCollection;
 	

@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.metadata.MetadataList;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.business.CategoryFormBuilder;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMetadata;
-	import com.kaltura.vo.KalturaMetadataFilter;
-	import com.kaltura.vo.KalturaMetadataListResponse;
+	import com.vidiun.commands.metadata.MetadataList;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.vo.CustomMetadataDataVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.business.CategoryFormBuilder;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.model.CategoriesModel;
+	import com.vidiun.types.VidiunMetadataObjectType;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunMetadata;
+	import com.vidiun.vo.VidiunMetadataFilter;
+	import com.vidiun.vo.VidiunMetadataListResponse;
 	
 	import mx.collections.ArrayCollection;
 	
-	public class ListCategoryMetadataDataCommand extends KalturaCommand
+	public class ListCategoryMetadataDataCommand extends VidiunCommand
 	{
 		
 		/**
@@ -34,16 +34,16 @@ package com.kaltura.kmc.modules.content.commands.cat
 			if (!filterModel.categoryMetadataProfiles || !catModel.selectedCategory)
 				return;
 			
-			var filter:KalturaMetadataFilter = new KalturaMetadataFilter();
+			var filter:VidiunMetadataFilter = new VidiunMetadataFilter();
 			filter.objectIdEqual = String(catModel.selectedCategory.id);	
-			filter.metadataObjectTypeEqual = KalturaMetadataObjectType.CATEGORY;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			filter.metadataObjectTypeEqual = VidiunMetadataObjectType.CATEGORY;
+			var pager:VidiunFilterPager = new VidiunFilterPager();
 			
 			var listMetadataData:MetadataList = new MetadataList(filter, pager);
-			listMetadataData.addEventListener(KalturaEvent.COMPLETE, result);
-			listMetadataData.addEventListener(KalturaEvent.FAILED, fault);
+			listMetadataData.addEventListener(VidiunEvent.COMPLETE, result);
+			listMetadataData.addEventListener(VidiunEvent.FAILED, fault);
 			
-			_model.context.kc.post(listMetadataData);
+			_model.context.vc.post(listMetadataData);
 		}
 		 
 		/**
@@ -55,7 +55,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 		{
 			super.result(data);
 			
-			var metadataResponse:KalturaMetadataListResponse = data.data as KalturaMetadataListResponse;
+			var metadataResponse:VidiunMetadataListResponse = data.data as VidiunMetadataListResponse;
 			
 			var filterModel:FilterModel = _model.filterModel;
 			var catModel:CategoriesModel = _model.categoriesModel;
@@ -70,9 +70,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var formBuilder:CategoryFormBuilder = filterModel.categoryFormBuilders[i] as CategoryFormBuilder;
 				formBuilder.metadataInfo = categoryMetadata;
 				
-				// add the KalturaMetadata of this profile to the EntryMetadataDataVO
-				var profileId:int = (filterModel.categoryMetadataProfiles[i] as KMCMetadataProfileVO).profile.id;
-				for each (var metadata:KalturaMetadata in metadataResponse.objects) {
+				// add the VidiunMetadata of this profile to the EntryMetadataDataVO
+				var profileId:int = (filterModel.categoryMetadataProfiles[i] as VMCMetadataProfileVO).profile.id;
+				for each (var metadata:VidiunMetadata in metadataResponse.objects) {
 					if (metadata.metadataProfileId == profileId) {
 						categoryMetadata.metadata = metadata;
 						break;

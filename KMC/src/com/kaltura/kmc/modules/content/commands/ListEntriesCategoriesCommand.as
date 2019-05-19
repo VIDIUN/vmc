@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.categoryEntry.CategoryEntryList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.view.window.RemoveCategoriesWindow;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryEntry;
-	import com.kaltura.vo.KalturaCategoryEntryFilter;
-	import com.kaltura.vo.KalturaCategoryEntryListResponse;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.commands.categoryEntry.CategoryEntryList;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vmc.modules.content.view.window.RemoveCategoriesWindow;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryEntry;
+	import com.vidiun.vo.VidiunCategoryEntryFilter;
+	import com.vidiun.vo.VidiunCategoryEntryListResponse;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -22,7 +22,7 @@ package com.kaltura.kmc.modules.content.commands
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class ListEntriesCategoriesCommand extends KalturaCommand {
+	public class ListEntriesCategoriesCommand extends VidiunCommand {
 		
 		private const CHUNK_SIZE:int = 20;
 		
@@ -72,19 +72,19 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			for (var i:uint = _lastObjectIndex; i < final; i++) {
-				ids += (_model.selectedEntries[i] as KalturaBaseEntry).id + ",";
+				ids += (_model.selectedEntries[i] as VidiunBaseEntry).id + ",";
 			}
-			var f:KalturaCategoryEntryFilter = new KalturaCategoryEntryFilter();
+			var f:VidiunCategoryEntryFilter = new VidiunCategoryEntryFilter();
 			f.entryIdIn = ids;
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:VidiunFilterPager = new VidiunFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = 1000;	// very big number, should get all
 			
 			var list:CategoryEntryList = new CategoryEntryList(f, p);
-			list.addEventListener(KalturaEvent.COMPLETE, listCategoryEntriesChunkResult);
-			list.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(list);
+			list.addEventListener(VidiunEvent.COMPLETE, listCategoryEntriesChunkResult);
+			list.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(list);
 			_lastObjectIndex = final;
 		}
 		
@@ -93,11 +93,11 @@ package com.kaltura.kmc.modules.content.commands
 		 * see if need to get another CategoryEntry chunk, or start processing
 		 * @param data
 		 */		
-		private function listCategoryEntriesChunkResult(data:KalturaEvent):void {
+		private function listCategoryEntriesChunkResult(data:VidiunEvent):void {
 			super.result(data);
 			if (!checkError(data)) {
 				// concat result to previous results
-				var curResult:Array = (data.data as KalturaCategoryEntryListResponse).objects;
+				var curResult:Array = (data.data as VidiunCategoryEntryListResponse).objects;
 				if (curResult && curResult.length) {
 					// if categories were deleted or something and are still listed on the entry
 					// but don't come back on list, we might get an empty array
@@ -109,7 +109,7 @@ package com.kaltura.kmc.modules.content.commands
 				else {
 					// no more categoryEntries to list
 					if (_categoryEntries.length) {
-						_model.selectedEntriesCategoriesKObjects = _categoryEntries;
+						_model.selectedEntriesCategoriesVObjects = _categoryEntries;
 						_uniqueCategories = processCategoryEntries();
 						_lastObjectIndex = 0;
 						listCategoriesChunk();
@@ -142,8 +142,8 @@ package com.kaltura.kmc.modules.content.commands
 			var found:Boolean;
 			for (var i:int = 0; i<_categoryEntries.length; i++) {
 				found = false;
-				for each (var kce:KalturaCategoryEntry in uniques) {
-					if (kce.categoryId == _categoryEntries[i].categoryId) {
+				for each (var vce:VidiunCategoryEntry in uniques) {
+					if (vce.categoryId == _categoryEntries[i].categoryId) {
 						found = true;
 						break;
 					}
@@ -166,31 +166,31 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			for (var i:uint = _lastObjectIndex; i < final; i++) {
-				ids += (_uniqueCategories[i] as KalturaCategoryEntry).categoryId + ",";
+				ids += (_uniqueCategories[i] as VidiunCategoryEntry).categoryId + ",";
 			}
 			
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
+			var f:VidiunCategoryFilter = new VidiunCategoryFilter();
 			f.idIn = ids;
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:VidiunFilterPager = new VidiunFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = CHUNK_SIZE;	// very big number, should get all
 			
 			var list:CategoryList = new CategoryList(f, p);
-			list.addEventListener(KalturaEvent.COMPLETE, listCategoriesChunkResult);
-			list.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(list);
+			list.addEventListener(VidiunEvent.COMPLETE, listCategoriesChunkResult);
+			list.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(list);
 			_lastObjectIndex = final;
 		}
 		
 		private var _categories:Array = [];
 		
 		
-		private function listCategoriesChunkResult(data:KalturaEvent):void {
+		private function listCategoriesChunkResult(data:VidiunEvent):void {
 			super.result(data);
 			_model.decreaseLoadCounter();
 			if (!checkError(data)) {
-				_categories = _categories.concat((data.data as KalturaCategoryListResponse).objects);
+				_categories = _categories.concat((data.data as VidiunCategoryListResponse).objects);
 				
 				if (_lastObjectIndex < _uniqueCategories.length) {
 					listCategoriesChunk();

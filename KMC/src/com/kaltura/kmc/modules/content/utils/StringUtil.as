@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.utils
+package com.vidiun.vmc.modules.content.utils
 {
 	public class StringUtil {
 		

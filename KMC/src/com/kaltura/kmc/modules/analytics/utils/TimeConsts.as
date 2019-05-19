@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.utils
+package com.vidiun.vmc.modules.analytics.utils
 {
 	public class TimeConsts
 	{

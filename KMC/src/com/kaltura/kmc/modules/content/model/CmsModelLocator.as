@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.model {
+package com.vidiun.vmc.modules.content.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.containers.ConfinedTitleWindow;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.PlaylistModel;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.types.KalturaTubeMogulSyndicationFeedOrderBy;
-	import com.kaltura.vo.KalturaBaseSyndicationFeedFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.containers.ConfinedTitleWindow;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.PlaylistModel;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.model.types.WindowsStates;
+	import com.vidiun.edw.vo.ListableVo;
+	import com.vidiun.vmvc.model.VMvCModel;
+	import com.vidiun.types.VidiunTubeMogulSyndicationFeedOrderBy;
+	import com.vidiun.vo.VidiunBaseSyndicationFeedFilter;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -28,7 +28,7 @@ package com.kaltura.kmc.modules.content.model {
 		public static const LOADING_FLAG_CHANGED:String = "loadingFlagChanged";
 		
 		/**
-		 * application context (ks, urls, etc)
+		 * application context (vs, urls, etc)
 		 * */
 		public var context:ContextDataPack;
 		
@@ -56,7 +56,7 @@ package com.kaltura.kmc.modules.content.model {
 		/**
 		 * entry details model
 		 * */
-		public var entryDetailsModel:KMvCModel;
+		public var entryDetailsModel:VMvCModel;
 		
 		
 		/**
@@ -172,7 +172,7 @@ package com.kaltura.kmc.modules.content.model {
 		 * all the categories to which the selected entries are assigned (||, not &&) 
 		 */
 		public var selectedEntriesCategories:ArrayCollection;
-		public var selectedEntriesCategoriesKObjects:Array;
+		public var selectedEntriesCategoriesVObjects:Array;
 
 		/**
 		 * current open window (popup) 
@@ -181,7 +181,7 @@ package com.kaltura.kmc.modules.content.model {
 		
 		/**
 		 * conversion profiles that are marked as live, for use when adding live streams
-		 * (KalturaConversionProfile.type = KalturaConversionProfileType.LIVE_STREAM)
+		 * (VidiunConversionProfile.type = VidiunConversionProfileType.LIVE_STREAM)
 		 */
 		public var liveConversionProfiles:ArrayCollection;
 
@@ -261,7 +261,7 @@ package com.kaltura.kmc.modules.content.model {
 		public function CmsModelLocator(enforcer:Enforcer) {
 			attic = new Object();
 			
-			entryDetailsModel = KMvCModel.getInstance();
+			entryDetailsModel = VMvCModel.getInstance();
 			
 			context = entryDetailsModel.getDataPack(ContextDataPack) as ContextDataPack;
 			
@@ -282,10 +282,10 @@ package com.kaltura.kmc.modules.content.model {
 			bulkUploadModel = new BulkUploadModel();
 			
 			extSynModel = new ExtSynModel();
-			extSynModel.syndicationFeedsFilterPager = new KalturaFilterPager();
+			extSynModel.syndicationFeedsFilterPager = new VidiunFilterPager();
 			extSynModel.syndicationFeedsFilterPager.pageSize = 10;
-			extSynModel.syndicationFeedsFilter = new KalturaBaseSyndicationFeedFilter();
-			extSynModel.syndicationFeedsFilter.orderBy = KalturaTubeMogulSyndicationFeedOrderBy.CREATED_AT_DESC;
+			extSynModel.syndicationFeedsFilter = new VidiunBaseSyndicationFeedFilter();
+			extSynModel.syndicationFeedsFilter.orderBy = VidiunTubeMogulSyndicationFeedOrderBy.CREATED_AT_DESC;
 		}
 
 

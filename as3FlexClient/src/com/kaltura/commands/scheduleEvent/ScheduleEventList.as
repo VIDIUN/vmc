@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleEvent
+package com.vidiun.commands.scheduleEvent
 {
-		import com.kaltura.vo.KalturaScheduleEventFilter;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.scheduleEvent.ScheduleEventListDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduleEventFilter;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.scheduleEvent.ScheduleEventListDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* List KalturaScheduleEvent objects
+	* List VidiunScheduleEvent objects
 	**/
-	public class ScheduleEventList extends KalturaCall
+	public class ScheduleEventList extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param filter KalturaScheduleEventFilter
-		* @param pager KalturaFilterPager
+		* @param filter VidiunScheduleEventFilter
+		* @param pager VidiunFilterPager
 		**/
-		public function ScheduleEventList( filter : KalturaScheduleEventFilter=null,pager : KalturaFilterPager=null )
+		public function ScheduleEventList( filter : VidiunScheduleEventFilter=null,pager : VidiunFilterPager=null )
 		{
 			service= 'schedule_scheduleevent';
 			action= 'list';
@@ -52,12 +52,12 @@ package com.kaltura.commands.scheduleEvent
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

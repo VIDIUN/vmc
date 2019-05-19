@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetTable;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.types.KalturaReportType;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaReportInputFilter;
-	import com.kaltura.vo.KalturaReportTable;
+	import com.vidiun.commands.report.ReportGetTable;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.types.VidiunReportType;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunReportInputFilter;
+	import com.vidiun.vo.VidiunReportTable;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
@@ -23,21 +23,21 @@ package com.kaltura.kmc.modules.analytics.commands {
 
 			ExecuteReportHelper.reportSetupBeforeExecution();
 
-			var applicationPager : KalturaFilterPager = new KalturaFilterPager();
+			var applicationPager : VidiunFilterPager = new VidiunFilterPager();
 			applicationPager.pageSize = 10000;
 			applicationPager.pageIndex = 1;
 	
 			var reportGetTable:ReportGetTable;
 
-			var krif : KalturaReportInputFilter = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
-			reportGetTable = new ReportGetTable(KalturaReportType.APPLICATIONS,
-												krif, 
+			var vrif : VidiunReportInputFilter = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
+			reportGetTable = new ReportGetTable(VidiunReportType.APPLICATIONS,
+												vrif, 
 												applicationPager);
 			 
 			reportGetTable.queued = false;
-			reportGetTable.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetTable.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(reportGetTable);
+			reportGetTable.addEventListener(VidiunEvent.COMPLETE, result);
+			reportGetTable.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(reportGetTable);
 		}
 
 
@@ -46,14 +46,14 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingApplicationsFlag = false;
 			_model.checkLoading();
 			
-			var krt:KalturaReportTable = KalturaReportTable(result.data);
+			var vrt:VidiunReportTable = VidiunReportTable(result.data);
 
 			// spread received data through the model
 			var tablesArr:Array;
 			var arrCol:ArrayCollection;
-			if(krt.data)
+			if(vrt.data)
 			{
-				tablesArr = krt.data.split(";");
+				tablesArr = vrt.data.split(";");
 				arrCol = new ArrayCollection(tablesArr);
 				
 				//Remove the last empty cell

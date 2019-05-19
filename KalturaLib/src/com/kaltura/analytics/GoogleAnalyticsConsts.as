@@ -1,4 +1,4 @@
-package com.kaltura.analytics {
+package com.vidiun.analytics {
 
 	public class GoogleAnalyticsConsts {
 		public static const PAGE_VIEW:String = "Page view/";
@@ -334,7 +334,7 @@ package com.kaltura.analytics {
 		public static const DASHBOARD_CUSTOMIZE_PLAYERS:String = "Customize Players";
 
 		// ==================================================================
-		// Login screen (NOT in KMC):
+		// Login screen (NOT in VMC):
 		// ==================================================================
 		public static const LOGIN:String = "User Logs In"; 
 		public static const LOGIN_FIRST_TIME:String = "login first time"; 
@@ -434,12 +434,12 @@ package com.kaltura.analytics {
 		// ==================================================================
 		// module names:
 		// ==================================================================
-		public static const ANALYTICS:String = "KMC/Reports and Analytics";
-		public static const CONTENT:String = "KMC/Content";
-		public static const STUDIO:String = "KMC/Studio";
-		public static const ACCOUNT:String = "KMC/Settings";
-		public static const DASHBOARD:String = "KMC/Dashboard";
-		public static const ADMIN:String = "KMC/Administration";
+		public static const ANALYTICS:String = "VMC/Reports and Analytics";
+		public static const CONTENT:String = "VMC/Content";
+		public static const STUDIO:String = "VMC/Studio";
+		public static const ACCOUNT:String = "VMC/Settings";
+		public static const DASHBOARD:String = "VMC/Dashboard";
+		public static const ADMIN:String = "VMC/Administration";
 
 
 	}

@@ -5,7 +5,7 @@
 
 -->
 <mx:LineChart xmlns:mx="http://www.adobe.com/2006/mxml" seriesFilters="{[]}" 
-	dataTipFunction="onDataTip" showDataTips="true" xmlns:metadata="com.kaltura.commands.metadata.*" > 
+	dataTipFunction="onDataTip" showDataTips="true" xmlns:metadata="com.vidiun.commands.metadata.*" > 
 	
 	<mx:Metadata>
 		[ResourceBundle("SharedResources")]

@@ -6,25 +6,25 @@
     <feature featureLabel="Controls" showCheckbox="false"/>
     <!--===============================================================-->
     <!--===============================================================-->
-    <feature showCheckbox="true" specialFeature="true" featureLabel="Title Text" id="TopTitleScreen" selected="false" k_param="selected" k_value="false" height="30">
+    <feature showCheckbox="true" specialFeature="true" featureLabel="Title Text" id="TopTitleScreen" selected="false" v_param="selected" v_value="false" height="30">
       <Label label="Title Text" bold="true"/>
       <Spacer/>
       <Label label="This feature allows you to display the title of the video currently playing."/>
-      <CheckBox label="Top video area" selected="true" k_param="selected" k_value="true" enabled="false"/>
+      <CheckBox label="Top video area" selected="true" v_param="selected" v_value="true" enabled="false"/>
       <Spacer/>
     </feature>
-    <feature showCheckbox="true" specialFeature="true" featureLabel="Your Watermark" id="watermark" selected="false" k_param="selected" k_value="false">
+    <feature showCheckbox="true" specialFeature="true" featureLabel="Your Watermark" id="watermark" selected="false" v_param="selected" v_value="false">
       <Spacer/>
       <Label label="Your Watermark" bold="true"/>
       <Label label="Brand your player with your own logo displayed as a watermark on the video. Upload an image to a location on the web and provide the link below."/>
       <Spacer/>
       <Label label="Watermark URL"/>
-      <Input id="watermarkPath" k_param="watermarkPath" k_value="http://www.kaltura.com/content/uiconf/kaltura/kmc/appstudio/kdp3/exampleWatermark.png"/>
+      <Input id="watermarkPath" v_param="watermarkPath" v_value="http://www.vidiun.com/content/uiconf/vidiun/vmc/appstudio/vdp3/exampleWatermark.png"/>
       <Label label="Watermark landing page url"/>
-      <Input id="watermarkClickPath" k_param="watermarkClickPath" k_value="http://www.kaltura.com/"/>
+      <Input id="watermarkClickPath" v_param="watermarkClickPath" v_value="http://www.vidiun.com/"/>
       <Spacer/>
       <Label label="Watermark location on the video:"/>
-      <ComboBox id="watermarkPosition" k_param="watermarkPosition" k_value="topLeft">
+      <ComboBox id="watermarkPosition" v_param="watermarkPosition" v_value="topLeft">
         <item>
           <data>bottomLeft</data>
           <label>Bottom Left</label>
@@ -43,44 +43,44 @@
         </item>
       </ComboBox>
       <Label label="Padding"/>
-      <NumericStepper id="padding" k_param="padding" k_value="5"/>
+      <NumericStepper id="padding" v_param="padding" v_value="5"/>
     </feature>
-    <feature showCheckbox="true" featureLabel="Full Screen Button" id="fsBtn" selected="true" k_param="selected" k_value="true">
+    <feature showCheckbox="true" featureLabel="Full Screen Button" id="fsBtn" selected="true" v_param="selected" v_value="true">
       <Spacer/>
       <Label label="Full Screen Button" bold="true"/>
       <Label label="This button allows users to switch to full screen mode, and back to regular mode."/>
       <Spacer/>
       <Label label="Tooltip - Play:"/>
-      <Input id="tooltipGo" k_param="upTooltip" k_value="Full Screen - ENTER"/>
+      <Input id="tooltipGo" v_param="upTooltip" v_value="Full Screen - ENTER"/>
       <Label label="Tooltip - Pause:"/>
-      <Input id="tooltipExit" k_param="selectedTooltip" k_value="Full Screen - ENTER"/>
+      <Input id="tooltipExit" v_param="selectedTooltip" v_value="Full Screen - ENTER"/>
     </feature>
     <!--===============================================================-->
     <!--===============================================================-->
     <feature featureLabel="Subtitles &amp; Transcriptions" showCheckbox="false"/>
     <!--===============================================================-->
     <!--===============================================================-->
-    <feature showCheckbox="true" featureLabel="Captions on video" id="ccOverList" pluginId="closedCaptionsOverPlayer" selected="true" k_param="selected" k_value="true">
+    <feature showCheckbox="true" featureLabel="Captions on video" id="ccOverList" pluginId="closedCaptionsOverPlayer" selected="true" v_param="selected" v_value="true">
       <Spacer/>
       <Label label="Captions on video" bold="true"/>
       <Label label="Displays captions on top of the video. Make sure that &quot;Captions for accessibility&quot; is not selected."/>
       <Spacer/>
       <Label label="Text Color:"/>
-      <ColorPicker id="fontColor" k_param="fontColor" k_value="0xFFFFFF" applyTo="closedCaptionsOverPlayer"/>
+      <ColorPicker id="fontColor" v_param="fontColor" v_value="0xFFFFFF" applyTo="closedCaptionsOverPlayer"/>
       <Label label="Text Styles:"/>
-      <RadioButtonGroup id="ccOverRG" k_param="useGlow" k_value="true" applyTo="closedCaptionsOverPlayer"/>
-      <RadioButton id="ccOverGlowRB" groupName="ccOverRG" selected="true" value="true" k_param="selected" k_value="true" label="Glow effect surrounding text"/>
+      <RadioButtonGroup id="ccOverRG" v_param="useGlow" v_value="true" applyTo="closedCaptionsOverPlayer"/>
+      <RadioButton id="ccOverGlowRB" groupName="ccOverRG" selected="true" value="true" v_param="selected" v_value="true" label="Glow effect surrounding text"/>
       <Label label="Glow Color:"/>
-      <ColorPicker id="ccOverGlowColor" k_param="glowColor" k_value="0x000333" applyTo="closedCaptionsOverPlayer" enabled="{ccOverGlowRB.selected}"/>
+      <ColorPicker id="ccOverGlowColor" v_param="glowColor" v_value="0x000333" applyTo="closedCaptionsOverPlayer" enabled="{ccOverGlowRB.selected}"/>
       <Label label="Glow Blur:"/>
-      <NumericStepper id="ccOverGlowBlur" k_param="glowBlur" k_value="4" minimum="0" maximum="255" applyTo="closedCaptionsOverPlayer" enabled="{ccOverGlowRB.selected}"/>
-      <RadioButton id="ccOverBgRB" groupName="ccOverRG" selected="false" value="false" k_param="selected" k_value="false" label="Background layer behind text"/>
+      <NumericStepper id="ccOverGlowBlur" v_param="glowBlur" v_value="4" minimum="0" maximum="255" applyTo="closedCaptionsOverPlayer" enabled="{ccOverGlowRB.selected}"/>
+      <RadioButton id="ccOverBgRB" groupName="ccOverRG" selected="false" value="false" v_param="selected" v_value="false" label="Background layer behind text"/>
       <Label label="Background Color:"/>
-      <ColorPicker id="bgColor" k_param="bg" k_value="0x000000" applyTo="closedCaptionsOverPlayer" enabled="{ccOverBgRB.selected}"/>
+      <ColorPicker id="bgColor" v_param="bg" v_value="0x000000" applyTo="closedCaptionsOverPlayer" enabled="{ccOverBgRB.selected}"/>
       <Label label="Font Size:"/>
-      <NumericStepper id="fontsize" k_param="fontsize" k_value="12" applyTo="closedCaptionsOverPlayer"/>
+      <NumericStepper id="fontsize" v_param="fontsize" v_value="12" applyTo="closedCaptionsOverPlayer"/>
       <Label label="Font Family:"/>
-      <ComboBox id="fontFamily" k_param="fontFamily" k_value="Arial" applyTo="closedCaptionsOverPlayer">
+      <ComboBox id="fontFamily" v_param="fontFamily" v_value="Arial" applyTo="closedCaptionsOverPlayer">
         <item>
           <data>Verdana</data>
           <label>Verdana</label>
@@ -139,32 +139,32 @@
         </item>
       </ComboBox>
       <!--Label label="Prompt (text that appears on captions selector):" />
-			<Input id="ccOverPrompt"  k_param="prompt" k_value="Captions" applyTo="ccOverComboBox"/>
+			<Input id="ccOverPrompt"  v_param="prompt" v_value="Captions" applyTo="ccOverComboBox"/>
 			
 			<Label label="Tooltip:" />
-			<Input id="ccOverTooltip"  k_param="tooltip" k_value="" applyTo="ccOverComboBox"/-->
+			<Input id="ccOverTooltip"  v_param="tooltip" v_value="" applyTo="ccOverComboBox"/-->
     </feature>
-    <feature showCheckbox="true" featureLabel="Captions for accessibility" id="ccUnderList" pluginId="ccUnderScreen" selected="false" k_param="selected" k_value="false">
+    <feature showCheckbox="true" featureLabel="Captions for accessibility" id="ccUnderList" pluginId="ccUnderScreen" selected="false" v_param="selected" v_value="false">
       <Spacer/>
       <Label label="Captions for accessibility" bold="true"/>
       <Label label="Displays captions in a dedicated area under video. Make sure that &quot;Captions on video&quot; is not selected."/>
       <Spacer/>
       <Label label="Text color:"/>
-      <ColorPicker id="fontColor" k_param="fontColor" k_value="0xFFFFFF" applyTo="closedCaptionsUnderPlayer"/>
+      <ColorPicker id="fontColor" v_param="fontColor" v_value="0xFFFFFF" applyTo="closedCaptionsUnderPlayer"/>
       <Label label="Text Styles:"/>
-      <RadioButtonGroup id="ccUnderRG" k_param="useGlow" k_value="true" applyTo="closedCaptionsUnderPlayer"/>
-      <RadioButton id="ccUnderGlowRB" groupName="ccUnderRG" selected="true" value="true" k_param="selected" k_value="true" label="Glow effect surrounding text"/>
+      <RadioButtonGroup id="ccUnderRG" v_param="useGlow" v_value="true" applyTo="closedCaptionsUnderPlayer"/>
+      <RadioButton id="ccUnderGlowRB" groupName="ccUnderRG" selected="true" value="true" v_param="selected" v_value="true" label="Glow effect surrounding text"/>
       <Label label="Glow Color:"/>
-      <ColorPicker id="ccUnderGlowColor" k_param="glowColor" k_value="0x000333" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderGlowRB.selected}"/>
+      <ColorPicker id="ccUnderGlowColor" v_param="glowColor" v_value="0x000333" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderGlowRB.selected}"/>
       <Label label="Glow Blur:"/>
-      <NumericStepper id="ccUnderGlowBlur" k_param="glowBlur" k_value="4" minimum="0" maximum="255" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderGlowRB.selected}"/>
-      <RadioButton id="ccUnderBgRB" groupName="ccUnderRG" selected="false" value="false" k_param="selected" k_value="false" label="Background layer behind text"/>
+      <NumericStepper id="ccUnderGlowBlur" v_param="glowBlur" v_value="4" minimum="0" maximum="255" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderGlowRB.selected}"/>
+      <RadioButton id="ccUnderBgRB" groupName="ccUnderRG" selected="false" value="false" v_param="selected" v_value="false" label="Background layer behind text"/>
       <Label label="Background Color:"/>
-      <ColorPicker id="bgColor" k_param="bg" k_value="0x000000" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderBgRB.selected}"/>
+      <ColorPicker id="bgColor" v_param="bg" v_value="0x000000" applyTo="closedCaptionsUnderPlayer" enabled="{ccUnderBgRB.selected}"/>
       <Label label="Font Size:"/>
-      <NumericStepper id="fontsize" k_param="fontsize" k_value="12" applyTo="closedCaptionsUnderPlayer"/>
+      <NumericStepper id="fontsize" v_param="fontsize" v_value="12" applyTo="closedCaptionsUnderPlayer"/>
       <Label label="Font Family:"/>
-      <ComboBox id="fontFamily" k_param="fontFamily" k_value="Arial" applyTo="closedCaptionsUnderPlayer">
+      <ComboBox id="fontFamily" v_param="fontFamily" v_value="Arial" applyTo="closedCaptionsUnderPlayer">
         <item>
           <data>Verdana</data>
           <label>Verdana</label>
@@ -223,18 +223,18 @@
         </item>
       </ComboBox>
       <!--Label label="Prompt (text that appears on captions selector):" />
-			<Input id="ccUnderPrompt"  k_param="prompt" k_value="Captions" />
+			<Input id="ccUnderPrompt"  v_param="prompt" v_value="Captions" />
 			
 			<Label label="Tooltip:" />
-			<Input id="ccUnderTooltip"  k_param="tooltip" k_value="" /-->
+			<Input id="ccUnderTooltip"  v_param="tooltip" v_value="" /-->
     </feature>
-    <feature showCheckbox="true" featureLabel="Audio Description" id="onVideoAD" pluginId="audioDescription" selected="true" k_param="selected" k_value="true">
+    <feature showCheckbox="true" featureLabel="Audio Description" id="onVideoAD" pluginId="audioDescription" selected="true" v_param="selected" v_value="true">
       <Spacer/>
       <Label label="Audio Description" bold="true"/>
       <Label label="Use Audio Description to add descriptive audio to the played entry."/>
       <Spacer/>
       <Label label="Volume:"/>
-      <NumericStepper id="adVolume" minimum="0" maximum="1" stepSize="0.1" k_param="volume" k_value="1" applyTo="audioDescription"/>
+      <NumericStepper id="adVolume" minimum="0" maximum="1" stepSize="0.1" v_param="volume" v_value="1" applyTo="audioDescription"/>
     </feature>
 	<!--===============================================================-->
     <!--===============================================================-->
@@ -242,12 +242,12 @@
     <!--===============================================================-->
     <!--===============================================================-->
 	
-	<feature showCheckbox="true" featureLabel="DRM - Widevine" id="widevine" selected="false" k_param="selected" k_value="false" rpEnabled="true">
+	<feature showCheckbox="true" featureLabel="DRM - Widevine" id="widevine" selected="false" v_param="selected" v_value="false" rpEnabled="true">
 	  <Spacer/>
 	  <Label label="DRM - Widevine" bold="true"/>
 	  <Spacer/>
 	  <Label label="Adding the DRM-Widevine option enables license protected playback of encrypted content in the player (flash player only)."/>
-	  <Label label="Note: This option is applicable only when the DRM feature is enabled for the KMC account."/>
+	  <Label label="Note: This option is applicable only when the DRM feature is enabled for the VMC account."/>
 	</feature>
 	
 	<!--===============================================================-->
@@ -255,43 +255,43 @@
     <feature featureLabel="Analytics" showCheckbox="false"/>
     <!--===============================================================-->
     <!--===============================================================-->
-	<feature showCheckbox="true" featureLabel="Google Analytics" id="googleAnalytics" pluginId="googleAnalytics" selected="false" k_param="selected" k_value="true" rpEnabled="true">
+	<feature showCheckbox="true" featureLabel="Google Analytics" id="googleAnalytics" pluginId="googleAnalytics" selected="false" v_param="selected" v_value="true" rpEnabled="true">
 	  <Spacer/>
 	  <Label label="Google Analytics" bold="true"/>
 	  <Label label="Use Google Analytics to track this media."/>
 	  <Spacer/>
 	  <Label label="Urchin Code:"/>
 	  <Label label="The google urchin code, i.e UA-30149691-1"/>
-	  <Input id="urchinCode" k_param="urchinCode"/>
+	  <Input id="urchinCode" v_param="urchinCode"/>
 	  <Label label="Track events monitor:"/>
 	  <Label label="A named on page function to be called for every event."/>
-	  <Input id="trackEventMonitor" k_param="trackEventMonitor"/>
+	  <Input id="trackEventMonitor" v_param="trackEventMonitor"/>
 	  <Seperator/>
 	  <Spacer/>
 	  <Label label="Custom Events:"/>
-	  <Label label="A coma separated list of kaltura player events you wish to track. Read more here:"/>
-	  <Label label="http://player.kaltura.com/docs/api#jsapi" link="http://player.kaltura.com/docs/api#jsapi"/>
-	  <Input id="customEvents" k_param="customEvents" k_value="doPlay,doPause,playerPlayEnd"/>
+	  <Label label="A coma separated list of vidiun player events you wish to track. Read more here:"/>
+	  <Label label="http://player.vidiun.com/docs/api#jsapi" link="http://player.vidiun.com/docs/api#jsapi"/>
+	  <Input id="customEvents" v_param="customEvents" v_value="doPlay,doPause,playerPlayEnd"/>
 	  <Label label="Custom Category sent to google for doPlay event"/>
-	  <Input id="doPlayCategory" k_param="doPlayCategory"/>
+	  <Input id="doPlayCategory" v_param="doPlayCategory"/>
 	  <Label label="Custom Action sent to google for doPlay event"/>
-	  <Input id="doPlayAction" k_param="doPlayAction"/>
+	  <Input id="doPlayAction" v_param="doPlayAction"/>
 	  <Label label="Custom Value sent to google for doPlay event"/>
-	  <Input id="doPlayValue" k_param="doPlayValue"/>
+	  <Input id="doPlayValue" v_param="doPlayValue"/>
 	  <Label label="Custom Category sent to google for doPause event"/>
-	  <Input id="doPauseCategory" k_param="doPauseCategory"/>
+	  <Input id="doPauseCategory" v_param="doPauseCategory"/>
 	  <Label label="Custom Action sent to google for doPause event"/>
-	  <Input id="doPauseAction" k_param="doPauseAction"/>
+	  <Input id="doPauseAction" v_param="doPauseAction"/>
 	  <Label label="Custom Value sent to google for doPause event"/>
-	  <Input id="doPauseValue" k_param="doPauseValue"/>
+	  <Input id="doPauseValue" v_param="doPauseValue"/>
 	  <Label label="Custom Category sent to google for playerPlayEnd event"/>
-	  <Input id="playerPlayEndCategory" k_param="playerPlayEndCategory"/>
+	  <Input id="playerPlayEndCategory" v_param="playerPlayEndCategory"/>
 	  <Label label="Custom Action sent to google for playerPlayEnd event"/>
-	  <Input id="playerPlayEndAction" k_param="playerPlayEndAction"/>
+	  <Input id="playerPlayEndAction" v_param="playerPlayEndAction"/>
 	  <Label label="Custom Value sent to google for playerPlayEnd event"/>
-	  <Input id="playerPlayEndValue" k_param="playerPlayEndValue"/>
+	  <Input id="playerPlayEndValue" v_param="playerPlayEndValue"/>
 	</feature>
-	<feature showCheckbox="true" featureLabel="Akamai Media Analytics" id="akamaiMediaAnalytics" selected="true" k_param="selected" k_value="true" rpEnabled="true">
+	<feature showCheckbox="true" featureLabel="Akamai Media Analytics" id="akamaiMediaAnalytics" selected="true" v_param="selected" v_value="true" rpEnabled="true">
 	  <Spacer/>
 	  <Label label="Akamai Media Analytics" bold="true"/>
 	  <Spacer/>
@@ -301,20 +301,20 @@
 	  <Label label="https://control.akamai.com/" link="https://control.akamai.com/"/>
 	  <Label label="Otherwise please visit the order page."/>
 	</feature>
-	<feature showCheckbox="true" featureLabel="Omniture Analytics" id="omnitureOnPage" selected="false" k_param="selected" k_value="false" rpEnabled="true">
+	<feature showCheckbox="true" featureLabel="Omniture Analytics" id="omnitureOnPage" selected="false" v_param="selected" v_value="false" rpEnabled="true">
 		<Spacer/>
 		<Label label="Omniture Analytics" bold="true"/>
 		<Label label="Enables siteCatalyist 15 Omniture analytics to track player events. This Omniture plugin integrates with your existing Omniture tracked pages by using your s_code.js file generated through your Adobe Omniture console."/>
 		<Spacer/>
 		<Label label="S Code URL:"/>
 		<Label label="The URL to the Ominture gennerated sCode file. This field is required."/>
-		<Input id="s_codeUrl" k_param="s_codeUrl"/>
+		<Input id="s_codeUrl" v_param="s_codeUrl"/>
 		<Label label="Tracking Callback:"/>
 		<Label label="A global callback function for logging omniture events."/>
-		<Input id="trackEventMonitor" k_param="trackEventMonitor"/>
+		<Input id="trackEventMonitor" v_param="trackEventMonitor"/>
 		<Spacer/>
 		<Label label="For more info and advanced configuration click here:"/>
-		<Label label="http://player.kaltura.com/docs/OmnitureOnPage" link="http://player.kaltura.com/docs/OmnitureOnPage"/>
+		<Label label="http://player.vidiun.com/docs/OmnitureOnPage" link="http://player.vidiun.com/docs/OmnitureOnPage"/>
 	</feature>
   </features>
   <!--===============================================================-->

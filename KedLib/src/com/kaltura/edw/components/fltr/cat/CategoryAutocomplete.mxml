@@ -2,7 +2,7 @@
 <!---
 	text autocomplete for categories in the filter
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:cat="com.kaltura.edw.components.fltr.cat.*" 
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:cat="com.vidiun.edw.components.fltr.cat.*" 
 		 xmlns:components="com.hillelcoren.components.*"
 		 creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
@@ -10,26 +10,26 @@
 		/**
 		* dispatched when the value of the component have changed 
 		*/	
-		[Event(name="valueChange", type="com.kaltura.edw.events.GeneralNonCairngormEvent")]
+		[Event(name="valueChange", type="com.vidiun.edw.events.GeneralNonCairngormEvent")]
 		
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACCategoryController;
+			import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 
 			/**
-			 * KalturaClient for autocomplete's API calls.
+			 * VidiunClient for autocomplete's API calls.
 			 * @internal 
 			 * should be set before creationComplete event
 			 * */
-			public var kClient:KalturaClient;
+			public var vClient:VidiunClient;
 			
 			[Inspectable(enumeration="true,false")]
 			/**
@@ -42,7 +42,7 @@
 			public var disabledCategories:ArrayCollection = new ArrayCollection();
 			
 			protected function creationCompleteHandler(event:FlexEvent):void {
-				new KACCategoryController(completor, kClient);
+				new VACCategoryController(completor, vClient);
 			}
 
 

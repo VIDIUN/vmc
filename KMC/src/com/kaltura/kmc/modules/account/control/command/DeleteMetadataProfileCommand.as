@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.metadataProfile.MetadataProfileDelete;
-	import com.kaltura.commands.metadataProfile.MetadataProfileList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.MetadataProfileEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.utils.ListMetadataProfileUtil;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.types.KalturaMetadataOrderBy;
-	import com.kaltura.types.KalturaMetadataProfileCreateMode;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaMetadataProfile;
-	import com.kaltura.vo.KalturaMetadataProfileFilter;
-	import com.kaltura.vo.KalturaMetadataProfileListResponse;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.metadataProfile.MetadataProfileDelete;
+	import com.vidiun.commands.metadataProfile.MetadataProfileList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.control.events.MetadataProfileEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.utils.ListMetadataProfileUtil;
+	import com.vidiun.types.VidiunMetadataObjectType;
+	import com.vidiun.types.VidiunMetadataOrderBy;
+	import com.vidiun.types.VidiunMetadataProfileCreateMode;
+	import com.vidiun.utils.parsers.MetadataProfileParser;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunMetadataProfile;
+	import com.vidiun.vo.VidiunMetadataProfileFilter;
+	import com.vidiun.vo.VidiunMetadataProfileListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -47,7 +47,7 @@ package com.kaltura.kmc.modules.account.control.command {
 			
 			var delStr:String = '';
 			for each (var item:Object in _profs) {
-				delStr += '\n' + (item as KMCMetadataProfileVO).profile.name;
+				delStr += '\n' + (item as VMCMetadataProfileVO).profile.name;
 			}
 			
 			Alert.show(rm.getString('account', 'metadataSchemaDeleteAlert', [delStr]), rm.getString('account', 'metadataSchemaDeleteTitle'), Alert.YES | Alert.NO, null, deleteResponseFunc);
@@ -60,23 +60,23 @@ package com.kaltura.kmc.modules.account.control.command {
 				
 				var mr:MultiRequest = new MultiRequest();
 				
-				for each (var profile:KMCMetadataProfileVO in _profs) {
+				for each (var profile:VMCMetadataProfileVO in _profs) {
 					var deleteSchema:MetadataProfileDelete = new MetadataProfileDelete(profile.profile.id);
 					mr.addAction(deleteSchema);
 				}
 				
 				// list the latest metadata profiles (after all deletion is done)s
-				var filter:KalturaMetadataProfileFilter = new KalturaMetadataProfileFilter();
-				filter.orderBy = KalturaMetadataOrderBy.CREATED_AT_DESC;
-				filter.createModeNotEqual = KalturaMetadataProfileCreateMode.APP;
-				filter.metadataObjectTypeIn = KalturaMetadataObjectType.ENTRY + "," + KalturaMetadataObjectType.CATEGORY;
+				var filter:VidiunMetadataProfileFilter = new VidiunMetadataProfileFilter();
+				filter.orderBy = VidiunMetadataOrderBy.CREATED_AT_DESC;
+				filter.createModeNotEqual = VidiunMetadataProfileCreateMode.APP;
+				filter.metadataObjectTypeIn = VidiunMetadataObjectType.ENTRY + "," + VidiunMetadataObjectType.CATEGORY;
 				var listMetadataProfile:MetadataProfileList = new MetadataProfileList(filter, _model.metadataFilterPager);
 				mr.addAction(listMetadataProfile);
 				
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
 				
-				_model.context.kc.post(mr);
+				_model.context.vc.post(mr);
 			}
 		}
 
@@ -89,7 +89,7 @@ package com.kaltura.kmc.modules.account.control.command {
 			_model.loadingFlag = false;
 			var responseArray:Array = data.data as Array;
 			// last request is always the list request
-			var listResult:KalturaMetadataProfileListResponse = responseArray[responseArray.length - 1] as KalturaMetadataProfileListResponse;
+			var listResult:VidiunMetadataProfileListResponse = responseArray[responseArray.length - 1] as VidiunMetadataProfileListResponse;
 			_model.metadataProfilesTotalCount = listResult.totalCount;
 			_model.metadataProfilesArray = ListMetadataProfileUtil.handleListMetadataResult(listResult, _model.context);
 		}
@@ -101,7 +101,7 @@ package com.kaltura.kmc.modules.account.control.command {
 		 *
 		 */
 		public function fault(info:Object):void {
-			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 				JSGate.expired();
 				return;
 			}

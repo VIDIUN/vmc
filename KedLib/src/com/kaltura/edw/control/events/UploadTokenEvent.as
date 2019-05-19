@@ -1,11 +1,11 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.edw.vo.AssetVO;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.vo.AssetVO;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	import flash.net.FileReference;
 	
-	public class UploadTokenEvent extends KMvCEvent
+	public class UploadTokenEvent extends VMvCEvent
 	{
 		public static const UPLOAD_TOKEN:String = "uploadToken";
 		

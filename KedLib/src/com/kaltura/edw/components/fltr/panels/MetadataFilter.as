@@ -1,11 +1,11 @@
-package com.kaltura.edw.components.fltr.panels
+package com.vidiun.edw.components.fltr.panels
 {
-	import com.kaltura.edw.components.fltr.IAdvancedSearchFilterComponent;
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.vo.KalturaMetadataSearchItem;
-	import com.kaltura.vo.KalturaSearchCondition;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.vidiun.edw.components.fltr.IAdvancedSearchFilterComponent;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+	import com.vidiun.types.VidiunSearchOperatorType;
+	import com.vidiun.vo.VidiunMetadataSearchItem;
+	import com.vidiun.vo.VidiunSearchCondition;
+	import com.vidiun.vo.MetadataFieldVO;
 	
 	import flash.events.MouseEvent;
 	
@@ -15,7 +15,7 @@ package com.kaltura.edw.components.fltr.panels
 	
 	public class MetadataFilter extends AdditionalFilter implements IAdvancedSearchFilterComponent {
 		
-		private var _initialFilter:KalturaMetadataSearchItem;
+		private var _initialFilter:VidiunMetadataSearchItem;
 		
 		
 		override public function set filter(value:Object):void {
@@ -29,7 +29,7 @@ package com.kaltura.edw.components.fltr.panels
 			if (_buttons) {
 				_buttons[0].selected = false;
 				// scan the fields (filter.items)
-				for each (var field:KalturaSearchCondition in value.items) {
+				for each (var field:VidiunSearchCondition in value.items) {
 					// for each field, find a matching button and select it
 					for each (var cb:CheckBox in _buttons) {
 						if (cb.data == field.value) {
@@ -42,31 +42,31 @@ package com.kaltura.edw.components.fltr.panels
 			}
 			else {
 				// keep the value for later
-				_initialFilter = value as KalturaMetadataSearchItem;
+				_initialFilter = value as VidiunMetadataSearchItem;
 			}
 		}
 		
 		/**
-		 * filter is KalturaMetadataSearchItem whose items are KalturaSearchCondition 
+		 * filter is VidiunMetadataSearchItem whose items are VidiunSearchCondition 
 		 */
 		override public function get filter():Object {
 			if (_buttons) {
-				var fieldValueSearchCondition:KalturaSearchCondition;
-				var fieldKalturaMetadataSearchItem:KalturaMetadataSearchItem = new KalturaMetadataSearchItem();
-				fieldKalturaMetadataSearchItem.type = KalturaSearchOperatorType.SEARCH_OR;
-				fieldKalturaMetadataSearchItem.metadataProfileId = parseInt((parent as MetadataProfileFilter).id); // value set by EntriesFilter
-				fieldKalturaMetadataSearchItem.items = new Array();
+				var fieldValueSearchCondition:VidiunSearchCondition;
+				var fieldVidiunMetadataSearchItem:VidiunMetadataSearchItem = new VidiunMetadataSearchItem();
+				fieldVidiunMetadataSearchItem.type = VidiunSearchOperatorType.SEARCH_OR;
+				fieldVidiunMetadataSearchItem.metadataProfileId = parseInt((parent as MetadataProfileFilter).id); // value set by EntriesFilter
+				fieldVidiunMetadataSearchItem.items = new Array();
 				for (var i:int = 1; i < _buttons.length; i++) {
 					if (_buttons[i].selected) {
-						fieldValueSearchCondition = new KalturaSearchCondition();
+						fieldValueSearchCondition = new VidiunSearchCondition();
 						fieldValueSearchCondition.field = (data as MetadataFieldVO).xpath;
 						fieldValueSearchCondition.value = _buttons[i].data;
-						fieldKalturaMetadataSearchItem.items.push(fieldValueSearchCondition);
+						fieldVidiunMetadataSearchItem.items.push(fieldValueSearchCondition);
 					}
 				}
 				
-				if (fieldKalturaMetadataSearchItem.items.length > 0) {
-					return fieldKalturaMetadataSearchItem;
+				if (fieldVidiunMetadataSearchItem.items.length > 0) {
+					return fieldVidiunMetadataSearchItem;
 				}
 			}
 			// if no buttons or no selected buttons, return null

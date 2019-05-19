@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.admin.model {
+package com.vidiun.vmc.modules.admin.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.kmc.modules.admin.model.UsersModel;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.vmc.modules.admin.model.UsersModel;
 	
 	import flash.events.EventDispatcher;
 	
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.admin.model {
 		/**
 		 * API v3 client
 		 */
-		public var kc:KalturaClient;
+		public var vc:VidiunClient;
 		
 		/**
 		 * reference to module
@@ -124,7 +124,7 @@ package com.kaltura.kmc.modules.admin.model {
 
 
 		/**
-		 * retreives an instance of the KMCModelLocator class
+		 * retreives an instance of the VMCModelLocator class
 		 */
 		public static function getInstance():AdminModelLocator {
 			if (_modelLocator == null) {

@@ -1,4 +1,4 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
 	import flash.external.ExternalInterface;
 
@@ -9,10 +9,10 @@ package com.kaltura.edw.business
 	 * know where we need to change stuff when changing method signatures, etc.  
 	 * @author Atar
 	 */
-	public class KedJSGate {
+	public class VedJSGate {
 		
 		public static function openClipApp(entryId:String, mode:String):void {
-			ExternalInterface.call("kmc.functions.openClipApp", entryId, mode);
+			ExternalInterface.call("vmc.functions.openClipApp", entryId, mode);
 		} 
 		
 		
@@ -33,16 +33,16 @@ package com.kaltura.edw.business
 		public static function doPreviewEmbed(functionName:String, entryId:String, entryName:String, entryDescription:String, 
 											  previewOnly:Boolean, is_playlist:Boolean, uiconfId:String, live_bitrates:Array,
 											  duration:int, thumbnail:String, creationDate:int):void {
-			//			kmc.preview_embed.doPreviewEmbed(id, name, description, previewOnly, is_playlist, uiconf id, live_bitrates);
+			//			vmc.preview_embed.doPreviewEmbed(id, name, description, previewOnly, is_playlist, uiconf id, live_bitrates);
 			ExternalInterface.call(functionName, entryId, escape(entryName), escape(entryDescription), previewOnly, is_playlist, uiconfId,
 				live_bitrates, duration, thumbnail, creationDate);
 		}
 		
 		/**
-		 * ks expired 
+		 * vs expired 
 		 */
 		public static function expired():void {
-			ExternalInterface.call("kmc.functions.expired");
+			ExternalInterface.call("vmc.functions.expired");
 		}
 		
 		/**
@@ -50,7 +50,7 @@ package com.kaltura.edw.business
 		 * @param enable	if true enable, otherwise disable  
 		 */
 		public static function maskHeader(enable:Boolean):void {
-			ExternalInterface.call("kmc.utils.maskHeader", enable);
+			ExternalInterface.call("vmc.utils.maskHeader", enable);
 		}
 		
 		
@@ -60,7 +60,7 @@ package com.kaltura.edw.business
 		 * @param entryName
 		 */
 		public static function openLiveAnalyticsDrilldown(entryId:String, entryName:String):void { 
-			ExternalInterface.call("kmc.functions.openLiveAnalyticsDrilldown", entryId, entryName);
+			ExternalInterface.call("vmc.functions.openLiveAnalyticsDrilldown", entryId, entryName);
 		}
 		
 		/**

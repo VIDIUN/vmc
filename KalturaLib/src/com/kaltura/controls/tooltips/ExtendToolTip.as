@@ -1,4 +1,4 @@
-package com.kaltura.controls.tooltips
+package com.vidiun.controls.tooltips
 {
 	 import flash.display.Bitmap;
 	 import flash.events.Event;

@@ -34,7 +34,7 @@
 			<!-- List of resource bundles to compile in the resourceModule -->
 			<!-- dashboard -->
 			<include-resource-bundles>charts</include-resource-bundles>
-			<include-resource-bundles>kdashboard</include-resource-bundles>
+			<include-resource-bundles>vdashboard</include-resource-bundles>
 			<include-resource-bundles>common</include-resource-bundles>
 		
 

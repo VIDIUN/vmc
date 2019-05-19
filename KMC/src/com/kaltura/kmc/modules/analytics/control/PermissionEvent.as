@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.control
+package com.vidiun.vmc.modules.analytics.control
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	

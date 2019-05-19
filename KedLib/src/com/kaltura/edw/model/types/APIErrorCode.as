@@ -1,4 +1,4 @@
-package com.kaltura.edw.model.types {
+package com.vidiun.edw.model.types {
 
 	/**
 	 * known API errors according to December 2010 (Dragonfly +-)
@@ -20,16 +20,16 @@ package com.kaltura.edw.model.types {
 
 		//
 		/**
-		 * Missing KS, session not established
+		 * Missing VS, session not established
 		 */
-		public static const MISSING_KS:String = "MISSING_KS";
+		public static const MISSING_VS:String = "MISSING_VS";
 
 		 
 		/**
-		 * Invalid KS \"%s\", Error \"%s,%s\"
-		 * %s - the ks string, %s - error code, %s - error description 
+		 * Invalid VS \"%s\", Error \"%s,%s\"
+		 * %s - the vs string, %s - error code, %s - error description 
 		 */
-		public static const INVALID_KS:String = "INVALID_KS";
+		public static const INVALID_VS:String = "INVALID_VS";
 
 		//
 		/**

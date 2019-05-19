@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
-	public class ClipEvent extends KMvCEvent {
+	public class ClipEvent extends VMvCEvent {
 		
 		/**
 		 * get a list of clips derived from the given entry.
-		 * event.data should be {id:id of the root entry, pager:kalturaPager, orderBy: string, list order}
+		 * event.data should be {id:id of the root entry, pager:vidiunPager, orderBy: string, list order}
 		 */		
 		public static const GET_ENTRY_CLIPS:String = "GET_ENTRY_CLIPS";
 		

@@ -6,7 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaMediaType;
+			import com.vidiun.types.VidiunMediaType;
 			
 			import mx.resources.ResourceManager;
 			
@@ -23,19 +23,19 @@
 				}
 				switch(mediaType)  
 				{
-					case KalturaMediaType.VIDEO.toString():
+					case VidiunMediaType.VIDEO.toString():
 					{
 						mediaTypeImage.source = StyleManager.getStyleDeclaration(".imageBank").getStyle("videoImage");
 						mediaTypeImage.toolTip = resourceManager.getString('entrytable', 'video'); 
 						break;
 					} 
-					case KalturaMediaType.IMAGE.toString(): 
+					case VidiunMediaType.IMAGE.toString(): 
 					{
 						mediaTypeImage.source = StyleManager.getStyleDeclaration(".imageBank").getStyle("imgImage"); 
 						mediaTypeImage.toolTip = resourceManager.getString('entrytable', 'image'); 
 						break;
 					}
-					case KalturaMediaType.AUDIO.toString(): 
+					case VidiunMediaType.AUDIO.toString(): 
 					{
 						mediaTypeImage.source =StyleManager.getStyleDeclaration(".imageBank").getStyle("audioImage"); 
 						mediaTypeImage.toolTip = resourceManager.getString('entrytable', 'audio');
@@ -53,7 +53,7 @@
 						mediaTypeImage.toolTip = resourceManager.getString('entrytable', 'xml'); 
 						break;
 					}
-					case KalturaMediaType.LIVE_STREAM_FLASH.toString(): 
+					case VidiunMediaType.LIVE_STREAM_FLASH.toString(): 
 					{
 						mediaTypeImage.source = StyleManager.getStyleDeclaration(".imageBank").getStyle("docLive"); 
 						mediaTypeImage.toolTip = resourceManager.getString('entrytable', 'live'); 

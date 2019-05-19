@@ -1,6 +1,6 @@
-package com.kaltura.components
+package com.vidiun.components
 {
-	import com.kaltura.controls.TimeStepper;
+	import com.vidiun.controls.TimeStepper;
 	
 	import org.flexunit.Assert;
 	

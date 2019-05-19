@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" 
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.types.KalturaContributionPolicyType;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.types.VidiunContributionPolicyType;
 			
 			import mx.controls.Button;
 			import mx.events.FlexEvent;
@@ -25,11 +25,11 @@
 				}
 				else {
 					if (polMemBtn.selected) {
-						accessString = KalturaContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION /* + "," */;
+						accessString = VidiunContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION /* + "," */;
 					}
 						// the state of both selected is handled in the first condition
 					else if (polAllBtn.selected) {
-						accessString = KalturaContributionPolicyType.ALL /* + "," */;
+						accessString = VidiunContributionPolicyType.ALL /* + "," */;
 					}
 					//remove last , 
 					//					accessString = accessString.slice(0, accessString.length - 1);
@@ -52,11 +52,11 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION:
+							case VidiunContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION:
 								polMemBtn.selected = true;
 								break;
 							
-							case KalturaContributionPolicyType.ALL:
+							case VidiunContributionPolicyType.ALL:
 								polAllBtn.selected = true;
 								break;
 						}

@@ -2,19 +2,19 @@
 <!---
 	 graphic interface for setting advertizing configurations.
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.kaltura.kmc.modules.studio.view.wizard.*"
-		 xmlns:form="com.kaltura.kmc.modules.studio.view.form.*" xmlns:controls="com.kaltura.controls.*"
-		 xmlns:validators="com.kaltura.validators.*" width="100%" minWidth="620" horizontalScrollPolicy="off"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.vidiun.vmc.modules.studio.view.wizard.*"
+		 xmlns:form="com.vidiun.vmc.modules.studio.view.form.*" xmlns:controls="com.vidiun.controls.*"
+		 xmlns:validators="com.vidiun.validators.*" width="100%" minWidth="620" horizontalScrollPolicy="off"
 		 backgroundColor="#F7F7F7" hide="update()" show="onShow()">
 	<mx:Metadata>
 		[Event(name="detailsChanged", type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdSourceVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-			import com.kaltura.utils.KUtils;
+			import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
+			import com.vidiun.vmc.modules.studio.vo.ads.AdSourceVo;
+			import com.vidiun.vmc.modules.studio.vo.ads.AdvertizingVo;
+			import com.vidiun.utils.VUtils;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.ComboBox;
@@ -642,7 +642,7 @@
 				<mx:Label text="{resourceManager.getString('advertising', 'adsrc')}:" width="{LABEL_WIDTH}"/>
 				<mx:ComboBox id="adsourceCB" change="adsourceCB_changeHandler(event)" width="{VALUE_WIDTH}"/>
 			</mx:HBox>
-			<form:DisablableBox id="customswfView" direction="vertical" enabled="{KUtils.logicalAnd(adsourceCB.selectedItem.id != VAST, _editable)}"
+			<form:DisablableBox id="customswfView" direction="vertical" enabled="{VUtils.logicalAnd(adsourceCB.selectedItem.id != VAST, _editable)}"
 								width="100%">
 				<mx:HBox>
 					<mx:Label text="{resourceManager.getString('advertising', 'swfurl')}:" width="{LABEL_WIDTH}"/>
@@ -663,7 +663,7 @@
 			<mx:Spacer height="10"/>
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<!-- - - - - - - - - - - - - - - player config - - - - - - - - - - - - - - - -->
-			<form:DisablableBox id="playerConfigBox" direction="vertical" enabled="{KUtils.logicalAnd((adsourceCB.selectedItem.id == VAST), _editable)}" width="100%">
+			<form:DisablableBox id="playerConfigBox" direction="vertical" enabled="{VUtils.logicalAnd((adsourceCB.selectedItem.id == VAST), _editable)}" width="100%">
 				<mx:Label text="{resourceManager.getString('advertising', 'playerConfig')}" styleName="pageTitle"/>
 				<form:YesNoQuestion id="ynCuePoints" labelWidth="{LABEL_WIDTH}" change="notifyChange()"
 									yesLabel="{resourceManager.getString('advertising', 'yes')}" 

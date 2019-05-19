@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.vidiun.vmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryDelete;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CatTrackEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.analytics.GoogleAnalyticsConsts;
+	import com.vidiun.analytics.GoogleAnalyticsTracker;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.category.CategoryDelete;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CatTrackEvent;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.model.CategoriesModel;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class DeleteCategoriesCommand extends KalturaCommand {
+	public class DeleteCategoriesCommand extends VidiunCommand {
 
 		private var _ids:Array;
 
@@ -38,12 +38,12 @@ package com.kaltura.kmc.modules.content.commands.cat {
 			}
 			if (!_ids) {	// handling bulk, get from model
 				_ids = [];
-				for each (var kCat:KalturaCategory in _model.categoriesModel.selectedCategories) {
-					_ids.push(kCat.id);
-					if (!hasEditWarn && kCat.tags && kCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
+				for each (var vCat:VidiunCategory in _model.categoriesModel.selectedCategories) {
+					_ids.push(vCat.id);
+					if (!hasEditWarn && vCat.tags && vCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
 						hasEditWarn = true;
 					}
-					if (!hasSubCats && kCat.directSubCategoriesCount > 0) {
+					if (!hasSubCats && vCat.directSubCategoriesCount > 0) {
 						hasSubCats = true;
 					}
 				}
@@ -130,8 +130,8 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		
 		private function deleteGroup():void {
 			var mr:MultiRequest = new MultiRequest();
-			mr.addEventListener(KalturaEvent.COMPLETE, deleteGroupResult);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, deleteGroupResult);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 			mr.queued = false;
 			
 			// get number of categories in group
@@ -144,11 +144,11 @@ package com.kaltura.kmc.modules.content.commands.cat {
 				mr.addAction(deleteCategory);
 			}
 			_model.increaseLoadCounter();
-			_model.context.kc.post(mr);
+			_model.context.vc.post(mr);
 		}
 		
 		
-		private function deleteGroupResult(data:KalturaEvent):void {
+		private function deleteGroupResult(data:VidiunEvent):void {
 			super.result(data);
 			_model.decreaseLoadCounter();
 			

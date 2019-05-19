@@ -1,4 +1,4 @@
-package com.kaltura.controls.tooltips
+package com.vidiun.controls.tooltips
 {
 	import mx.controls.ToolTip;
 
@@ -7,12 +7,12 @@ package com.kaltura.controls.tooltips
 	 * This class enforce a specific CSS class for the tooltip. It is made
 	 * to seperate tooltips between one flex application loading a new flex applicatio.
 	 */
-	public class KalturaTooltip extends ToolTip
+	public class VidiunTooltip extends ToolTip
 	{
-		public function KalturaTooltip()
+		public function VidiunTooltip()
 		{
 			super();
-			styleName = "KalturaTooltip";
+			styleName = "VidiunTooltip";
 		}
 		
 	}

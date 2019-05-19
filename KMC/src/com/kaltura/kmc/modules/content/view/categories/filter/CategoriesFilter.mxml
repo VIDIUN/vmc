@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.kaltura.edw.components.fltr.*" 
-				 xmlns:cat="com.kaltura.edw.components.fltr.cat.*" xmlns:panels="com.kaltura.edw.components.fltr.panels.*" 
-				 xmlns:filter="com.kaltura.kmc.modules.content.view.categories.filter.*">
+<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.vidiun.edw.components.fltr.*" 
+				 xmlns:cat="com.vidiun.edw.components.fltr.cat.*" xmlns:panels="com.vidiun.edw.components.fltr.panels.*" 
+				 xmlns:filter="com.vidiun.vmc.modules.content.view.categories.filter.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.base.types.MetadataCustomFieldTypes;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.components.fltr.panels.MetadataProfileFilter;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.types.KalturaSearchOperatorType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaFilter;
-			import com.kaltura.vo.KalturaMetadataSearchItem;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.base.types.MetadataCustomFieldTypes;
+			import com.vidiun.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.vidiun.edw.components.fltr.panels.MetadataProfileFilter;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.types.VidiunSearchOperatorType;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.VidiunFilter;
+			import com.vidiun.vo.VidiunMetadataSearchItem;
+			import com.vidiun.vo.MetadataFieldVO;
 			
 			import mx.collections.ArrayCollection;
 			
@@ -27,7 +27,7 @@
 			
 			
 			/**
-			 * reset kalturaFilter so any values that apply 
+			 * reset vidiunFilter so any values that apply 
 			 * to the accordion components will be set
 			 * */
 			private function setFilterValues():void {
@@ -58,14 +58,14 @@
 				
 				
 				// build panels
-				var profileVo:KMCMetadataProfileVO;
+				var profileVo:VMCMetadataProfileVO;
 				var metadataTab:MetadataProfileFilter;
 				var field:MetadataFieldVO;
 				var hasSearchableFields:Boolean;
 				var hasSearchableListFields:Boolean;
 				
 				for (i = _metadataProfiles.length-1; i>=0; i--) {
-					profileVo = _metadataProfiles.getItemAt(i) as KMCMetadataProfileVO;
+					profileVo = _metadataProfiles.getItemAt(i) as VMCMetadataProfileVO;
 					if (profileVo.metadataFieldVOArray && profileVo.metadataFieldVOArray.length) {
 						// look for searchable fields of type list:
 						hasSearchableFields = false;						
@@ -91,8 +91,8 @@
 						}
 						else if (hasSearchableFields) {
 							// add item to advanced search
-							var profileSearchItem:KalturaMetadataSearchItem = new KalturaMetadataSearchItem();
-							profileSearchItem.type = KalturaSearchOperatorType.SEARCH_AND;
+							var profileSearchItem:VidiunMetadataSearchItem = new VidiunMetadataSearchItem();
+							profileSearchItem.type = VidiunSearchOperatorType.SEARCH_AND;
 							profileSearchItem.metadataProfileId = profileVo.profile.id;
 							handelAdvancedSearchComponent(profileSearchItem, profileVo.profile.id.toString());
 						}
@@ -101,7 +101,7 @@
 			}
 			
 			
-			override public function set kalturaFilter(value:KalturaFilter):void {
+			override public function set vidiunFilter(value:VidiunFilter):void {
 				// fix the attribute for categoriesTree if needed, then call super()
 				if (catTree.selectionMode == CatTreeSelectionMode.MULTIPLE_SELECT_PLUS) {
 					if (value[catTree.exactAttribute]) {
@@ -115,7 +115,7 @@
 						value[catTree.plusAttribute] = null;
 					}
 				}
-				super.kalturaFilter = value;
+				super.vidiunFilter = value;
 			}
 			
 		]]>
@@ -132,7 +132,7 @@
 								exactAttribute="parentIdIn" plusAttribute="ancestorIdIn"
 								selectionMode="{CatTreeSelectionMode.MULTIPLE_SELECT_EXACT}" valueChange="updateFilterValue(event)"
 								dataProvider="{filterModel.categoriesForCats}" categories="{filterModel.categoriesMapForCats}"
-								chunkedData="{filterModel.chunkedCategoriesLoad}" kClient="{context.kc}"
+								chunkedData="{filterModel.chunkedCategoriesLoad}" vClient="{context.vc}"
 								prefsButton="{prefs}" prefsIdentifier="categories"/>
 			<mx:Button id="prefs" right="7" y="0" styleName="catTreePrefs"/>
 		</mx:Canvas>

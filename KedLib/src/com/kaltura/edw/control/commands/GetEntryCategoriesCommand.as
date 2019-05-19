@@ -1,42 +1,42 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.categoryEntry.CategoryEntryList;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaCategoryEntry;
-	import com.kaltura.vo.KalturaCategoryEntryFilter;
-	import com.kaltura.vo.KalturaCategoryEntryListResponse;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.commands.categoryEntry.CategoryEntryList;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunCategoryEntry;
+	import com.vidiun.vo.VidiunCategoryEntryFilter;
+	import com.vidiun.vo.VidiunCategoryEntryListResponse;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
-	public class GetEntryCategoriesCommand extends KedCommand {
+	public class GetEntryCategoriesCommand extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
 			switch (event.type) {
-				case KedEntryEvent.RESET_ENTRY_CATEGORIES:
+				case VedEntryEvent.RESET_ENTRY_CATEGORIES:
 					edp.entryCategories = new ArrayCollection();
 					break;
-				case KedEntryEvent.GET_ENTRY_CATEGORIES:
+				case VedEntryEvent.GET_ENTRY_CATEGORIES:
 					_model.increaseLoadCounter();
 					
-					// get a list of KalturaCategoryEntries
-					var e:KedEntryEvent = event as KedEntryEvent;
+					// get a list of VidiunCategoryEntries
+					var e:VedEntryEvent = event as VedEntryEvent;
 					
-					var f:KalturaCategoryEntryFilter = new KalturaCategoryEntryFilter();
+					var f:VidiunCategoryEntryFilter = new VidiunCategoryEntryFilter();
 					f.entryIdEqual = e.entryVo.id;
-					var p:KalturaFilterPager = new KalturaFilterPager();
+					var p:VidiunFilterPager = new VidiunFilterPager();
 					p.pageSize = edp.maxNumCategories;
 					var getcats:CategoryEntryList = new CategoryEntryList(f, p);
 					
-					getcats.addEventListener(KalturaEvent.COMPLETE, result);
-					getcats.addEventListener(KalturaEvent.FAILED, fault);
+					getcats.addEventListener(VidiunEvent.COMPLETE, result);
+					getcats.addEventListener(VidiunEvent.FAILED, fault);
 					
 					_client.post(getcats);
 					break;
@@ -47,33 +47,33 @@ package com.kaltura.edw.control.commands
 		override public function result(data:Object):void {
 			super.result(data);
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-			if (data.data is KalturaCategoryEntryListResponse) {
-				// get a list of KalturaCategories
-				var kce:KalturaCategoryEntry;
+			if (data.data is VidiunCategoryEntryListResponse) {
+				// get a list of VidiunCategories
+				var vce:VidiunCategoryEntry;
 				var str:String = '';
-				var kces:Array = data.data.objects;
-				if (!kces || !kces.length) {
+				var vces:Array = data.data.objects;
+				if (!vces || !vces.length) {
 					_model.decreaseLoadCounter();
 					return;
 				}
 				
-				for each (kce in kces) {
-					str += kce.categoryId + ",";
+				for each (vce in vces) {
+					str += vce.categoryId + ",";
 				}
-				var f:KalturaCategoryFilter = new KalturaCategoryFilter();
+				var f:VidiunCategoryFilter = new VidiunCategoryFilter();
 				f.idIn = str;
-				var p:KalturaFilterPager = new KalturaFilterPager();
+				var p:VidiunFilterPager = new VidiunFilterPager();
 				p.pageSize = edp.maxNumCategories;
 				var getcats:CategoryList = new CategoryList(f, p);
 				
-				getcats.addEventListener(KalturaEvent.COMPLETE, result);
-				getcats.addEventListener(KalturaEvent.FAILED, fault);
+				getcats.addEventListener(VidiunEvent.COMPLETE, result);
+				getcats.addEventListener(VidiunEvent.FAILED, fault);
 				
 				_client.post(getcats);
 			}
-			else if (data.data is KalturaCategoryListResponse) {
-				// put the KalturaCategories on the model
-				edp.entryCategories = new ArrayCollection((data.data as KalturaCategoryListResponse).objects);
+			else if (data.data is VidiunCategoryListResponse) {
+				// put the VidiunCategories on the model
+				edp.entryCategories = new ArrayCollection((data.data as VidiunCategoryListResponse).objects);
 				_model.decreaseLoadCounter();
 			}
 		}

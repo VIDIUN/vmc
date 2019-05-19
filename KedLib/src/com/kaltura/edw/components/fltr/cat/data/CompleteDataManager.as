@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.fltr.cat.data {
-	import com.kaltura.edw.components.fltr.cat.events.CategoriesDataManagerEvent;
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.control.events.CategoriesTreeEvent;
-	import com.kaltura.edw.vo.CategoryVO;
+package com.vidiun.edw.components.fltr.cat.data {
+	import com.vidiun.edw.components.fltr.cat.events.CategoriesDataManagerEvent;
+	import com.vidiun.edw.control.CategoriesTreeController;
+	import com.vidiun.edw.control.events.CategoriesTreeEvent;
+	import com.vidiun.edw.vo.CategoryVO;
 
 	import flash.events.EventDispatcher;
 

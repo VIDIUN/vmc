@@ -1,41 +1,41 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaCategoryUser;
+	import com.vidiun.vo.VidiunCategoryUser;
 
 	public class CategoryUserEvent extends CairngormEvent {
 		
 		
 		/**
 		 * save selected category users on model
-		 * event.data is ([KalturaCategoryUser])
+		 * event.data is ([VidiunCategoryUser])
 		 */
 		public static const SET_SELECTED_CATEGORY_USERS:String = 'cnt_setSelectedCategoryUsers';
 		
 		/**
-		 * event.data is [desired perm lvl, [KalturaCategoryUser]]
+		 * event.data is [desired perm lvl, [VidiunCategoryUser]]
 		 */
 		public static const SET_CATEGORY_USERS_PERMISSION_LEVEL:String = 'cnt_editCategoryUsersPermissionLevel';
 		
 		/**
-		 * event.data is [KalturaCategoryUser] 
+		 * event.data is [VidiunCategoryUser] 
 		 */
 		public static const SET_CATEGORY_USERS_MANUAL_UPDATE:String = 'cnt_setCategoryUsersManualUpdate';
 		
 		/**
-		 * event.data is [KalturaCategoryUser] 
+		 * event.data is [VidiunCategoryUser] 
 		 */
 		public static const SET_CATEGORY_USERS_AUTO_UPDATE:String = 'cnt_setCategoryUsersAutoUpdate';
 		
 		/**
 		 * add users to the current selected category
-		 * event.data is [categoryid, permission level, update method, ([KalturaUsers])]
+		 * event.data is [categoryid, permission level, update method, ([VidiunUsers])]
 		 */
 		public static const ADD_CATEGORY_USERS : String = "content_addCategoryUsers";
 		
 		/**
 		 * delete category users.
-		 * event.data is [KalturaCategoryUser] 
+		 * event.data is [VidiunCategoryUser] 
 		 */
 		public static const DELETE_CATEGORY_USERS:String = 'cnt_deleteCategoryUsers';
 		
@@ -47,13 +47,13 @@ package com.kaltura.kmc.modules.content.events
 		
 		/**
 		 * deactivate category users.
-		 * event.data is [KalturaCategoryUser] 
+		 * event.data is [VidiunCategoryUser] 
 		 */
 		public static const DEACTIVATE_CATEGORY_USER:String = 'cnt_deactivateCategoryUser';
 		
 		/**
 		 * activate category users.
-		 * event.data is [KalturaCategoryUser] 
+		 * event.data is [VidiunCategoryUser] 
 		 */
 		public static const ACTIVATE_CATEGORY_USER:String = 'cnt_activateCategoryUser';
 		

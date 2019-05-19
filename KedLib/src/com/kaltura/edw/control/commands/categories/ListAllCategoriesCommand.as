@@ -1,21 +1,21 @@
-package com.kaltura.edw.control.commands.categories
+package com.vidiun.edw.control.commands.categories
 {
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunCategoryOrderBy;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 
-	public class ListAllCategoriesCommand extends KedCommand {
+	public class ListAllCategoriesCommand extends VedCommand {
 		
 		private var _source:*;
 		
@@ -23,18 +23,18 @@ package com.kaltura.edw.control.commands.categories
 		
 		private var _filterModel:FilterModel;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			
 			_source = event.source;
 			_onComplete = event.onComplete;
 			
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
-			f.orderBy = KalturaCategoryOrderBy.NAME_ASC;
+			var f:VidiunCategoryFilter = new VidiunCategoryFilter();
+			f.orderBy = VidiunCategoryOrderBy.NAME_ASC;
 			var listCategories:CategoryList = new CategoryList(f);
 			// listeners
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
+			listCategories.addEventListener(VidiunEvent.COMPLETE, result);
+			listCategories.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(listCategories);
 		}
@@ -43,24 +43,24 @@ package com.kaltura.edw.control.commands.categories
 			super.result(data);
 			_filterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			// set root level categories to the model
-			_filterModel.categoriesForEntries = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
+			_filterModel.categoriesForEntries = buildCategoriesHyrarchy((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
 			// set root level categories to the model
-			_filterModel.categoriesForMod = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForMod);
+			_filterModel.categoriesForMod = buildCategoriesHyrarchy((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForMod);
 			// set root level categories to the model
-			_filterModel.categoriesForCats = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForCats);
+			_filterModel.categoriesForCats = buildCategoriesHyrarchy((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForCats);
 			// set root level categories to the model
-			_filterModel.categoriesGeneral = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
+			_filterModel.categoriesGeneral = buildCategoriesHyrarchy((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
 			_model.decreaseLoadCounter();
 		}
 		
-		private function buildCategoriesHyrarchy(kCats:Array, catMap:HashMap):ArrayCollection {
+		private function buildCategoriesHyrarchy(vCats:Array, catMap:HashMap):ArrayCollection {
 			var allCategories:ArrayCollection = new ArrayCollection();	// all categories, so we can scan them easily
 			var rootLevel:ArrayCollection = new ArrayCollection();	// categories in the root level
 			var category:CategoryVO;
 			// create category VOs and add to hashmap
-			for each (var kCat:KalturaCategory in kCats) {
-				category = new CategoryVO(kCat.id, kCat.name, kCat);
-				catMap.put(kCat.id + '', category);
+			for each (var vCat:VidiunCategory in vCats) {
+				category = new CategoryVO(vCat.id, vCat.name, vCat);
+				catMap.put(vCat.id + '', category);
 				allCategories.addItem(category)
 			}
 			

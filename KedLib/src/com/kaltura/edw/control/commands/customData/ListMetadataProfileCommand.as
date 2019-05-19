@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.customData {
-	import com.kaltura.commands.metadataProfile.MetadataProfileList;
-	import com.kaltura.edw.business.EntryFormBuilder;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.types.KalturaMetadataOrderBy;
-	import com.kaltura.types.KalturaMetadataProfileCreateMode;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaMetadataProfile;
-	import com.kaltura.vo.KalturaMetadataProfileFilter;
-	import com.kaltura.vo.KalturaMetadataProfileListResponse;
-	import com.kaltura.vo.MetadataFieldVO;
+package com.vidiun.edw.control.commands.customData {
+	import com.vidiun.commands.metadataProfile.MetadataProfileList;
+	import com.vidiun.edw.business.EntryFormBuilder;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunMetadataObjectType;
+	import com.vidiun.types.VidiunMetadataOrderBy;
+	import com.vidiun.types.VidiunMetadataProfileCreateMode;
+	import com.vidiun.utils.parsers.MetadataProfileParser;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunMetadataProfile;
+	import com.vidiun.vo.VidiunMetadataProfileFilter;
+	import com.vidiun.vo.VidiunMetadataProfileListResponse;
+	import com.vidiun.vo.MetadataFieldVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -28,12 +28,12 @@ package com.kaltura.edw.control.commands.customData {
 	 * @author Michal
 	 *
 	 */
-	public class ListMetadataProfileCommand extends KedCommand {
+	public class ListMetadataProfileCommand extends VedCommand {
 
 		/**
 		 * only if a metadata profile view contains layout with this name it will be used
 		 */
-		public static const KMC_LAYOUT_NAME:String = "KMC";
+		public static const VMC_LAYOUT_NAME:String = "VMC";
 
 
 		/**
@@ -41,15 +41,15 @@ package com.kaltura.edw.control.commands.customData {
 		 * @param event the event that triggered this command
 		 *
 		 */
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var filter:KalturaMetadataProfileFilter = new KalturaMetadataProfileFilter();
-			filter.orderBy = KalturaMetadataOrderBy.CREATED_AT_DESC;
-			filter.createModeNotEqual = KalturaMetadataProfileCreateMode.APP;
-			filter.metadataObjectTypeEqual = KalturaMetadataObjectType.ENTRY;
+			var filter:VidiunMetadataProfileFilter = new VidiunMetadataProfileFilter();
+			filter.orderBy = VidiunMetadataOrderBy.CREATED_AT_DESC;
+			filter.createModeNotEqual = VidiunMetadataProfileCreateMode.APP;
+			filter.metadataObjectTypeEqual = VidiunMetadataObjectType.ENTRY;
 			var listMetadataProfile:MetadataProfileList = new MetadataProfileList(filter);
-			listMetadataProfile.addEventListener(KalturaEvent.COMPLETE, result);
-			listMetadataProfile.addEventListener(KalturaEvent.FAILED, fault);
+			listMetadataProfile.addEventListener(VidiunEvent.COMPLETE, result);
+			listMetadataProfile.addEventListener(VidiunEvent.FAILED, fault);
 
 			_client.post(listMetadataProfile);
 		}
@@ -65,7 +65,7 @@ package com.kaltura.edw.control.commands.customData {
 			_model.decreaseLoadCounter();
 
 			if (data.error) {
-				var er:KalturaError = data.error as KalturaError;
+				var er:VidiunError = data.error as VidiunError;
 				if (er) {
 					// ignore service forbidden
 					if (er.errorCode != APIErrorCode.SERVICE_FORBIDDEN) {
@@ -74,14 +74,14 @@ package com.kaltura.edw.control.commands.customData {
 				}
 			}
 			else {
-				var response:KalturaMetadataProfileListResponse = data.data as KalturaMetadataProfileListResponse;
+				var response:VidiunMetadataProfileListResponse = data.data as VidiunMetadataProfileListResponse;
 				var metadataProfiles:Array = new Array();
 				var formBuilders:Array = new Array();
 				if (response.objects) {
 					for (var i:int = 0; i < response.objects.length; i++) {
-						var recievedProfile:KalturaMetadataProfile = response.objects[i];
+						var recievedProfile:VidiunMetadataProfile = response.objects[i];
 						if (recievedProfile) {
-							var metadataProfile:KMCMetadataProfileVO = new KMCMetadataProfileVO();
+							var metadataProfile:VMCMetadataProfileVO = new VMCMetadataProfileVO();
 							metadataProfile.profile = recievedProfile;
 							metadataProfile.xsd = new XML(recievedProfile.xsd);
 							metadataProfile.metadataFieldVOArray = MetadataProfileParser.fromXSDtoArray(metadataProfile.xsd);
@@ -113,7 +113,7 @@ package com.kaltura.edw.control.commands.customData {
 									continue;
 								}
 								for each (var layout:XML in recievedView.children()) {
-									if (layout.@id == ListMetadataProfileCommand.KMC_LAYOUT_NAME) {
+									if (layout.@id == ListMetadataProfileCommand.VMC_LAYOUT_NAME) {
 										metadataProfile.viewXML = layout;
 										isViewExist = true;
 										continue;
@@ -121,7 +121,7 @@ package com.kaltura.edw.control.commands.customData {
 								}
 							}
 							if (!isViewExist) {
-								//if no view was retruned, or no view with "KMC" name, we will set the default metadata view uiconf XML
+								//if no view was retruned, or no view with "VMC" name, we will set the default metadata view uiconf XML
 								if (CustomDataDataPack.metadataDefaultUiconfXML){
 									metadataProfile.viewXML = CustomDataDataPack.metadataDefaultUiconfXML.copy();
 								}

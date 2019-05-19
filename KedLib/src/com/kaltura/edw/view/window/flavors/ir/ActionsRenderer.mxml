@@ -3,7 +3,7 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.window.flavors.FilesTable;
+			import com.vidiun.edw.view.window.flavors.FilesTable;
 			
 			import mx.resources.ResourceManager;
 			protected function linkbutton1_clickHandler(event:MouseEvent):void

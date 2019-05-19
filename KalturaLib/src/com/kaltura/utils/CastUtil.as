@@ -1,4 +1,4 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	/**
 	 * This class will be a casting util for all classes.  

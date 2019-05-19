@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryEntry.CategoryEntryAdd;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryEntry;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.categoryEntry.CategoryEntryAdd;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class AddCategoriesEntriesCommand extends KalturaCommand {
+	public class AddCategoriesEntriesCommand extends VidiunCommand {
 		
 		
 		private var _eventType:String;
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.content.commands
 			_eventType = event.type;
 			
 			var e:EntriesEvent = event as EntriesEvent;
-			_categories = e.data as Array; // elements are KalturaCategories
+			_categories = e.data as Array; // elements are VidiunCategories
 			// for each entry, add the category.
 			if (event.type == EntriesEvent.ADD_ON_THE_FLY_CATEGORY) {
 				_entries = _model.categoriesModel.onTheFlyCategoryEntries;
@@ -41,24 +41,24 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			var cea:CategoryEntryAdd;
-			var kce:KalturaCategoryEntry;
+			var vce:VidiunCategoryEntry;
 			var mr:MultiRequest = new MultiRequest();
 			_catents = new Array();
-			for each (var kbe:KalturaBaseEntry in _entries) {
-				for each (var kc:KalturaCategory in _categories) {
-					kce = new KalturaCategoryEntry();
-					kce.entryId = kbe.id;
-					kce.categoryId = kc.id;
-					cea = new CategoryEntryAdd(kce);
+			for each (var vbe:VidiunBaseEntry in _entries) {
+				for each (var vc:VidiunCategory in _categories) {
+					vce = new VidiunCategoryEntry();
+					vce.entryId = vbe.id;
+					vce.categoryId = vc.id;
+					cea = new CategoryEntryAdd(vce);
 					mr.addAction(cea);
-					_catents.push({entry:kbe, category:kc});
+					_catents.push({entry:vbe, category:vc});
 				}
 			}
 			
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);
 			
 		}
 		
@@ -86,7 +86,7 @@ package com.kaltura.kmc.modules.content.commands
 			// look for error
 			var str:String = '';
 			var o:Object;
-			var er:KalturaError = (resultData as KalturaEvent).error;
+			var er:VidiunError = (resultData as VidiunEvent).error;
 			if (er) {
 				str = getMessageFromError(er.errorCode, er.errorMsg);
 				Alert.show(str, header);

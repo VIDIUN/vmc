@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.BaseFlexVo;
+	import com.vidiun.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaUserEntry extends BaseFlexVo
+	public dynamic class VidiunUserEntry extends BaseFlexVo
 	{
 		/**
 		* unique auto-generated identifier
@@ -50,7 +50,7 @@ package com.kaltura.vo
 		public var partnerId : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryStatus
+		* @see com.vidiun.types.VidiunUserEntryStatus
 		**/
 		public var status : String = null;
 
@@ -63,12 +63,12 @@ package com.kaltura.vo
 		public var updatedAt : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryType
+		* @see com.vidiun.types.VidiunUserEntryType
 		**/
 		public var type : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryExtendedStatus
+		* @see com.vidiun.types.VidiunUserEntryExtendedStatus
 		**/
 		public var extendedStatus : String = null;
 

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaRelatedFilter;
+	import com.vidiun.vo.VidiunRelatedFilter;
 
 	[Bindable]
-	public dynamic class KalturaCuePointBaseFilter extends KalturaRelatedFilter
+	public dynamic class VidiunCuePointBaseFilter extends VidiunRelatedFilter
 	{
 		/**
 		**/
@@ -41,7 +41,7 @@ package com.kaltura.vo
 		public var idIn : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaCuePointType
+		* @see com.vidiun.types.VidiunCuePointType
 		**/
 		public var cuePointTypeEqual : String = null;
 
@@ -50,7 +50,7 @@ package com.kaltura.vo
 		public var cuePointTypeIn : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaCuePointStatus
+		* @see com.vidiun.types.VidiunCuePointStatus
 		**/
 		public var statusEqual : int = int.MIN_VALUE;
 
@@ -135,7 +135,7 @@ package com.kaltura.vo
 		public var partnerSortValueLessThanOrEqual : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaNullableBoolean
+		* @see com.vidiun.types.VidiunNullableBoolean
 		**/
 		public var forceStopEqual : int = int.MIN_VALUE;
 

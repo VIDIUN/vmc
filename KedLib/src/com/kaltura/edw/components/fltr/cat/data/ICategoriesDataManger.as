@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.fltr.cat.data
+package com.vidiun.edw.components.fltr.cat.data
 {
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.vo.CategoryVO;
+	import com.vidiun.edw.control.CategoriesTreeController;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.vo.CategoryVO;
 	
 	import flash.events.IEventDispatcher;
 	

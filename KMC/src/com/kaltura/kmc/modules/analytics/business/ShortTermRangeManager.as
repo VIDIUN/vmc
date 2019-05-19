@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.analytics.business {
-	import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+package com.vidiun.vmc.modules.analytics.business {
+	import com.vidiun.vmc.modules.analytics.utils.TimeConsts;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
 	
 	import mx.controls.ComboBox;
 	import mx.events.ListEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	import mx.utils.ArrayUtil;
-	import com.kaltura.edw.vo.LocalizedVo;
+	import com.vidiun.edw.vo.LocalizedVo;
 
 	/**
 	 * dates range manager for the short term: day to year.

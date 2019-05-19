@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*" 
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*" 
 							title="{resourceManager.getString('cms','setPermissionLevel')}"
 							layout="vertical" width="400" height="300"
 							showCloseButton="true" close="closeHandler(event)"
@@ -7,11 +7,11 @@
 							creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-			import com.kaltura.types.KalturaCategoryUserPermissionLevel;
-			import com.kaltura.vo.KalturaCategoryUser;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+			import com.vidiun.types.VidiunCategoryUserPermissionLevel;
+			import com.vidiun.vo.VidiunCategoryUser;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
@@ -26,15 +26,15 @@
 
 			private function creationCompleteHandler(event:FlexEvent):void {
 				var lvls:Array = [
-					{label:resourceManager.getString('cms', 'member'), data:KalturaCategoryUserPermissionLevel.MEMBER},
-					{label:resourceManager.getString('cms', 'contributor'), data:KalturaCategoryUserPermissionLevel.CONTRIBUTOR},
-					{label:resourceManager.getString('cms', 'moderator'), data:KalturaCategoryUserPermissionLevel.MODERATOR},
-					{label:resourceManager.getString('cms', 'manager'), data:KalturaCategoryUserPermissionLevel.MANAGER}
+					{label:resourceManager.getString('cms', 'member'), data:VidiunCategoryUserPermissionLevel.MEMBER},
+					{label:resourceManager.getString('cms', 'contributor'), data:VidiunCategoryUserPermissionLevel.CONTRIBUTOR},
+					{label:resourceManager.getString('cms', 'moderator'), data:VidiunCategoryUserPermissionLevel.MODERATOR},
+					{label:resourceManager.getString('cms', 'manager'), data:VidiunCategoryUserPermissionLevel.MANAGER}
 				];
 				box.dataProvider = lvls;
 				if (users && users.length == 1) {
 					for each(var o:Object in lvls){
-						if (o.data == (users[0] as KalturaCategoryUser).permissionLevel) {
+						if (o.data == (users[0] as VidiunCategoryUser).permissionLevel) {
 							box.selectedItem = o;
 							break;
 						}
@@ -58,7 +58,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_bulk_cat_user_permission', true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_bulk_cat_user_permission', true));
 			}
 
 		]]>

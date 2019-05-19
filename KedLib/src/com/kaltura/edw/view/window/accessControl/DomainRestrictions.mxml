@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" styleName="acpPopUpSectionBox"
-		 implements="com.kaltura.edw.view.window.accessControl.IRestrictionsPanel">
+		 implements="com.vidiun.edw.view.window.accessControl.IRestrictionsPanel">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaSiteRestrictionType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KalturaAccessControl;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaSiteRestriction;
-			import com.kaltura.windows.popUpWindows.AddNewDomainPopUpWindow;
+			import com.vidiun.types.VidiunSiteRestrictionType;
+			import com.vidiun.utils.VArrayUtil;
+			import com.vidiun.vo.VidiunAccessControl;
+			import com.vidiun.vo.VidiunBaseRestriction;
+			import com.vidiun.vo.VidiunSiteRestriction;
+			import com.vidiun.windows.popUpWindows.AddNewDomainPopUpWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -19,7 +19,7 @@
 			/**
 			 * the access control object being edited
 			 * */
-			public var profile:KalturaAccessControl;
+			public var profile:VidiunAccessControl;
 
 			[Bindable]
 			/**
@@ -43,11 +43,11 @@
 			
 			public function setRestrictions():void {
 				var restrictionFound:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in profile.restrictions) {
-					if (restriction is KalturaSiteRestriction) {
+				for each (var restriction:VidiunBaseRestriction in profile.restrictions) {
+					if (restriction is VidiunSiteRestriction) {
 						restrictionFound = true;
 						var arr:ArrayCollection;
-						if ((restriction as KalturaSiteRestriction).siteRestrictionType == KalturaSiteRestrictionType.ALLOW_SITE_LIST) {
+						if ((restriction as VidiunSiteRestriction).siteRestrictionType == VidiunSiteRestrictionType.ALLOW_SITE_LIST) {
 							approvedSitesRadioBtn.selected = true;
 							arr = allowedSitesArr;
 						}
@@ -56,7 +56,7 @@
 							arr = notAllowedSitesArr;
 						}
 						
-						setSitesFromString(arr, (restriction as KalturaSiteRestriction).siteList);
+						setSitesFromString(arr, (restriction as VidiunSiteRestriction).siteList);
 						break;
 					}
 				}
@@ -67,8 +67,8 @@
 			
 			public function updateRestrictions():void {
 				if (anySiteRaddioBtn.selected != true) {
-					var siteRestriction:KalturaSiteRestriction = new KalturaSiteRestriction();
-					siteRestriction.siteRestrictionType = approvedSitesRadioBtn.selected ? KalturaSiteRestrictionType.ALLOW_SITE_LIST : KalturaSiteRestrictionType.RESTRICT_SITE_LIST;
+					var siteRestriction:VidiunSiteRestriction = new VidiunSiteRestriction();
+					siteRestriction.siteRestrictionType = approvedSitesRadioBtn.selected ? VidiunSiteRestrictionType.ALLOW_SITE_LIST : VidiunSiteRestrictionType.RESTRICT_SITE_LIST;
 					
 					var list:List = (approvedSitesRadioBtn.selected == true) ? approvedDomainsList : notApprovedDomainsList;
 					siteRestriction.siteList = getSitesList(list.dataProvider as ArrayCollection);
@@ -134,7 +134,7 @@
 			private function alertHandler(event:CloseEvent):void {
 				if (event.detail == Alert.YES) {
 					for each (var domain:String in _selectedList.selectedItems) {
-						KArrayUtil.removeItemFromArray(domain, _selectedList.dataProvider.source);
+						VArrayUtil.removeItemFromArray(domain, _selectedList.dataProvider.source);
 					}
 					_selectedList.dataProvider.refresh();
 				}

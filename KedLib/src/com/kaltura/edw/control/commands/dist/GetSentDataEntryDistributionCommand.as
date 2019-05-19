@@ -1,19 +1,19 @@
-package com.kaltura.edw.control.commands.dist
+package com.vidiun.edw.control.commands.dist
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.EntryDistributionEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunEntryDistribution;
 	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
-	public class GetSentDataEntryDistributionCommand extends KedCommand
+	public class GetSentDataEntryDistributionCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
-			var entryDis:KalturaEntryDistribution = (event as EntryDistributionEvent).entryDistribution;
+		override public function execute(event:VMvCEvent):void {
+			var entryDis:VidiunEntryDistribution = (event as EntryDistributionEvent).entryDistribution;
 			var stringURL:String = _client.protocol + _client.domain + '/api_v3/index.php/service/contentDistribution_entryDistribution/action/serveSentData/actionType/1/id/' +
-				entryDis.id + '/ks/' + _client.ks;
+				entryDis.id + '/vs/' + _client.vs;
 			var urlRequest:URLRequest = new URLRequest(stringURL);
 			navigateToURL(urlRequest , '_self');
 		}

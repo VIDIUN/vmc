@@ -4,26 +4,26 @@ scheduling tab of EntryDetailsWin.
 also used in SetSchedulingWin.
 -->
 <mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="schedulingVbox"
-		   xmlns:controls="com.kaltura.controls.*" implements="com.kaltura.edw.business.IDrilldownPanel"
+		   xmlns:controls="com.vidiun.controls.*" implements="com.vidiun.edw.business.IDrilldownPanel"
 		   label="{resourceManager.getString('drilldown', 'scheduling')}">
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.controls.SM_TimeEntry;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.utils.DateFieldWithTimeStepperLogic;
-			import com.kaltura.utils.KUtils;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.controls.SM_TimeEntry;
+			import com.vidiun.edw.business.IDrilldownPanel;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.utils.DateFieldWithTimeStepperLogic;
+			import com.vidiun.utils.VUtils;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			
 			[Bindable]
@@ -37,13 +37,13 @@ also used in SetSchedulingWin.
 			private var _timeManager:DateFieldWithTimeStepperLogic;
 			
 			
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 			private var _dpModel:IDataPackRepository;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
-			public function set selectedEntry(selectedEntry:KalturaBaseEntry):void {
+			public function set selectedEntry(selectedEntry:VidiunBaseEntry):void {
 				_selectedEntry = selectedEntry;
 			}
 			
@@ -103,7 +103,7 @@ also used in SetSchedulingWin.
 				var endTime:int = getEndTime();
 				
 				if (_selectedEntry.startDate > 0) {
-					_selectedEntry.startDate = (startTime > 0) ? startTime : KalturaClient.NULL_INT;
+					_selectedEntry.startDate = (startTime > 0) ? startTime : VidiunClient.NULL_INT;
 				}
 				else if (startTime > 0) {
 					// was not set before and is set now
@@ -111,13 +111,13 @@ also used in SetSchedulingWin.
 				}
 				
 				if (_selectedEntry.endDate > 0) {
-					_selectedEntry.endDate = (endTime > 0) ? endTime : KalturaClient.NULL_INT;
+					_selectedEntry.endDate = (endTime > 0) ? endTime : VidiunClient.NULL_INT;
 				}
 				else if (endTime > 0) {
 					// was not set before and is set now
 					_selectedEntry.endDate =  endTime;
 				}
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 			
 			
@@ -350,33 +350,33 @@ also used in SetSchedulingWin.
 					</mx:GridItem>
 					<mx:GridItem width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 						<mx:DateField id='sepcificStartDate' showToday="true" width="120"
-									  enabled="{KUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"
+									  enabled="{VUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"
 									  change="validateTimes()"/>
 					</mx:GridItem>
 					<mx:GridItem width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 						<controls:TimeStepper height="25" showAMPMLabel="true" showHours="true" id="sepcificStartHour"
 											   styleName="timeEntry"
-											   enabled="{KUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"
+											   enabled="{VUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"
 											   click="validateTimes()"/>
 					</mx:GridItem>
 				</mx:GridRow>
 				<mx:GridRow width="100%" height="30">
 					<mx:GridItem width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 						<mx:CheckBox id="specificEndCBBtn"
-									 enabled="{KUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"/>
+									 enabled="{VUtils.logicalAnd(editable, spcificRangeRBtn.selected)}"/>
 					</mx:GridItem>
 					<mx:GridItem width="100%" height="100%" horizontalAlign="right" verticalAlign="middle">
 						<mx:Label text="{resourceManager.getString('drilldown', 'endDateLabel')}"
-								  enabled="{KUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected)}"/>
+								  enabled="{VUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected)}"/>
 					</mx:GridItem>
 					<mx:GridItem width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 						<mx:DateField 
-							enabled="{KUtils.logicalAnd(editable, KUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected))}"
+							enabled="{VUtils.logicalAnd(editable, VUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected))}"
 							id='specificEndDate' width="120" change="validateTimes()"/>
 					</mx:GridItem>
 					<mx:GridItem width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 						<controls:TimeStepper height="25" showAMPMLabel="true" showHours="true"
-											   enabled="{KUtils.logicalAnd(editable, KUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected))}"
+											   enabled="{VUtils.logicalAnd(editable, VUtils.logicalAnd(specificEndCBBtn.selected, spcificRangeRBtn.selected))}"
 											   id='specificEndHour' styleName="timeEntry" click="validateTimes()"/>
 					</mx:GridItem>
 				</mx:GridRow>

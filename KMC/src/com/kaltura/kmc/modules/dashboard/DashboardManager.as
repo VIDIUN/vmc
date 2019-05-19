@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.dashboard {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.commands.partner.PartnerGetStatistics;
-	import com.kaltura.commands.partner.PartnerGetUsage;
-	import com.kaltura.commands.report.ReportGetGraphs;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.events.KmcNavigationEvent;
-	import com.kaltura.kmc.modules.KmcModule;
-	import com.kaltura.types.KalturaReportType;
-	import com.kaltura.vo.KalturaPartner;
-	import com.kaltura.vo.KalturaPartnerStatistics;
-	import com.kaltura.vo.KalturaPartnerUsage;
-	import com.kaltura.vo.KalturaReportGraph;
-	import com.kaltura.vo.KalturaReportInputFilter;
+package com.vidiun.vmc.modules.dashboard {
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.partner.PartnerGetInfo;
+	import com.vidiun.commands.partner.PartnerGetStatistics;
+	import com.vidiun.commands.partner.PartnerGetUsage;
+	import com.vidiun.commands.report.ReportGetGraphs;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.business.permissions.PermissionManager;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.events.VmcNavigationEvent;
+	import com.vidiun.vmc.modules.VmcModule;
+	import com.vidiun.types.VidiunReportType;
+	import com.vidiun.vo.VidiunPartner;
+	import com.vidiun.vo.VidiunPartnerStatistics;
+	import com.vidiun.vo.VidiunPartnerUsage;
+	import com.vidiun.vo.VidiunReportGraph;
+	import com.vidiun.vo.VidiunReportInputFilter;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.dashboard {
 	 * In the first phase of the dashboard this class does it all, later on we will split it to
 	 */
 	public class DashboardManager extends EventDispatcher {
-		public const KALTURA_OFFSET:Number = 21600; //(6 hours * 60 min * 60 sec = 21600)
+		public const VIDIUN_OFFSET:Number = 21600; //(6 hours * 60 min * 60 sec = 21600)
 
 		///it is set to 30 DAYS just to get some data
 		public const SECONDES_IN_30_DAYS:Number = 30 * 24 * 60 * 60; // 7d x 24h x 60m x 60s
@@ -48,9 +48,9 @@ package com.kaltura.kmc.modules.dashboard {
 		/** single instanse for this class **/
 		private static var _instance:DashboardManager;
 
-		/** kaltura client object - for contacting the server **/
-		private var _kc:KalturaClient; //kaltura client that make all kaltura API calls
-		public var app:KmcModule;
+		/** vidiun client object - for contacting the server **/
+		private var _vc:VidiunClient; //vidiun client that make all vidiun API calls
+		public var app:VmcModule;
 		
 		[Bindable]
 		public var showGraphs : Boolean = true;
@@ -80,13 +80,13 @@ package com.kaltura.kmc.modules.dashboard {
 		public var publisherName:String;
 
 
-		public function get kc():KalturaClient {
-			return _kc;
+		public function get vc():VidiunClient {
+			return _vc;
 		}
 
 
-		public function set kc(kC:KalturaClient):void {
-			_kc = kC;
+		public function set vc(vC:VidiunClient):void {
+			_vc = vC;
 		}
 
 
@@ -139,14 +139,14 @@ package com.kaltura.kmc.modules.dashboard {
 		
 		private function getPartnerData():void {
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, onPartnerInfo);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
-			kc.post(getPartnerInfo);	
+			getPartnerInfo.addEventListener(VidiunEvent.COMPLETE, onPartnerInfo);
+			getPartnerInfo.addEventListener(VidiunEvent.FAILED, fault);
+			vc.post(getPartnerInfo);	
 		}
 
 		
-		private function onPartnerInfo(ke:KalturaEvent):void {
-			publisherName = (ke.data as KalturaPartner).name;
+		private function onPartnerInfo(ve:VidiunEvent):void {
+			publisherName = (ve.data as VidiunPartner).name;
 		}
 		
 
@@ -157,16 +157,16 @@ package com.kaltura.kmc.modules.dashboard {
 		 */
 		private function getUsageData():void {
 			var now:Date = new Date();
-			new KalturaPartnerUsage();
+			new VidiunPartnerUsage();
 			var partnerGetStatistics:PartnerGetStatistics = new PartnerGetStatistics();
-			partnerGetStatistics.addEventListener(KalturaEvent.COMPLETE, onPartnerStatistics);
-			partnerGetStatistics.addEventListener(KalturaEvent.FAILED, fault);
-			kc.post(partnerGetStatistics);	
+			partnerGetStatistics.addEventListener(VidiunEvent.COMPLETE, onPartnerStatistics);
+			partnerGetStatistics.addEventListener(VidiunEvent.FAILED, fault);
+			vc.post(partnerGetStatistics);	
 		}
 		
 		protected function onPartnerStatistics(result:Object):void
 		{
-			var statistics:KalturaPartnerStatistics = result.data as KalturaPartnerStatistics;
+			var statistics:VidiunPartnerStatistics = result.data as VidiunPartnerStatistics;
 			totalBWSoFar = statistics.bandwidth.toFixed(2);
 			totalPercentSoFar = statistics.usagePercent.toFixed();
 			hostingGB = statistics.hosting.toFixed(2);
@@ -179,7 +179,7 @@ package com.kaltura.kmc.modules.dashboard {
 		 * In case the usage data call has errors
 		 */
 		private function onSrvFlt(fault:Object):void {
-			Alert.show(ResourceManager.getInstance().getString('kdashboard', 'usageErrorMsg') + ":\n" + fault.error.errorMsg, ResourceManager.getInstance().getString('kdashboard', 'error'));
+			Alert.show(ResourceManager.getInstance().getString('vdashboard', 'usageErrorMsg') + ":\n" + fault.error.errorMsg, ResourceManager.getInstance().getString('vdashboard', 'error'));
 		}
 
 		
@@ -194,22 +194,22 @@ package com.kaltura.kmc.modules.dashboard {
 		 * Calling for the graph's data from the server
 		 */
 		private function getGraphData():void {
-			var krif:KalturaReportInputFilter = new KalturaReportInputFilter();
+			var vrif:VidiunReportInputFilter = new VidiunReportInputFilter();
 			if (!dateFormatter) initDateFormatter();
 			
 			var today:Date = new Date();
 			
 			// use new filters (YYYYMMDD). send local date.
-			krif.toDay = dateFormatter.format(today);
+			vrif.toDay = dateFormatter.format(today);
 			var ONE_DAY:int = 1000 * 60 * 60 * 24;
-			krif.fromDay = dateFormatter.format(new Date(today.time - 30*ONE_DAY));
-			krif.timeZoneOffset = today.timezoneOffset;
+			vrif.fromDay = dateFormatter.format(new Date(today.time - 30*ONE_DAY));
+			vrif.timeZoneOffset = today.timezoneOffset;
 
-			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs(KalturaReportType.TOP_CONTENT, krif, 'sum_time_viewed'); //  sum_time_viewed count_plays
+			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs(VidiunReportType.TOP_CONTENT, vrif, 'sum_time_viewed'); //  sum_time_viewed count_plays
 
-			reportGetGraphs.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetGraphs.addEventListener(KalturaEvent.FAILED, fault);
-			kc.post(reportGetGraphs);
+			reportGetGraphs.addEventListener(VidiunEvent.COMPLETE, result);
+			reportGetGraphs.addEventListener(VidiunEvent.FAILED, fault);
+			vc.post(reportGetGraphs);
 		}
 
 
@@ -219,11 +219,11 @@ package com.kaltura.kmc.modules.dashboard {
 		 *
 		 */
 		private function result(result:Object):void {
-			var krpArr:Array = result.data as Array;
+			var vrpArr:Array = result.data as Array;
 
-			for (var i:int = 0; i < krpArr.length; i++) {
-				var krp:KalturaReportGraph = KalturaReportGraph(krpArr[i]);
-				var pointsArr:Array = krp.data.split(";");
+			for (var i:int = 0; i < vrpArr.length; i++) {
+				var vrp:VidiunReportGraph = VidiunReportGraph(vrpArr[i]);
+				var pointsArr:Array = vrp.data.split(";");
 				var graphPoints:ArrayCollection = new ArrayCollection();
 
 				for (var j:int = 0; j < pointsArr.length; j++) {
@@ -238,7 +238,7 @@ package com.kaltura.kmc.modules.dashboard {
 					}
 				}
 
-				dimMap.put(krp.id, graphPoints);
+				dimMap.put(vrp.id, graphPoints);
 			}
 
 			// set the first AC as the default for the graph
@@ -257,20 +257,20 @@ package com.kaltura.kmc.modules.dashboard {
 		 *
 		 */
 		private function fault(info:Object):void {
-			if ((info as KalturaEvent).error) {
-				if (info.error.errorCode == APIErrorCode.INVALID_KS) {
+			if ((info as VidiunEvent).error) {
+				if (info.error.errorCode == APIErrorCode.INVALID_VS) {
 					JSGate.expired();
 				}
 				else if (info.error.errorCode == APIErrorCode.SERVICE_FORBIDDEN) {
 					// added the support of non closable window
 					
 					Alert.show(ResourceManager.getInstance().getString('common', 'forbiddenError'), 
-						ResourceManager.getInstance().getString('kdashboard', 'error'), Alert.OK, null, logout);
+						ResourceManager.getInstance().getString('vdashboard', 'error'), Alert.OK, null, logout);
 					//de-activate the HTML tabs
-//					ExternalInterface.call("kmc.utils.activateHeader", false);
+//					ExternalInterface.call("vmc.utils.activateHeader", false);
 				}
-				else if((info as KalturaEvent).error.errorMsg) {
-					Alert.show((info as KalturaEvent).error.errorMsg, ResourceManager.getInstance().getString('kdashboard', 'error'));
+				else if((info as VidiunEvent).error.errorMsg) {
+					Alert.show((info as VidiunEvent).error.errorMsg, ResourceManager.getInstance().getString('vdashboard', 'error'));
 				}
 			}
 		}
@@ -289,7 +289,7 @@ package com.kaltura.kmc.modules.dashboard {
 		 */
 		public function launchOuterLink(linkCode:String, pageNum:String=null):void
 		{
-			var linkStr:String = ResourceManager.getInstance().getString('kdashboard', linkCode);
+			var linkStr:String = ResourceManager.getInstance().getString('vdashboard', linkCode);
 			linkStr += pageNum ? ('#page=' + pageNum) : '';
 			var urlr:URLRequest = new URLRequest(linkStr);
 			navigateToURL(urlr, "_blank");
@@ -308,8 +308,8 @@ package com.kaltura.kmc.modules.dashboard {
 		/**
 		 * Loading a outer module by calling JS function and the html wrapper of this SWF application
 		 */
-		public function loadKMCModule(moduleName:String, subModule:String = ''):void {
-			dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, moduleName, subModule));
+		public function loadVMCModule(moduleName:String, subModule:String = ''):void {
+			dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, moduleName, subModule));
 		}
 
 	}

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package com.kaltura.utils.imageCropper {
+package com.vidiun.utils.imageCropper {
 	import flash.display.*;
 	import flash.events.*;
 	import flash.external.ExternalInterface;
@@ -145,14 +145,14 @@ package com.kaltura.utils.imageCropper {
 			}
 		}
 		
-		public function keyboardDownEvent(ke:KeyboardEvent):void {
-			if (ke.shiftKey) {
+		public function keyboardDownEvent(ve:KeyboardEvent):void {
+			if (ve.shiftKey) {
 				shiftIsPressed = true;
 			}
 		}
 		
-		public function keyboardUpEvent(ke:KeyboardEvent):void {
-			if (!ke.shiftKey) {
+		public function keyboardUpEvent(ve:KeyboardEvent):void {
+			if (!ve.shiftKey) {
 				shiftIsPressed = false;
 			}
 		}

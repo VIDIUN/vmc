@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" 
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.types.KalturaAppearInListType;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.types.VidiunAppearInListType;
 			
 			import mx.controls.Button;
 			import mx.events.FlexEvent;
@@ -25,11 +25,11 @@
 				}
 				else {
 					if (unlistedBtn.selected) {
-						accessString = KalturaAppearInListType.CATEGORY_MEMBERS_ONLY /* + "," */;
+						accessString = VidiunAppearInListType.CATEGORY_MEMBERS_ONLY /* + "," */;
 					}
 					// the state of both selected is handled in the first condition
 					else if (listedBtn.selected) {
-						accessString = KalturaAppearInListType.PARTNER_ONLY /* + "," */;
+						accessString = VidiunAppearInListType.PARTNER_ONLY /* + "," */;
 					}
 					//remove last , 
 //					accessString = accessString.slice(0, accessString.length - 1);
@@ -52,11 +52,11 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaAppearInListType.CATEGORY_MEMBERS_ONLY:
+							case VidiunAppearInListType.CATEGORY_MEMBERS_ONLY:
 								unlistedBtn.selected = true;
 								break;
 							
-							case KalturaAppearInListType.PARTNER_ONLY:
+							case VidiunAppearInListType.PARTNER_ONLY:
 								listedBtn.selected = true;
 								break;
 						}

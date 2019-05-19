@@ -1,4 +1,4 @@
-package com.kaltura.edw.model.types
+package com.vidiun.edw.model.types
 {
 	public class DropFolderListType {
 		

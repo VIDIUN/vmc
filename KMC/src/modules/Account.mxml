@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*"
-				   xmlns:view="com.kaltura.kmc.modules.account.view.*"
-				   xmlns:business="com.kaltura.kmc.modules.account.business.*"
-				   xmlns:control="com.kaltura.kmc.modules.account.control.*"
-				   preloader="com.kaltura.preloaders.KmcPreloader" backgroundColor="#FFFFFF" layout="vertical"
+<modules:VmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.vidiun.vmc.modules.*"
+				   xmlns:view="com.vidiun.vmc.modules.account.view.*"
+				   xmlns:business="com.vidiun.vmc.modules.account.business.*"
+				   xmlns:control="com.vidiun.vmc.modules.account.control.*"
+				   preloader="com.vidiun.preloaders.VmcPreloader" backgroundColor="#FFFFFF" layout="vertical"
 				   minHeight="520" minWidth="950" borderThickness="0" borderStyle="solid" paddingLeft="0"
 				   paddingRight="0" paddingTop="0" paddingBottom="0">
 
@@ -14,18 +14,18 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.kmc.modules.account.view.CustomData;
-			import com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel;
-			import com.kaltura.kmc.modules.account.view.interfaces.IUndoable;
-			import com.kaltura.kmc.modules.account.vo.AdminVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+			import com.vidiun.vmc.modules.account.view.CustomData;
+			import com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel;
+			import com.vidiun.vmc.modules.account.view.interfaces.IUndoable;
+			import com.vidiun.vmc.modules.account.vo.AdminVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -35,7 +35,7 @@
 			import mx.events.ItemClickEvent;
 
 			/**
-			 * KMC is responsible to use the value of
+			 * VMC is responsible to use the value of
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "account";
@@ -86,7 +86,7 @@
 					Alert.show(resourceManager.getString('account', 'saveChangesQ'), "", Alert.YES | Alert.NO, null, saveBeforeChangingModule);
 				}
 				else {
-					dispatchEvent(new Event(KmcModule.FINISHED_SAVING, true));
+					dispatchEvent(new Event(VmcModule.FINISHED_SAVING, true));
 				}
 			}
 
@@ -131,8 +131,8 @@
 				Alert.cancelLabel = resourceManager.getString('account', 'cancel');
 
 				//// init analytics feature and Google Analytics
-				var ka:KAnalyticsTracker = KAnalyticsTracker.getInstance();
-				ka.init(_model.context.kc, "Account", "4.0", _model.context.userId);
+				var va:VAnalyticsTracker = VAnalyticsTracker.getInstance();
+				va.init(_model.context.vc, "Account", "4.0", _model.context.userId);
 
 
 
@@ -173,7 +173,7 @@
 				if (this.willTrigger(Event.ADDED_TO_STAGE)) {
 					removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				}
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/Settings");
+				GoogleAnalyticsTracker.getInstance().setBasePath("VMC/Settings");
 				
 				if (_initialTab) {
 					switchToTab(_initialTab);
@@ -191,7 +191,7 @@
 				else {
 					_model.context.rootUrl = "http://" + objParam.host;
 				}
-				_model.context.kc = _kc;
+				_model.context.vc = _vc;
 
 			}
 
@@ -205,19 +205,19 @@
 			private function onTabChange(event:IndexChangedEvent):void {
 				switch (contentView.selectedChild) {
 					case overview:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCOUNT_OVERVIEW, "Account>Account Overview");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_ACCOUNT_OVERVIEW, "Account>Account Overview");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCOUNT_INFO, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case integration:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_UPDATE_SERVER_SETTINGS, "Account>Update Server Settings");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_UPDATE_SERVER_SETTINGS, "Account>Update Server Settings");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_INTEGRATION, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case accessControl:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCESS_CONTROL, "Account>Access Control");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_ACCESS_CONTROL, "Account>Access Control");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCESS_CONTROL, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case transcoding:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_TRANSCODING_SETTINGS, "Account>Transcoding Settings");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_TRANSCODING_SETTINGS, "Account>Transcoding Settings");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_TRANSCODING_SETTINGS, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case metadata:
@@ -227,7 +227,7 @@
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_MY_USER, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case upgrade:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCOUNT_UPGRADE, "Account>Account Upgrade");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_ACCOUNT_UPGRADE, "Account>Account Upgrade");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCOUNT_UPGRADE, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 
@@ -254,7 +254,7 @@
 			 * */
 			private function saveBeforeChangingModule(event:CloseEvent):void {
 				handleSaveAlert(event);
-				dispatchEvent(new Event(KmcModule.FINISHED_SAVING, true));
+				dispatchEvent(new Event(VmcModule.FINISHED_SAVING, true));
 			}
 
 
@@ -329,7 +329,7 @@
 					anchor = 'section_acc_upgrade';
 				}
 
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 		]]>
 	</mx:Script>
@@ -375,4 +375,4 @@
 
 	</mx:VBox>
 
-</modules:KmcModule>
+</modules:VmcModule>

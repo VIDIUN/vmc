@@ -1,4 +1,4 @@
-package com.kaltura.core
+package com.vidiun.core
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -8,12 +8,12 @@ package com.kaltura.core
 	import mx.core.Application;
 	import mx.events.FlexEvent;
 
-	public class KApplication extends Application
+	public class VApplication extends Application
 	{
-		import com.kaltura.events.WrapperEvent;
+		import com.vidiun.events.WrapperEvent;
 		import mx.events.FlexEvent;
 
-		public function KApplication()
+		public function VApplication()
 		{
 			addEventListener(FlexEvent.PREINITIALIZE, preinitializeHandler);
 		}

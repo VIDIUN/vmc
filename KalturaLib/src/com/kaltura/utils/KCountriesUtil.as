@@ -1,6 +1,6 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
-	import com.kaltura.dataStructures.HashMap;
+	import com.vidiun.dataStructures.HashMap;
 	
 	import flash.display.DisplayObjectContainer;
 	
@@ -15,9 +15,9 @@ package com.kaltura.utils
 	 * 
 	 * 
 	 */
-	public class KCountriesUtil
+	public class VCountriesUtil
 	{
-		private static var _instance:KCountriesUtil = null;
+		private static var _instance:VCountriesUtil = null;
 		private var countriesArr:ArrayCollection = new ArrayCollection();
 		private var countriesMap:HashMap = new HashMap();
 		private var countriesFlagsMap:HashMap = new HashMap();
@@ -31,740 +31,740 @@ package com.kaltura.utils
 		 * 
 		 */
 
-		/*[Embed(source="/com/kaltura/assets/images/flags/af.gif")]
+		/*[Embed(source="/com/vidiun/assets/images/flags/af.gif")]
 		private static const _af:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/al.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/al.gif")]
 		private static const _al:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/dz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/dz.gif")]
 		private static const _dz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/as.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/as.gif")]
 		private static const _as:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ad.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ad.gif")]
 		private static const _ad:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ao.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ao.gif")]
 		private static const _ao:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ai.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ai.gif")]
 		private static const _ai:Class;
 		
-	 	[Embed(source="/com/kaltura/assets/images/flags/aq.gif")]
+	 	[Embed(source="/com/vidiun/assets/images/flags/aq.gif")]
 		private static const _aq:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ag.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ag.gif")]
 		private static const _ag:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ar.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ar.gif")]
 		private static const _ar:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/am.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/am.gif")]
 		private static const _am:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/aw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/aw.gif")]
 		private static const _aw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ac.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ac.gif")]
 		private static const _ac:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/au.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/au.gif")]
 		private static const _au:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/at.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/at.gif")]
 		private static const _at:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/az.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/az.gif")]
 		private static const _az:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bs.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bs.gif")]
 		private static const _bs:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bh.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bh.gif")]
 		private static const _bh:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bd.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bd.gif")]
 		private static const _bd:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bb.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bb.gif")]
 		private static const _bb:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/by.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/by.gif")]
 		private static const _by:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/be.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/be.gif")]
 		private static const _be:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bz.gif")]
 		private static const _bz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bj.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bj.gif")]
 		private static const _bj:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bm.gif")]
 		private static const _bm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bt.gif")]
 		private static const _bt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bo.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bo.gif")]
 		private static const _bo:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ba.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ba.gif")]
 		private static const _ba:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bw.gif")]
 		private static const _bw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bv.gif")]
 		private static const _bv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/br.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/br.gif")]
 		private static const _br:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/io.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/io.gif")]
 		private static const _io:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bn.gif")]
 		private static const _bn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bg.gif")]
 		private static const _bg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bf.gif")]
 		private static const _bf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/bi.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/bi.gif")]
 		private static const _bi:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kh.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kh.gif")]
 		private static const _kh:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cm.gif")]
 		private static const _cm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ca.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ca.gif")]
 		private static const _ca:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cv.gif")]
 		private static const _cv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ky.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ky.gif")]
 		private static const _ky:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cf.gif")]
 		private static const _cf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/td.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/td.gif")]
 		private static const _td:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cl.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cl.gif")]
 		private static const _cl:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cn.gif")]
 		private static const _cn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cx.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cx.gif")]
 		private static const _cx:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cc.gif")]
 		private static const _cc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/co.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/co.gif")]
 		private static const _co:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/km.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/km.gif")]
 		private static const _km:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cg.gif")]
 		private static const _cg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cd.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cd.gif")]
 		private static const _cd:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ck.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ck.gif")]
 		private static const _ck:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cr.gif")]
 		private static const _cr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ci.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ci.gif")]
 		private static const _ci:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/hr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/hr.gif")]
 		private static const _hr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cu.gif")]
 		private static const _cu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cy.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cy.gif")]
 		private static const _cy:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/cz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/cz.gif")]
 		private static const _cz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/dk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/dk.gif")]
 		private static const _dk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/dj.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/dj.gif")]
 		private static const _dj:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/dm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/dm.gif")]
 		private static const _dm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/do.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/do.gif")]
 		private static const _do:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ec.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ec.gif")]
 		private static const _ec:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/eg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/eg.gif")]
 		private static const _eg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sv.gif")]
 		private static const _sv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gq.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gq.gif")]
 		private static const _gq:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/er.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/er.gif")]
 		private static const _er:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ee.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ee.gif")]
 		private static const _ee:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/et.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/et.gif")]
 		private static const _et:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fk.gif")]
 		private static const _fk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fo.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fo.gif")]
 		private static const _fo:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fj.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fj.gif")]
 		private static const _fj:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fi.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fi.gif")]
 		private static const _fi:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fr.gif")]
 		private static const _fr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gf.gif")]
 		private static const _gf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pf.gif")]
 		private static const _pf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tf.gif")]
 		private static const _tf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ga.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ga.gif")]
 		private static const _ga:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gm.gif")]
 		private static const _gm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ge.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ge.gif")]
 		private static const _ge:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/de.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/de.gif")]
 		private static const _de:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gh.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gh.gif")]
 		private static const _gh:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gi.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gi.gif")]
 		private static const _gi:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gr.gif")]
 		private static const _gr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gl.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gl.gif")]
 		private static const _gl:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gd.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gd.gif")]
 		private static const _gd:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gp.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gp.gif")]
 		private static const _gp:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gu.gif")]
 		private static const _gu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gt.gif")]
 		private static const _gt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gg.gif")]
 		private static const _gg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gn.gif")]
 		private static const _gn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gw.gif")]
 		private static const _gw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gy.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gy.gif")]
 		private static const _gy:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ht.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ht.gif")]
 		private static const _ht:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/hm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/hm.gif")]
 		private static const _hm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/hn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/hn.gif")]
 		private static const _hn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/hk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/hk.gif")]
 		private static const _hk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/hu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/hu.gif")]
 		private static const _hu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/is.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/is.gif")]
 		private static const _is:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/in.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/in.gif")]
 		private static const _in:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/id.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/id.gif")]
 		private static const _id:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ir.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ir.gif")]
 		private static const _ir:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/iq.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/iq.gif")]
 		private static const _iq:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ie.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ie.gif")]
 		private static const _ie:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/im.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/im.gif")]
 		private static const _im:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/il.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/il.gif")]
 		private static const _il:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/it.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/it.gif")]
 		private static const _it:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/jm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/jm.gif")]
 		private static const _jm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/jp.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/jp.gif")]
 		private static const _jp:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/je.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/je.gif")]
 		private static const _je:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/jo.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/jo.gif")]
 		private static const _jo:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kz.gif")]
 		private static const _kz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ke.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ke.gif")]
 		private static const _ke:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ki.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ki.gif")]
 		private static const _ki:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kr.gif")]
 		private static const _kr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kw.gif")]
 		private static const _kw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kg.gif")]
 		private static const _kg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/la.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/la.gif")]
 		private static const _la:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lv.gif")]
 		private static const _lv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lb.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lb.gif")]
 		private static const _lb:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ls.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ls.gif")]
 		private static const _ls:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lr.gif")]
 		private static const _lr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ly.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ly.gif")]
 		private static const _ly:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/li.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/li.gif")]
 		private static const _li:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lt.gif")]
 		private static const _lt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lu.gif")]
 		private static const _lu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mo.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mo.gif")]
 		private static const _mo:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mk.gif")]
 		private static const _mk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mg.gif")]
 		private static const _mg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mw.gif")]
 		private static const _mw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/my.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/my.gif")]
 		private static const _my:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mv.gif")]
 		private static const _mv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ml.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ml.gif")]
 		private static const _ml:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mt.gif")]
 		private static const _mt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mh.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mh.gif")]
 		private static const _mh:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mq.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mq.gif")]
 		private static const _mq:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mr.gif")]
 		private static const _mr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mu.gif")]
 		private static const _mu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/yt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/yt.gif")]
 		private static const _yt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mx.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mx.gif")]
 		private static const _mx:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/fm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/fm.gif")]
 		private static const _fm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/md.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/md.gif")]
 		private static const _md:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mc.gif")]
 		private static const _mc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mn.gif")]
 		private static const _mn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ms.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ms.gif")]
 		private static const _ms:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ma.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ma.gif")]
 		private static const _ma:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mz.gif")]
 		private static const _mz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mm.gif")]
 		private static const _mm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/na.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/na.gif")]
 		private static const _na:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nr.gif")]
 		private static const _nr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/np.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/np.gif")]
 		private static const _np:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nl.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nl.gif")]
 		private static const _nl:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/an.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/an.gif")]
 		private static const _an:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nc.gif")]
 		private static const _nc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nz.gif")]
 		private static const _nz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ni.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ni.gif")]
 		private static const _ni:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ne.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ne.gif")]
 		private static const _ne:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ng.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ng.gif")]
 		private static const _ng:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nu.gif")]
 		private static const _nu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/nf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/nf.gif")]
 		private static const _nf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kp.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kp.gif")]
 		private static const _kp:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/mp.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/mp.gif")]
 		private static const _mp:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/no.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/no.gif")]
 		private static const _no:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/om.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/om.gif")]
 		private static const _om:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pk.gif")]
 		private static const _pk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pw.gif")]
 		private static const _pw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ps.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ps.gif")]
 		private static const _ps:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pa.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pa.gif")]
 		private static const _pa:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pg.gif")]
 		private static const _pg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/py.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/py.gif")]
 		private static const _py:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pe.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pe.gif")]
 		private static const _pe:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ph.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ph.gif")]
 		private static const _ph:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pn.gif")]
 		private static const _pn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pl.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pl.gif")]
 		private static const _pl:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pt.gif")]
 		private static const _pt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pr.gif")]
 		private static const _pr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/qa.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/qa.gif")]
 		private static const _qa:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/re.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/re.gif")]
 		private static const _re:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ro.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ro.gif")]
 		private static const _ro:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ru.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ru.gif")]
 		private static const _ru:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/rw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/rw.gif")]
 		private static const _rw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ws.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ws.gif")]
 		private static const _ws:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sm.gif")]
 		private static const _sm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/st.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/st.gif")]
 		private static const _st:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sa.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sa.gif")]
 		private static const _sa:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sn.gif")]
 		private static const _sn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/yu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/yu.gif")]
 		private static const _yu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sc.gif")]
 		private static const _sc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sl.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sl.gif")]
 		private static const _sl:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sg.gif")]
 		private static const _sg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sk.gif")]
 		private static const _sk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/si.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/si.gif")]
 		private static const _si:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sb.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sb.gif")]
 		private static const _sb:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/so.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/so.gif")]
 		private static const _so:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/za.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/za.gif")]
 		private static const _za:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/gs.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/gs.gif")]
 		private static const _gs:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/es.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/es.gif")]
 		private static const _es:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lk.gif")]
 		private static const _lk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sh.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sh.gif")]
 		private static const _sh:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/kn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/kn.gif")]
 		private static const _kn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/lc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/lc.gif")]
 		private static const _lc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/pm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/pm.gif")]
 		private static const _pm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/vc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/vc.gif")]
 		private static const _vc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sd.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sd.gif")]
 		private static const _sd:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sr.gif")]
 		private static const _sr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sj.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sj.gif")]
 		private static const _sj:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sz.gif")]
 		private static const _sz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/se.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/se.gif")]
 		private static const _se:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ch.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ch.gif")]
 		private static const _ch:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/sy.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/sy.gif")]
 		private static const _sy:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tw.gif")]
 		private static const _tw:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tj.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tj.gif")]
 		private static const _tj:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tz.gif")]
 		private static const _tz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/th.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/th.gif")]
 		private static const _th:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tp.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tp.gif")]
 		private static const _tp:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tg.gif")]
 		private static const _tg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tk.gif")]
 		private static const _tk:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/to.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/to.gif")]
 		private static const _to:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tt.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tt.gif")]
 		private static const _tt:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ta.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ta.gif")]
 		private static const _ta:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tn.gif")]
 		private static const _tn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tr.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tr.gif")]
 		private static const _tr:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tm.gif")]
 		private static const _tm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tc.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tc.gif")]
 		private static const _tc:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/tv.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/tv.gif")]
 		private static const _tv:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ug.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ug.gif")]
 		private static const _ug:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ua.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ua.gif")]
 		private static const _ua:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ae.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ae.gif")]
 		private static const _ae:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/uk.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/uk.gif")]
 		private static const _uk:Class; 
 		
-		[Embed(source="/com/kaltura/assets/images/flags/us.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/us.gif")]
 		private static const _us:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/um.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/um.gif")]
 		private static const _um:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/uy.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/uy.gif")]
 		private static const _uy:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/uz.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/uz.gif")]
 		private static const _uz:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/vu.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/vu.gif")]
 		private static const _vu:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/va.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/va.gif")]
 		private static const _va:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ve.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ve.gif")]
 		private static const _ve:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/vn.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/vn.gif")]
 		private static const _vn:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/vi.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/vi.gif")]
 		private static const _vi:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/vg.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/vg.gif")]
 		private static const _vg:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/wf.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/wf.gif")]
 		private static const _wf:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/ye.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/ye.gif")]
 		private static const _ye:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/zm.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/zm.gif")]
 		private static const _zm:Class;
 		
-		[Embed(source="/com/kaltura/assets/images/flags/zw.gif")]
+		[Embed(source="/com/vidiun/assets/images/flags/zw.gif")]
 		private static const _zw:Class;*/
 
     	
 		/**
 		 * Constructor
 		 */
-		public function KCountriesUtil(enforcer:Enforcer)
+		public function VCountriesUtil(enforcer:Enforcer)
 		{
 			initCountriesArray(countriesArr);
 			initCountriesMaps();
@@ -775,11 +775,11 @@ package com.kaltura.utils
 		 * Singleton instance
 		 * 
 		 */
-		public static function get instance():KCountriesUtil
+		public static function get instance():VCountriesUtil
 		{
 			if(_instance == null)
 			{
-				_instance = new KCountriesUtil(new Enforcer());
+				_instance = new VCountriesUtil(new Enforcer());
 			}
 			
 			return _instance;

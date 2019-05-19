@@ -2,21 +2,21 @@
 <!---
 edit ConversionProfileAssetParams attributes
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"  
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"  
 				 styleName="TitleWindowType2" creationComplete="creationCompleteHandler(event)"
 				 title="{resourceManager.getString('account','conversionFlavorSettingsTitle')}" 
 				 showCloseButton="true" close="{onClose()}" showHelpButton="true" help="helpHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.types.KalturaAssetParamsDeletePolicy;
-			import com.kaltura.types.KalturaAssetParamsOrigin;
-			import com.kaltura.types.KalturaFlavorReadyBehaviorType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
-			import com.kaltura.vo.KalturaLiveParams;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.types.VidiunAssetParamsDeletePolicy;
+			import com.vidiun.types.VidiunAssetParamsOrigin;
+			import com.vidiun.types.VidiunFlavorReadyBehaviorType;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.vo.FlavorVO;
+			import com.vidiun.vo.VidiunConversionProfileAssetParams;
+			import com.vidiun.vo.VidiunLiveParams;
 			
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
@@ -31,26 +31,26 @@ edit ConversionProfileAssetParams attributes
 			 * data provider for the asset's ready behaviour
 			 * */
 			private const _availabilityOptions:Array = [
-				{value:KalturaFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS, name:ResourceManager.getInstance().getString('account', 'flavor_inherit')}, 
-				{value:KalturaFlavorReadyBehaviorType.REQUIRED, name:ResourceManager.getInstance().getString('account', 'flavor_required')}, 
-				{value:KalturaFlavorReadyBehaviorType.OPTIONAL, name:ResourceManager.getInstance().getString('account', 'flavor_optional')}
+				{value:VidiunFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS, name:ResourceManager.getInstance().getString('account', 'flavor_inherit')}, 
+				{value:VidiunFlavorReadyBehaviorType.REQUIRED, name:ResourceManager.getInstance().getString('account', 'flavor_required')}, 
+				{value:VidiunFlavorReadyBehaviorType.OPTIONAL, name:ResourceManager.getInstance().getString('account', 'flavor_optional')}
 			];
 			
 			/**
 			 * data provider for the asset's origin
 			 * */
 			private const _originOptions:Array = [
-				{value:KalturaAssetParamsOrigin.CONVERT, name:ResourceManager.getInstance().getString('account', 'flavor_convert')},
-				{value:KalturaAssetParamsOrigin.CONVERT_WHEN_MISSING, name:ResourceManager.getInstance().getString('account', 'flavor_cwm')},
-				{value:KalturaAssetParamsOrigin.INGEST, name:ResourceManager.getInstance().getString('account', 'flavor_ingest')}
+				{value:VidiunAssetParamsOrigin.CONVERT, name:ResourceManager.getInstance().getString('account', 'flavor_convert')},
+				{value:VidiunAssetParamsOrigin.CONVERT_WHEN_MISSING, name:ResourceManager.getInstance().getString('account', 'flavor_cwm')},
+				{value:VidiunAssetParamsOrigin.INGEST, name:ResourceManager.getInstance().getString('account', 'flavor_ingest')}
 			];
 			
 			/**
 			 * data provider for the asset's generation policy
 			 * */
 			private const _genOptions:Array = [
-				{value:KalturaNullableBoolean.FALSE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_no_force')},
-				{value:KalturaNullableBoolean.TRUE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_force')},
+				{value:VidiunNullableBoolean.FALSE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_no_force')},
+				{value:VidiunNullableBoolean.TRUE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_force')},
 			];
 			
 			
@@ -58,14 +58,14 @@ edit ConversionProfileAssetParams attributes
 			 * data provider for the asset's intermediate-flavor handling options
 			 * */
 			private const _handleOptions:Array = [
-				{value:KalturaAssetParamsDeletePolicy.KEEP, name:ResourceManager.getInstance().getString('account', 'ifh_keep')},
-				{value:KalturaAssetParamsDeletePolicy.DELETE, name:ResourceManager.getInstance().getString('account', 'ifh_delete')},
+				{value:VidiunAssetParamsDeletePolicy.KEEP, name:ResourceManager.getInstance().getString('account', 'ifh_keep')},
+				{value:VidiunAssetParamsDeletePolicy.DELETE, name:ResourceManager.getInstance().getString('account', 'ifh_delete')},
 			];
 			
 			
 			
 			
-			private var _cpap:KalturaConversionProfileAssetParams;
+			private var _cpap:VidiunConversionProfileAssetParams;
 			
 			
 			[Bindable]
@@ -120,32 +120,32 @@ edit ConversionProfileAssetParams attributes
 			protected function setValues():void {
 				if (cbAvailability && cbConvertPolicy && tiSystemName && cbGenPolicy && cbInterHandle) {
 					// source flavor - always ingest, inherit
-					if (_flavorVO.kFlavor.tags && _flavorVO.kFlavor.tags.indexOf("source") > -1) {
-						_cpap.origin = KalturaAssetParamsOrigin.INGEST;
+					if (_flavorVO.vFlavor.tags && _flavorVO.vFlavor.tags.indexOf("source") > -1) {
+						_cpap.origin = VidiunAssetParamsOrigin.INGEST;
 						if (_cpap.readyBehavior == int.MIN_VALUE) {
-							_cpap.readyBehavior = KalturaFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS;
+							_cpap.readyBehavior = VidiunFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS;
 						}
 						cbConvertPolicy.enabled = false;
 					}
-					if (_flavorVO.kFlavor.id == 0) {
+					if (_flavorVO.vFlavor.id == 0) {
 						cbGenPolicy.enabled = false;
-						_cpap.forceNoneComplied = KalturaNullableBoolean.FALSE_VALUE;
+						_cpap.forceNoneComplied = VidiunNullableBoolean.FALSE_VALUE;
 					}
 					// default values:
 					if (_cpap.readyBehavior == int.MIN_VALUE) {
-						_cpap.readyBehavior = KalturaFlavorReadyBehaviorType.OPTIONAL;
+						_cpap.readyBehavior = VidiunFlavorReadyBehaviorType.OPTIONAL;
 					}
 					if (_cpap.origin == int.MIN_VALUE) {
-						_cpap.origin = KalturaAssetParamsOrigin.CONVERT;
+						_cpap.origin = VidiunAssetParamsOrigin.CONVERT;
 					}
 					if (!_cpap.systemName) {
-						_cpap.systemName = _flavorVO.kFlavor.systemName;
+						_cpap.systemName = _flavorVO.vFlavor.systemName;
 					}
-					if (_cpap.forceNoneComplied == int.MIN_VALUE) {	// KalturaNullableBoolean is generated in the client as int
-						_cpap.forceNoneComplied = KalturaNullableBoolean.FALSE_VALUE;
+					if (_cpap.forceNoneComplied == int.MIN_VALUE) {	// VidiunNullableBoolean is generated in the client as int
+						_cpap.forceNoneComplied = VidiunNullableBoolean.FALSE_VALUE;
 					}
 					if (_cpap.deletePolicy == int.MIN_VALUE) {	
-						_cpap.deletePolicy = KalturaAssetParamsDeletePolicy.KEEP;
+						_cpap.deletePolicy = VidiunAssetParamsDeletePolicy.KEEP;
 					}
 					cbAvailability.selectedIndex = getItemIndex(_availabilityOptions, _cpap.readyBehavior);
 					cbConvertPolicy.selectedIndex = getItemIndex(_originOptions, _cpap.origin);
@@ -179,7 +179,7 @@ edit ConversionProfileAssetParams attributes
 				PermissionManager.getInstance().applyAllAttributes(this, "conversionFlavorDrilldown");
 				if (flavorVO) {
 					// if this is a live param, only system name is relevant
-					if (flavorVO.kFlavor is KalturaLiveParams) {
+					if (flavorVO.vFlavor is VidiunLiveParams) {
 						cbAvailability.includeInLayout = cbAvailability.visible = false;
 						cbConvertPolicy.includeInLayout = cbConvertPolicy.visible = false;
 						cbGenPolicy.includeInLayout = cbGenPolicy.visible = false;
@@ -208,16 +208,16 @@ edit ConversionProfileAssetParams attributes
 			}
 
 			/**
-			 * the KalturaConversionProfileAssetParams being edited
+			 * the VidiunConversionProfileAssetParams being edited
 			 */
-			public function get cpap():KalturaConversionProfileAssetParams {
+			public function get cpap():VidiunConversionProfileAssetParams {
 				return _cpap;
 			}
 
 			/**
 			 * @private
 			 */
-			public function set cpap(value:KalturaConversionProfileAssetParams):void {
+			public function set cpap(value:VidiunConversionProfileAssetParams):void {
 				_cpap = value;
 				setValues();
 			}
@@ -227,7 +227,7 @@ edit ConversionProfileAssetParams attributes
 
 			protected function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_transcoding_flavor_edit'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_transcoding_flavor_edit'));
 			}
 
 			
@@ -240,12 +240,12 @@ edit ConversionProfileAssetParams attributes
 				var result:Boolean = isDrmEnabled;
 				if (result) {
 					// originalObjectType is being set in FlavorParamsUtil.makeFlavorParams()
-					if (flavorVO.kFlavor.hasOwnProperty('originalObjectType') 
-						&& flavorVO.kFlavor.originalObjectType == 'KalturaWidevineFlavorParams') {
+					if (flavorVO.vFlavor.hasOwnProperty('originalObjectType') 
+						&& flavorVO.vFlavor.originalObjectType == 'VidiunWidevineFlavorParams') {
 						result = false;
 					}
 					// this is another check for the same thing.
-					else if (flavorVO.kFlavor.tags.indexOf("widevine") > -1) {
+					else if (flavorVO.vFlavor.tags.indexOf("widevine") > -1) {
 						// widevine flavors are marked either with "widevine" or with "widevine_mbr" tag
 						result = false;
 					}
@@ -260,7 +260,7 @@ edit ConversionProfileAssetParams attributes
 			<mx:Text text="{profileName}" width="100%" />
 		</mx:FormItem>
 		<mx:FormItem label="{resourceManager.getString('account','convFlavorName')}" >
-			<mx:Text text="{flavorVO.kFlavor.name}" width="100%"/>
+			<mx:Text text="{flavorVO.vFlavor.name}" width="100%"/>
 		</mx:FormItem>
 		<mx:FormItem label="{resourceManager.getString('account','assetAvialability')}" 
 					 visible="{cbAvailability.visible}" includeInLayout="{cbAvailability.includeInLayout}" >

@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.admin.control
+package com.vidiun.vmc.modules.admin.control
 {
 	import com.adobe.cairngorm.control.FrontController;
-	import com.kaltura.kmc.modules.admin.control.commands.*;
-	import com.kaltura.kmc.modules.admin.control.events.*;
+	import com.vidiun.vmc.modules.admin.control.commands.*;
+	import com.vidiun.vmc.modules.admin.control.events.*;
 
 	public class AdminController extends FrontController
 	{

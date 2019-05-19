@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.vidiun.vmc.modules.studio.vo
 {
 	
-	import com.kaltura.kmc.modules.studio.model.types.MediaTypes;
+	import com.vidiun.vmc.modules.studio.model.types.MediaTypes;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -16,7 +16,7 @@ package com.kaltura.kmc.modules.studio.vo
 		public var partnerId : String = "";
 		public var subpId : String = "";
 		public var puserId : String = "";
-		public var kshowId : String = "";
+		public var vshowId : String = "";
 		public var tags : String = "";
 		public var status : String = "";
 		
@@ -60,7 +60,7 @@ package com.kaltura.kmc.modules.studio.vo
 			entry.partnerId = this.partnerId;
 			entry.subpId  = this.subpId;
 			entry.puserId = this.puserId;
-			entry.kshowId = this.kshowId;
+			entry.vshowId = this.vshowId;
 			entry.tags = this.tags;
 			entry.status = this.status;
 			entry.type = this.type;
@@ -106,7 +106,7 @@ package com.kaltura.kmc.modules.studio.vo
 			if( entry.partnerId != this.partnerId ) isIt = false;
 			if( entry.subpId  != this.subpId ) isIt = false;
 			if( entry.puserId != this.puserId ) isIt = false;
-			if( entry.kshowId != this.kshowId ) isIt= false;
+			if( entry.vshowId != this.vshowId ) isIt= false;
 			if( entry.tags != this.tags ) isIt = false;
 			if( entry.status != this.status ) isIt = false;
 			if( entry.type != this.type ) isIt = false;

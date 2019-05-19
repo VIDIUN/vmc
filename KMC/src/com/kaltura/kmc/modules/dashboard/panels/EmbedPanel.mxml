@@ -7,16 +7,16 @@
 
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" horizontalAlign="left"
-		 styleName="dashboardBox" xmlns:controls="com.kaltura.controls.*">
+		 styleName="dashboardBox" xmlns:controls="com.vidiun.controls.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.dashboard.DashboardManager;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 			
 			import modules.Dashboard;
 
@@ -27,24 +27,24 @@
 
 			private function manage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_EMBED_PLAYER, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_EMBED_PLAYER,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.DASHBOARD,VidiunStatsVmcEventType.DASHBOARD_EMBED_PLAYER,
 														  "DashBoard>Embed Player")
-//				DashboardManager.instance.loadKMCModule('content', 'Manage');
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'content', 'manage'));
+//				DashboardManager.instance.loadVMCModule('content', 'Manage');
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, 'content', 'manage'));
 			}
 
 
 			private function publish():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_EMBED_PLAYLIST, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_EMBED_PLAYLIST,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.DASHBOARD,VidiunStatsVmcEventType.DASHBOARD_EMBED_PLAYLIST,
 														  "DashBoard>Embed PlayList")
-//				DashboardManager.instance.loadKMCModule('content', 'Publish');
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'content', 'playlists'));
+//				DashboardManager.instance.loadVMCModule('content', 'Publish');
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, 'content', 'playlists'));
 			}
 		]]>
 	</mx:Script>
 	<mx:HBox width="100%" horizontalAlign="left" styleName="featureTitleBox">
-		<mx:Label text="{resourceManager.getString('kdashboard', 'embed_title')}" id="titleLabel" styleName="titleLabel"/>
+		<mx:Label text="{resourceManager.getString('vdashboard', 'embed_title')}" id="titleLabel" styleName="titleLabel"/>
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%" horizontalGap="0">
 		<mx:VBox height="100%" styleName="DashboardInnerBox" width="170">
@@ -53,26 +53,26 @@
 		<mx:VBox width="100%" height="100%" styleName="uploadInnerBox">
 			<mx:HBox width="100%">
 				<mx:Text id="embedOption1Label" width="95%"
-						 text="{resourceManager.getString('kdashboard', 'embed_option_1_description')}"
+						 text="{resourceManager.getString('vdashboard', 'embed_option_1_description')}"
 						 styleName="featureLineLabel"/>
 				<mx:Spacer width="5%"/>
 				<controls:MultilineButton id="embedOption1Button"
-						   label="{resourceManager.getString('kdashboard', 'embed_option_1_button')}"
+						   label="{resourceManager.getString('vdashboard', 'embed_option_1_button')}"
 						   useHandCursor="true" buttonMode="true" styleName="dashboardBtn" click="manage()"
 						   width="{Dashboard.BUTTON_WIDTH_SIZE}"/>
 			</mx:HBox>
 			<mx:HBox width="100%">
 				<mx:Text id="embedOption2Label" width="95%"
-						 text="{resourceManager.getString('kdashboard', 'embed_option_2_description')}"
+						 text="{resourceManager.getString('vdashboard', 'embed_option_2_description')}"
 						 styleName="featureLineLabel"/>
 				<mx:Spacer width="5%"/>
 				<controls:MultilineButton id="embedOption2Button"
-						   label="{resourceManager.getString('kdashboard', 'embed_option_2_button')}"
+						   label="{resourceManager.getString('vdashboard', 'embed_option_2_button')}"
 						   useHandCursor="true" buttonMode="true" styleName="dashboardBtn" click="publish()"
 						   width="{Dashboard.BUTTON_WIDTH_SIZE}"/>
 			</mx:HBox>
 			<mx:LinkButton id='quickStartLinkButton' styleName="dashboardLinkBtn"
-						   label="{resourceManager.getString('kdashboard', 'quick_start_link')}"
+						   label="{resourceManager.getString('vdashboard', 'quick_start_link')}"
 						   click="{DashboardManager.instance.launchExactOuterLink(quickStartURL)}"/>
 		</mx:VBox>
 	</mx:HBox>

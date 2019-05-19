@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*" 
+<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*" 
 							layout="vertical" width="450" height="190" showCloseButton="true"  
 							styleName="TitleWindowType2" paddingTop="24" 
 							creationComplete="creationCompleteHandler(event)" 
 							title="{resourceManager.getString('filter', 'preferencesWindowTitle')}" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.cat.events.CatTreePrefsEvent;
+			import com.vidiun.edw.components.fltr.cat.events.CatTreePrefsEvent;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;

@@ -2,29 +2,29 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.create.view.FilesTable;
-			import com.kaltura.kmc.modules.create.vo.UploadFile;
-			import com.kaltura.types.KalturaMediaType;
+			import com.vidiun.vmc.modules.create.view.FilesTable;
+			import com.vidiun.vmc.modules.create.vo.UploadFile;
+			import com.vidiun.types.VidiunMediaType;
 			
 			import mx.events.ListEvent;
 			import mx.resources.ResourceManager;
 			
 			public static const TYPES:Array = [
-				{value:KalturaMediaType.AUDIO, name:ResourceManager.getInstance().getString('create', 'audio_files')},
-				{value:KalturaMediaType.VIDEO, name:ResourceManager.getInstance().getString('create', 'video_files')},
-				{value:KalturaMediaType.IMAGE, name:ResourceManager.getInstance().getString('create', 'image_files')}];
+				{value:VidiunMediaType.AUDIO, name:ResourceManager.getInstance().getString('create', 'audio_files')},
+				{value:VidiunMediaType.VIDEO, name:ResourceManager.getInstance().getString('create', 'video_files')},
+				{value:VidiunMediaType.IMAGE, name:ResourceManager.getInstance().getString('create', 'image_files')}];
 			
 			override public function set data(value:Object):void {
 				super.data = value;
 				// show type from VO:
 				switch ((data as UploadFile).mediaType) {
-					case KalturaMediaType.AUDIO:
+					case VidiunMediaType.AUDIO:
 						cb.selectedIndex = 0;
 						break;
-					case KalturaMediaType.VIDEO:
+					case VidiunMediaType.VIDEO:
 						cb.selectedIndex = 1;
 						break;
-					case KalturaMediaType.IMAGE:
+					case VidiunMediaType.IMAGE:
 						cb.selectedIndex = 2;
 						break;
 					default:

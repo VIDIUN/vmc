@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.fltr.panels
+package com.vidiun.edw.components.fltr.panels
 {
-	import com.kaltura.edw.components.fltr.IMultiAttributeFilterComponent;
+	import com.vidiun.edw.components.fltr.IMultiAttributeFilterComponent;
 	
 	public class MultiAttributeFilter extends AdditionalFilter implements IMultiAttributeFilterComponent {
 		
@@ -22,7 +22,7 @@ package com.kaltura.edw.components.fltr.panels
 		}
 		
 		
-		public function set kfilters(value:Array):void {
+		public function set vfilters(value:Array):void {
 			// update vo:
 			_vo = {};
 			for (var i:int = 0; i<_attributes.length; i++) {
@@ -30,7 +30,7 @@ package com.kaltura.edw.components.fltr.panels
 			}
 		}
 		
-		public function get kfilters():Array {
+		public function get vfilters():Array {
 			var result:Array = [];
 			for (var i:int = 0; i<_attributes.length; i++) {
 				result.push(_vo[_attributes[i]]);

@@ -1,7 +1,7 @@
-package com.kaltura.edw.components.fltr.panels {
-	import com.kaltura.edw.components.fltr.FilterComponentEvent;
-	import com.kaltura.edw.components.fltr.IFilterComponent;
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
+package com.vidiun.edw.components.fltr.panels {
+	import com.vidiun.edw.components.fltr.FilterComponentEvent;
+	import com.vidiun.edw.components.fltr.IFilterComponent;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -15,7 +15,7 @@ package com.kaltura.edw.components.fltr.panels {
 	/**
 	 * dispatched when the value of the component have changed
 	 */
-	[Event(name="valueChange", type="com.kaltura.edw.components.fltr.FilterComponentEvent")]
+	[Event(name="valueChange", type="com.vidiun.edw.components.fltr.FilterComponentEvent")]
 
 	public class AdditionalFilter extends VBox implements IFilterComponent {
 
@@ -154,7 +154,7 @@ package com.kaltura.edw.components.fltr.panels {
 
 
 		/**
-		 * Name of the <code>KalturaFilter</code> attribute this component handles
+		 * Name of the <code>VidiunFilter</code> attribute this component handles
 		 */
 		public function set attribute(value:String):void {
 			_attribute = value;
@@ -167,7 +167,7 @@ package com.kaltura.edw.components.fltr.panels {
 
 
 		/**
-		 * Value for the relevant attribute on <code>KalturaFilter</code>.
+		 * Value for the relevant attribute on <code>VidiunFilter</code>.
 		 */
 		public function set filter(value:Object):void {
 			throw new Error("Method set filter() must be implemented");

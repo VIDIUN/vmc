@@ -3,18 +3,18 @@
 	<mx:Script>
 		<![CDATA[
 			// -------------------------
-			// "owner" is EntryTable, "data" is KalturaBaseEntry
+			// "owner" is EntryTable, "data" is VidiunBaseEntry
 			// -------------------------
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunMediaType;
 			
 			
 			
 			public static const NAME_CLICKED:String = "nameClicked";
 			
 			private function getDrillDownEnabled(type:int):Boolean {
-				if (type == KalturaMediaType.LIVE_STREAM_FLASH) {
-					return data.status == KalturaEntryStatus.READY && owner["showLinks"];
+				if (type == VidiunMediaType.LIVE_STREAM_FLASH) {
+					return data.status == VidiunEntryStatus.READY && owner["showLinks"];
 				}
 				else
 					return owner["showLinks"];

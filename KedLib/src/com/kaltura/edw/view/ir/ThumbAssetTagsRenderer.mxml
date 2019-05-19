@@ -2,7 +2,7 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" height="90" verticalAlign="middle" horizontalAlign="center" paddingLeft="7" paddingRight="7" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
 			
 			override public function set data(value:Object):void {
 				var thumb:ThumbnailWithDimensions = value as ThumbnailWithDimensions;

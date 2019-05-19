@@ -1,4 +1,4 @@
-package com.kaltura.base.vo
+package com.vidiun.base.vo
 {
 	public class DeletedEntry
 	{

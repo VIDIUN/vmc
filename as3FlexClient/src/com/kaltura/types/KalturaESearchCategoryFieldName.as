@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,9 +25,9 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.types
+package com.vidiun.types
 {
-	public class KalturaESearchCategoryFieldName
+	public class VidiunESearchCategoryFieldName
 	{
 		public static const CATEGORY_CONTRIBUTION_POLICY : String = "contribution_policy";
 		public static const CATEGORY_CREATED_AT : String = "created_at";
@@ -41,8 +41,8 @@ package com.kaltura.types
 		public static const CATEGORY_FULL_NAME : String = "full_name";
 		public static const CATEGORY_INHERITANCE_TYPE : String = "inheritance_type";
 		public static const CATEGORY_INHERITED_PARENT_ID : String = "inherited_parent_id";
-		public static const CATEGORY_KUSER_ID : String = "kuser_id";
-		public static const CATEGORY_KUSER_IDS : String = "kuser_ids";
+		public static const CATEGORY_VUSER_ID : String = "vuser_id";
+		public static const CATEGORY_VUSER_IDS : String = "vuser_ids";
 		public static const CATEGORY_MEMBERS_COUNT : String = "members_count";
 		public static const CATEGORY_MODERATION : String = "moderation";
 		public static const CATEGORY_NAME : String = "name";

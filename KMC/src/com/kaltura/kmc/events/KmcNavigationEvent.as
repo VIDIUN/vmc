@@ -1,4 +1,4 @@
-package com.kaltura.kmc.events {
+package com.vidiun.vmc.events {
 	import flash.events.Event;
 
 	/**
@@ -6,14 +6,14 @@ package com.kaltura.kmc.events {
 	 * dispatch in order to navigate to a new module / sub-module.
 	 * @author Atar
 	 */
-	public class KmcNavigationEvent extends Event {
+	public class VmcNavigationEvent extends Event {
 		
 		
 		/**
 		 * The NavigationEvent.NAVIGATE constant defines the value of the 
 		 * <code>type</code> property of the event object 
 		 * for a <code>navigate</code> event.
-		 * dispatched by different components to ask the KMC to naivgate 
+		 * dispatched by different components to ask the VMC to naivgate 
 		 * to a module as depicted by the event data.
 		 *
 		 * @eventType navigate
@@ -21,7 +21,7 @@ package com.kaltura.kmc.events {
 		public static const NAVIGATE:String = "navigate";
 		
 		/**
-		 * dispatched by KMC when the handling of a navigation request is complete.
+		 * dispatched by VMC when the handling of a navigation request is complete.
 		 * */
 		public static const NAVIGATION_COMPLETE:String = "navigation_complete";
 
@@ -32,7 +32,7 @@ package com.kaltura.kmc.events {
 		private var _data:Object;
 
 
-		public function KmcNavigationEvent(type:String, module:String, subtab:String = "", data:Object = null,
+		public function VmcNavigationEvent(type:String, module:String, subtab:String = "", data:Object = null,
 										bubbles:Boolean = true, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			_module = module;

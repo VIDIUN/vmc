@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+<containers:ConfinedTitleWindow xmlns:containers="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
 				layout="vertical" styleName="TitleWindowType2"
 				backgroundColor="#f7f7f7"
 				width="360" height="230"
@@ -9,8 +9,8 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.events.KedDataEvent;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.events.VedDataEvent;
 			
 			import mx.containers.VBox;
 			import mx.containers.ViewStack;
@@ -132,7 +132,7 @@
 			}
 			
 			private function setSelectedChild(childName:String):void {
-				var de:KedDataEvent = new KedDataEvent(KedDataEvent.NAVIGATE);
+				var de:VedDataEvent = new VedDataEvent(VedDataEvent.NAVIGATE);
 				de.data = childName;
 				dispatchEvent(de);
 			}

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.vidiun.vmc.modules.account.control.events
 {
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.vidiun.vo.MetadataFieldVO;
 	
 	import flash.events.Event;
 	

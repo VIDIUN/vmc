@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.control.events {
+package com.vidiun.vmc.modules.account.control.events {
 	import com.adobe.cairngorm.control.CairngormEvent;
 
 	public class EntryEvent extends CairngormEvent {

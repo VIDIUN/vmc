@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetTable;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.kmc.modules.analytics.model.reports.FormatReportParam;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaReportBaseTotal;
-	import com.kaltura.vo.KalturaReportInputFilter;
-	import com.kaltura.vo.KalturaReportTable;
+	import com.vidiun.commands.report.ReportGetTable;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.analytics.control.ReportEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vmc.modules.analytics.model.reports.FormatReportParam;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vo.VidiunEndUserReportInputFilter;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunReportBaseTotal;
+	import com.vidiun.vo.VidiunReportInputFilter;
+	import com.vidiun.vo.VidiunReportTable;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -22,7 +22,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 	public class GetTableCommand implements ICommand, IResponder {
 		private var _model:AnalyticsModelLocator = AnalyticsModelLocator.getInstance();
 
-		private var _tableData:KalturaReportTable;
+		private var _tableData:VidiunReportTable;
 		private var _addTotals:Boolean;
 		private var _baseTotalsWatcher:ChangeWatcher;
 		private var _isDataPending:Boolean;
@@ -49,7 +49,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 			ExecuteReportHelper.reportSetupBeforeExecution();
 
 			if (!selectedReportData.pager) {
-				selectedReportData.pager = new KalturaFilterPager();
+				selectedReportData.pager = new VidiunFilterPager();
 				selectedReportData.pager.pageSize = ReportData.DEF_PAGER_SIZE;
 				selectedReportData.pager.pageIndex = 1;
 			}
@@ -62,17 +62,17 @@ package com.kaltura.kmc.modules.analytics.commands {
 			if (reportEvt.orderBy)
 				selectedReportData.orderBy = reportEvt.orderBy;
 
-			var krif:KalturaReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
+			var vrif:VidiunReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
 			var reportGetTable:ReportGetTable = new ReportGetTable(reportEvt.reportType,
-				krif,
+				vrif,
 				selectedReportData.pager,
 				selectedReportData.orderBy,
 				ExecuteReportHelper.getObjectIds(_screenType));
 
 			reportGetTable.queued = false;
-			reportGetTable.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetTable.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(reportGetTable);
+			reportGetTable.addEventListener(VidiunEvent.COMPLETE, result);
+			reportGetTable.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(reportGetTable);
 		}
 
 
@@ -82,7 +82,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.checkLoading();
 
 			// save received data
-			_tableData = KalturaReportTable(result.data);
+			_tableData = VidiunReportTable(result.data);
 			
 			// add totals if required
 			if (_addTotals && _model.loadingBaseTotals) {
@@ -271,7 +271,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 
 
 		private function getBaseTotal(totalHeader:String):Number {
-			for each (var baseTotal:KalturaReportBaseTotal in _model.selectedReportData.baseTotals) {
+			for each (var baseTotal:VidiunReportBaseTotal in _model.selectedReportData.baseTotals) {
 				if (baseTotal.id == totalHeader) {
 					return parseFloat(baseTotal.data);
 				}

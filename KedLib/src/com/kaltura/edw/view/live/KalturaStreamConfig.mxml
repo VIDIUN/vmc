@@ -2,11 +2,11 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="vbox1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.edw.vo.LocalizedVo;
-			import com.kaltura.types.KalturaDVRStatus;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.business.EntryLiveStreamingHelper;
+			import com.vidiun.edw.vo.LocalizedVo;
+			import com.vidiun.types.VidiunDVRStatus;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -15,7 +15,7 @@
 			private var _autoStreamDp:Array; 
 			
 			[Bindable]
-			public var selectedEntry:KalturaLiveStreamEntry;
+			public var selectedEntry:VidiunLiveStreamEntry;
 			
 			public function getAutoStartStreaming(): Boolean {
 				if (autoStream.selectedItem) {
@@ -50,8 +50,8 @@
 				}
 			}
 			
-			private function selectInitialValue(entry:KalturaLiveStreamEntry):void {
-				if (entry.explicitLive == KalturaNullableBoolean.TRUE_VALUE) {
+			private function selectInitialValue(entry:VidiunLiveStreamEntry):void {
+				if (entry.explicitLive == VidiunNullableBoolean.TRUE_VALUE) {
 					autoStream.selectedIndex = 0;
 				}
 				else {
@@ -70,8 +70,8 @@
 				  width="{EntryLiveStreamingHelper.BROADCASTING_WIDTH}" styleName="drillDownSubLabel"/>
 	</mx:HBox>
 	
-	<mx:HBox width="100%" visible="{selectedEntry.dvrStatus == KalturaDVRStatus.ENABLED}" 
-			 includeInLayout="{selectedEntry.dvrStatus == KalturaDVRStatus.ENABLED}">
+	<mx:HBox width="100%" visible="{selectedEntry.dvrStatus == VidiunDVRStatus.ENABLED}" 
+			 includeInLayout="{selectedEntry.dvrStatus == VidiunDVRStatus.ENABLED}">
 		<mx:Label text="{resourceManager.getString('drilldown', 'dvrWin')}" width="{EntryLiveStreamingHelper.PREFIXES_WIDTH}"
 				  styleName="drillDownLabel"/>
 		<mx:Label id="dvrWin" text="{EntryLiveStreamingHelper.getDVRWindow(selectedEntry)}" selectable="true" 

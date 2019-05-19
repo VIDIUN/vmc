@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrashcanBase
-	xmlns="com.kaltura.controls.trashcan.*"
+	xmlns="com.vidiun.controls.trashcan.*"
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	backgroundSize="100%"
 	styleName="trashCanStyle"
@@ -9,7 +9,7 @@
 	borderStyle="solid" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.controls.trashcan.events.TrashcanEvent;
+			import com.vidiun.controls.trashcan.events.TrashcanEvent;
 		]]>
 	</mx:Script>
 

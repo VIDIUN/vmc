@@ -1,28 +1,28 @@
-package com.kaltura.edw.control.commands.dist
+package com.vidiun.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.EntryDistributionWithProfile;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaEntryDistributionStatus;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaEntryDistribution;
-	import com.kaltura.vo.KalturaEntryDistributionFilter;
-	import com.kaltura.vo.KalturaEntryDistributionListResponse;
+	import com.vidiun.commands.entryDistribution.EntryDistributionList;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.EntryDistributionWithProfile;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunEntryDistributionStatus;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunEntryDistribution;
+	import com.vidiun.vo.VidiunEntryDistributionFilter;
+	import com.vidiun.vo.VidiunEntryDistributionListResponse;
 	
-	public class ListEntryDistributionCommand extends KedCommand
+	public class ListEntryDistributionCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
-			var entryDistributionFilter:KalturaEntryDistributionFilter = new KalturaEntryDistributionFilter();
+			var entryDistributionFilter:VidiunEntryDistributionFilter = new VidiunEntryDistributionFilter();
 			entryDistributionFilter.entryIdEqual = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;	
 			var listEntryDistribution:EntryDistributionList = new EntryDistributionList(entryDistributionFilter);
-			listEntryDistribution.addEventListener(KalturaEvent.COMPLETE, result);
-			listEntryDistribution.addEventListener(KalturaEvent.FAILED, fault);
+			listEntryDistribution.addEventListener(VidiunEvent.COMPLETE, result);
+			listEntryDistribution.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(listEntryDistribution);
 
 		}
@@ -32,22 +32,22 @@ package com.kaltura.edw.control.commands.dist
 			_model.decreaseLoadCounter();	
 			super.result(data);
 
-			var result:KalturaEntryDistributionListResponse = data.data as KalturaEntryDistributionListResponse;
+			var result:VidiunEntryDistributionListResponse = data.data as VidiunEntryDistributionListResponse;
 			handleEntryDistributionResult(result);	
 		}
 		
-		public function handleEntryDistributionResult(result:KalturaEntryDistributionListResponse):void 
+		public function handleEntryDistributionResult(result:VidiunEntryDistributionListResponse):void 
 		{
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var distributionArray:Array = [];
 			var profilesArray:Array = ddp.distributionInfo.distributionProfiles;
-			for each (var distribution:KalturaEntryDistribution in result.objects) {
-				if (distribution.status != KalturaEntryDistributionStatus.DELETED) {
-					for each (var profile:KalturaDistributionProfile in profilesArray) {
+			for each (var distribution:VidiunEntryDistribution in result.objects) {
+				if (distribution.status != VidiunEntryDistributionStatus.DELETED) {
+					for each (var profile:VidiunDistributionProfile in profilesArray) {
 						if (distribution.distributionProfileId == profile.id) {
 							var newEntryDistribution:EntryDistributionWithProfile = new EntryDistributionWithProfile();
-							newEntryDistribution.kalturaDistributionProfile = profile;
-							newEntryDistribution.kalturaEntryDistribution = distribution;
+							newEntryDistribution.vidiunDistributionProfile = profile;
+							newEntryDistribution.vidiunEntryDistribution = distribution;
 							distributionArray.push(newEntryDistribution);
 						} 
 					}

@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.vidiun.vmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.vidiun.vo.MetadataFieldVO;
 	
 	/**
 	 * This class represents an event indicating some change was done in the metadata fields 

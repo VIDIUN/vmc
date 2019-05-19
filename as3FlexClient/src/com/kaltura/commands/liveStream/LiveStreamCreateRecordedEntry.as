@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.liveStream
+package com.vidiun.commands.liveStream
 {
-	import com.kaltura.delegates.liveStream.LiveStreamCreateRecordedEntryDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.vidiun.delegates.liveStream.LiveStreamCreateRecordedEntryDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Create recorded entry id if it doesn't exist and make sure it happens on the DC that the live entry was created on.
 	**/
-	public class LiveStreamCreateRecordedEntry extends KalturaCall
+	public class LiveStreamCreateRecordedEntry extends VidiunCall
 	{
 		public var filterFields : String;
 		

@@ -9,7 +9,7 @@
  nameObj.label = some_name_here;
  * 
  */
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
 		//	import com.sagada.business.SagadaServices;
 		

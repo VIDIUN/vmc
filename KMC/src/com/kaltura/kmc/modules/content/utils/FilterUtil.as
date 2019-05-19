@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.content.utils
+package com.vidiun.vmc.modules.content.utils
 {
-	import com.kaltura.kmc.modules.account.view.CustomData;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
-	import com.kaltura.vo.KalturaMetadataSearchItem;
-	import com.kaltura.vo.KalturaPlaylistFilter;
-	import com.kaltura.vo.KalturaSearchCondition;
-	import com.kaltura.vo.KalturaSearchOperator;
+	import com.vidiun.vmc.modules.account.view.CustomData;
+	import com.vidiun.types.VidiunSearchOperatorType;
+	import com.vidiun.vo.VidiunBaseEntryFilter;
+	import com.vidiun.vo.VidiunMediaEntryFilter;
+	import com.vidiun.vo.VidiunMetadataSearchItem;
+	import com.vidiun.vo.VidiunPlaylistFilter;
+	import com.vidiun.vo.VidiunSearchCondition;
+	import com.vidiun.vo.VidiunSearchOperator;
 	
 	import mx.utils.Base64Decoder;
 
@@ -20,25 +20,25 @@ package com.kaltura.kmc.modules.content.utils
 	public class FilterUtil
 	{
 		/**
-		 * creates a KalturaMediaEntryFilter from encoded data
+		 * creates a VidiunMediaEntryFilter from encoded data
 		 * @param filter	encoded filter data
 		 * */
-		public static function createFilterFromString(filter:String):KalturaBaseEntryFilter {
+		public static function createFilterFromString(filter:String):VidiunBaseEntryFilter {
 			var dec:Base64Decoder = new Base64Decoder();
 			dec.decode(filter);
 			var filterString:String = dec.toByteArray().toString();
 			var filterArray:Array = filterString.split("&");
 			
 			// distinguish between playlist and entry:
-			var kmef:KalturaBaseEntryFilter;
+			var vmef:VidiunBaseEntryFilter;
 			for (var j:int = 0; j < filterArray.length; j++) {
 				if (filterArray[j].indexOf("objectType") == 0) {
 					var cls:String = filterArray[j].split("=")[1];
-					if (cls == "KalturaPlaylistFilter") {
-						kmef = new KalturaPlaylistFilter();
+					if (cls == "VidiunPlaylistFilter") {
+						vmef = new VidiunPlaylistFilter();
 					}
 					else {
-						kmef = new KalturaMediaEntryFilter();
+						vmef = new VidiunMediaEntryFilter();
 					}
 					break;
 				}
@@ -53,16 +53,16 @@ package com.kaltura.kmc.modules.content.utils
 						saveCustomDataValue(customDataFilters, filterArray[i]);
 					}
 					else {
-						// KalturaMediaEntryFilter is dynamic, ok to put all values without testing
-						kmef[att[0]] = att[1];
+						// VidiunMediaEntryFilter is dynamic, ok to put all values without testing
+						vmef[att[0]] = att[1];
 					}
 				}
 			}
 			// parse the custom data array and make it advanced search component
 			if (customDataFilters.length > 0) {
-				handleCustomDataFilter(kmef, customDataFilters);
+				handleCustomDataFilter(vmef, customDataFilters);
 			}
-			return kmef;
+			return vmef;
 		}
 		
 		/**
@@ -85,24 +85,24 @@ package com.kaltura.kmc.modules.content.utils
 		
 		/**
 		 * create custom data filter, including advanced search if required.
-		 * @param kmef	filter to manipulate
+		 * @param vmef	filter to manipulate
 		 * @param key	either profile id, field or value
 		 * @param value	value for the given attribute
 		 * 
 		 */
-		public static function handleCustomDataFilter(kmef:KalturaBaseEntryFilter, customDataFilters:Array):void {
-			if (!kmef.advancedSearch) {
+		public static function handleCustomDataFilter(vmef:VidiunBaseEntryFilter, customDataFilters:Array):void {
+			if (!vmef.advancedSearch) {
 				// create advanced search component
-				kmef.advancedSearch = new KalturaSearchOperator();
-				kmef.advancedSearch.type = KalturaSearchOperatorType.SEARCH_AND;
-				kmef.advancedSearch.items = new Array();
+				vmef.advancedSearch = new VidiunSearchOperator();
+				vmef.advancedSearch.type = VidiunSearchOperatorType.SEARCH_AND;
+				vmef.advancedSearch.items = new Array();
 			}
 			
 			
 			for (var i:int = 0; i<customDataFilters.length; i++) {
 				var cdvo:CustomDataVo = customDataFilters[i] as CustomDataVo;
-				var profileSearchItem:KalturaMetadataSearchItem = getMetadataProfileSearchItem(kmef.advancedSearch.items, cdvo.profileId);
-				var fieldSearchCondition:KalturaSearchCondition = getMetadataFieldSearchCondition(profileSearchItem, cdvo.field);
+				var profileSearchItem:VidiunMetadataSearchItem = getMetadataProfileSearchItem(vmef.advancedSearch.items, cdvo.profileId);
+				var fieldSearchCondition:VidiunSearchCondition = getMetadataFieldSearchCondition(profileSearchItem, cdvo.field);
 				fieldSearchCondition.value = cdvo.value;
 			}
 		}
@@ -115,9 +115,9 @@ package com.kaltura.kmc.modules.content.utils
 		 * @param field		x-path of the field as in schema
 		 * @return 	search condition that matches the given field
 		 */
-		public static function getMetadataFieldSearchCondition(profileSearchItem:KalturaMetadataSearchItem, field:String):KalturaSearchCondition {
-			var searchItem:KalturaMetadataSearchItem;
-			var searchCond:KalturaSearchCondition;
+		public static function getMetadataFieldSearchCondition(profileSearchItem:VidiunMetadataSearchItem, field:String):VidiunSearchCondition {
+			var searchItem:VidiunMetadataSearchItem;
+			var searchCond:VidiunSearchCondition;
 			var found:Boolean;
 			
 			for each (searchItem in profileSearchItem.items) {	
@@ -135,15 +135,15 @@ package com.kaltura.kmc.modules.content.utils
 			} 
 			if (!found) {
 				// create searchItem for the field
-				searchItem = new KalturaMetadataSearchItem();
+				searchItem = new VidiunMetadataSearchItem();
 				searchItem.metadataProfileId = profileSearchItem.metadataProfileId;
-				searchItem.type = KalturaSearchOperatorType.SEARCH_OR;
+				searchItem.type = VidiunSearchOperatorType.SEARCH_OR;
 				searchItem.items = [];
 				profileSearchItem.items.push(searchItem);
 			}
 			
 			// create a searchCondition
-			searchCond = new KalturaSearchCondition();
+			searchCond = new VidiunSearchCondition();
 			searchCond.field = field;
 			searchItem.items.push(searchCond);
 			
@@ -159,8 +159,8 @@ package com.kaltura.kmc.modules.content.utils
 		 * @param profileId
 		 * @return metadata profile searchItem corresponding to the given profile id
 		 */
-		public static function getMetadataProfileSearchItem(items:Array, profileId:int):KalturaMetadataSearchItem {
-			var searchItem:KalturaMetadataSearchItem;
+		public static function getMetadataProfileSearchItem(items:Array, profileId:int):VidiunMetadataSearchItem {
+			var searchItem:VidiunMetadataSearchItem;
 			var found:Boolean;
 			
 			for each (searchItem in items) {
@@ -171,9 +171,9 @@ package com.kaltura.kmc.modules.content.utils
 			} 
 			if (!found) {
 				// create serachItem for the profile
-				searchItem = new KalturaMetadataSearchItem();
+				searchItem = new VidiunMetadataSearchItem();
 				searchItem.metadataProfileId = profileId;
-				searchItem.type = KalturaSearchOperatorType.SEARCH_AND;
+				searchItem.type = VidiunSearchOperatorType.SEARCH_AND;
 				searchItem.items = [];
 				items.push(searchItem);
 			}

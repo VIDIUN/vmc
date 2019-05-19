@@ -1,4 +1,4 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
 	public class EntryDetailsValidationError {
 		

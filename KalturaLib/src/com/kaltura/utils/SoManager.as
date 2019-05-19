@@ -1,4 +1,4 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	import flash.net.SharedObject;
 	

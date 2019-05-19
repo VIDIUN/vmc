@@ -4,45 +4,45 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaSyndicationFeedType;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.types.VidiunSyndicationFeedType;
 			
 			private function createTypeLabel():void
 			{
 				var vo:ExternalSyndicationVO = data as ExternalSyndicationVO;
-				switch(vo.kSyndicationFeed.type)
+				switch(vo.vSyndicationFeed.type)
 				{
-					case KalturaSyndicationFeedType.GOOGLE_VIDEO:
+					case VidiunSyndicationFeedType.GOOGLE_VIDEO:
 					{
 						typeLabel.text = 'Google';
 						break;
 					}
-					case KalturaSyndicationFeedType.YAHOO:
+					case VidiunSyndicationFeedType.YAHOO:
 					{
 						typeLabel.text = 'Yahoo';
 						break;
 					}
-					case KalturaSyndicationFeedType.ITUNES:
+					case VidiunSyndicationFeedType.ITUNES:
 					{
 						typeLabel.text = 'ITunes';
 						break;
 					}
-					case KalturaSyndicationFeedType.TUBE_MOGUL:
+					case VidiunSyndicationFeedType.TUBE_MOGUL:
 					{
 						typeLabel.text = 'Tube Mogul';
 						break;
 					}
-					case KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
+					case VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
 					{
 						typeLabel.text = resourceManager.getString('cms','roku_direct_publisher');
 						break;
 					}
-					case KalturaSyndicationFeedType.OPERA_TV_SNAP:
+					case VidiunSyndicationFeedType.OPERA_TV_SNAP:
 					{
 						typeLabel.text = resourceManager.getString('cms','opera_tv_snap');
 						break;
 					}
-					case KalturaSyndicationFeedType.KALTURA_XSLT:
+					case VidiunSyndicationFeedType.VIDIUN_XSLT:
 					{
 						typeLabel.text = resourceManager.getString('cms','flexibleFormatFeed');
 						break;

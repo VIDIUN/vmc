@@ -1,26 +1,26 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.liveStream.LiveStreamIsLive;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.types.KalturaPlaybackProtocol;
+	import com.vidiun.commands.liveStream.LiveStreamIsLive;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.types.VidiunPlaybackProtocol;
 
-	public class GetLivestreamStatusCommand extends KedCommand {
+	public class GetLivestreamStatusCommand extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
-			if (event.type == KedEntryEvent.GET_LIVESTREAM_STATUS) {
+		override public function execute(event:VMvCEvent):void {
+			if (event.type == VedEntryEvent.GET_LIVESTREAM_STATUS) {
 				_model.increaseLoadCounter();
-				var getStat:LiveStreamIsLive = new LiveStreamIsLive((event as KedEntryEvent).entryVo.id, KalturaPlaybackProtocol.HDS); 
-				getStat.addEventListener(KalturaEvent.COMPLETE, result);
-				getStat.addEventListener(KalturaEvent.FAILED, fault);
+				var getStat:LiveStreamIsLive = new LiveStreamIsLive((event as VedEntryEvent).entryVo.id, VidiunPlaybackProtocol.HDS); 
+				getStat.addEventListener(VidiunEvent.COMPLETE, result);
+				getStat.addEventListener(VidiunEvent.FAILED, fault);
 				_client.post(getStat);
 			}
-			else if (event.type == KedEntryEvent.RESET_LIVESTREAM_STATUS) {
+			else if (event.type == VedEntryEvent.RESET_LIVESTREAM_STATUS) {
 				var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-				edp.selectedLiveEntryIsLive = KalturaNullableBoolean.NULL_VALUE;
+				edp.selectedLiveEntryIsLive = VidiunNullableBoolean.NULL_VALUE;
 			}
 		}
 		

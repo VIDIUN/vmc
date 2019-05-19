@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -23,7 +23,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * R&P: for image entries, add size params when requesting image
-		 * (for accounts who use remote storage, then images don't use kaltura service)
+		 * (for accounts who use remote storage, then images don't use vidiun service)
 		 * */
 		public var enableThumbResize:Boolean = false;
 		
@@ -43,19 +43,19 @@ package com.kaltura.edw.model.datapacks
 		public var enableAkamaiLive:Boolean = true;
 		
 		/**
-		 * RnP: provision Kaltura live streams
+		 * RnP: provision Vidiun live streams
 		 * */
-		public var enableKalturaLive:Boolean = true;
+		public var enableVidiunLive:Boolean = true;
 		
 		/**
-		 * RnP: by default record Kaltura live streams
+		 * RnP: by default record Vidiun live streams
 		 * */
-		public var enableKalturaRecording:Boolean = true;
+		public var enableVidiunRecording:Boolean = true;
 		
 		/**
-		 * RnP: create Kaltura multicast live streams
+		 * RnP: create Vidiun multicast live streams
 		 * */
-		public var enableKalturaMulticast:Boolean = true;
+		public var enableVidiunMulticast:Boolean = true;
 		
 	}
 }

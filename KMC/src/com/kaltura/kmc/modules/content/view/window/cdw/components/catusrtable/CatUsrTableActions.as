@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.view.window.cdw.components.catusrtable
+package com.vidiun.vmc.modules.content.view.window.cdw.components.catusrtable
 {
 	public class CatUsrTableActions {
 		

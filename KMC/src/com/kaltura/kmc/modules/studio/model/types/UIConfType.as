@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.model.types
+package com.vidiun.vmc.modules.studio.model.types
 {
 	import mx.resources.ResourceManager;
 	

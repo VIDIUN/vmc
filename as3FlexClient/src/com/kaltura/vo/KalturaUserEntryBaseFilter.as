@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaRelatedFilter;
+	import com.vidiun.vo.VidiunRelatedFilter;
 
 	[Bindable]
-	public dynamic class KalturaUserEntryBaseFilter extends KalturaRelatedFilter
+	public dynamic class VidiunUserEntryBaseFilter extends VidiunRelatedFilter
 	{
 		/**
 		**/
@@ -69,7 +69,7 @@ package com.kaltura.vo
 		public var userIdNotIn : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryStatus
+		* @see com.vidiun.types.VidiunUserEntryStatus
 		**/
 		public var statusEqual : String = null;
 
@@ -90,12 +90,12 @@ package com.kaltura.vo
 		public var updatedAtGreaterThanOrEqual : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryType
+		* @see com.vidiun.types.VidiunUserEntryType
 		**/
 		public var typeEqual : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaUserEntryExtendedStatus
+		* @see com.vidiun.types.VidiunUserEntryExtendedStatus
 		**/
 		public var extendedStatusEqual : String = null;
 

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.view.window.cdw
+package com.vidiun.vmc.modules.content.view.window.cdw
 {
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
+	import com.vidiun.vmc.modules.content.model.CategoriesModel;
 	
 	import flash.events.IEventDispatcher;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*"
-							xmlns:containers="com.kaltura.containers.*" xmlns:cat="com.kaltura.edw.components.fltr.cat.*" 
+							xmlns:containers="com.vidiun.containers.*" xmlns:cat="com.vidiun.edw.components.fltr.cat.*" 
 							layout="vertical" width="400" height="400"
 							showCloseButton="true" close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
 							title="{_windowTitle}" 
@@ -8,15 +8,15 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACCategoryController;
+			import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import mx.core.mx_internal;
 			import mx.events.CloseEvent;
@@ -36,7 +36,7 @@
 			/**
 			 * client for autocomplete calls
 			 * */
-			public var kClient:KalturaClient;
+			public var vClient:VidiunClient;
 
 
 			[Bindable]
@@ -47,7 +47,7 @@
 
 			/**
 			 * list of categories to move
-			 * KalturaCategory objects
+			 * VidiunCategory objects
 			 * */
 			public function setCategories(value:Array):void {
 				_categories = value;
@@ -63,7 +63,7 @@
 
 
 			private function creationCompleteHandler(event:FlexEvent):void {
-				new KACCategoryController(catComplete, kClient);
+				new VACCategoryController(catComplete, vClient);
 			}
 
 
@@ -78,21 +78,21 @@
 			/**
 			 * get new parent category
 			 * */
-			public function getParent():KalturaCategory {
-				var kCat:KalturaCategory;
+			public function getParent():VidiunCategory {
+				var vCat:VidiunCategory;
 				if (none.selected) {
 					// return the "root"
-					kCat = new KalturaCategory();
-					kCat.id = 0;
+					vCat = new VidiunCategory();
+					vCat.id = 0;
 				}
 				else if (catComplete.selectedItem) {
-					kCat = catComplete.selectedItem as KalturaCategory;
+					vCat = catComplete.selectedItem as VidiunCategory;
 				}
 				else {
-					kCat = (catTree.getSelectedCategories()[0] as CategoryVO).category;
+					vCat = (catTree.getSelectedCategories()[0] as CategoryVO).category;
 				}
 		
-				return kCat;
+				return vCat;
 			}
 
 			protected function button1_clickHandler(event:MouseEvent):void {
@@ -102,7 +102,7 @@
 
 
 			private function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cat_move", true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, "section_cat_move", true));
 			}
 
 

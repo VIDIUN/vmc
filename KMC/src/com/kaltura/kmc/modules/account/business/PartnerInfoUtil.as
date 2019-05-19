@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.account.business
+package com.vidiun.vmc.modules.account.business
 {
-	import com.kaltura.kmc.modules.account.vo.NotificationVO;
+	import com.vidiun.vmc.modules.account.vo.NotificationVO;
 	
 	import mx.collections.ArrayCollection;
 
 	/**
-	 * methods for manipulating partner data (KalturaPartner / PartnerVO)  
+	 * methods for manipulating partner data (VidiunPartner / PartnerVO)  
 	 * @author atar.shadmi
 	 * 
 	 */	

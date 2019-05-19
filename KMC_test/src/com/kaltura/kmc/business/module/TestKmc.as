@@ -1,18 +1,18 @@
-package com.kaltura.kmc.business.module
+package com.vidiun.vmc.business.module
 {
 	import org.flexunit.Assert;
 	
 
-	public class TestKmc extends KMC
+	public class TestVmc extends VMC
 	{	
 		
 		[Test]
 		public function testRemoveExistingModule():void {
-			var kmcuiconf:XML = <root>
+			var vmcuiconf:XML = <root>
 					<!-- path to skin file -->
-					<skinPath>http://localhost/kmc/KMC/bin-debug/workspaces/kmc/KMC/assets/kmc_skin.swf</skinPath>
+					<skinPath>http://localhost/vmc/VMC/bin-debug/workspaces/vmc/VMC/assets/vmc_skin.swf</skinPath>
 					<!-- path to help page -->
-					<helpPage>index.php/kmc/kmc2help</helpPage>
+					<helpPage>index.php/vmc/vmc2help</helpPage>
 					<modules>
 				        <module id="content" uiconf="1002420" path="Content.swf" />
 				 		<module id="studio" uiconf="1002416" path="Studio.swf"/>
@@ -21,19 +21,19 @@ package com.kaltura.kmc.business.module
 				        <module id="account" uiconf="1002414" path="Account.swf"/>
 					</modules>					
 				</root>;
-			removeModule(kmcuiconf, "content");
-			if (kmcuiconf.modules.module.(@id == "content").length() > 0) {
+			removeModule(vmcuiconf, "content");
+			if (vmcuiconf.modules.module.(@id == "content").length() > 0) {
 				Assert.fail("module not removed");
 			}
 		}
 		
 		[Test]
 		public function testRemoveNonExistingModule():void {
-			var kmcuiconf:XML = <root>
+			var vmcuiconf:XML = <root>
 					<!-- path to skin file -->
-					<skinPath>http://localhost/kmc/KMC/bin-debug/workspaces/kmc/KMC/assets/kmc_skin.swf</skinPath>
+					<skinPath>http://localhost/vmc/VMC/bin-debug/workspaces/vmc/VMC/assets/vmc_skin.swf</skinPath>
 					<!-- path to help page -->
-					<helpPage>index.php/kmc/kmc2help</helpPage>
+					<helpPage>index.php/vmc/vmc2help</helpPage>
 					<modules>
 				        <module id="content" uiconf="1002420" path="Content.swf" />
 				 		<module id="studio" uiconf="1002416" path="Studio.swf"/>
@@ -43,7 +43,7 @@ package com.kaltura.kmc.business.module
 					</modules>					
 				</root>;
 			try {
-				removeModule(kmcuiconf, "atar");
+				removeModule(vmcuiconf, "atar");
 			} catch (e:Error) {
 				Assert.fail("method crashed");
 			}

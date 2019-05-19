@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.business
+package com.vidiun.vmc.modules.content.business
 {
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.base.FormBuilderBase;
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.CustomMetadataConstantTypes;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaMetadata;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.business.base.FormBuilderBase;
+	import com.vidiun.edw.model.MetadataDataObject;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.model.types.CustomMetadataConstantTypes;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.vmvc.model.VMvCModel;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunMetadata;
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.UIComponent;
@@ -20,7 +20,7 @@ package com.kaltura.kmc.modules.content.business
 	{
 		private var _model:CmsModelLocator = CmsModelLocator.getInstance();
 		
-		public function CategoryFormBuilder(metadataProfile:KMCMetadataProfileVO)
+		public function CategoryFormBuilder(metadataProfile:VMCMetadataProfileVO)
 		{
 			super(metadataProfile);
 		}

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:charts="com.kaltura.kmc.modules.analytics.view.charts.*"
-		 xmlns:view="com.kaltura.kmc.modules.analytics.view.*" xmlns:dtn="com.kaltura.kmc.modules.analytics.view.dtn.*">
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:charts="com.vidiun.vmc.modules.analytics.view.charts.*"
+		 xmlns:view="com.vidiun.vmc.modules.analytics.view.*" xmlns:dtn="com.vidiun.vmc.modules.analytics.view.dtn.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.analytics.control.PartnerEvent;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-			import com.kaltura.kmc.modules.analytics.view.dtn.DTNItem;
-			import com.kaltura.types.KalturaReportType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.analytics.control.PartnerEvent;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+			import com.vidiun.vmc.modules.analytics.view.dtn.DTNItem;
+			import com.vidiun.types.VidiunReportType;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -65,7 +65,7 @@
 						break;
 					default:
 						// the new screen is not in Content's scope, need to hide panel
-						(usageViews.selectedChild as KalturaReportView).onHide();
+						(usageViews.selectedChild as VidiunReportView).onHide();
 				}
 				if (gaEvent) {
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + gaEvent, GoogleAnalyticsConsts.ANALYTICS);
@@ -75,7 +75,7 @@
 
 
 			public function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_analytics_usage'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_analytics_usage'));
 			}
 
 
@@ -109,9 +109,9 @@
 	<dtn:DTN id="dtn" width="158" styleName="analyticsDtn" dataProvider="{_model.usageDtnDp}"
 			 enabled="{!_model.loadingFlag}" change="onDtnChange()"/>
 	<mx:ViewStack id="usageViews" width="100%" height="{this.height - 15}" styleName="contentViewStack" >
-		<view:KalturaReportView id="pbns" width="100%" height="100%" showTimeUnits="true" dateOnlyFlag="true"
+		<view:VidiunReportView id="pbns" width="100%" height="100%" showTimeUnits="true" dateOnlyFlag="true"
 								showUsersFilter="false" showApplicationsFilter="false" 
-								kdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
+								vdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
 								loadTotal="{_model.loadingTotalFlag}" loadTable="{_model.loadingTableFlag}"
 								isLoading="{_model.loadingFlag}"
 								filterVo="{_model.filterMasks.publisherBandwidthNStorage}"
@@ -121,12 +121,12 @@
 								tableHeaders="{_model.tableHeaders.publisherBandwidthNStorage}"
 								dateRanger="{_model.longTermDatesRanger}"
 								dimCbDp="{_model.reportDimension.publisherStorageNBandwidth}"
-								reportType="{KalturaReportType.PARTNER_USAGE}"
+								reportType="{VidiunReportType.PARTNER_USAGE}"
 								helpUrl="{'section_analytics_publisher_bandwidth_and_storage'}"
 								label="{resourceManager.getString('analytics', 'pbns')}" styleName="pageStyle"/>
-		<view:KalturaReportView id="endUserStorage" width="100%" height="100%" showTimeUnits="true" dateOnlyFlag="true"
+		<view:VidiunReportView id="endUserStorage" width="100%" height="100%" showTimeUnits="true" dateOnlyFlag="true"
 								showApplicationsFilter="false" addGraphTotals="true" 
-								kdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
+								vdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
 								loadTotal="{_model.loadingTotalFlag}" loadTable="{_model.loadingTableFlag}"
 								isLoading="{_model.loadingFlag}" filterVo="{_model.filterMasks.endUserStorage}"
 								screenType="{ScreenTypes.END_USER_STORAGE}" reportData="{_model.selectedReportData}"
@@ -135,14 +135,14 @@
 								dateRanger="{_model.longTermDatesRanger}"
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.endUserStorage}"
 								dimCbDp="{_model.reportDimension.endUserStorage}"
-								reportType="{KalturaReportType.USER_USAGE}"
+								reportType="{VidiunReportType.USER_USAGE}"
 								drillDown="{onDrillDown(ScreenTypes.END_USER_STORAGE_DRILL_DOWN)}"
 								helpUrl="{'section_analytics_end_user_storage'}"
 								label="{resourceManager.getString('analytics', 'endUserStorage')}" styleName="pageStyle"/>
-		<view:KalturaReportView id="specificEndUserStorage" width="100%" height="100%" showTimeUnits="true"
+		<view:VidiunReportView id="specificEndUserStorage" width="100%" height="100%" showTimeUnits="true"
 								dateOnlyFlag="true" showUsersFilter="false" showApplicationsFilter="false"
 								addGraphTotals="true" addTableTotals="true" 
-								kdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
+								vdpParams="{_model.context}" loadChart="{_model.loadingChartFlag}"
 								loadTotal="{_model.loadingTotalFlag}" loadTable="{_model.loadingTableFlag}"
 								isLoading="{_model.loadingFlag}"
 								filterVo="{_model.filterMasks.publisherBandwidthNStorage}"
@@ -153,7 +153,7 @@
 								dateRanger="{_model.longTermDatesRanger}"
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.specificEndUserStorage}"
 								dimCbDp="{_model.reportDimension.endUserStorage}"
-								reportType="{KalturaReportType.SPECIFIC_USER_USAGE}" isDrillDown="true"
+								reportType="{VidiunReportType.SPECIFIC_USER_USAGE}" isDrillDown="true"
 								backScreenType="{ScreenTypes.END_USER_STORAGE}"
 								helpUrl="{'section_analytics_end_user_storage_drilldown'}"
 								label="{resourceManager.getString('analytics', 'endUserStorage')}" styleName="pageStyle" />

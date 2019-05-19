@@ -1,26 +1,26 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.accessControl.AccessControlAdd;
-	import com.kaltura.edw.control.events.AccessControlEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.vidiun.commands.accessControl.AccessControlAdd;
+	import com.vidiun.edw.control.events.AccessControlEvent;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.AccessControlProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class AddNewAccessControlProfileCommand extends KedCommand
+	public class AddNewAccessControlProfileCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_dispatcher = event.dispatcher;
 			var accessControl:AccessControlProfileVO = event.data;
 			var addNewAccessControl:AccessControlAdd = new AccessControlAdd(accessControl.profile);
-		 	addNewAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			addNewAccessControl.addEventListener(KalturaEvent.FAILED, fault);
+		 	addNewAccessControl.addEventListener(VidiunEvent.COMPLETE, result);
+			addNewAccessControl.addEventListener(VidiunEvent.FAILED, fault);
 			var context:ContextDataPack = _model.getDataPack(ContextDataPack) as ContextDataPack;
-			context.kc.post(addNewAccessControl);
+			context.vc.post(addNewAccessControl);
 		}
 		
 		override public function result(data:Object):void

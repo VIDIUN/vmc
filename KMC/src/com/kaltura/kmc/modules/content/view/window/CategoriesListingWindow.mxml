@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							layout="vertical" width="400" height="190"
 							showCloseButton="true" showHelpButton="true" help="helpHandler(event)"
 							title="{resourceManager.getString('cms', 'catListTitle')}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.types.KalturaAppearInListType;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.types.VidiunAppearInListType;
 			
 
 
@@ -27,7 +27,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cats_list", true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, "section_cats_list", true));
 			}
 
 		]]>
@@ -37,9 +37,9 @@
 	
 	<mx:RadioButtonGroup id="myGroup" change="myGroup_changeHandler(event)"/>
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catListListed')}" 
-					value="{KalturaAppearInListType.PARTNER_ONLY}" groupName="myGroup" />
+					value="{VidiunAppearInListType.PARTNER_ONLY}" groupName="myGroup" />
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catListUnlisted')}" 
-					value="{KalturaAppearInListType.CATEGORY_MEMBERS_ONLY}" groupName="myGroup" />
+					value="{VidiunAppearInListType.CATEGORY_MEMBERS_ONLY}" groupName="myGroup" />
 	
 	
 	<mx:ControlBar>

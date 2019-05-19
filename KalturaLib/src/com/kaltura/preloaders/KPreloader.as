@@ -1,6 +1,6 @@
-package com.kaltura.preloaders
+package com.vidiun.preloaders
 {
-	import com.kaltura.wrapper.IFlexWrapper;
+	import com.vidiun.wrapper.IFlexWrapper;
 
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -8,7 +8,7 @@ package com.kaltura.preloaders
 	import mx.managers.SystemManager;
 	import mx.preloaders.DownloadProgressBar;
 
-	public class KPreloader extends DownloadProgressBar
+	public class VPreloader extends DownloadProgressBar
 	{
 		private var _wrapperRoot:DisplayObject;
 
@@ -17,7 +17,7 @@ package com.kaltura.preloaders
 		private var _stageWidth:Number;
 		private var _stageHeight:Number;
 
-		public function KPreloader()
+		public function VPreloader()
 		{
 			super();
 			//set the default stageSize, which determines the preloader position on the screen

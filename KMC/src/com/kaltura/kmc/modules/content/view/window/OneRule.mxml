@@ -3,29 +3,29 @@
  OneRule encapsulates a filter with entries list.
 -->
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" 
-		 xmlns:playlist="com.kaltura.edw.components.playlist.*"
-		 xmlns:fltr="com.kaltura.edw.components.fltr.*" >
+		 xmlns:playlist="com.vidiun.edw.components.playlist.*"
+		 xmlns:fltr="com.vidiun.edw.components.fltr.*" >
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-			import com.kaltura.kmc.modules.content.events.RuleBasedTypeEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaEntryType;
-			import com.kaltura.types.KalturaPlaylistType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-			import com.kaltura.vo.KalturaPlaylist;
+			import com.vidiun.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.types.WindowsStates;
+			import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
+			import com.vidiun.vmc.modules.content.events.RuleBasedTypeEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunEntryType;
+			import com.vidiun.types.VidiunPlaylistType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunMediaEntryFilter;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+			import com.vidiun.vo.VidiunPlaylist;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
@@ -43,23 +43,23 @@
 
 
 
-			private var _ruleToEdit:KalturaMediaEntryFilterForPlaylist;
+			private var _ruleToEdit:VidiunMediaEntryFilterForPlaylist;
 
-			public function set ruleToEdit(value:KalturaMediaEntryFilterForPlaylist):void {
+			public function set ruleToEdit(value:VidiunMediaEntryFilterForPlaylist):void {
 				_ruleToEdit = value;
 				// make sure to view only allowed content
 				value.moderationStatusIn = "2,6,1,5";
 				// convertion status
 				value.statusIn = "2,1";
-				value.typeIn = KalturaEntryType.MEDIA_CLIP + "," + KalturaEntryType.LIVE_STREAM;
+				value.typeIn = VidiunEntryType.MEDIA_CLIP + "," + VidiunEntryType.LIVE_STREAM;
 				if (filter) {
-					filter.kalturaFilter = value;
+					filter.vidiunFilter = value;
 				}
 				entries.limit = value.limit;
 				entries.setSelectedOrderBy(value.orderBy);
 			}
 
-			public function get ruleToEdit():KalturaMediaEntryFilterForPlaylist {
+			public function get ruleToEdit():VidiunMediaEntryFilterForPlaylist {
 				return _ruleToEdit;
 			}
 
@@ -78,22 +78,22 @@
 			 * take current rule and execute it to estimate the output;
 			 */
 			public function runRule():void {
-				var playlist:KalturaPlaylist = new KalturaPlaylist();
+				var playlist:VidiunPlaylist = new VidiunPlaylist();
 				playlist.totalResults = entries.getPlaylistLimit();
-				playlist.playlistType = KalturaPlaylistType.DYNAMIC;
+				playlist.playlistType = VidiunPlaylistType.DYNAMIC;
 				playlist.filters = new Array();
 
 				var orderByStr:String = entries.getSelectedOrderBy();
 
-				var kmef:KalturaMediaEntryFilter = filter.kalturaFilter as KalturaMediaEntryFilter;
-				kmef.orderBy = orderByStr;
-				playlist.filters.push(kmef);
+				var vmef:VidiunMediaEntryFilter = filter.vidiunFilter as VidiunMediaEntryFilter;
+				vmef.orderBy = orderByStr;
+				playlist.filters.push(vmef);
 				playlist.parts = playlistEntries;
 
 				var cgEvent:CairngormEvent = new RuleBasedTypeEvent(RuleBasedTypeEvent.ONE_RULE);
 				cgEvent.dispatch();
 
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.GET_RULE_BASED_PLAYLIST, playlist);
+				cgEvent = new VMCEntryEvent(VMCEntryEvent.GET_RULE_BASED_PLAYLIST, playlist);
 				cgEvent.dispatch();
 
 				if (!_isFirstRun)
@@ -108,8 +108,8 @@
 			/**
 			 * Get current rule filter
 			 */
-			public function get ruleFilter():KalturaMediaEntryFilterForPlaylist {
-				var plf:KalturaMediaEntryFilterForPlaylist = filter.kalturaFilter as KalturaMediaEntryFilterForPlaylist;
+			public function get ruleFilter():VidiunMediaEntryFilterForPlaylist {
+				var plf:VidiunMediaEntryFilterForPlaylist = filter.vidiunFilter as VidiunMediaEntryFilterForPlaylist;
 				plf.limit = entries.getPlaylistLimit();
 				plf.orderBy = entries.getSelectedOrderBy();
 				return plf;
@@ -124,11 +124,11 @@
 				entries.editable = value;
 			}
 
-			protected function entries_showEntryDetailsHandler(event:KedDataEvent):void
+			protected function entries_showEntryDetailsHandler(event:VedDataEvent):void
 			{
-				var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
-				var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id);
-				KedController.getInstance().dispatch(kEvent);					
+				var entry:VidiunBaseEntry = event.data as VidiunBaseEntry;
+				var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id);
+				VedController.getInstance().dispatch(vEvent);					
 				var cgEvent:CairngormEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_ENTRY_DETAILS_WINDOW);
 				cgEvent.dispatch();
 			}
@@ -136,7 +136,7 @@
 
 			protected function filter_creationCompleteHandler(event:FlexEvent):void {
 				if (_ruleToEdit) {
-					filter.kalturaFilter = _ruleToEdit;
+					filter.vidiunFilter = _ruleToEdit;
 				}
 			}
 
@@ -154,7 +154,7 @@
 							freeTextSearch="{searchBox}" filterModel="{filterData}" showPrefsButton="{false}" 
 							categoriesTreeSelectionMode="{CatTreeSelectionMode.MULTIPLE_SELECT_EXACT}"
 							metadataProfiles="{filterData.metadataProfiles}" distributionProfiles="{distributionProfilesArray}"
-							context="{KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
+							context="{VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
 							categoriesRoot="{filterData.categoriesGeneral}" allCategories="{filterData.categoriesMapGeneral}"
 							enableIngestionStatus="false" enableAccessControl="false" enableModeration="false" enableScheduling="false"
 							creationComplete="filter_creationCompleteHandler(event)"/>

@@ -3,21 +3,21 @@
 		 verticalScrollPolicy="off" horizontalScrollPolicy="off" paddingLeft="4">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaLiveParams;
+			import com.vidiun.vo.FlavorVO;
+			import com.vidiun.vo.VidiunFlavorParams;
+			import com.vidiun.vo.VidiunLiveParams;
 			
 			[Bindable]
 			private var txt:String = '';
 			
 			override public function set data(value:Object):void {
 				super.data = value;
-				var flv:KalturaFlavorParams = (value as FlavorVO).kFlavor;  
-				if (flv is KalturaLiveParams && flv.tags && flv.tags.indexOf('ingest') != -1) {
+				var flv:VidiunFlavorParams = (value as FlavorVO).vFlavor;  
+				if (flv is VidiunLiveParams && flv.tags && flv.tags.indexOf('ingest') != -1) {
 					txt = resourceManager.getString('account', 'n_a');
 				}
 				else {
-					txt = ((data as FlavorVO).kFlavor.audioBitrate + (data as FlavorVO).kFlavor.videoBitrate).toString();
+					txt = ((data as FlavorVO).vFlavor.audioBitrate + (data as FlavorVO).vFlavor.videoBitrate).toString();
 				}
 			}
 		]]>

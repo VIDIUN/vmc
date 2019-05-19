@@ -1,4 +1,4 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	import mx.utils.URLUtil;
 
@@ -76,7 +76,7 @@ package com.kaltura.utils
 		}
 		/**
 		 *Returns the full path that leads a given URL/path without the file name.
-		 * For example "http://www.kaltura.com/samples/Sample.swf is converted to |http://www.kaltura.com/samples/"
+		 * For example "http://www.vidiun.com/samples/Sample.swf is converted to |http://www.vidiun.com/samples/"
 		 * @param url
 		 * @return
 		 *
@@ -97,7 +97,7 @@ package com.kaltura.utils
 
 		/**
 		 * Removes the "[[IMPORT]]" from a URL string.
-		 * For example the URL http://sandbox.kaltura.com/[[IMPORT]]/cdnsandbox.kaltura.com/Sample.swf will be cut to http://cdnsandbox.kaltura.com/Sample.swf
+		 * For example the URL http://sandbox.vidiun.com/[[IMPORT]]/cdnsandbox.vidiun.com/Sample.swf will be cut to http://cdnsandbox.vidiun.com/Sample.swf
 		 * If the given url does not contain the [[IMPORT]] string, the url is returned without any changes.
 		 * The [[IMPORT]] string is known to be concatenated when a swf is loaded from a different into an existing security sandbox.
 		 * @param url A URL, that potentially contains the '[[IMPORT]]' String.
@@ -163,7 +163,7 @@ package com.kaltura.utils
 		/**
 		 * Extracts the path part of the URL
 		 * <p>
-		 * For example: getUpperDir("http://www.kaltura.com/home/index") returns "home/index";
+		 * For example: getUpperDir("http://www.vidiun.com/home/index") returns "home/index";
 		 * </p>
 		 * @param url
 		 * @return

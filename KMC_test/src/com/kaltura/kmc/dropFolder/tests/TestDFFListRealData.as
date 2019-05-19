@@ -1,10 +1,10 @@
-package com.kaltura.kmc.dropFolder.tests
+package com.vidiun.vmc.dropFolder.tests
 {
-	import com.kaltura.edw.control.events.DropFolderFileEvent;
-	import com.kaltura.edw.control.commands.dropFolder.ListDropFoldersFilesCommand;
-	import com.kaltura.vo.KalturaDropFolderFile;
-	import com.kaltura.vo.KalturaDropFolderFileListResponse;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.vidiun.edw.control.events.DropFolderFileEvent;
+	import com.vidiun.edw.control.commands.dropFolder.ListDropFoldersFilesCommand;
+	import com.vidiun.vo.VidiunDropFolderFile;
+	import com.vidiun.vo.VidiunDropFolderFileListResponse;
+	import com.vidiun.vo.VidiunMediaEntry;
 	
 	import flexunit.framework.Assert;
 	
@@ -18,11 +18,11 @@ package com.kaltura.kmc.dropFolder.tests
 			/**
 			 * create a dummy list reponse 
 			 */
-			protected function createDummy():KalturaDropFolderFileListResponse {
-				var response:KalturaDropFolderFileListResponse = new KalturaDropFolderFileListResponse();
+			protected function createDummy():VidiunDropFolderFileListResponse {
+				var response:VidiunDropFolderFileListResponse = new VidiunDropFolderFileListResponse();
 				response.objects = new Array();
 				
-				var dff:KalturaDropFolderFile = new KalturaDropFolderFile();
+				var dff:VidiunDropFolderFile = new VidiunDropFolderFile();
 				dff.id = 45;
 				dff.partnerId = 346151;
 				dff.dropFolderId = 1;
@@ -36,7 +36,7 @@ package com.kaltura.kmc.dropFolder.tests
 				dff.updatedAt = 1305122832;
 				response.objects.push(dff);
 				
-				dff = new KalturaDropFolderFile();
+				dff = new VidiunDropFolderFile();
 				dff.id = 46;
 				dff.partnerId = 346151;
 				dff.dropFolderId = 1;
@@ -53,7 +53,7 @@ package com.kaltura.kmc.dropFolder.tests
 				response.objects.push(dff);
 				
 				
-				dff = new KalturaDropFolderFile();
+				dff = new VidiunDropFolderFile();
 				dff.id = 43;
 				dff.partnerId = 346151;
 				dff.dropFolderId = 1;
@@ -68,7 +68,7 @@ package com.kaltura.kmc.dropFolder.tests
 				dff.updatedAt = 1305122833;
 				response.objects.push(dff);
 				
-				dff = new KalturaDropFolderFile();
+				dff = new VidiunDropFolderFile();
 				dff.id = 44;
 				dff.partnerId = 346151;
 				dff.dropFolderId = 1;
@@ -93,10 +93,10 @@ package com.kaltura.kmc.dropFolder.tests
 			 */
 			public function testSlugResponseNoParsed():void
 			{
-				_entry = new KalturaMediaEntry();
+				_entry = new VidiunMediaEntry();
 				_entry.referenceId = 'Pinky';
 				_eventType = DropFolderFileEvent.LIST_BY_SELECTED_FOLDER_HIERCH;
-				var response:KalturaDropFolderFileListResponse = createDummy();
+				var response:VidiunDropFolderFileListResponse = createDummy();
 				var list:Array = handleDropFolderFileList(response);
 				var defaultName:String = ResourceManager.getInstance().getString('cms', 'parseFailed');
 				

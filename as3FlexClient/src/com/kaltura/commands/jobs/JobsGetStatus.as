@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.jobs
+package com.vidiun.commands.jobs
 {
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.jobs.JobsGetStatusDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.jobs.JobsGetStatusDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* batch getStatusAction returns the status of task
 	**/
-	public class JobsGetStatus extends KalturaCall
+	public class JobsGetStatus extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param jobId int
 		* @param jobType String
-		* @param pager KalturaFilterPager
+		* @param pager VidiunFilterPager
 		**/
-		public function JobsGetStatus( jobId : int,jobType : String,pager : KalturaFilterPager=null )
+		public function JobsGetStatus( jobId : int,jobType : String,pager : VidiunFilterPager=null )
 		{
 			service= 'jobs';
 			action= 'getStatus';
@@ -56,7 +56,7 @@ package com.kaltura.commands.jobs
 			keyArr.push('jobType');
 			valueArr.push(jobType);
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.create
+package com.vidiun.vmc.modules.create
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.bulkUpload.BulkUploadAdd;
-	import com.kaltura.commands.category.CategoryAddFromBulkUpload;
-	import com.kaltura.commands.categoryUser.CategoryUserAddFromBulkUpload;
-	import com.kaltura.commands.user.UserAddFromBulkUpload;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.create.types.BulkTypes;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.types.KalturaBulkUploadType;
-	import com.kaltura.vo.KalturaBulkUploadCategoryData;
-	import com.kaltura.vo.KalturaBulkUploadCategoryUserData;
-	import com.kaltura.vo.KalturaBulkUploadCsvJobData;
-	import com.kaltura.vo.KalturaBulkUploadUserData;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.bulkUpload.BulkUploadAdd;
+	import com.vidiun.commands.category.CategoryAddFromBulkUpload;
+	import com.vidiun.commands.categoryUser.CategoryUserAddFromBulkUpload;
+	import com.vidiun.commands.user.UserAddFromBulkUpload;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.create.types.BulkTypes;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.types.VidiunBulkUploadType;
+	import com.vidiun.vo.VidiunBulkUploadCategoryData;
+	import com.vidiun.vo.VidiunBulkUploadCategoryUserData;
+	import com.vidiun.vo.VidiunBulkUploadCsvJobData;
+	import com.vidiun.vo.VidiunBulkUploadUserData;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -38,12 +38,12 @@ package com.kaltura.kmc.modules.create
 	public class BulkUploader extends EventDispatcher {
 		
 		
-		private var _client:KalturaClient;
+		private var _client:VidiunClient;
 		
 		/**
 		 * type of object being uploaded in bulk
 		 * 
-		 * @see com.kaltura.kmc.modules.create.types.BulkTypes 
+		 * @see com.vidiun.vmc.modules.create.types.BulkTypes 
 		 */		
 		private var _uploadType:String;
 		
@@ -59,7 +59,7 @@ package com.kaltura.kmc.modules.create
 		
 		private var _processedFilesCounter:int = 0;
 		
-		public function BulkUploader(client:KalturaClient) {
+		public function BulkUploader(client:VidiunClient) {
 			super(this);
 			_client = client;
 		}
@@ -78,38 +78,38 @@ package com.kaltura.kmc.modules.create
 		protected function addBulkUploads(event:Event):void {
 			var defaultConversionProfileId:int = -1;
 			var file:FileReference;
-			var kbu:KalturaCall;
-			var jobData:KalturaBulkUploadCsvJobData;
+			var vbu:VidiunCall;
+			var jobData:VidiunBulkUploadCsvJobData;
 			_files = [];
 			for (var i:int = 0; i<_bulkUpldFileRef.fileList.length; i++) {
 				file = _bulkUpldFileRef.fileList[i] as FileReference;
 				// save the file
 				_files.push(file);
 			
-				jobData = new KalturaBulkUploadCsvJobData();
+				jobData = new VidiunBulkUploadCsvJobData();
 				jobData.fileName = file.name;
 				switch (_uploadType) {
 					case BulkTypes.MEDIA:
 						// pass in xml or csv file type
-						kbu = new BulkUploadAdd(defaultConversionProfileId, file, getUploadType(file.name));
+						vbu = new BulkUploadAdd(defaultConversionProfileId, file, getUploadType(file.name));
 						break;
 					
 					case BulkTypes.CATEGORY:
-						kbu = new CategoryAddFromBulkUpload(file, jobData, new KalturaBulkUploadCategoryData());
+						vbu = new CategoryAddFromBulkUpload(file, jobData, new VidiunBulkUploadCategoryData());
 						break;
 					case BulkTypes.USER:
-						kbu = new UserAddFromBulkUpload(file, jobData, new KalturaBulkUploadUserData());
+						vbu = new UserAddFromBulkUpload(file, jobData, new VidiunBulkUploadUserData());
 						break;
 					case BulkTypes.CATEGORY_USER:
-						kbu = new CategoryUserAddFromBulkUpload(file, jobData, new KalturaBulkUploadCategoryUserData());
+						vbu = new CategoryUserAddFromBulkUpload(file, jobData, new VidiunBulkUploadCategoryUserData());
 						break;
 				}
 				
 				
-				kbu.addEventListener(KalturaEvent.COMPLETE, bulkUploadCompleteHandler);
-				kbu.addEventListener(KalturaEvent.FAILED, bulkUploadCompleteHandler);
-				kbu.queued = false;
-				_client.post(kbu);
+				vbu.addEventListener(VidiunEvent.COMPLETE, bulkUploadCompleteHandler);
+				vbu.addEventListener(VidiunEvent.FAILED, bulkUploadCompleteHandler);
+				vbu.queued = false;
+				_client.post(vbu);
 			}
 		}
 		
@@ -139,9 +139,9 @@ package com.kaltura.kmc.modules.create
 			var ext:String = url.substring(url.length - 3);
 			ext = ext.toLowerCase();
 			if (ext == "csv") {
-				return KalturaBulkUploadType.CSV;
+				return VidiunBulkUploadType.CSV;
 			}
-			return KalturaBulkUploadType.XML;
+			return VidiunBulkUploadType.XML;
 		}
 		
 		
@@ -154,10 +154,10 @@ package com.kaltura.kmc.modules.create
 		}
 		
 		
-		protected function bulkUploadCompleteHandler(e:KalturaEvent):void {
+		protected function bulkUploadCompleteHandler(e:VidiunEvent):void {
 			if (!e.success)  {
-				var er:KalturaError = e.error;
-				if (er.errorCode == APIErrorCode.INVALID_KS) {
+				var er:VidiunError = e.error;
+				if (er.errorCode == APIErrorCode.INVALID_VS) {
 					JSGate.expired();
 				}
 				else if (er.errorCode == APIErrorCode.SERVICE_FORBIDDEN) {
@@ -177,7 +177,7 @@ package com.kaltura.kmc.modules.create
 		}
 		
 		/**
-		 * logout from KMC
+		 * logout from VMC
 		 * */
 		protected function logout(e:Object):void {
 			JSGate.expired();

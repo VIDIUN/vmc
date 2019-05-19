@@ -1,6 +1,6 @@
 <root>
 	<!-- path to skin file -->
-	<skinPath>assets/kmc_skin.swf</skinPath>
+	<skinPath>assets/vmc_skin.swf</skinPath>
 	<!-- path to help page -->
 	<help>
 		<helpPage>/content/docs/NetHelp/default.htm#!Documents/</helpPage>
@@ -32,7 +32,7 @@
 		<item key="section_add_live_stream" anchor="creatingalivestreami.htm" />
 		<item key="section_add_live_stream_ak" anchor="creatingalivestreami.htm" />
 		<item key="section_add_live_stream_man" anchor="creatingalivestreami.htm" />
-		<item key="section_add_live_stream_kal" anchor="creatingalivestreami.htm" />
+		<item key="section_add_live_stream_vid" anchor="creatingalivestreami.htm" />
 		<item key="section_add_live_stream_mul" anchor="creatingalivestreami.htm" />
 		<item key="section_flavor_dropfolder" anchor="matchfilesfromdropfo.htm" />
 		<item key="section_flavor_upload" anchor="uploadfromdesktop.htm" />
@@ -45,7 +45,7 @@
 		<item key="section_edit_rule" anchor="definingarule.htm" />
 		<item key="section_syndication" anchor="settingupsyndication.htm" />
 		<item key="section_ExternalSyndicationPopup" anchor="googlewebmastertasks.htm" />
-		<item key="section_ExternalSyndicationNotification" anchor="kmcpublishertasksfor.htm" />
+		<item key="section_ExternalSyndicationNotification" anchor="vmcpublishertasksfor.htm" />
 		<item key="section_categories" anchor="categoriestable.htm" />
 		<item key="freetext_categories" anchor="searchingthroughcate.htm" />
 		<item key="section_category_parent" anchor="addingeditingaspecif.htm" />
@@ -108,11 +108,11 @@
 		<item key="section_admin_roles" anchor="rolemanagement.htm" />
 		<item key="section_role_drilldown" anchor="creatingcustomroles.htm" />
 		<item key="section_desktop_upload" anchor="uploadmedia.htm" />
-		<item key="section_upload_menu" anchor="thekalturauploader.htm" />
+		<item key="section_upload_menu" anchor="thevidiunuploader.htm" />
 	</help>
 
 	<locale>
-		<path>locale/{locale}/kmc_{locale}_ResourceModule.swf</path>
+		<path>locale/{locale}/vmc_{locale}_ResourceModule.swf</path>
 		<language>en_US</language>
 	</locale>
 	
@@ -135,20 +135,20 @@
 				path="modules/Account.swf"/>
 		<module id="admin" displayName="Administration" subtab="users" uiconf="@@AdminUIConfID@@"
 				path="modules/Management.swf"/>
-		<module id="usageDashboard" displayName="Usage Dashboard" subtab="" htmlUrl="ei:kmc.functions.openUsageDashboard" />
+		<module id="usageDashboard" displayName="Usage Dashboard" subtab="" htmlUrl="ei:vmc.functions.openUsageDashboard" />
 		<!--module id="testMe" displayName="Test Me" subtab="" htmlUrl="/api_v3/testme/index.php"/-->
-		<module id="add" displayName="Upload" subtab="" kmcFunction="addCode.togglePanel"/>
+		<module id="add" displayName="Upload" subtab="" vmcFunction="addCode.togglePanel"/>
 	</modules>
 	<plugins>
 		<!-- all attributes on the plugin node are passed to the plugin as vars (plugin[att] = plugin.@att) -->
 		<plugin id="addCode" path="modules/AddEntryPanel.swf" dependencies="add"
-				samplesUrl="/content/docs/kaltura_batch_upload_sample.zip">
+				samplesUrl="/content/docs/vidiun_batch_upload_sample.zip">
 			<!-- hierarchical data can be passed in the "config" node (plugin["config"] = plugin.config[0]).
 				This is better than loading extra uiconfs, if not really necessary -->
 			<config>
 				<aspera>
-					<upgrade>http://site.kaltura.com/Upgrade_Request_High_Speed_Upload.html</upgrade>
-					<homepage>https://aspera.kaltura.com</homepage>
+					<upgrade>http://site.vidiun.com/Upgrade_Request_High_Speed_Upload.html</upgrade>
+					<homepage>https://aspera.vidiun.com</homepage>
 				</aspera>
 				<!-- "name" is first searched in locale, and if not available shown as is -->
 				<filter name="video_files"

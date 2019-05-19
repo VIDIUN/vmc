@@ -1,12 +1,12 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
-	import com.kaltura.kmc.business.permissions.TestPermissionManagerNoInit;
+	import com.vidiun.vmc.business.permissions.TestPermissionManagerNoInit;
 	
 	[Suite(order="2")]
 	[RunWith("org.flexunit.runners.Suite")]
 	public class PermissionsFalseInputSuit
 	{
-		public var test1:com.kaltura.kmc.business.permissions.TestPermissionManagerNoInit;
+		public var test1:com.vidiun.vmc.business.permissions.TestPermissionManagerNoInit;
 		
 	}
 }

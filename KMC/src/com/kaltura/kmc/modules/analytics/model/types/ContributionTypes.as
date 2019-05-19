@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.model.types
+package com.vidiun.vmc.modules.analytics.model.types
 {
-	import com.kaltura.types.KalturaSearchProviderType;
-	import com.kaltura.types.KalturaSourceType;
+	import com.vidiun.types.VidiunSearchProviderType;
+	import com.vidiun.types.VidiunSourceType;
 	
 	import mx.resources.ResourceManager;
 
@@ -15,61 +15,61 @@ package com.kaltura.kmc.modules.analytics.model.types
 				case -1:
 					return ResourceManager.getInstance().getString('sourceTypes', 'UNKNOWN');
 					break;
-				case int(KalturaSourceType.FILE):
+				case int(VidiunSourceType.FILE):
 					return ResourceManager.getInstance().getString('sourceTypes', 'FILE');
 					break;
-				case int(KalturaSourceType.SEARCH_PROVIDER):
+				case int(VidiunSourceType.SEARCH_PROVIDER):
 					return ResourceManager.getInstance().getString('sourceTypes', 'SEARCH_PROVIDER');
 					break;
-				case int(KalturaSourceType.URL):
+				case int(VidiunSourceType.URL):
 					return ResourceManager.getInstance().getString('sourceTypes', 'URL');
 					break;
-				case int(KalturaSourceType.WEBCAM):
+				case int(VidiunSourceType.WEBCAM):
 					return ResourceManager.getInstance().getString('sourceTypes', 'WEBCAM');
 					break;
-				case KalturaSearchProviderType.FLICKR:
+				case VidiunSearchProviderType.FLICKR:
 					return ResourceManager.getInstance().getString('sourceTypes', 'FLICKR');
 					break;
-				case KalturaSearchProviderType.ARCHIVE_ORG:
+				case VidiunSearchProviderType.ARCHIVE_ORG:
 					return ResourceManager.getInstance().getString('sourceTypes', 'ARCHIVE_ORG');
 					break;
-				case KalturaSearchProviderType.CCMIXTER:
+				case VidiunSearchProviderType.CCMIXTER:
 					return ResourceManager.getInstance().getString('sourceTypes', 'CCMIXTER');
 					break;
-				case KalturaSearchProviderType.CURRENT:
+				case VidiunSearchProviderType.CURRENT:
 					return ResourceManager.getInstance().getString('sourceTypes', 'CURRENT');
 					break;
-				case KalturaSearchProviderType.JAMENDO:
+				case VidiunSearchProviderType.JAMENDO:
 					return ResourceManager.getInstance().getString('sourceTypes', 'JAMENDO');
 					break;
-				case KalturaSearchProviderType.KALTURA:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA');
+				case VidiunSearchProviderType.VIDIUN:
+					return ResourceManager.getInstance().getString('sourceTypes', 'VIDIUN');
 					break;
-				case KalturaSearchProviderType.KALTURA_PARTNER:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA_PARTNER');
+				case VidiunSearchProviderType.VIDIUN_PARTNER:
+					return ResourceManager.getInstance().getString('sourceTypes', 'VIDIUN_PARTNER');
 					break;
-				case KalturaSearchProviderType.KALTURA_USER_CLIPS:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA_USER_CLIPS');
+				case VidiunSearchProviderType.VIDIUN_USER_CLIPS:
+					return ResourceManager.getInstance().getString('sourceTypes', 'VIDIUN_USER_CLIPS');
 					break;
-				case KalturaSearchProviderType.MEDIA_COMMONS:
+				case VidiunSearchProviderType.MEDIA_COMMONS:
 					return ResourceManager.getInstance().getString('sourceTypes', 'MEDIA_COMMONS');
 					break;
-				case KalturaSearchProviderType.METACAFE:
+				case VidiunSearchProviderType.METACAFE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'METACAFE');
 					break;
-				case KalturaSearchProviderType.MYSPACE:
+				case VidiunSearchProviderType.MYSPACE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'MYSPACE');
 					break;
-				case KalturaSearchProviderType.NYPL:
+				case VidiunSearchProviderType.NYPL:
 					return ResourceManager.getInstance().getString('sourceTypes', 'NYPL');
 					break;
-				case KalturaSearchProviderType.PHOTOBUCKET:
+				case VidiunSearchProviderType.PHOTOBUCKET:
 					return ResourceManager.getInstance().getString('sourceTypes', 'PHOTOBUCKET');
 					break;
-				case KalturaSearchProviderType.YOUTUBE:
+				case VidiunSearchProviderType.YOUTUBE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'YOUTUBE');
 					break;
-				case KalturaSearchProviderType.SEARCH_PROXY:
+				case VidiunSearchProviderType.SEARCH_PROXY:
 					return ResourceManager.getInstance().getString('sourceTypes', 'SEARCH_PROXY');
 					break;
 			}

@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users 
+This file is part of the Vidiun Collaborative Media Suite which allows users 
 to do with audio, video, and animation what Wiki platfroms allow them to do with 
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,12 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles.managers
+package com.vidiun.controls.vobjecthadles.managers
 {
-	import com.kaltura.controls.kobjecthadles.cursors.LeftRightCursor;
-	import com.kaltura.controls.kobjecthadles.cursors.NESWCursor;
-	import com.kaltura.controls.kobjecthadles.cursors.NWSECursor;
-	import com.kaltura.controls.kobjecthadles.cursors.UpDownCursor;
+	import com.vidiun.controls.vobjecthadles.cursors.LeftRightCursor;
+	import com.vidiun.controls.vobjecthadles.cursors.NESWCursor;
+	import com.vidiun.controls.vobjecthadles.cursors.NWSECursor;
+	import com.vidiun.controls.vobjecthadles.cursors.UpDownCursor;
 	
 	import flash.display.DisplayObjectContainer;
 	
@@ -63,7 +63,7 @@ package com.kaltura.controls.kobjecthadles.managers
 	
 		public static const MOVE_CURSOR_X_OFFSET : Number = -8;
 		public static const MOVE_CURSOR_Y_OFFSET : Number = -8;
-		[Embed(source="/com/kaltura/controls/kobjecthadles/assets/cursors/light/SizeAll.png")] [Bindable] public var cursorMoveCls:Class;
+		[Embed(source="/com/vidiun/controls/vobjecthadles/assets/cursors/light/SizeAll.png")] [Bindable] public var cursorMoveCls:Class;
 		
 		public static const NWSE_CURSOR_X_OFFSET : Number = -8;
 		public static const NWSE_CURSOR_Y_OFFSET : Number = -8;
@@ -71,7 +71,7 @@ package com.kaltura.controls.kobjecthadles.managers
 		public static const NESW_CURSOR_X_OFFSET : Number = -8;
 		public static const NESW_CURSOR_Y_OFFSET : Number = -8;
 		
-		[Embed(source="/com/kaltura/controls/kobjecthadles/assets/cursors/light/cursor-closedhand.png")] [Bindable] public var cursorRotateCls:Class;
+		[Embed(source="/com/vidiun/controls/vobjecthadles/assets/cursors/light/cursor-closedhand.png")] [Bindable] public var cursorRotateCls:Class;
 		
 	
 		private var _currentObjectRotation : Number = 0;

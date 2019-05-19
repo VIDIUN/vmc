@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.userRole.UserRoleClone;
-	import com.kaltura.commands.userRole.UserRoleList;
-	import com.kaltura.commands.userRole.UserRoleUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaUserRole;
-	import com.kaltura.vo.KalturaUserRoleListResponse;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.userRole.UserRoleClone;
+	import com.vidiun.commands.userRole.UserRoleList;
+	import com.vidiun.commands.userRole.UserRoleUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunUserRole;
+	import com.vidiun.vo.VidiunUserRoleListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
@@ -19,8 +19,8 @@ package com.kaltura.kmc.modules.admin.control.commands
 		
 		override public function execute(event:CairngormEvent):void {
 			var mr:MultiRequest = new MultiRequest();
-			var call:KalturaCall;
-			var role:KalturaUserRole = (event as RoleEvent).role; 
+			var call:VidiunCall;
+			var role:VidiunUserRole = (event as RoleEvent).role; 
 			// pass result of first call to second call
 //			mr.addRequestParam("2:userRoleId", "{1:result:id}");
 			mr.mapMultiRequestParam(1, "id", 2, "userRoleId");
@@ -29,29 +29,29 @@ package com.kaltura.kmc.modules.admin.control.commands
 			call = new UserRoleClone(role.id);
 			mr.addAction(call);
 			// edit new role's name (both params are dummy, real value is taken from the first call
-			call = new UserRoleUpdate(5, new KalturaUserRole());
+			call = new UserRoleUpdate(5, new VidiunUserRole());
 			mr.addAction(call);
 			
 			// list
 			call = new UserRoleList(_model.rolesModel.rolesFilter);
 			mr.addAction(call);
 			// post
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 			mr.queued = false;
 			_model.increaseLoadCounter();
-			_model.kc.post(mr);
+			_model.vc.post(mr);
 		}
 		
 		override protected function result(data:Object):void {
 			super.result(data);
 			// select the new role
-			_model.rolesModel.selectedRole = data.data[1] as KalturaUserRole;
-			// open drilldown for returned KalturaRole
-			_model.rolesModel.newRole = data.data[1] as KalturaUserRole;
+			_model.rolesModel.selectedRole = data.data[1] as VidiunUserRole;
+			// open drilldown for returned VidiunRole
+			_model.rolesModel.newRole = data.data[1] as VidiunUserRole;
 			_model.rolesModel.newRole = null;
 			
-			var response:KalturaUserRoleListResponse = data.data[2] as KalturaUserRoleListResponse;
+			var response:VidiunUserRoleListResponse = data.data[2] as VidiunUserRoleListResponse;
 			_model.rolesModel.roles = new ArrayCollection(response.objects);
 			_model.decreaseLoadCounter();
 		} 

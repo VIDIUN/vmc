@@ -1,25 +1,25 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.vidiun.edw.business.IDataOwner;
+	import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 
-	public class KMCFilterEvent extends CairngormEvent
+	public class VMCFilterEvent extends CairngormEvent
 	{
 		public static const SET_FILTER_TO_MODEL : String = "content_setFilterToModel";
 		
 		
-		private var _filterVo : KalturaMediaEntryFilterForPlaylist;
+		private var _filterVo : VidiunMediaEntryFilterForPlaylist;
 		
 		
 		
-		public function KMCFilterEvent(type:String, filterVo : KalturaMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function VMCFilterEvent(type:String, filterVo : VidiunMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_filterVo = filterVo;
 		}
 
-		public function get filterVo():KalturaMediaEntryFilterForPlaylist
+		public function get filterVo():VidiunMediaEntryFilterForPlaylist
 		{
 			return _filterVo;
 		}

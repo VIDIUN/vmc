@@ -1,13 +1,13 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.vo.KalturaConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfile;
 	
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
 	/**
-	 * Couples <code>KalturaConversionProfile</code> with its 
-	 * <code>KalturaConversionProfileAssetParams</code>.
+	 * Couples <code>VidiunConversionProfile</code> with its 
+	 * <code>VidiunConversionProfileAssetParams</code>.
 	 * @author Atar
 	 */
 	public class ConversionProfileWithFlavorParamsVo {
@@ -15,12 +15,12 @@ package com.kaltura.edw.vo
 		/**
 		 * Conversion Profile 
 		 */
-		public var profile:KalturaConversionProfile;
+		public var profile:VidiunConversionProfile;
 		
-		[ArrayElementType("com.kaltura.vo.KalturaConversionProfileAssetParams")]
+		[ArrayElementType("com.vidiun.vo.VidiunConversionProfileAssetParams")]
 		/**
 		 * all flavor params objects whos ids are associated with this profile.
-		 * <code>KalturaConversionProfileAssetParams</code> objects 
+		 * <code>VidiunConversionProfileAssetParams</code> objects 
 		 */		
 		public var flavors:ArrayCollection;
 		

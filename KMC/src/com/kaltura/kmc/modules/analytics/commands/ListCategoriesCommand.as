@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.CategoryUtils;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.types.VidiunCategoryOrderBy;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -26,13 +26,13 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingFlag = true;
 			_model.loadingCategories = true;
 
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
-			f.orderBy = KalturaCategoryOrderBy.NAME_ASC;
+			var f:VidiunCategoryFilter = new VidiunCategoryFilter();
+			f.orderBy = VidiunCategoryOrderBy.NAME_ASC;
 			var listCategories:CategoryList = new CategoryList(f);
 
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(listCategories);
+			listCategories.addEventListener(VidiunEvent.COMPLETE, result);
+			listCategories.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(listCategories);
 		}
 
 
@@ -47,26 +47,26 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingCategories = true;
 			_model.checkLoading();
 
-			var kclr:KalturaCategoryListResponse;
-			var kc:KalturaCategory;
+			var vclr:VidiunCategoryListResponse;
+			var vc:VidiunCategory;
 
-			if (event.data[0] is KalturaError) {
-				Alert.show((event.data[0] as KalturaError).errorMsg, ResourceManager.getInstance().getString('analytics', 'error'));
+			if (event.data[0] is VidiunError) {
+				Alert.show((event.data[0] as VidiunError).errorMsg, ResourceManager.getInstance().getString('analytics', 'error'));
 			}
 			else {
-				_model.categories = buildCategoriesHyrarchy((event.data as KalturaCategoryListResponse).objects, _model.categoriesMap);
+				_model.categories = buildCategoriesHyrarchy((event.data as VidiunCategoryListResponse).objects, _model.categoriesMap);
 			}
 
 		}
 		
-		private function buildCategoriesHyrarchy(kCats:Array, catMap:HashMap):ArrayCollection {
+		private function buildCategoriesHyrarchy(vCats:Array, catMap:HashMap):ArrayCollection {
 			var allCategories:ArrayCollection = new ArrayCollection();	// all categories, so we can scan them easily
 			var rootLevel:ArrayCollection = new ArrayCollection();	// categories in the root level
 			var category:CategoryVO;
 			// create category VOs and add to hashmap
-			for each (var kCat:KalturaCategory in kCats) {
-				category = new CategoryVO(kCat.id, kCat.name, kCat);
-				catMap.put(kCat.id + '', category);
+			for each (var vCat:VidiunCategory in vCats) {
+				category = new CategoryVO(vCat.id, vCat.name, vCat);
+				catMap.put(vCat.id + '', category);
 				allCategories.addItem(category)
 			}
 			

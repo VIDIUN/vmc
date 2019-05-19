@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryGet;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.types.KalturaInheritanceType;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.category.CategoryGet;
+	import com.vidiun.commands.user.UserGet;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.types.VidiunInheritanceType;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunUser;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class ManageParentCategoryCommand extends KalturaCommand{
+	public class ManageParentCategoryCommand extends VidiunCommand{
 		
 		private var _eventType:String;
 		
@@ -32,7 +32,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 					_model.increaseLoadCounter();
 					var mr:MultiRequest = new MultiRequest();
 					
-					var selectedCat:KalturaCategory = event.data as KalturaCategory;
+					var selectedCat:VidiunCategory = event.data as VidiunCategory;
 					var req:CategoryGet;
 					if (event.type == CategoryEvent.GET_PARENT_CATEGORY) {
 						req = new CategoryGet(selectedCat.parentId);
@@ -48,10 +48,10 @@ package com.kaltura.kmc.modules.content.commands.cat
 					mr.addAction(getOwner);
 					mr.mapMultiRequestParam(1, "owner", 2, "userId");
 					
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(VidiunEvent.COMPLETE, result);
+					mr.addEventListener(VidiunEvent.FAILED, fault);
 		
-					_model.context.kc.post(mr);
+					_model.context.vc.post(mr);
 					
 					break;
 					
@@ -64,13 +64,13 @@ package com.kaltura.kmc.modules.content.commands.cat
 			
 			if (!checkError(data)) {
 				//inheritedOwner
-				if (data.data[1] is KalturaUser) {
-					_model.categoriesModel.inheritedOwner = data.data[1] as KalturaUser;
+				if (data.data[1] is VidiunUser) {
+					_model.categoriesModel.inheritedOwner = data.data[1] as VidiunUser;
 				}
 				
 				// category
-				if (data.data[0] is KalturaCategory){
-					_model.categoriesModel.inheritedParentCategory = data.data[0] as KalturaCategory;
+				if (data.data[0] is VidiunCategory){
+					_model.categoriesModel.inheritedParentCategory = data.data[0] as VidiunCategory;
 				}
 				else {
 					Alert.show(ResourceManager.getInstance().getString('cms', 'error') + ": " +

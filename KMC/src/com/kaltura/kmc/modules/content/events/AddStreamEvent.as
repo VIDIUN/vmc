@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.vo.StreamVo;
+	import com.vidiun.vmc.modules.content.vo.StreamVo;
 
 	public class AddStreamEvent extends CairngormEvent
 	{

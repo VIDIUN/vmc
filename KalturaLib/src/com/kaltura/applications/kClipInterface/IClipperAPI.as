@@ -1,4 +1,4 @@
-package com.kaltura.applications.kClipInterface
+package com.vidiun.applications.vClipInterface
 {
 	import flash.events.IEventDispatcher;
 	
@@ -66,7 +66,7 @@ package com.kaltura.applications.kClipInterface
 		function init(params:Object):void;
 		
 		/**
-		 * Is KClip ready 
+		 * Is VClip ready 
 		 * @return true if ready
 		 * 
 		 */		

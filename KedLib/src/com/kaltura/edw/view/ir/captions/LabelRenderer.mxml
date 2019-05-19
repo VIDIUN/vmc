@@ -3,8 +3,8 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.captions.CaptionsTable;
-			import com.kaltura.edw.vo.EntryCaptionVO;
+			import com.vidiun.edw.view.captions.CaptionsTable;
+			import com.vidiun.edw.vo.EntryCaptionVO;
 
 
 			protected function labelTi_changeHandler(event:Event):void {

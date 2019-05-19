@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.account.model
+package com.vidiun.vmc.modules.account.model
 {
-	import com.kaltura.KalturaClient;
+	import com.vidiun.VidiunClient;
 	
 	[Bindable]
 	public class Context
 	{
 		public static const DEFAULT_UI_CONFIG_ID:String = "10000";
-	 	public static const DEFAULT_METADATA_PROFILE_NAME : String ="KMC_PROFILE";
+	 	public static const DEFAULT_METADATA_PROFILE_NAME : String ="VMC_PROFILE";
 	 
  		public var userId:String;
 		public var isAnonymous:Boolean;
 	//	public var partnerId:String;
 		public var subpId:String;
-	//	public var ks:String;
+	//	public var vs:String;
 		public var uiConfigId:String = DEFAULT_UI_CONFIG_ID;
 		public var permissions:int = -1;
 		public var groupId:String;
@@ -21,10 +21,10 @@ package com.kaltura.kmc.modules.account.model
 		 * The PS3 - new flex client API
 		 * 
 		 */
-		public var kc:KalturaClient;
+		public var vc:VidiunClient;
 		
 		/**
-		* protocol (like http://) and then  domain (like www.kaltura.com)
+		* protocol (like http://) and then  domain (like www.vidiun.com)
 		* e.g: swf that came from http://www.yourdomain.com/dir/file.swf will have "http://www.yourdomain.com/" as its root url
 		*/
 	 	public var rootUrl : String; 
@@ -36,7 +36,7 @@ package com.kaltura.kmc.modules.account.model
 		 public var sourceUrl:String; 
 
 		/**
-		 *The hosting server name, e.g. "kaltura.com"
+		 *The hosting server name, e.g. "vidiun.com"
 		 */
 		 public var hostName:String;  
 		/**
@@ -47,9 +47,9 @@ package com.kaltura.kmc.modules.account.model
 		public function get defaultUrlVars() :Object
 		{
 			return {uid: userId,
-					partner_id: kc.partnerId,
+					partner_id: vc.partnerId,
 					subp_id: subpId,
-					ks: kc.ks};
+					vs: vc.vs};
 		}
 	}
 }

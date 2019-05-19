@@ -1,19 +1,19 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
-	import com.kaltura.kmc.business.module.TestKmc;
-	import com.kaltura.kmc.business.module.TestKmcModuleLoader;
-	import com.kaltura.kmc.business.module.TestModuleLoaded;
-	import com.kaltura.kmc.business.module.TestKmc;
-	import com.kaltura.kmc.business.module.TestKmcModuleLoader;
-	import com.kaltura.kmc.business.module.TestModuleLoaded;
+	import com.vidiun.vmc.business.module.TestVmc;
+	import com.vidiun.vmc.business.module.TestVmcModuleLoader;
+	import com.vidiun.vmc.business.module.TestModuleLoaded;
+	import com.vidiun.vmc.business.module.TestVmc;
+	import com.vidiun.vmc.business.module.TestVmcModuleLoader;
+	import com.vidiun.vmc.business.module.TestModuleLoaded;
 	
 	[Suite]
 	[RunWith("org.flexunit.runners.Suite")]
 	public class ModuleSuit
 	{
-		public var test1:com.kaltura.kmc.business.module.TestKmc;
-		public var test2:com.kaltura.kmc.business.module.TestKmcModuleLoader;
-		public var test3:com.kaltura.kmc.business.module.TestModuleLoaded;
+		public var test1:com.vidiun.vmc.business.module.TestVmc;
+		public var test2:com.vidiun.vmc.business.module.TestVmcModuleLoader;
+		public var test3:com.vidiun.vmc.business.module.TestModuleLoaded;
 		
 	}
 }

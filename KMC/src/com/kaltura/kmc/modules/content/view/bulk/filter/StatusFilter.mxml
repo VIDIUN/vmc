@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaBatchJobStatus;
+			import com.vidiun.types.VidiunBatchJobStatus;
 			
 			import mx.events.FlexEvent;
 			
@@ -22,20 +22,20 @@
 				}
 				else {
 					if (finishedBtn.selected) {
-						typesString += KalturaBatchJobStatus.FINISHED + ",";
+						typesString += VidiunBatchJobStatus.FINISHED + ",";
 					}
 					if (finishedErrBtn.selected) {
-						typesString += KalturaBatchJobStatus.FINISHED_PARTIALLY + ",";
+						typesString += VidiunBatchJobStatus.FINISHED_PARTIALLY + ",";
 					}
 					if (failedBtn.selected) {
-						typesString += KalturaBatchJobStatus.FAILED + "," + KalturaBatchJobStatus.FATAL + ",";
+						typesString += VidiunBatchJobStatus.FAILED + "," + VidiunBatchJobStatus.FATAL + ",";
 					}
 					if (otherBtn.selected) {
-						typesString += KalturaBatchJobStatus.ABORTED + "," + 
-							KalturaBatchJobStatus.ALMOST_DONE + "," + KalturaBatchJobStatus.DONT_PROCESS + "," +
-							KalturaBatchJobStatus.MOVEFILE + "," + KalturaBatchJobStatus.PENDING + "," +
-							KalturaBatchJobStatus.PROCESSED + "," + KalturaBatchJobStatus.PROCESSING + "," +
-							KalturaBatchJobStatus.QUEUED + "," + KalturaBatchJobStatus.RETRY + ",";
+						typesString += VidiunBatchJobStatus.ABORTED + "," + 
+							VidiunBatchJobStatus.ALMOST_DONE + "," + VidiunBatchJobStatus.DONT_PROCESS + "," +
+							VidiunBatchJobStatus.MOVEFILE + "," + VidiunBatchJobStatus.PENDING + "," +
+							VidiunBatchJobStatus.PROCESSED + "," + VidiunBatchJobStatus.PROCESSING + "," +
+							VidiunBatchJobStatus.QUEUED + "," + VidiunBatchJobStatus.RETRY + ",";
 					}
 					//remove last , 
 					typesString = typesString.slice(0, typesString.length - 1);
@@ -60,28 +60,28 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaBatchJobStatus.FINISHED:
+							case VidiunBatchJobStatus.FINISHED:
 								finishedBtn.selected = true;
 								break;
 							
-							case KalturaBatchJobStatus.FINISHED_PARTIALLY:
+							case VidiunBatchJobStatus.FINISHED_PARTIALLY:
 								finishedErrBtn.selected = true;
 								break;
 							
-							case KalturaBatchJobStatus.FAILED:
-							case KalturaBatchJobStatus.FATAL:
+							case VidiunBatchJobStatus.FAILED:
+							case VidiunBatchJobStatus.FATAL:
 								failedBtn.selected = true;
 								break;
 							
-							case KalturaBatchJobStatus.ABORTED:
-							case KalturaBatchJobStatus.ALMOST_DONE:
-							case KalturaBatchJobStatus.DONT_PROCESS:
-							case KalturaBatchJobStatus.MOVEFILE:
-							case KalturaBatchJobStatus.PENDING:
-							case KalturaBatchJobStatus.PROCESSED:
-							case KalturaBatchJobStatus.PROCESSING:
-							case KalturaBatchJobStatus.QUEUED:
-							case KalturaBatchJobStatus.RETRY:
+							case VidiunBatchJobStatus.ABORTED:
+							case VidiunBatchJobStatus.ALMOST_DONE:
+							case VidiunBatchJobStatus.DONT_PROCESS:
+							case VidiunBatchJobStatus.MOVEFILE:
+							case VidiunBatchJobStatus.PENDING:
+							case VidiunBatchJobStatus.PROCESSED:
+							case VidiunBatchJobStatus.PROCESSING:
+							case VidiunBatchJobStatus.QUEUED:
+							case VidiunBatchJobStatus.RETRY:
 								otherBtn.selected = true;
 								break;
 						}

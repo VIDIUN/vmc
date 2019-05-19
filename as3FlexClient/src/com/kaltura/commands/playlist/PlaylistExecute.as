@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,29 +25,29 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.playlist
+package com.vidiun.commands.playlist
 {
-		import com.kaltura.vo.KalturaContext;
-		import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.playlist.PlaylistExecuteDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunContext;
+		import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.playlist.PlaylistExecuteDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Retrieve playlist for playing purpose
 	**/
-	public class PlaylistExecute extends KalturaCall
+	public class PlaylistExecute extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param id String
 		* @param detailed String
-		* @param playlistContext KalturaContext
-		* @param filter KalturaMediaEntryFilterForPlaylist
-		* @param pager KalturaFilterPager
+		* @param playlistContext VidiunContext
+		* @param filter VidiunMediaEntryFilterForPlaylist
+		* @param pager VidiunFilterPager
 		**/
-		public function PlaylistExecute( id : String,detailed : String='',playlistContext : KalturaContext=null,filter : KalturaMediaEntryFilterForPlaylist=null,pager : KalturaFilterPager=null )
+		public function PlaylistExecute( id : String,detailed : String='',playlistContext : VidiunContext=null,filter : VidiunMediaEntryFilterForPlaylist=null,pager : VidiunFilterPager=null )
 		{
 			service= 'playlist';
 			action= 'execute';
@@ -60,17 +60,17 @@ package com.kaltura.commands.playlist
 			keyArr.push('detailed');
 			valueArr.push(detailed);
 			if (playlistContext) { 
-				keyValArr = kalturaObject2Arrays(playlistContext, 'playlistContext');
+				keyValArr = vidiunObject2Arrays(playlistContext, 'playlistContext');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

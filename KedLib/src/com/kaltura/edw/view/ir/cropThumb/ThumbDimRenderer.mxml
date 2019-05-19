@@ -17,7 +17,7 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
 			
 			import mx.controls.listClasses.BaseListData;
 			import mx.controls.listClasses.ListData;

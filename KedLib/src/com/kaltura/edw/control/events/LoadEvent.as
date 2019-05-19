@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.business.IDataOwner;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
-	public class LoadEvent extends KMvCEvent {
+	public class LoadEvent extends VMvCEvent {
 		
 		public static const LOAD_FILTER_DATA : String = "content_loadFilterData";
 		public static const LOAD_ENTRY_DATA : String = "content_loadEntryData";

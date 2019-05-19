@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.analytics.model {
+package com.vidiun.vmc.modules.analytics.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.kmc.modules.analytics.business.IDateRangeManager;
-	import com.kaltura.kmc.modules.analytics.business.LongTermRangeManager;
-	import com.kaltura.kmc.modules.analytics.business.ShortTermRangeManager;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.kmc.modules.analytics.model.reports.AggregateHeaders;
-	import com.kaltura.kmc.modules.analytics.model.reports.FilterMasks;
-	import com.kaltura.kmc.modules.analytics.model.reports.ReportDimension;
-	import com.kaltura.kmc.modules.analytics.model.reports.TableHeaders;
-	import com.kaltura.kmc.modules.analytics.model.reports.UnsortableColumnHeaders;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.vo.AccountUsageVO;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-	import com.kaltura.kmc.modules.analytics.vo.PartnerVO;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.vmc.modules.analytics.business.IDateRangeManager;
+	import com.vidiun.vmc.modules.analytics.business.LongTermRangeManager;
+	import com.vidiun.vmc.modules.analytics.business.ShortTermRangeManager;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vmc.modules.analytics.model.reports.AggregateHeaders;
+	import com.vidiun.vmc.modules.analytics.model.reports.FilterMasks;
+	import com.vidiun.vmc.modules.analytics.model.reports.ReportDimension;
+	import com.vidiun.vmc.modules.analytics.model.reports.TableHeaders;
+	import com.vidiun.vmc.modules.analytics.model.reports.UnsortableColumnHeaders;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vmc.modules.analytics.vo.AccountUsageVO;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.vmc.modules.analytics.vo.PartnerVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
-	import com.kaltura.edw.vo.LocalizedVo;
+	import com.vidiun.edw.vo.LocalizedVo;
 
 	[Bindable]
 	public class AnalyticsModelLocator implements IModelLocator {
@@ -29,9 +29,9 @@ package com.kaltura.kmc.modules.analytics.model {
 		public const END_OF_DAY_IN_SECONDS:Number = 86399;
 
 		/**
-		 * kaltura client that make all kaltura API calls
+		 * vidiun client that make all vidiun API calls
 		 */
-		public var kc:KalturaClient;
+		public var vc:VidiunClient;
 
 		/**
 		 * application context data
@@ -41,9 +41,9 @@ package com.kaltura.kmc.modules.analytics.model {
 		//---------------------------------------------------------
 
 		/**
-		 * the uiconf that the loaded KDP uses
+		 * the uiconf that the loaded VDP uses
 		 */
-		public var kdpUiConf:String;
+		public var vdpUiConf:String;
 
 		//---------------------------------------------------------
 		//data objects
@@ -85,7 +85,7 @@ package com.kaltura.kmc.modules.analytics.model {
 		 * @param screenType as enumerated in ScreenTypes
 		 * @return filter vo through required mask
 		 * 
-		 * @see com.kaltura.kmc.modules.analytics.model.types.ScreenTypes
+		 * @see com.vidiun.vmc.modules.analytics.model.types.ScreenTypes
 		 */		
 		public function getFilterForScreen(screenType:int):FilterVo {
 			var res:FilterVo;
@@ -176,12 +176,12 @@ package com.kaltura.kmc.modules.analytics.model {
 		public var selectedEntry:String;
 		
 		/**
-		 * does ktable show links for items 
+		 * does vtable show links for items 
 		 */
 		public var tableSupportDrillDown:Boolean = true;
 		
 		/**
-		 * should referer icon be shown in ktable
+		 * should referer icon be shown in vtable
 		 */
 		public var showRefererIcon:Boolean = false;
 
@@ -313,7 +313,7 @@ package com.kaltura.kmc.modules.analytics.model {
 
 
 		/**
-		 * retreives an instance of the KMCModelLocator class
+		 * retreives an instance of the VMCModelLocator class
 		 */
 		public static function getInstance():AnalyticsModelLocator {
 			if (_modelLocator == null) {

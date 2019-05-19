@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.admin.view.renderers {
-	import com.kaltura.vo.KalturaUser;
+package com.vidiun.vmc.modules.admin.view.renderers {
+	import com.vidiun.vo.VidiunUser;
 	
 	import mx.containers.HBox;
 	import mx.controls.dataGridClasses.DataGridListData;
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.admin.view.renderers {
 
 
 		public function setDefaultContainer():void {
-			if (data && (data as KalturaUser).isAccountOwner) {
+			if (data && (data as VidiunUser).isAccountOwner) {
 				this.setStyle("backgroundColor", "#FFFDEF");
 			}
 			else {

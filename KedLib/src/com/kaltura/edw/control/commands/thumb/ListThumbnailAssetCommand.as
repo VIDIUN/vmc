@@ -1,32 +1,32 @@
-package com.kaltura.edw.control.commands.thumb
+package com.vidiun.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetGetByEntryId;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaDistributionThumbDimensions;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.vidiun.commands.thumbAsset.ThumbAssetGetByEntryId;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.vo.ThumbnailWithDimensions;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunDistributionThumbDimensions;
+	import com.vidiun.vo.VidiunThumbAsset;
 	
 	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;
 	
-	public class ListThumbnailAssetCommand extends KedCommand
+	public class ListThumbnailAssetCommand extends VedCommand
 	{
 		
 		private var _ddp:DistributionDataPack;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_ddp = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var listThumbnailAsset:ThumbAssetGetByEntryId = new ThumbAssetGetByEntryId((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id);
-			listThumbnailAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			listThumbnailAsset.addEventListener(KalturaEvent.FAILED, fault);
+			listThumbnailAsset.addEventListener(VidiunEvent.COMPLETE, result);
+			listThumbnailAsset.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(listThumbnailAsset);
 		}
 		
@@ -56,15 +56,15 @@ package com.kaltura.edw.control.commands.thumb
 			// will indicate if the requiredthumbs of these profiles exist
 			var isRequiredThumbsExistArray:Array = new Array();
 			// initilize with all false values
-			for each (var currentProfile:KalturaDistributionProfile in profilesArray) {
+			for each (var currentProfile:VidiunDistributionProfile in profilesArray) {
 				var currentArray:Array = new Array();
-				for each (var currentDimension:KalturaDistributionThumbDimensions in currentProfile.requiredThumbDimensions) {
+				for each (var currentDimension:VidiunDistributionThumbDimensions in currentProfile.requiredThumbDimensions) {
 					currentArray.push(false);
 				}
 				isRequiredThumbsExistArray.push(currentArray);
 			}
 			
-			for each (var currentThumb:KalturaThumbAsset in thumbsArray) {
+			for each (var currentThumb:VidiunThumbAsset in thumbsArray) {
 				var curUsedProfiles:Array = new Array();
 				var curThumbExist:Boolean = false;
 				//search for thumb with identical dimensions, to copy the used profiles from it
@@ -82,10 +82,10 @@ package com.kaltura.edw.control.commands.thumb
 				//search for all profiles that require the thumb dimensions
 				if (curUsedProfiles.length == 0) {
 					for (var i:int=profilesArray.length-1; i>=0; i--) {
-						var distributionProfile:KalturaDistributionProfile = profilesArray[i] as KalturaDistributionProfile;
+						var distributionProfile:VidiunDistributionProfile = profilesArray[i] as VidiunDistributionProfile;
 						if (distributionProfile.requiredThumbDimensions) {
 							for (var j:int=0; j<distributionProfile.requiredThumbDimensions.length; j++) {
-								var dim:KalturaDistributionThumbDimensions = distributionProfile.requiredThumbDimensions[j] as KalturaDistributionThumbDimensions;
+								var dim:VidiunDistributionThumbDimensions = distributionProfile.requiredThumbDimensions[j] as VidiunDistributionThumbDimensions;
 								if ((dim.width==currentThumb.width) && (dim.height==currentThumb.height)) {
 									curUsedProfiles.push(distributionProfile);
 									isRequiredThumbsExistArray[i][j] = true;
@@ -112,8 +112,8 @@ package com.kaltura.edw.control.commands.thumb
 				for (var l:int=0; l<array.length; l++) {
 					
 					if (!array[l]) {
-						var profile:KalturaDistributionProfile = profilesArray[k] as KalturaDistributionProfile;
-						var requireDimensions:KalturaDistributionThumbDimensions = profile.requiredThumbDimensions[l] as KalturaDistributionThumbDimensions;
+						var profile:VidiunDistributionProfile = profilesArray[k] as VidiunDistributionProfile;
+						var requireDimensions:VidiunDistributionThumbDimensions = profile.requiredThumbDimensions[l] as VidiunDistributionThumbDimensions;
 						var profileExist:Boolean = false;
 						var leftUsedProfiles:Array = new Array();
 						for each (var thumbnail:ThumbnailWithDimensions in remainingProfilesArray) {

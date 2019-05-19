@@ -1,4 +1,4 @@
-package com.kaltura.events {
+package com.vidiun.events {
 	import com.adobe.cairngorm.control.CairngormEvent;
 
 	public class AccessControlProfileEvent extends CairngormEvent {

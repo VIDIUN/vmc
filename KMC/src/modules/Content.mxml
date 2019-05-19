@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*"
-				   xmlns:business="com.kaltura.kmc.modules.content.business.*"
-				   xmlns:control="com.kaltura.kmc.modules.content.control.*" xmlns:view="com.kaltura.kmc.modules.content.view.*" 
-				   implements="com.kaltura.edw.business.IDataOwner" layout="vertical" 
+<modules:VmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.vidiun.vmc.modules.*"
+				   xmlns:business="com.vidiun.vmc.modules.content.business.*"
+				   xmlns:control="com.vidiun.vmc.modules.content.control.*" xmlns:view="com.vidiun.vmc.modules.content.view.*" 
+				   implements="com.vidiun.edw.business.IDataOwner" layout="vertical" 
 				   minWidth="950" verticalGap="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0"
-				   preloader="com.kaltura.preloaders.KmcPreloader"
-				   enabled="{!_model.loadingFlag &amp;&amp; !KMvCModel.getInstance().loadingFlag}" >
+				   preloader="com.vidiun.preloaders.VmcPreloader"
+				   enabled="{!_model.loadingFlag &amp;&amp; !VMvCModel.getInstance().loadingFlag}" >
 
 	<mx:Metadata>
 		[ResourceBundle("cms")]
@@ -15,49 +15,49 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.containers.ConfinedTitleWindow;
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.playlist.ManualPlaylistWindow;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.datapacks.ContentDataPack;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-			import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.events.AccessControlProfileEvent;
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.business.IContentPanel;
-			import com.kaltura.kmc.modules.content.events.*;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.kmc.modules.content.utils.FilterUtil;
-			import com.kaltura.kmc.modules.content.view.window.RulePlaylistWindow;
-			import com.kaltura.kmc.modules.content.view.window.SetSchedulingWin;
-			import com.kaltura.kmc.modules.content.view.window.cdw.CategoryDetailsWin;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KUtils;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.utils.SoManager;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaPlaylistFilter;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.containers.ConfinedTitleWindow;
+			import com.vidiun.edw.business.IDataOwner;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.playlist.ManualPlaylistWindow;
+			import com.vidiun.edw.control.DataTabController;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.MetadataProfileEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.datapacks.ContentDataPack;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.CuePointsDataPack;
+			import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+			import com.vidiun.edw.model.datapacks.EntryDataPack;
+			import com.vidiun.edw.model.datapacks.FlavorsDataPack;
+			import com.vidiun.edw.model.types.WindowsStates;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.events.AccessControlProfileEvent;
+			import com.vidiun.events.FileUploadEvent;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.business.IContentPanel;
+			import com.vidiun.vmc.modules.content.events.*;
+			import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+			import com.vidiun.vmc.modules.content.utils.FilterUtil;
+			import com.vidiun.vmc.modules.content.view.window.RulePlaylistWindow;
+			import com.vidiun.vmc.modules.content.view.window.SetSchedulingWin;
+			import com.vidiun.vmc.modules.content.view.window.cdw.CategoryDetailsWin;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.managers.FileUploadManager;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.utils.VUtils;
+			import com.vidiun.utils.ObjectHelpers;
+			import com.vidiun.utils.SoManager;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunMediaEntry;
+			import com.vidiun.vo.VidiunMediaEntryFilter;
+			import com.vidiun.vo.VidiunPlaylistFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -88,7 +88,7 @@
 			/**
 			 * entry data
 			 * */
-			private var _entryData:EntryDataPack = KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
+			private var _entryData:EntryDataPack = VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
 
 			[Bindable]
 			/**
@@ -110,7 +110,7 @@
 			protected var _ready:Boolean = false;
 
 			/**
-			 * KMC is responsible to use the value of
+			 * VMC is responsible to use the value of
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "content";
@@ -202,7 +202,7 @@
 				var cl:String = getQualifiedClassName(e);
 				if (e.type == "resize" &&  cl == "fl.events::ComponentEvent") {
 					// this is a flash event and Flex will not know how to "eat" it,
-					// it probably came from KDP.
+					// it probably came from VDP.
 					e.stopImmediatePropagation();
 					e.preventDefault();
 				}
@@ -211,7 +211,7 @@
 			
 			/**
 			 * reset list of live conversion profiles so it will be reloaded when needed.
-			 * (triggered using KMCNavigationEvent)
+			 * (triggered using VMCNavigationEvent)
 			 * */
 			public function resetLiveConversionProfilesList():void {
 				_model.liveConversionProfiles = null;
@@ -221,9 +221,9 @@
 			 * create a new audio entry
 			 * */
 			public function createAudioEntry(conversionProfileId:int = -1):void {
-				var entry:KalturaMediaEntry = new KalturaMediaEntry();
+				var entry:VidiunMediaEntry = new VidiunMediaEntry();
 				entry.name = resourceManager.getString('cms','defaultEntryName');
-				entry.mediaType = KalturaMediaType.AUDIO;
+				entry.mediaType = VidiunMediaType.AUDIO;
 				if (conversionProfileId != -1) {
 					entry.conversionProfileId = conversionProfileId;
 				}
@@ -236,9 +236,9 @@
 			 * create a new video entry
 			 * */
 			public function createVideoEntry(conversionProfileId:int = -1):void {
-				var entry:KalturaMediaEntry = new KalturaMediaEntry();
+				var entry:VidiunMediaEntry = new VidiunMediaEntry();
 				entry.name = resourceManager.getString('cms','defaultEntryName');
-				entry.mediaType = KalturaMediaType.VIDEO;
+				entry.mediaType = VidiunMediaType.VIDEO;
 				if (conversionProfileId != -1) {
 					entry.conversionProfileId = conversionProfileId;
 				}
@@ -290,8 +290,8 @@
 				// if there is entryid to start with, open the entry drilldown.
 				if (_model.attic.entryid) {
 					// get the entry
-					var kEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _model.attic.entryid);
-					KedController.getInstance().dispatch(kEvent);
+					var vEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _model.attic.entryid);
+					VedController.getInstance().dispatch(vEvent);
 					_model.attic.entryid = null;
 				}
 			}
@@ -301,17 +301,17 @@
 			 * create a dummy dispatcher if one is required.
 			 * used in the scenraio of GET_ENTRY_AND_DRILLDOWN to open EDW after entry is loaded.
 			 * */
-			private function setDummyKedDispatcher():void {
+			private function setDummyVedDispatcher():void {
 				if (!(_model.entryDetailsModel.getDataPack(ContextDataPack) as ContextDataPack).dispatcher) {
 					// if the dispatcher already exists, someone is already listening. we only need a single listener.
 					_entryIdDispatcher = new EventDispatcher();
-					_entryIdDispatcher.addEventListener(KedDataEvent.OPEN_ENTRY, windowsManager.handleKedEvents, false, 0, true);
+					_entryIdDispatcher.addEventListener(VedDataEvent.OPEN_ENTRY, windowsManager.handleVedEvents, false, 0, true);
 					(_model.entryDetailsModel.getDataPack(ContextDataPack) as ContextDataPack).dispatcher = _entryIdDispatcher;
 				}
 			}
 
 			/**
-			 * when opening KMC with a drilldown, need to supply ked with
+			 * when opening VMC with a drilldown, need to supply ved with
 			 * a dummy dispatcher because the the drilldown only updates
 			 * this value after it is created. use this.
 			 * */
@@ -339,7 +339,7 @@
 			private function initChildren(e:FlexEvent):void {
 				removeEventListener(FlexEvent.CREATION_COMPLETE, initChildren);
 				
-				setDummyKedDispatcher();
+				setDummyVedDispatcher();
 				
 				getDefaultMetadataView();
 				handleEntryId();
@@ -411,13 +411,13 @@
 				if (willTrigger(Event.ADDED_TO_STAGE)) {
 					removeEventListener(Event.ADDED_TO_STAGE, initTrackers);
 				}
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/content");
-				var ka:KAnalyticsTracker = KAnalyticsTracker.getInstance();
+				GoogleAnalyticsTracker.getInstance().setBasePath("VMC/content");
+				var va:VAnalyticsTracker = VAnalyticsTracker.getInstance();
 
 				// intialize local data
-				SoManager.getInstance().getLocalData("kmc", _model.context.userId);
+				SoManager.getInstance().getLocalData("vmc", _model.context.userId);
 
-				ka.init(_model.context.kc, "content", "4", _model.context.userId);
+				va.init(_model.context.vc, "content", "4", _model.context.userId);
 			}
 
 
@@ -428,11 +428,11 @@
 				var confFile:XML = new XML(_uiconf.confFile);
 
 				// context:
-				_model.context.moderationUiconf = confFile.uiconf.kdp.moderation.text().toString();
-				_model.context.drilldownUiconf = confFile.uiconf.kdp.drilldown.text().toString();
-				_model.context.drilldownAdsUiconf = confFile.uiconf.kdp.drilldownAds.text().toString();
-				_model.context.captureThumbnailUiconf = confFile.uiconf.kdp.captureThumbnail.text().toString();
-				_model.context.kClipAdsUiconf = confFile.uiconf.kclip.ads.text().toString();
+				_model.context.moderationUiconf = confFile.uiconf.vdp.moderation.text().toString();
+				_model.context.drilldownUiconf = confFile.uiconf.vdp.drilldown.text().toString();
+				_model.context.drilldownAdsUiconf = confFile.uiconf.vdp.drilldownAds.text().toString();
+				_model.context.captureThumbnailUiconf = confFile.uiconf.vdp.captureThumbnail.text().toString();
+				_model.context.vClipAdsUiconf = confFile.uiconf.vclip.ads.text().toString();
 				_model.context.panelsConfig = confFile.uiconf.entryDrilldown.panels[0];
 
 				// model:
@@ -449,7 +449,7 @@
 			protected function getFullUrl(url:String):String {
 				if (url.indexOf('://') == -1) {
 					// no protocol, concat from client
-					url = _kc.protocol + _kc.domain + url; 
+					url = _vc.protocol + _vc.domain + url; 
 				}
 				return url;
 			}
@@ -474,7 +474,7 @@
 					_model.openPlayer = objParam.openplayer;
 				}
 
-				_model.categoriesModel.client = _kc;
+				_model.categoriesModel.client = _vc;
 			}
 
 
@@ -487,9 +487,9 @@
 				_model.context.debugMode = objParam.debugmode;
 				_model.context.userId = objParam.uid;
 				_model.context.subpId = objParam.subpid;
-				_model.context.rootUrl = KUtils.hostFromCode(objParam.host);
+				_model.context.rootUrl = VUtils.hostFromCode(objParam.host);
 				_model.context.cdnHost = objParam.cdnhost ? objParam.cdnhost : _model.context.rootUrl;
-				_model.context.kc = _kc;
+				_model.context.vc = _vc;
 			}
 
 
@@ -497,11 +497,11 @@
 			 * fix race condition, application added or tab switch from initial flashvar
 			 */
 			private function switchToTab(tab:String = ""):void {
-				var kmef:KalturaBaseEntryFilter;
+				var vmef:VidiunBaseEntryFilter;
 				if (_model.attic.filter) {
-					kmef = FilterUtil.createFilterFromString(_model.attic.filter);
+					vmef = FilterUtil.createFilterFromString(_model.attic.filter);
 					_model.attic.filter = null;
-					_model.attic.kmef = kmef;
+					_model.attic.vmef = vmef;
 				}
 				
 				// get the correct index from the viewstack, so it'll work after removing items as well.
@@ -517,7 +517,7 @@
 				// init selected
 				if (selectedIndex == 0) {
 					// otherwise the "change" event will trigger these
-					(contentView.selectedChild as IContentPanel).init(_model.attic.kmef);
+					(contentView.selectedChild as IContentPanel).init(_model.attic.vmef);
 					JSGate.writeUrlHash(NAME, contentView.selectedChild.id);
 				}
 			}
@@ -666,30 +666,30 @@
 			private function trackTabChange(evt:Event):void {
 				switch (contentView.selectedChild) {
 					case manage:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInEntryTable>Manage");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "pagingInEntryTable>Manage");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_ENTRIES, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case playlists:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInPlaylistTable>Playlists");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "pagingInPlaylistTable>Playlists");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_PLAYLISTS, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case moderation:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInModerationTable>Moderate");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "pagingInModerationTable>Moderate");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_MODERATION, GoogleAnalyticsConsts.CONTENT)
 						break;
 					case syndication:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInSyndicateTable>Syndicate");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "pagingInSyndicateTable>Syndicate");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_SYNDICATION, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case categories:
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_CATEGORIES, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case uploads:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInBulkUploadTable>Upload");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "pagingInBulkUploadTable>Upload");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_BULK_UPLOADS, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case dropFolders:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "navigateToDropFoldersPage");
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_PAGE_VIEW, "navigateToDropFoldersPage");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_DROP_FOLDERS, GoogleAnalyticsConsts.CONTENT);
 						break;
 				}
@@ -740,7 +740,7 @@
 						return;
 					
 				}
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 
 
@@ -749,7 +749,7 @@
 			 * */
 			protected function initSelectedTab(event:IndexChangedEvent):void {
 				// initialize the new panel with filter saved in the attic, if any.
-				(contentView.getChildAt(event.newIndex) as IContentPanel).init(_model.attic.kmef);
+				(contentView.getChildAt(event.newIndex) as IContentPanel).init(_model.attic.vmef);
 				JSGate.writeUrlHash(NAME, contentView.selectedChild.id);
 			}
 
@@ -858,4 +858,4 @@
 
 		</mx:ViewStack>
 	</mx:VBox>
-</modules:KmcModule>
+</modules:VmcModule>

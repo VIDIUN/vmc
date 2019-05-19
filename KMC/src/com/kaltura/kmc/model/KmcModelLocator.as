@@ -1,30 +1,30 @@
-package com.kaltura.kmc.model {
+package com.vidiun.vmc.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.kmc.vo.UserVO;
-	import com.kaltura.types.KalturaPermissionStatus;
-	import com.kaltura.types.KalturaPermissionType;
-	import com.kaltura.vo.KalturaPermission;
-	import com.kaltura.vo.KalturaPermissionFilter;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.edw.business.permissions.PermissionManager;
+	import com.vidiun.vmc.vo.UserVO;
+	import com.vidiun.types.VidiunPermissionStatus;
+	import com.vidiun.types.VidiunPermissionType;
+	import com.vidiun.vo.VidiunPermission;
+	import com.vidiun.vo.VidiunPermissionFilter;
 
 	import flash.events.EventDispatcher;
 
 	[Bindable]
-	public class KmcModelLocator extends EventDispatcher implements IModelLocator {
+	public class VmcModelLocator extends EventDispatcher implements IModelLocator {
 
 		///////////////////////////////////////////
 		//singleton methods
 		/**
 		 * singleton instance
 		 */
-		private static var _instance:KmcModelLocator;
+		private static var _instance:VmcModelLocator;
 
 
 		/**
-		 * Kaltura Client. This should be the instance that every module will get and use
+		 * Vidiun Client. This should be the instance that every module will get and use
 		 */
-		public var kalturaClient:KalturaClient;
+		public var vidiunClient:VidiunClient;
 
 		/**
 		 * The instance of a PermissionManager.
@@ -38,16 +38,16 @@ package com.kaltura.kmc.model {
 
 		public var userInfo:UserVO;
 
-		public var permissionsListFilter:KalturaPermissionFilter;
+		public var permissionsListFilter:VidiunPermissionFilter;
 
 
 		/**
 		 * singleton means of retreiving an instance of the
-		 * <code>KmcModelLocator</code> class.
+		 * <code>VmcModelLocator</code> class.
 		 */
-		public static function getInstance():KmcModelLocator {
+		public static function getInstance():VmcModelLocator {
 			if (_instance == null) {
-				_instance = new KmcModelLocator(new Enforcer());
+				_instance = new VmcModelLocator(new Enforcer());
 
 			}
 			return _instance;
@@ -58,12 +58,12 @@ package com.kaltura.kmc.model {
 		 * initialize parameters and sub-models.
 		 * @param enforcer	singleton garantee
 		 */
-		public function KmcModelLocator(enforcer:Enforcer) {
+		public function VmcModelLocator(enforcer:Enforcer) {
 			permissionManager = PermissionManager.getInstance();
 
-			permissionsListFilter = new KalturaPermissionFilter();
-			permissionsListFilter.typeIn = KalturaPermissionType.SPECIAL_FEATURE + ',' + KalturaPermissionType.PLUGIN;
-			permissionsListFilter.statusEqual = KalturaPermissionStatus.ACTIVE;
+			permissionsListFilter = new VidiunPermissionFilter();
+			permissionsListFilter.typeIn = VidiunPermissionType.SPECIAL_FEATURE + ',' + VidiunPermissionType.PLUGIN;
+			permissionsListFilter.statusEqual = VidiunPermissionStatus.ACTIVE;
 		}
 
 

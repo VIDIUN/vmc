@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users 
+This file is part of the Vidiun Collaborative Media Suite which allows users 
 to do with audio, video, and animation what Wiki platfroms allow them to do with 
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,17 +20,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles.cursors
+package com.vidiun.controls.vobjecthadles.cursors
 {
 	import flash.display.Sprite;
-	import com.kaltura.controls.kobjecthadles.managers.HandleCursorManager;
+	import com.vidiun.controls.vobjecthadles.managers.HandleCursorManager;
 	import flash.display.Sprite;
 	import mx.core.BitmapAsset;
 	import mx.effects.Rotate;
 	
 	public class NWSECursor extends Sprite
 	{
-		[Embed(source="/com/kaltura/controls/kobjecthadles/assets/cursors/light/SizeNWSE.png")] [Bindable] public var CursorNWSECls:Class;
+		[Embed(source="/com/vidiun/controls/vobjecthadles/assets/cursors/light/SizeNWSE.png")] [Bindable] public var CursorNWSECls:Class;
 		
 		private var rottationEffect : Rotate;
 		

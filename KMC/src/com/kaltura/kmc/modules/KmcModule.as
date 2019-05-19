@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.uiConf.UiConfGet;
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.events.KmcErrorEvent;
-	import com.kaltura.kmc.events.KmcNavigationEvent;
-	import com.kaltura.kmc.utils.XMLUtils;
-	import com.kaltura.kmc.vo.Context;
-	import com.kaltura.kmc.vo.UserVO;
-	import com.kaltura.vo.KalturaUiConf;
+package com.vidiun.vmc.modules {
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.uiConf.UiConfGet;
+	import com.vidiun.edw.business.permissions.PermissionManager;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.events.VmcErrorEvent;
+	import com.vidiun.vmc.events.VmcNavigationEvent;
+	import com.vidiun.vmc.utils.XMLUtils;
+	import com.vidiun.vmc.vo.Context;
+	import com.vidiun.vmc.vo.UserVO;
+	import com.vidiun.vo.VidiunUiConf;
 	
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
@@ -39,22 +39,22 @@ package com.kaltura.kmc.modules {
 	
 	/**
 	 * Dispatched when the module needs to navigate to another module.
-	 * @eventType com.kaltura.kmc.events.KmcNavigationEvent
+	 * @eventType com.vidiun.vmc.events.VmcNavigationEvent
 	 */
-	[Event(name="navigate", type="com.kaltura.kmc.events.KmcNavigationEvent")]
+	[Event(name="navigate", type="com.vidiun.vmc.events.VmcNavigationEvent")]
 
 	/**
 	 * Dispatched when the module encountered some error that prevents it from functioning.
-	 * @eventType com.kaltura.kmc.events.KmcErrorEvent
+	 * @eventType com.vidiun.vmc.events.VmcErrorEvent
 	 */
-	[Event(name="error", type="com.kaltura.kmc.events.KmcErrorEvent")]
+	[Event(name="error", type="com.vidiun.vmc.events.VmcErrorEvent")]
 
 	/**
 	 * Dispatched when user clicked a help link.
 	 * The <code>page</code> parameter is the anchor on help page.
-	 * @eventType com.kaltura.kmc.events.KmcHelpEvent
+	 * @eventType com.vidiun.vmc.events.VmcHelpEvent
 	 */
-	[Event(name="help", type="com.kaltura.kmc.events.KmcHelpEvent")]
+	[Event(name="help", type="com.vidiun.vmc.events.VmcHelpEvent")]
 
 	/**
 	 * Dispatched when module has finished saving necessary data and application can navigate
@@ -66,9 +66,9 @@ package com.kaltura.kmc.modules {
 	
 	
 	/**
-	 * KmcModule is an abstract class that holds common functionalities of KMC modules.
+	 * VmcModule is an abstract class that holds common functionalities of VMC modules.
 	 * */
-	public class KmcModule extends Module {
+	public class VmcModule extends Module {
 		
 
 		// =====================================================
@@ -92,9 +92,9 @@ package com.kaltura.kmc.modules {
 		protected var _flashvars:Object;
 		
 		/**
-		 * @copy #kc
+		 * @copy #vc
 		 * */
-		protected var _kc:KalturaClient;
+		protected var _vc:VidiunClient;
 		
 	
 		[Bindable]
@@ -123,7 +123,7 @@ package com.kaltura.kmc.modules {
 		/**
 		 * configuration object
 		 * */
-		protected var _uiconf:KalturaUiConf;
+		protected var _uiconf:VidiunUiConf;
 		
 		/**
 		 * set to "true" when the module is functional
@@ -142,9 +142,9 @@ package com.kaltura.kmc.modules {
 		 * */
 		protected function loadUiconf(uiconfId:String):void {
 			var uiconf:UiConfGet = new UiConfGet(int(uiconfId));
-			uiconf.addEventListener(KalturaEvent.COMPLETE, configurationLoadHandler);
-			uiconf.addEventListener(KalturaEvent.FAILED, configurationLoadFailedHandler);
-			_kc.post(uiconf);
+			uiconf.addEventListener(VidiunEvent.COMPLETE, configurationLoadHandler);
+			uiconf.addEventListener(VidiunEvent.FAILED, configurationLoadFailedHandler);
+			_vc.post(uiconf);
 		}
 
 		/**
@@ -172,8 +172,8 @@ package com.kaltura.kmc.modules {
 		 * use configuration info
 		 * @param e		data from server
 		 * */
-		protected function configurationLoadHandler(e:KalturaEvent):void {
-			_uiconf = e.data as KalturaUiConf;
+		protected function configurationLoadHandler(e:VidiunEvent):void {
+			_uiconf = e.data as VidiunUiConf;
 			// update any values from flashvars
 			_uiconf.confFile = overrideDataByFlashvars(_uiconf.confFile, _flashvars);
 			var confFile:XML = new XML(_uiconf.confFile);
@@ -215,10 +215,10 @@ package com.kaltura.kmc.modules {
 		 * failed loading uiconf
 		 * @param e		data from server
 		 * */
-		protected function configurationLoadFailedHandler(e:KalturaEvent):void {
+		protected function configurationLoadFailedHandler(e:VidiunEvent):void {
 			// use locale value instead of given error
 			// - do we know the resourceBundle name? put all errors in "errors" bundle on all locales 
-			dispatchEvent(new KmcErrorEvent(KmcErrorEvent.ERROR, e.error.errorMsg));
+			dispatchEvent(new VmcErrorEvent(VmcErrorEvent.ERROR, e.error.errorMsg));
 		}
 
 
@@ -261,7 +261,7 @@ package com.kaltura.kmc.modules {
 
 
 		/**
-		 * Tell KMC to switch to another module.
+		 * Tell VMC to switch to another module.
 		 * @param module	name of module to show, should match the NAME the module declares.
 		 * @param subtab	name of subtab of the module to show. If <code>subtab</code> is supplied and the
 		 * 					module has a subtab with the same name it should show the matching subtab.
@@ -269,7 +269,7 @@ package com.kaltura.kmc.modules {
 		 * @param extra		a generic object with data to be passed to the module.
 		 * */
 		protected function navigate(module:String, subtab:String = "", extra:Object = null):void {
-			this.dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, module, subtab, extra));
+			this.dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, module, subtab, extra));
 		}
 
 
@@ -286,16 +286,16 @@ package com.kaltura.kmc.modules {
 
 		/**
 		 * Initialize the module.
-		 * @param kc	KalturaClient for server API calls
+		 * @param vc	VidiunClient for server API calls
 		 * @param uiconfid	Id of uiconf that the module has to load.
 		 * @param flashvars	application flashvars - any data passed from the wrapper
 		 * @param user	current user info
 		 * @param cm	the global context menu, to add its version.
 		 * @param context	Application context
 		 * */
-		public function init(kc:KalturaClient, uiconfid:String, flashvars:Object, user:UserVO, cm:ContextMenu, context:Context = null):void {
+		public function init(vc:VidiunClient, uiconfid:String, flashvars:Object, user:UserVO, cm:ContextMenu, context:Context = null):void {
 			Security.allowDomain('*');
-			_kc = kc;
+			_vc = vc;
 			_uiconfId = uiconfid;
 			_flashvars = flashvars;
 			_userInfo = user;
@@ -322,7 +322,7 @@ package com.kaltura.kmc.modules {
 		
 		
 		/**
-		 * The name returned by this method will be the ID of the module in KMC.
+		 * The name returned by this method will be the ID of the module in VMC.
 		 * Each module must implement this method to return the right name.  
 		 */		
 		public function getModuleName():String {
@@ -346,7 +346,7 @@ package com.kaltura.kmc.modules {
 		 * @param enable	if true enables, if false disables
 		 */
 		protected function enableHtmlTabs(enable:Boolean):void {
-//			ExternalInterface.call("kmc.utils.maskHeader", enable);
+//			ExternalInterface.call("vmc.utils.maskHeader", enable);
 			JSGate.maskHeader(enable);
 		}
 		

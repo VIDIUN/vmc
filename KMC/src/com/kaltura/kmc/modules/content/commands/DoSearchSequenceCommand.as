@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.edw.control.VedController;
+	import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
 
 	/**
-	 * this command adds some KMC specific actions around the list action 
+	 * this command adds some VMC specific actions around the list action 
 	 * @author Atar
 	 */	
-	public class DoSearchSequenceCommand extends KalturaCommand {
+	public class DoSearchSequenceCommand extends VidiunCommand {
 		
 		
 		override public function execute(event:CairngormEvent):void {
-			var e:KMCSearchEvent = event as KMCSearchEvent;
+			var e:VMCSearchEvent = event as VMCSearchEvent;
 			// reset selected entries list
 			_model.selectedEntries = new Array();
 			// search for new entries
 			var cgEvent:SearchEvent = new SearchEvent(SearchEvent.SEARCH_ENTRIES, e.listableVo);
-			KedController.getInstance().dispatch(cgEvent);
+			VedController.getInstance().dispatch(cgEvent);
 			// reset the refresh required flag
 			_model.refreshEntriesRequired = false;
 		}

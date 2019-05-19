@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.view.controls.bulkactions
+package com.vidiun.vmc.modules.content.view.controls.bulkactions
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
+	import com.vidiun.edw.model.types.WindowsStates;
+	import com.vidiun.vmc.modules.content.events.WindowEvent;
 	
 	import flash.events.Event;
 	

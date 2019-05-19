@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
+<table:SelectionTable xmlns:table="com.vidiun.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
 					  height="100%" rowHeight="40" headerRelease="headerReleaseHandler(event)"
 					  creationComplete="creationCompleteHandler(event)" change="onSelectionsChange(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
-			import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.types.KalturaNullableBoolean;
+			import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode;
+			import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
+			import com.vidiun.types.VidiunConversionProfileType;
+			import com.vidiun.types.VidiunNullableBoolean;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
@@ -49,7 +49,7 @@
 				var si:Array = this.selectedItems;
 				for (var i:int = 0; i<si.length; i++) {
 					cpVo = si[i] as ConversionProfileVO;
-					if (cpVo.profile.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
+					if (cpVo.profile.isDefault == VidiunNullableBoolean.TRUE_VALUE) {
 						si.splice(i, 1);
 						selectedItems = si;
 						break;
@@ -96,7 +96,7 @@
 			
 			private function getModeFromProfile(cpvo:ConversionProfileVO):String {
 				var result:String;
-				if (cpvo.profile.type == KalturaConversionProfileType.LIVE_STREAM) {
+				if (cpvo.profile.type == VidiunConversionProfileType.LIVE_STREAM) {
 					result = ConversionProfileWindowMode.MODE_LIVE; 
 				}
 				else {
@@ -109,17 +109,17 @@
 
 
 	<table:columns>
-		<mx:DataGridColumn width="32" minWidth="32" headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer"/>
+		<mx:DataGridColumn width="32" minWidth="32" headerRenderer="com.vidiun.controls.table.SelectionRenderer"
+						   itemRenderer="com.vidiun.controls.table.SelectionRenderer"/>
 		<mx:DataGridColumn width="45" headerText="{resourceManager.getString('account','id')}" dataField="id"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.ConversionProfileIdRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.ConversionProfileIdRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transNameCol')}" dataField="name"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.ConversionProfileNameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.ConversionProfileNameRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transDescCol')}" dataField="description"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.ConversionProfileDescriptionRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.ConversionProfileDescriptionRenderer"/>
 		<mx:DataGridColumn width="350" headerText="{resourceManager.getString('account','transFlavSelcetedCol')}" dataField="flavors"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.ConversionProfileFlavorsRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.ConversionProfileFlavorsRenderer"/>
 		<mx:DataGridColumn width="135" headerText="{resourceManager.getString('account','transActionsCol')}" 
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.ConversionProfileActionRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.ConversionProfileActionRenderer"/>
 	</table:columns>
 </table:SelectionTable>

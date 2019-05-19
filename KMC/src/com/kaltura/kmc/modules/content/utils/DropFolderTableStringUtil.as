@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.content.utils
+package com.vidiun.vmc.modules.content.utils
 {
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
-	import com.kaltura.vo.KalturaDropFolderFile;
+	import com.vidiun.vo.VidiunDropFolderFile;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.formatters.DateFormatter;
-	import com.kaltura.types.KalturaDropFolderFileStatus;
-	import com.kaltura.types.KalturaDropFolderFileErrorCode;
+	import com.vidiun.types.VidiunDropFolderFileStatus;
+	import com.vidiun.types.VidiunDropFolderFileErrorCode;
 
 	public class DropFolderTableStringUtil {
 		
@@ -45,7 +45,7 @@ package com.kaltura.kmc.modules.content.utils
 		 * */
 		public static function getDatesInfo(item:Object):String {
 			var rm:IResourceManager = ResourceManager.getInstance();
-			var file:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var file:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			var str:String = rm.getString('dropfolders', 'dfUploadStart' , [formatDate(file.uploadStartDetectedAt)] );
 			str += '\n' + rm.getString('dropfolders', 'dfUploadEnd',  [formatDate(file.uploadEndDetectedAt)] );
 			str += '\n' + rm.getString('dropfolders', 'dfTranserStart',  [formatDate(file.importStartedAt)] );
@@ -57,7 +57,7 @@ package com.kaltura.kmc.modules.content.utils
 		 * Create suitable string to display in the "Created at" column
 		 * */
 		public static function dateCreatedLabelFunc(item:Object, column:DataGridColumn): String {
-			var curFile:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var curFile:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			return formatDate(curFile.createdAt);
 		}
 		
@@ -66,7 +66,7 @@ package com.kaltura.kmc.modules.content.utils
 		 * Create suitable string to display in the "File Size" column
 		 * */
 		public static function fileSizeLabelFunc(item:Object, column:DataGridColumn): String {
-			var curFile:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var curFile:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			if (curFile.fileSize==int.MIN_VALUE)
 				return '';
 			return ((curFile.fileSize/MB_MULTIPLIER).toFixed(DIGITS_AFTER_DEC_POINT)) + ' ' + ResourceManager.getInstance().getString('dropfolders','megaBytes');
@@ -79,40 +79,40 @@ package com.kaltura.kmc.modules.content.utils
 		 * */
 		public static function getStatusInfo(item:Object):String {
 			var resourceManager:IResourceManager = ResourceManager.getInstance();
-			var file:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var file:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			var str:String = file.status.toString();	// original value as default
 			switch (file.status) {
-				case KalturaDropFolderFileStatus.UPLOADING:
+				case VidiunDropFolderFileStatus.UPLOADING:
 					str = resourceManager.getString('dropfolders','transferringDesc');
 					break;
-				case KalturaDropFolderFileStatus.DOWNLOADING:
+				case VidiunDropFolderFileStatus.DOWNLOADING:
 					str = resourceManager.getString('dropfolders','downloadingDesc');
 					break;
-				case KalturaDropFolderFileStatus.PENDING:
+				case VidiunDropFolderFileStatus.PENDING:
 					str = resourceManager.getString('dropfolders','pendingDesc');
 					break;
-				case KalturaDropFolderFileStatus.PROCESSING:
+				case VidiunDropFolderFileStatus.PROCESSING:
 					str = resourceManager.getString('dropfolders','processingDesc');
 					break;
-				case KalturaDropFolderFileStatus.PARSED:
+				case VidiunDropFolderFileStatus.PARSED:
 					str = resourceManager.getString('dropfolders','parsedDesc');
 					break;
-				case KalturaDropFolderFileStatus.WAITING:
+				case VidiunDropFolderFileStatus.WAITING:
 					str = resourceManager.getString('dropfolders','waitingDesc');
 					break;
-				case KalturaDropFolderFileStatus.NO_MATCH:
+				case VidiunDropFolderFileStatus.NO_MATCH:
 					str = resourceManager.getString('dropfolders','noMatchDesc');
 					break;
-				case KalturaDropFolderFileStatus.ERROR_HANDLING:
+				case VidiunDropFolderFileStatus.ERROR_HANDLING:
 					str = resourceManager.getString('dropfolders','errHandlingDesc');
 					break;
-				case KalturaDropFolderFileStatus.ERROR_DELETING:
+				case VidiunDropFolderFileStatus.ERROR_DELETING:
 					str = resourceManager.getString('dropfolders','errDeletingDesc');
 					break;
-				case KalturaDropFolderFileStatus.HANDLED:
+				case VidiunDropFolderFileStatus.HANDLED:
 					str = resourceManager.getString('dropfolders','handledDesc');
 					break;
-				case KalturaDropFolderFileStatus.ERROR_DOWNLOADING:
+				case VidiunDropFolderFileStatus.ERROR_DOWNLOADING:
 					str = resourceManager.getString('dropfolders','errDnldDesc');
 					break;
 			}
@@ -125,29 +125,29 @@ package com.kaltura.kmc.modules.content.utils
 		 * */
 		public static function statusLabelFunc(item:Object, column:DataGridColumn): String {
 			var resourceManager:IResourceManager = ResourceManager.getInstance();
-			var curFile:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var curFile:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			switch (curFile.status) {
-				case KalturaDropFolderFileStatus.UPLOADING:
+				case VidiunDropFolderFileStatus.UPLOADING:
 					return resourceManager.getString('dropfolders','transferringBtn');
-				case KalturaDropFolderFileStatus.DOWNLOADING:
+				case VidiunDropFolderFileStatus.DOWNLOADING:
 					return resourceManager.getString('dropfolders','downloadingBtn');
-				case KalturaDropFolderFileStatus.PENDING:
+				case VidiunDropFolderFileStatus.PENDING:
 					return resourceManager.getString('dropfolders','pendingBtn');
-				case KalturaDropFolderFileStatus.PROCESSING:
+				case VidiunDropFolderFileStatus.PROCESSING:
 					return resourceManager.getString('dropfolders','processingBtn');
-				case KalturaDropFolderFileStatus.PARSED:
+				case VidiunDropFolderFileStatus.PARSED:
 					return resourceManager.getString('dropfolders','parsedBtn');
-				case KalturaDropFolderFileStatus.WAITING:
+				case VidiunDropFolderFileStatus.WAITING:
 					return resourceManager.getString('dropfolders','waitingBtn');
-				case KalturaDropFolderFileStatus.NO_MATCH:
+				case VidiunDropFolderFileStatus.NO_MATCH:
 					return resourceManager.getString('dropfolders','noMatchBtn');
-				case KalturaDropFolderFileStatus.ERROR_HANDLING:
+				case VidiunDropFolderFileStatus.ERROR_HANDLING:
 					return resourceManager.getString('dropfolders','errHandlingBtn');
-				case KalturaDropFolderFileStatus.ERROR_DELETING:
+				case VidiunDropFolderFileStatus.ERROR_DELETING:
 					return resourceManager.getString('dropfolders','errDeletingBtn');
-				case KalturaDropFolderFileStatus.HANDLED:
+				case VidiunDropFolderFileStatus.HANDLED:
 					return resourceManager.getString('dropfolders','handledBtn');
-				case KalturaDropFolderFileStatus.ERROR_DOWNLOADING:
+				case VidiunDropFolderFileStatus.ERROR_DOWNLOADING:
 					return resourceManager.getString('dropfolders','errDnldBtn');
 			}
 			return '';
@@ -159,61 +159,61 @@ package com.kaltura.kmc.modules.content.utils
 		 * */
 		public static function getErrorDescription(item:Object) : String {
 			var resourceManager:IResourceManager = ResourceManager.getInstance();
-			var file:KalturaDropFolderFile = item as KalturaDropFolderFile;
+			var file:VidiunDropFolderFile = item as VidiunDropFolderFile;
 			var err:String = file.errorDescription;	// keep server string as default description
 			
 			switch (file.errorCode) {
-				case KalturaDropFolderFileErrorCode.ERROR_ADDING_BULK_UPLOAD :
+				case VidiunDropFolderFileErrorCode.ERROR_ADDING_BULK_UPLOAD :
 					err = resourceManager.getString('dropfolders','dfErrAddBulk');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_IN_BULK_UPLOAD :
+				case VidiunDropFolderFileErrorCode.ERROR_IN_BULK_UPLOAD :
 					err = resourceManager.getString('dropfolders','dfErrBulkUpload');
 					break;
-//				case KalturaDropFolderFileErrorCode.ERROR_WRITING_TEMP_FILE :
-//				case KalturaDropFolderFileErrorCode.LOCAL_FILE_WRONG_CHECKSUM :
-//				case KalturaDropFolderFileErrorCode.LOCAL_FILE_WRONG_SIZE :
+//				case VidiunDropFolderFileErrorCode.ERROR_WRITING_TEMP_FILE :
+//				case VidiunDropFolderFileErrorCode.LOCAL_FILE_WRONG_CHECKSUM :
+//				case VidiunDropFolderFileErrorCode.LOCAL_FILE_WRONG_SIZE :
 //					// not supposed to happen
 //					break;
-				case KalturaDropFolderFileErrorCode.ERROR_UPDATE_ENTRY : 
+				case VidiunDropFolderFileErrorCode.ERROR_UPDATE_ENTRY : 
 					err = resourceManager.getString('dropfolders','dfErrUpdateEntry');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_ADD_ENTRY : 
+				case VidiunDropFolderFileErrorCode.ERROR_ADD_ENTRY : 
 					err = resourceManager.getString('dropfolders','dfErrAddEntry');
 					break;
-				case KalturaDropFolderFileErrorCode.FLAVOR_NOT_FOUND : 
+				case VidiunDropFolderFileErrorCode.FLAVOR_NOT_FOUND : 
 					err = resourceManager.getString('dropfolders','dfErrFlavorNotFound', [file.parsedFlavor]);
 					break;
-				case KalturaDropFolderFileErrorCode.FLAVOR_MISSING_IN_FILE_NAME : 
+				case VidiunDropFolderFileErrorCode.FLAVOR_MISSING_IN_FILE_NAME : 
 					err = resourceManager.getString('dropfolders','dfErrFlavorMissingInFile');
 					break;
-				case KalturaDropFolderFileErrorCode.SLUG_REGEX_NO_MATCH : 
+				case VidiunDropFolderFileErrorCode.SLUG_REGEX_NO_MATCH : 
 					err = resourceManager.getString('dropfolders','dfErrSlugRegex');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_READING_FILE :
+				case VidiunDropFolderFileErrorCode.ERROR_READING_FILE :
 					err = resourceManager.getString('dropfolders','dfErrReadFile');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_DOWNLOADING_FILE :
+				case VidiunDropFolderFileErrorCode.ERROR_DOWNLOADING_FILE :
 					err = resourceManager.getString('dropfolders','dfErrDnldFile');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_UPDATE_FILE :
+				case VidiunDropFolderFileErrorCode.ERROR_UPDATE_FILE :
 					err = resourceManager.getString('dropfolders','dfErrUpdateFile');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_ADD_CONTENT_RESOURCE :
+				case VidiunDropFolderFileErrorCode.ERROR_ADD_CONTENT_RESOURCE :
 					err = resourceManager.getString('dropfolders','dfErrAddResource');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_ADDING_CONTENT_PROCESSOR :
+				case VidiunDropFolderFileErrorCode.ERROR_ADDING_CONTENT_PROCESSOR :
 					err = resourceManager.getString('dropfolders','dfErrAddProc');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_IN_CONTENT_PROCESSOR :
+				case VidiunDropFolderFileErrorCode.ERROR_IN_CONTENT_PROCESSOR :
 					err = resourceManager.getString('dropfolders','dfErrProc');
 					break;
-				case KalturaDropFolderFileErrorCode.ERROR_DELETING_FILE :
+				case VidiunDropFolderFileErrorCode.ERROR_DELETING_FILE :
 					err = resourceManager.getString('dropfolders','dfErrDelFile');
 					break;
-				case KalturaDropFolderFileErrorCode.MALFORMED_XML_FILE :
+				case VidiunDropFolderFileErrorCode.MALFORMED_XML_FILE :
 					err = resourceManager.getString('dropfolders','dfErrMalformXml');
 					break;
-				case KalturaDropFolderFileErrorCode.XML_FILE_SIZE_EXCEED_LIMIT :
+				case VidiunDropFolderFileErrorCode.XML_FILE_SIZE_EXCEED_LIMIT :
 					err = resourceManager.getString('dropfolders','dfErrXmlSize');
 					break;
 					

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo {
+package com.vidiun.vmc.modules.studio.vo {
 	import mx.controls.CheckBox;
 	import mx.controls.ComboBox;
 	import mx.controls.NumericStepper;
@@ -68,7 +68,7 @@ package com.kaltura.kmc.modules.studio.vo {
 
 
 		public function get hasParam():Boolean {
-			if (_xml.@k_param.length() > 0) {
+			if (_xml.@v_param.length() > 0) {
 				return true
 			}
 			return false
@@ -80,13 +80,13 @@ package com.kaltura.kmc.modules.studio.vo {
 				case "ComboBox":
 					break;
 				case "Input":
-					_xml.@k_value = value;
+					_xml.@v_value = value;
 					break;
 				case "CheckBox":
-					_xml.@k_value = _xml.@selected = value;
+					_xml.@v_value = _xml.@selected = value;
 					break;
 				case "NumericStepper":
-					_xml.@k_value = value;
+					_xml.@v_value = value;
 					break;
 			}
 		}

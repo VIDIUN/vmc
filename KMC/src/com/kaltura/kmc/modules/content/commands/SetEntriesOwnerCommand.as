@@ -1,30 +1,30 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.baseEntry.BaseEntryUpdate;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class SetEntriesOwnerCommand extends KalturaCommand {
+	public class SetEntriesOwnerCommand extends VidiunCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			
 			var e:EntriesEvent = event as EntriesEvent;
 			var userid:String = e.data;
-			var entry:KalturaBaseEntry;
+			var entry:VidiunBaseEntry;
 			var updateEntry:BaseEntryUpdate
 			var mr:MultiRequest = new MultiRequest();
 			
 			for (var i:uint = 0; i < e.entries.length; i++) {
-				entry = e.entries[i] as KalturaBaseEntry;
+				entry = e.entries[i] as VidiunBaseEntry;
 				entry.userId = userid;
 				entry.setUpdatedFieldsOnly(true);
 				if (entry.conversionProfileId) {
@@ -37,9 +37,9 @@ package com.kaltura.kmc.modules.content.commands
 				updateEntry = new BaseEntryUpdate(entry.id, entry);
 				mr.addAction(updateEntry);
 			}
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);
 			
 		}
 		override public function result(data:Object):void {

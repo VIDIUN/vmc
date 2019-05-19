@@ -1,28 +1,28 @@
-package com.kaltura.edw.control.commands.flavor
+package com.vidiun.edw.control.commands.flavor
 {
-	import com.kaltura.commands.media.MediaCancelReplace;
-	import com.kaltura.edw.business.Cloner;
-	import com.kaltura.edw.business.EntryUtil;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.MediaEvent;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.vidiun.commands.media.MediaCancelReplace;
+	import com.vidiun.edw.business.Cloner;
+	import com.vidiun.edw.business.EntryUtil;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.MediaEvent;
+	import com.vidiun.edw.events.VedDataEvent;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunMediaEntry;
 	
 	import flash.events.IEventDispatcher;
 
 
-	public class CancelMediaEntryReplacementCommand extends KedCommand
+	public class CancelMediaEntryReplacementCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			var cancelReplacement:MediaCancelReplace = new MediaCancelReplace((event as MediaEvent).entry.id);
-			cancelReplacement.addEventListener(KalturaEvent.COMPLETE, result);
-			cancelReplacement.addEventListener(KalturaEvent.FAILED, fault);
+			cancelReplacement.addEventListener(VidiunEvent.COMPLETE, result);
+			cancelReplacement.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(cancelReplacement);
 		}
@@ -30,12 +30,12 @@ package com.kaltura.edw.control.commands.flavor
 		override public function result(data:Object):void {
 			super.result(data);
 			
-			if (data.data && (data.data is KalturaMediaEntry)) {
-				var entry:KalturaBaseEntry = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry;
-				EntryUtil.updateChangebleFieldsOnly(data.data as KalturaMediaEntry, entry);
+			if (data.data && (data.data is VidiunMediaEntry)) {
+				var entry:VidiunBaseEntry = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry;
+				EntryUtil.updateChangebleFieldsOnly(data.data as VidiunMediaEntry, entry);
 				
 				var dsp:IEventDispatcher = (_model.getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
-				var e:KedDataEvent = new KedDataEvent(KedDataEvent.ENTRY_RELOADED);
+				var e:VedDataEvent = new VedDataEvent(VedDataEvent.ENTRY_RELOADED);
 				e.data = entry; 
 				dsp.dispatchEvent(e);
 //				EntryUtil.updateSelectedEntryInList(entry, _model.listableVo.arrayCollection);

@@ -15,7 +15,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.hillelcoren.components.autoComplete.interfaces.iComboItem;
-			import com.kaltura.autocomplete.itemRenderers.selection.base.ISelectionItemRenderer;
+			import com.vidiun.autocomplete.itemRenderers.selection.base.ISelectionItemRenderer;
 			
 			import mx.containers.Canvas;
 			import mx.controls.Button;

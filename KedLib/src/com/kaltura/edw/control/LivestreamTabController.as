@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.ListLiveConversionProfilesCommand;
-	import com.kaltura.edw.control.commands.RegenerateLiveTokenCommand;
-	import com.kaltura.edw.control.events.LiveEvent;
-	import com.kaltura.edw.control.events.ProfileEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.ListLiveConversionProfilesCommand;
+	import com.vidiun.edw.control.commands.RegenerateLiveTokenCommand;
+	import com.vidiun.edw.control.events.LiveEvent;
+	import com.vidiun.edw.control.events.ProfileEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class LivestreamTabController extends KMvCController {
+	public class LivestreamTabController extends VMvCController {
 		
 		public function LivestreamTabController()
 		{

@@ -30,15 +30,15 @@
    @ignore
  */
 
-package com.kaltura.kmvc.control {
+package com.vidiun.vmvc.control {
 	import flash.events.Event;
 
 	/**
-	 * The KMvCEvent class is used to differentiate KMvC events
+	 * The VMvCEvent class is used to differentiate VMvC events
 	 * from events raised by the underlying Flex framework (or
-	 * similar). It is mandatory for KMvC event dispatching.
+	 * similar). It is mandatory for VMvC event dispatching.
 	 */
-	public class KMvCEvent extends Event {
+	public class VMvCEvent extends Event {
 		
 		/**
 		 * the object who triggered event dispatching. <br>
@@ -64,7 +64,7 @@ package com.kaltura.kmvc.control {
 		 * The value is updated when a controller dispatches the event
 		 * and is meant for use if a command needs to trigger another command.
 		 * */
-		public var dispatcher:KMvCController;
+		public var dispatcher:VMvCController;
 
 
 		/**
@@ -81,7 +81,7 @@ package com.kaltura.kmvc.control {
 		 * and also defaults the standard Flex event properties bubbles and cancelable
 		 * to true and false respectively.
 		 */
-		public function KMvCEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function VMvCEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 		}
 

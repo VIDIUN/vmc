@@ -29,9 +29,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 @ignore
 */
-package com.kaltura.kmvc.commands
+package com.vidiun.vmvc.commands
 { 
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
    
 
    /**
@@ -92,6 +92,6 @@ package com.kaltura.kmvc.commands
        * different ways to similar user gesture requests.
        * </p>
        */
-      function execute( event : KMvCEvent ) : void;
+      function execute( event : VMvCEvent ) : void;
    }
 }

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduledTaskProfile
+package com.vidiun.commands.scheduledTaskProfile
 {
-	import com.kaltura.delegates.scheduledTaskProfile.ScheduledTaskProfileDeleteDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.vidiun.delegates.scheduledTaskProfile.ScheduledTaskProfileDeleteDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Delete a scheduled task profile
 	**/
-	public class ScheduledTaskProfileDelete extends KalturaCall
+	public class ScheduledTaskProfileDelete extends VidiunCall
 	{
 		public var filterFields : String;
 		

@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaBaseSyndicationFeed;
+	import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+	import com.vidiun.commands.syndicationFeed.SyndicationFeedUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vo.VidiunBaseSyndicationFeed;
 	
 	import mx.rpc.IResponder;
 	
-	public class UpdateExternalSyndicationCommand extends KalturaCommand implements ICommand, IResponder
+	public class UpdateExternalSyndicationCommand extends VidiunCommand implements ICommand, IResponder
 	{
 		override public function execute(event:CairngormEvent):void
 		{
 			_model.increaseLoadCounter();
-			var feed:KalturaBaseSyndicationFeed = event.data as KalturaBaseSyndicationFeed;
+			var feed:VidiunBaseSyndicationFeed = event.data as VidiunBaseSyndicationFeed;
 			var id:String = feed.id;
 //			feed.id = null;
 //			feed.type = "";
@@ -25,9 +25,9 @@ package com.kaltura.kmc.modules.content.commands
 			feed.setUpdatedFieldsOnly(true);
 		
 		 	var updateFeed:SyndicationFeedUpdate = new SyndicationFeedUpdate(id, feed);
-		 	updateFeed.addEventListener(KalturaEvent.COMPLETE, result);
-			updateFeed.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(updateFeed);	   
+		 	updateFeed.addEventListener(VidiunEvent.COMPLETE, result);
+			updateFeed.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(updateFeed);	   
 		}
 
 		override public function result(data:Object):void

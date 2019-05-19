@@ -1,6 +1,6 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.controls.Paging;
+	import com.vidiun.controls.Paging;
 	
 	public interface IListable
 	{

@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -13,7 +13,7 @@ package com.kaltura.edw.model.datapacks
 		
 //		/**
 //		 * whether to display "mixes" tab in entrydrilldown
-//		 * (in KMC value is taken from content uiconf) 
+//		 * (in VMC value is taken from content uiconf) 
 //		 */		
 //		public var showMixesTab:Boolean = true;
 		

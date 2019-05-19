@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAssetsParamsResourceContainers;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaResource;
+package com.vidiun.edw.control.events {
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunAssetsParamsResourceContainers;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunResource;
 
-	public class DropFolderFileEvent extends KMvCEvent {
+	public class DropFolderFileEvent extends VMvCEvent {
 
 		/**
 		 * reset the drop folder files list on the model
@@ -31,13 +31,13 @@ package com.kaltura.edw.control.events {
 //		 * */
 //		public static const DELETE_FILES:String = "delete_files";
 
-		private var _entry:KalturaBaseEntry;
+		private var _entry:VidiunBaseEntry;
 		private var _slug:String;
-		private var _resources:KalturaResource;
+		private var _resources:VidiunResource;
 		private var _selectedFiles:Array;
 
 
-		public function DropFolderFileEvent(type:String, entry:KalturaBaseEntry=null, slug:String=null, resource:KalturaResource=null, selectedFiles:Array=null, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function DropFolderFileEvent(type:String, entry:VidiunBaseEntry=null, slug:String=null, resource:VidiunResource=null, selectedFiles:Array=null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			_entry = entry;
 			_slug = slug;
@@ -46,7 +46,7 @@ package com.kaltura.edw.control.events {
 		}
 
 
-		public function get entry():KalturaBaseEntry {
+		public function get entry():VidiunBaseEntry {
 			return _entry;
 		}
 
@@ -56,7 +56,7 @@ package com.kaltura.edw.control.events {
 		}
 
 
-		public function get resource():KalturaResource {
+		public function get resource():VidiunResource {
 			return _resources;
 		}
 		

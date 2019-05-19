@@ -1,7 +1,7 @@
-package com.kaltura.kmc.business.module {
-	import com.kaltura.kmc.business.KmcModuleLoader;
-	import com.kaltura.kmc.events.KmcModuleEvent;
-	import com.kaltura.kmc.modules.KmcModule;
+package com.vidiun.vmc.business.module {
+	import com.vidiun.vmc.business.VmcModuleLoader;
+	import com.vidiun.vmc.events.VmcModuleEvent;
+	import com.vidiun.vmc.modules.VmcModule;
 	
 	import flash.system.ApplicationDomain;
 	
@@ -13,43 +13,43 @@ package com.kaltura.kmc.business.module {
 	import org.flexunit.Assert;
 	import org.flexunit.async.Async;
 
-	public class TestKmcModuleLoader {
-		private var _kmcModuleLoader:KmcModuleLoader;
+	public class TestVmcModuleLoader {
+		private var _vmcModuleLoader:VmcModuleLoader;
 
 
 		[Before]
 		public function setUp():void {
-			_kmcModuleLoader = new KmcModuleLoader();
+			_vmcModuleLoader = new VmcModuleLoader();
 		}
 
 
 		[After]
 		public function tearDown():void {
-			_kmcModuleLoader = null;
+			_vmcModuleLoader = null;
 		}
 
 
 		[Test(async, description="if module loaded, say so")]
 		public function testOnModuleReady():void {
-			KmcModule;HBox;ComboBox;
+			VmcModule;HBox;ComboBox;
 			var asyncHandler:Function = Async.asyncHandler(this, handleSuccess, 5000, null, handleTimeout);
-			_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOADED, asyncHandler, false, 0, true);
-			var ml:ModuleLoader = _kmcModuleLoader.loadKmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
+			_vmcModuleLoader.addEventListener(VmcModuleEvent.MODULE_LOADED, asyncHandler, false, 0, true);
+			var ml:ModuleLoader = _vmcModuleLoader.loadVmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
 			ml.loadModule();
 		}
 
 
 		[Test(async, description="if error loading module, catch the error")]
 		public function testOnModuleError():void {
-			KmcModule; 
+			VmcModule; 
 			var asyncHandler:Function = Async.asyncHandler(this, handleSuccess, 10000, null, handleTimeout);
-			_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOAD_ERROR, asyncHandler, false, 0, true);
-			var ml:ModuleLoader = _kmcModuleLoader.loadKmcModule("bin-debug/modules/Dashboard1.swf", "dashboard");
+			_vmcModuleLoader.addEventListener(VmcModuleEvent.MODULE_LOAD_ERROR, asyncHandler, false, 0, true);
+			var ml:ModuleLoader = _vmcModuleLoader.loadVmcModule("bin-debug/modules/Dashboard1.swf", "dashboard");
 			ml.loadModule();
 		}
 
 
-		protected function handleSuccess(event:KmcModuleEvent, passThroughData:Object = null):void {
+		protected function handleSuccess(event:VmcModuleEvent, passThroughData:Object = null):void {
 			trace(event.type, event.errorText);
 		}
 

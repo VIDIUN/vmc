@@ -1,65 +1,65 @@
-package com.kaltura.kmc.modules.content.business
+package com.vidiun.vmc.modules.content.business
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.analytics.KAnalyticsTracker;
-	import com.kaltura.analytics.KAnalyticsTrackerConsts;
-	import com.kaltura.containers.ConfinedTitleWindow;
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.edw.components.playlist.ManualPlaylistWindow;
-	import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-	import com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode;
-	import com.kaltura.edw.constants.PanelConsts;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.LoadEvent;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.edw.view.EntryDetailsWin;
-	import com.kaltura.edw.view.window.CategoryBrowser;
-	import com.kaltura.edw.view.window.SetEntryOwnerWindow;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.kmc.modules.content.events.SetPlaylistTypeEvent;
-	import com.kaltura.kmc.modules.content.events.UpdateEntryEvent;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-	import com.kaltura.kmc.modules.content.model.types.EntryDetailsWindowState;
-	import com.kaltura.kmc.modules.content.utils.StringUtil;
-	import com.kaltura.kmc.modules.content.view.window.AddLiveStream;
-	import com.kaltura.kmc.modules.content.view.window.AddTagsWin;
-	import com.kaltura.kmc.modules.content.view.window.CategoriesAccessWindow;
-	import com.kaltura.kmc.modules.content.view.window.CategoriesContributionWindow;
-	import com.kaltura.kmc.modules.content.view.window.CategoriesListingWindow;
-	import com.kaltura.kmc.modules.content.view.window.DownloadWin;
-	import com.kaltura.kmc.modules.content.view.window.MoveCategoriesWindow;
-	import com.kaltura.kmc.modules.content.view.window.RemoveCategoriesWindow;
-	import com.kaltura.kmc.modules.content.view.window.RemoveTagsWin;
-	import com.kaltura.kmc.modules.content.view.window.RulePlaylistWindow;
-	import com.kaltura.kmc.modules.content.view.window.SetAccessControlProfileWin;
-	import com.kaltura.kmc.modules.content.view.window.SetSchedulingWin;
-	import com.kaltura.kmc.modules.content.view.window.cdw.CategoryDetailsWin;
-	import com.kaltura.kmc.modules.content.view.window.cdw.users.SetCatOwnerWindow;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.types.KalturaPlaylistType;
-	import com.kaltura.types.KalturaStatsKmcEventType;
-	import com.kaltura.utils.SoManager;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
-	import com.kaltura.vo.KalturaLiveStreamBitrate;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.analytics.GoogleAnalyticsConsts;
+	import com.vidiun.analytics.GoogleAnalyticsTracker;
+	import com.vidiun.analytics.VAnalyticsTracker;
+	import com.vidiun.analytics.VAnalyticsTrackerConsts;
+	import com.vidiun.containers.ConfinedTitleWindow;
+	import com.vidiun.edw.business.IDataOwner;
+	import com.vidiun.edw.components.playlist.ManualPlaylistWindow;
+	import com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent;
+	import com.vidiun.edw.components.playlist.types.ManualPlaylistWindowMode;
+	import com.vidiun.edw.constants.PanelConsts;
+	import com.vidiun.edw.control.VedController;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.LoadEvent;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.edw.events.VedDataEvent;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.types.WindowsStates;
+	import com.vidiun.edw.view.EntryDetailsWin;
+	import com.vidiun.edw.view.window.CategoryBrowser;
+	import com.vidiun.edw.view.window.SetEntryOwnerWindow;
+	import com.vidiun.edw.vo.ListableVo;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
+	import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+	import com.vidiun.vmc.modules.content.events.SetPlaylistTypeEvent;
+	import com.vidiun.vmc.modules.content.events.UpdateEntryEvent;
+	import com.vidiun.vmc.modules.content.events.WindowEvent;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.vmc.modules.content.model.types.EntryDetailsWindowState;
+	import com.vidiun.vmc.modules.content.utils.StringUtil;
+	import com.vidiun.vmc.modules.content.view.window.AddLiveStream;
+	import com.vidiun.vmc.modules.content.view.window.AddTagsWin;
+	import com.vidiun.vmc.modules.content.view.window.CategoriesAccessWindow;
+	import com.vidiun.vmc.modules.content.view.window.CategoriesContributionWindow;
+	import com.vidiun.vmc.modules.content.view.window.CategoriesListingWindow;
+	import com.vidiun.vmc.modules.content.view.window.DownloadWin;
+	import com.vidiun.vmc.modules.content.view.window.MoveCategoriesWindow;
+	import com.vidiun.vmc.modules.content.view.window.RemoveCategoriesWindow;
+	import com.vidiun.vmc.modules.content.view.window.RemoveTagsWin;
+	import com.vidiun.vmc.modules.content.view.window.RulePlaylistWindow;
+	import com.vidiun.vmc.modules.content.view.window.SetAccessControlProfileWin;
+	import com.vidiun.vmc.modules.content.view.window.SetSchedulingWin;
+	import com.vidiun.vmc.modules.content.view.window.cdw.CategoryDetailsWin;
+	import com.vidiun.vmc.modules.content.view.window.cdw.users.SetCatOwnerWindow;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vmvc.model.VMvCModel;
+	import com.vidiun.types.VidiunMediaType;
+	import com.vidiun.types.VidiunPlaylistType;
+	import com.vidiun.types.VidiunStatsVmcEventType;
+	import com.vidiun.utils.SoManager;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunLiveStreamEntry;
+	import com.vidiun.vo.VidiunLiveStreamBitrate;
+	import com.vidiun.vo.VidiunMediaEntry;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -110,7 +110,7 @@ package com.kaltura.kmc.modules.content.business
 		/**
 		 * entry data
 		 * */
-		private var _entryData:EntryDataPack = KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;		
+		private var _entryData:EntryDataPack = VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;		
 
 		
 		/**
@@ -216,7 +216,7 @@ package com.kaltura.kmc.modules.content.business
 						(currentPopUp as AddLiveStream).model = model;
 						var ip:String;
 						try {
-							ip = ExternalInterface.call("kmc.utils.getClientIP");
+							ip = ExternalInterface.call("vmc.utils.getClientIP");
 							(currentPopUp as AddLiveStream).defaultIP = ip;
 						}
 						catch (e:Error) {
@@ -240,7 +240,7 @@ package com.kaltura.kmc.modules.content.business
 						(currentPopUp as SetAccessControlProfileWin).context = model.context; 
 						(currentPopUp as SetAccessControlProfileWin).selectedEntries = new ArrayCollection(model.selectedEntries);
 						(currentPopUp as SetAccessControlProfileWin).filterModel = model.filterModel;
-						(currentPopUp as SetAccessControlProfileWin).entryDetailsModel = KMvCModel.getInstance();
+						(currentPopUp as SetAccessControlProfileWin).entryDetailsModel = VMvCModel.getInstance();
 						
 						break;
 					case WindowsStates.SETTING_SCHEDULING_WINDOW:
@@ -260,17 +260,17 @@ package com.kaltura.kmc.modules.content.business
 						if (model.categoriesModel.selectedCategory.name == null){
 							model.categoriesModel.processingNewCategory = true;	//TODO make pretty
 							catDetails.isNewCategory = true;
-							catDetails.kClient = model.context.kc;
+							catDetails.vClient = model.context.vc;
 						}
 						catDetails.filterModel = model.filterModel;
 						catDetails.categoriesModel = model.categoriesModel;
-						catDetails.addEventListener(KedDataEvent.CLOSE_WINDOW, handleKedEvents, false, 0, true);
+						catDetails.addEventListener(VedDataEvent.CLOSE_WINDOW, handleVedEvents, false, 0, true);
 						break;
 					case WindowsStates.CHANGE_ENTRY_OWNER_WINDOW:
 						currentPopUp = new SetEntryOwnerWindow();
 						currentPopUp.addEventListener("save", handleChangeEntryOwnerEvents, false, 0, true);
 						currentPopUp.addEventListener(CloseEvent.CLOSE, handleClosePopup, false, 0, true);
-						(currentPopUp as SetEntryOwnerWindow).kClient = (KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).kc;
+						(currentPopUp as SetEntryOwnerWindow).vClient = (VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).vc;
 //							(currentPopUp as SetOwnerWindow).entryData = _entryData;
 //							(currentPopUp as SetOwnerWindow).setUserById(_entryData.selectedEntry.userId);
 						break;
@@ -279,7 +279,7 @@ package com.kaltura.kmc.modules.content.business
 						currentPopUp.addEventListener("apply", handleAddCategoriesEvents, false, 0, true);
 						currentPopUp.addEventListener(CloseEvent.CLOSE, handleClosePopup, false, 0, true);
 						(currentPopUp as CategoryBrowser).filterModel = model.filterModel;
-						(currentPopUp as CategoryBrowser).kClient = (KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).kc;
+						(currentPopUp as CategoryBrowser).vClient = (VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).vc;
 						break;
 					case WindowsStates.REMOVE_CATEGORIES_WINDOW:
 						currentPopUp = new RemoveCategoriesWindow();
@@ -341,7 +341,7 @@ package com.kaltura.kmc.modules.content.business
 			currentPopUp.addEventListener("apply", handleMoveCategoriesEvents, false, 0, true);
 			currentPopUp.addEventListener(CloseEvent.CLOSE, handleClosePopup, false, 0, true);
 			(currentPopUp as MoveCategoriesWindow).filterModel = model.filterModel;
-			(currentPopUp as MoveCategoriesWindow).kClient = model.context.kc;
+			(currentPopUp as MoveCategoriesWindow).vClient = model.context.vc;
 			if (newState == WindowsStates.MOVE_CATEGORIES_WINDOW) {
 				(currentPopUp as MoveCategoriesWindow).setCategories(model.categoriesModel.selectedCategories);
 			}
@@ -358,8 +358,8 @@ package com.kaltura.kmc.modules.content.business
 			var dw:DownloadWin;
 			//if the user selected to download a single image, no need to open to pop-up
 			if ((model.selectedEntries) && (model.selectedEntries.length == 1) && 
-				(model.selectedEntries[0] is KalturaMediaEntry) && 
-				((model.selectedEntries[0] as KalturaMediaEntry).mediaType == KalturaMediaType.IMAGE)) {
+				(model.selectedEntries[0] is VidiunMediaEntry) && 
+				((model.selectedEntries[0] as VidiunMediaEntry).mediaType == VidiunMediaType.IMAGE)) {
 				var urlRequest:URLRequest = new URLRequest(model.selectedEntries[0].downloadUrl + DOWNLOAD_FINITE);
 				navigateToURL(urlRequest);
 				owner.enabled = true;
@@ -379,25 +379,25 @@ package com.kaltura.kmc.modules.content.business
 		private function openEntryDetails(state:String):EntryDetailsWin {
 			var edw:EntryDetailsWin = new EntryDetailsWin();
 			edw.styleName = "WinTitleStyle";
-			edw.addEventListener(KedDataEvent.ENTRY_RELOADED, handleKedEvents, false, 0, true);
-			edw.addEventListener(KedDataEvent.CLOSE_WINDOW, handleKedEvents, false, 0, true);
-			edw.addEventListener(KedDataEvent.CATEGORY_CHANGED, handleKedEvents, false, 0, true);
-			edw.addEventListener(KedDataEvent.ENTRY_UPDATED, handleKedEvents, false, 0, true);
-			edw.addEventListener(KedDataEvent.OPEN_REPLACEMENT, handleKedEvents, false, 0, true);
-			edw.addEventListener(KedDataEvent.OPEN_ENTRY, handleKedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.ENTRY_RELOADED, handleVedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.CLOSE_WINDOW, handleVedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.CATEGORY_CHANGED, handleVedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.ENTRY_UPDATED, handleVedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.OPEN_REPLACEMENT, handleVedEvents, false, 0, true);
+			edw.addEventListener(VedDataEvent.OPEN_ENTRY, handleVedEvents, false, 0, true);
 			edw.isNewEntry = state == EntryDetailsWindowState.NEW_ENTRY;
 			// get the selected entry from the server
 			if (state != EntryDetailsWindowState.NEW_ENTRY && state != EntryDetailsWindowState.NORMAL_ENTRY_SA) {
 				// in the SA mode, we just got the entry. no need to fetch again
-				var getSelectedEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null,
+				var getSelectedEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null,
 					_entryData.selectedEntry.id);
-				KedController.getInstance().dispatch(getSelectedEntry);
+				VedController.getInstance().dispatch(getSelectedEntry);
 			}
 			if (state == EntryDetailsWindowState.REPLACEMENT_ENTRY) {
 				setReplacementDrilldown(edw);
 			}
 			
-			var entryDetailsModel:KMvCModel = KMvCModel.getInstance();
+			var entryDetailsModel:VMvCModel = VMvCModel.getInstance();
 			edw.entryDetailsModel = entryDetailsModel;
 			var contextData:ContextDataPack = entryDetailsModel.getDataPack(ContextDataPack) as ContextDataPack;
 			contextData.showEmbedCode = model.showSingleEntryEmbedCode;
@@ -408,7 +408,7 @@ package com.kaltura.kmc.modules.content.business
 			else if (model.listableVo)	// only for normal entries
 				edw.itemsAC = model.listableVo.arrayCollection;
 			GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_ENTRY_DRILLDOWN, GoogleAnalyticsConsts.CONTENT)
-			KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_ENTRY_DRILLDOWN, "content>Entry DrillDown");
+			VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_ENTRY_DRILLDOWN, "content>Entry DrillDown");
 			
 			return edw;
 		
@@ -419,8 +419,8 @@ package com.kaltura.kmc.modules.content.business
 		 * open drill down to replacement entry, with partial tabs list
 		 * */
 		private function setReplacementDrilldown(edw:EntryDetailsWin):void {
-			KMvCModel.addModel();
-			var edp:EntryDataPack = KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
+			VMvCModel.addModel();
+			var edp:EntryDataPack = VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
 			edp.selectedEntry = _entryData.selectedReplacementEntry;
 			edp.replacedEntryName = _entryData.selectedEntry.name;
 			//
@@ -436,18 +436,18 @@ package com.kaltura.kmc.modules.content.business
 		 * window for the given entry.
 		 * @param entry		the entry to drill into.
 		 * */
-		private function requestEntryDrilldown(entry:KalturaBaseEntry):void {
+		private function requestEntryDrilldown(entry:VidiunBaseEntry):void {
 			var cgEvent:CairngormEvent;
-			var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry);
-			KedController.getInstance().dispatch(kEvent);
-			if (entry is KalturaPlaylist) {
+			var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, entry);
+			VedController.getInstance().dispatch(vEvent);
+			if (entry is VidiunPlaylist) {
 				//switch manual / rule base
-				if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.STATIC_LIST) {
+				if ((entry as VidiunPlaylist).playlistType == VidiunPlaylistType.STATIC_LIST) {
 					// manual list
 					cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_MANUAL_WINDOW);
 					cgEvent.dispatch();
 				}
-				if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.DYNAMIC) {
+				if ((entry as VidiunPlaylist).playlistType == VidiunPlaylistType.DYNAMIC) {
 					cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_RULE_BASED_WINDOW);
 					cgEvent.dispatch();
 				}
@@ -463,43 +463,43 @@ package com.kaltura.kmc.modules.content.business
 		/**
 		 * handle events dispatched by the drilldown
 		 * */
-		public function handleKedEvents(e:KedDataEvent):void {
+		public function handleVedEvents(e:VedDataEvent):void {
 			switch (e.type) {
-				case KedDataEvent.ENTRY_UPDATED:
+				case VedDataEvent.ENTRY_UPDATED:
 					// set refresh list required
 					model.refreshEntriesRequired = true;
 					// break; // case falldown
-				case KedDataEvent.ENTRY_RELOADED:
+				case VedDataEvent.ENTRY_RELOADED:
 					// dispatch a Cairngorm event which will update the new entry in the entries list
 					var uev:UpdateEntryEvent = new UpdateEntryEvent(UpdateEntryEvent.UPDATE_ENTRY_IN_LIST);
 					uev.data = e.data;
 					uev.dispatch();
 					break;
 				
-				case KedDataEvent.CLOSE_WINDOW:
+				case VedDataEvent.CLOSE_WINDOW:
 					// close the drilldown
 					var cgEvent:CairngormEvent = new WindowEvent(WindowEvent.CLOSE);
 					cgEvent.dispatch();
 					
 //					// make sure list is refreshed when drilldown window is closed (Atar: this happens in Content)
 //					if (model.refreshEntriesRequired) {
-//						cgEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES, model.listableVo);
+//						cgEvent = new VMCSearchEvent(VMCSearchEvent.DO_SEARCH_ENTRIES, model.listableVo);
 //						cgEvent.dispatch();
 //					}
 					break;
 				
-				case KedDataEvent.CATEGORY_CHANGED:
+				case VedDataEvent.CATEGORY_CHANGED:
 					// list entries
-					var searchEvent:KMCSearchEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES , model.listableVo  );
+					var searchEvent:VMCSearchEvent = new VMCSearchEvent(VMCSearchEvent.DO_SEARCH_ENTRIES , model.listableVo  );
 					searchEvent.dispatch();
 					break;
 				
-				case KedDataEvent.OPEN_REPLACEMENT:
+				case VedDataEvent.OPEN_REPLACEMENT:
 					var openWindow:WindowEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.REPLACEMENT_ENTRY_DETAILS_WINDOW);
 					openWindow.dispatch();
 					break;
 				
-				case KedDataEvent.OPEN_ENTRY:
+				case VedDataEvent.OPEN_ENTRY:
 					requestEntryDrilldown(e.data);
 					break;
 			}
@@ -515,7 +515,7 @@ package com.kaltura.kmc.modules.content.business
 			
 			var mpw:ManualPlaylistWindow = new ManualPlaylistWindow();
 			mpw.filterData = model.filterModel;
-			mpw.client = model.context.kc;
+			mpw.client = model.context.vc;
 			
 			if (model.playlistModel.onTheFlyPlaylistType == SetPlaylistTypeEvent.MANUAL_PLAYLIST) {
 				// this is not an empty or edit existing playlist - this is a
@@ -561,37 +561,37 @@ package com.kaltura.kmc.modules.content.business
 				
 				case ManualPlaylistWindowEvent.SHOW_ENTRY_DETAILS:
 					// open entry details window with the selected entry from the playlist
-					var entry:KalturaBaseEntry = e.data as KalturaBaseEntry;
-					var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id);
-					KedController.getInstance().dispatch(kEvent);
+					var entry:VidiunBaseEntry = e.data as VidiunBaseEntry;
+					var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id);
+					VedController.getInstance().dispatch(vEvent);
 					cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_ENTRY_DETAILS_WINDOW);
 					cgEvent.dispatch();
 					break;
 				
 				case ManualPlaylistWindowEvent.SAVE_NEW_PLAYLIST:
-					var addEntryEvent:KMCEntryEvent = new KMCEntryEvent(KMCEntryEvent.ADD_PLAYLIST, e.data as KalturaPlaylist);
+					var addEntryEvent:VMCEntryEvent = new VMCEntryEvent(VMCEntryEvent.ADD_PLAYLIST, e.data as VidiunPlaylist);
 					addEntryEvent.dispatch();
 					break;
 				
 				case ManualPlaylistWindowEvent.SAVE_EXISTING_PLAYLIST:
 					var entriesEvent:EntriesEvent = new EntriesEvent(EntriesEvent.UPDATE_PLAYLISTS,
-						new ArrayCollection([e.data as KalturaPlaylist]));
+						new ArrayCollection([e.data as VidiunPlaylist]));
 					entriesEvent.dispatch();
 					break;
 				
 				case ManualPlaylistWindowEvent.GET_PLAYLIST:
-					cgEvent = new KMCEntryEvent(KMCEntryEvent.GET_PLAYLIST, e.data as KalturaPlaylist);
+					cgEvent = new VMCEntryEvent(VMCEntryEvent.GET_PLAYLIST, e.data as VidiunPlaylist);
 					cgEvent.dispatch();
 					break;
 				
 				case ManualPlaylistWindowEvent.LOAD_FILTER_DATA:
 					var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, e.target as IDataOwner, model.filterModel);
-					KedController.getInstance().dispatch(fe);
+					VedController.getInstance().dispatch(fe);
 					break;
 				
 				case ManualPlaylistWindowEvent.SEARCH_ENTRIES:
 					var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SEARCH_ENTRIES, e.data as ListableVo);
-					KedController.getInstance().dispatch(searchEvent);
+					VedController.getInstance().dispatch(searchEvent);
 					break;
 			}
 		}
@@ -605,13 +605,13 @@ package com.kaltura.kmc.modules.content.business
 			var rpw:RulePlaylistWindow = new RulePlaylistWindow();
 			rpw.rulePlaylistData = model.playlistModel;
 			rpw.rootUrl = model.context.rootUrl;
-			if (_entryData.selectedEntry && (_entryData.selectedEntry is KalturaPlaylist)) {
-				rpw.editPlaylist = _entryData.selectedEntry as KalturaPlaylist;
+			if (_entryData.selectedEntry && (_entryData.selectedEntry is VidiunPlaylist)) {
+				rpw.editPlaylist = _entryData.selectedEntry as VidiunPlaylist;
 			}
 			rpw.filterData = model.filterModel;
 			
 			rpw.distributionProfilesArr = (model.entryDetailsModel.getDataPack(DistributionDataPack) as DistributionDataPack).distributionInfo.distributionProfiles;
-			rpw.client = model.context.kc;
+			rpw.client = model.context.vc;
 			// assign the current fiter to the new window 
 			rpw.onTheFlyFilter = model.playlistModel.onTheFlyFilter;
 			model.playlistModel.onTheFlyFilter = null;
@@ -622,11 +622,11 @@ package com.kaltura.kmc.modules.content.business
 		/**
 		 * open a preview player with live streaming entry
 		 * */
-		private function openLivestreamPreview(entry:KalturaBaseEntry):void {
-			var lp:KalturaLiveStreamEntry = entry as KalturaLiveStreamEntry;
+		private function openLivestreamPreview(entry:VidiunBaseEntry):void {
+			var lp:VidiunLiveStreamEntry = entry as VidiunLiveStreamEntry;
 			var bitrates:Array = new Array();
 			var o:Object;
-			for each (var br:KalturaLiveStreamBitrate in lp.bitrates) {
+			for each (var br:VidiunLiveStreamBitrate in lp.bitrates) {
 				o = new Object();
 				o.bitrate = br.bitrate;
 				o.width = br.width;
@@ -651,10 +651,10 @@ package com.kaltura.kmc.modules.content.business
 		/**
 		 * open a preview player with playlist
 		 * */
-		private function openPlaylistPreview(entry:KalturaBaseEntry):void {
+		private function openPlaylistPreview(entry:VidiunBaseEntry):void {
 			// open playlist preview
 			if (model.openPlaylist) {
-				var pl:KalturaPlaylist = entry as KalturaPlaylist;
+				var pl:VidiunPlaylist = entry as VidiunPlaylist;
 				JSGate.doPreviewEmbed(model.openPlaylist, pl.id, pl.name, StringUtil.cutTo512Chars(pl.description), 
 					!model.showPlaylistEmbedCode, true, model.attic.previewuiconf, null, 0, null, 0);
 				model.attic.previewuiconf = null;
@@ -669,12 +669,12 @@ package com.kaltura.kmc.modules.content.business
 		/**
 		 * open a preview player with a normal entry
 		 * */
-		private function openEntryPreview(entry:KalturaBaseEntry):void {
+		private function openEntryPreview(entry:VidiunBaseEntry):void {
 			// open regular entry preview
 			if (model.openPlayer) {
 				var duration:int = 0;
-				if (entry is KalturaMediaEntry) {
-					duration = (entry as KalturaMediaEntry).duration;
+				if (entry is VidiunMediaEntry) {
+					duration = (entry as VidiunMediaEntry).duration;
 				}
 				JSGate.doPreviewEmbed(model.openPlayer, entry.id, entry.name, StringUtil.cutTo512Chars(entry.description),
 					!model.showSingleEntryEmbedCode, false, model.attic.previewuiconf, null, duration, entry.thumbnailUrl,
@@ -693,13 +693,13 @@ package com.kaltura.kmc.modules.content.business
 		 * This method triggers one of the specific openPreview methods.
 		 * */
 		private function openPreviewEmbed():void {
-			var entry:KalturaBaseEntry = _entryData.selectedEntry;
+			var entry:VidiunBaseEntry = _entryData.selectedEntry;
 			
-			if (entry is KalturaLiveStreamEntry) {
+			if (entry is VidiunLiveStreamEntry) {
 				openLivestreamPreview(entry);
 				
 			}
-			else if (entry is KalturaPlaylist) {
+			else if (entry is VidiunPlaylist) {
 				openPlaylistPreview(entry);
 			}
 			else {
@@ -713,7 +713,7 @@ package com.kaltura.kmc.modules.content.business
 		 * Open live dashboard for a live entry. <br>
 		 * */
 		private function openLiveDashboard():void {
-			var entry:KalturaBaseEntry = _entryData.selectedEntry;
+			var entry:VidiunBaseEntry = _entryData.selectedEntry;
 			JSGate.OpenLiveDashboard(entry.id);
 			model.windowState = WindowsStates.NONE;
 		}
@@ -724,9 +724,9 @@ package com.kaltura.kmc.modules.content.business
 				case "save":
 					// set entry owner for all selected entries
 					var tgt:SetEntryOwnerWindow = e.target as SetEntryOwnerWindow;
-					var kEvent:EntriesEvent = new EntriesEvent(EntriesEvent.SET_ENTRIES_OWNER, new ArrayCollection(model.selectedEntries));
-					kEvent.data = tgt.selectedUser.id;
-					kEvent.dispatch();
+					var vEvent:EntriesEvent = new EntriesEvent(EntriesEvent.SET_ENTRIES_OWNER, new ArrayCollection(model.selectedEntries));
+					vEvent.data = tgt.selectedUser.id;
+					vEvent.dispatch();
 					break;
 			}
 		}
@@ -737,9 +737,9 @@ package com.kaltura.kmc.modules.content.business
 				case "apply":
 					// add categories to all selected entries
 					var tgt:CategoryBrowser = e.target as CategoryBrowser;
-					var kEvent:EntriesEvent = new EntriesEvent(EntriesEvent.ADD_CATEGORIES_ENTRIES, new ArrayCollection(model.selectedEntries));
-					kEvent.data = tgt.getCategories();
-					kEvent.dispatch();
+					var vEvent:EntriesEvent = new EntriesEvent(EntriesEvent.ADD_CATEGORIES_ENTRIES, new ArrayCollection(model.selectedEntries));
+					vEvent.data = tgt.getCategories();
+					vEvent.dispatch();
 					break;
 			}
 		}
@@ -751,9 +751,9 @@ package com.kaltura.kmc.modules.content.business
 				case "apply": 
 					// set all categories as children of the selected parent category 
 					var tgt:MoveCategoriesWindow = e.target as MoveCategoriesWindow;
-					var kEvent:CategoryEvent = new CategoryEvent(CategoryEvent.MOVE_CATEGORIES);
-					kEvent.data = [tgt.getCategories(), tgt.getParent()];
-					kEvent.dispatch();
+					var vEvent:CategoryEvent = new CategoryEvent(CategoryEvent.MOVE_CATEGORIES);
+					vEvent.data = [tgt.getCategories(), tgt.getParent()];
+					vEvent.dispatch();
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_CATS_MOVE, GoogleAnalyticsConsts.CONTENT);
 					break;
 			}
@@ -763,9 +763,9 @@ package com.kaltura.kmc.modules.content.business
 			switch (e.type) {
 				case "apply": 
 					var tgt:CategoriesListingWindow = e.target as CategoriesListingWindow;
-					var kEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_LISTING);
-					kEvent.data = tgt.getListing();
-					kEvent.dispatch();
+					var vEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_LISTING);
+					vEvent.data = tgt.getListing();
+					vEvent.dispatch();
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_CATS_LISTING, GoogleAnalyticsConsts.CONTENT);
 					break;
 			}
@@ -776,9 +776,9 @@ package com.kaltura.kmc.modules.content.business
 			switch (e.type) {
 				case "apply": 
 					var tgt:CategoriesContributionWindow = e.target as CategoriesContributionWindow
-					var kEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_CONTRIBUTION);
-					kEvent.data = tgt.getContributionPolicy();
-					kEvent.dispatch();
+					var vEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_CONTRIBUTION);
+					vEvent.data = tgt.getContributionPolicy();
+					vEvent.dispatch();
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_CATS_CONTRIBUTION_POLICY, GoogleAnalyticsConsts.CONTENT);
 					break;
 			}
@@ -789,9 +789,9 @@ package com.kaltura.kmc.modules.content.business
 			switch (e.type) {
 				case "apply": 
 					var tgt:CategoriesAccessWindow = e.target as CategoriesAccessWindow;
-					var kEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_ACCESS);
-					kEvent.data = tgt.getAccess();
-					kEvent.dispatch();
+					var vEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_ACCESS);
+					vEvent.data = tgt.getAccess();
+					vEvent.dispatch();
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_CATS_ACCESS, GoogleAnalyticsConsts.CONTENT);
 					break;
 			}
@@ -802,9 +802,9 @@ package com.kaltura.kmc.modules.content.business
 			var tgt:SetCatOwnerWindow = e.target as SetCatOwnerWindow;
 			switch (e.type) {
 				case "apply":
-					var kEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_OWNER);
-					kEvent.data = tgt.ownerUser.id;
-					kEvent.dispatch();
+					var vEvent:CategoryEvent = new CategoryEvent(CategoryEvent.SET_CATEGORIES_OWNER);
+					vEvent.data = tgt.ownerUser.id;
+					vEvent.dispatch();
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_CATS_OWNER, GoogleAnalyticsConsts.CONTENT);
 					break;
 			}

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" 
-		 xmlns:view="com.kaltura.kmc.modules.admin.view.*" xmlns:controls="com.kaltura.controls.*"
-		 implements="com.kaltura.kmc.modules.admin.view.IAdminSubtab"
+		 xmlns:view="com.vidiun.vmc.modules.admin.view.*" xmlns:controls="com.vidiun.controls.*"
+		 implements="com.vidiun.vmc.modules.admin.view.IAdminSubtab"
 		 creationComplete="creationCompleteHandler()">
 	<mx:Metadata >
-		[Event(name="enableHeader",type="com.kaltura.kmc.modules.admin.control.events.GeneralEvent")]
+		[Event(name="enableHeader",type="com.vidiun.vmc.modules.admin.control.events.GeneralEvent")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcErrorEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.admin.control.events.DrilldownEvent;
-			import com.kaltura.kmc.modules.admin.control.events.GeneralEvent;
-			import com.kaltura.kmc.modules.admin.control.events.ListItemsEvent;
-			import com.kaltura.kmc.modules.admin.control.events.PartnerEvent;
-			import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-			import com.kaltura.kmc.modules.admin.control.events.UserEvent;
-			import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-			import com.kaltura.kmc.modules.admin.model.RolesModel;
-			import com.kaltura.kmc.modules.admin.model.UsersModel;
-			import com.kaltura.kmc.vo.UserVO;
-			import com.kaltura.types.KalturaUserStatus;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaUser;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcErrorEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.admin.control.events.DrilldownEvent;
+			import com.vidiun.vmc.modules.admin.control.events.GeneralEvent;
+			import com.vidiun.vmc.modules.admin.control.events.ListItemsEvent;
+			import com.vidiun.vmc.modules.admin.control.events.PartnerEvent;
+			import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+			import com.vidiun.vmc.modules.admin.control.events.UserEvent;
+			import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+			import com.vidiun.vmc.modules.admin.model.RolesModel;
+			import com.vidiun.vmc.modules.admin.model.UsersModel;
+			import com.vidiun.vmc.vo.UserVO;
+			import com.vidiun.types.VidiunUserStatus;
+			import com.vidiun.vo.VidiunFilterPager;
+			import com.vidiun.vo.VidiunUser;
+			import com.vidiun.vo.VidiunUserRole;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -144,7 +144,7 @@
 					user_s = ResourceManager.getInstance().getString('admin', 'users_quota_users');
 				}
 				var left:int = (model.loginUsersQuota - model.totalUsers);
-				// users_quota = {0} KMC {1} already in use. {2} still available. 
+				// users_quota = {0} VMC {1} already in use. {2} still available. 
 				var s:String = ResourceManager.getInstance().getString('admin', 'users_quota', [model.totalUsers, user_s, left.toString()]);
 				usersQuota.text = s;
 				addBtn.enabled = left > 0;
@@ -154,7 +154,7 @@
 			/**
 			 * if a user drilldown window is opened, update the user's role. 
 			 * */
-			protected function onNewRoleChange(value:KalturaUserRole):void {
+			protected function onNewRoleChange(value:VidiunUserRole):void {
 				if (value) {
 					if (_userDrilldown) {
 						_userDrilldown.setUserRole(value.id.toString());
@@ -229,21 +229,21 @@
 				}
 				
 				// list
-				var kfp:KalturaFilterPager = new KalturaFilterPager();
-				if (paging.kalturaFilterPager.pageSize != int.MIN_VALUE) {
-					kfp.pageSize = paging.kalturaFilterPager.pageSize;
+				var vfp:VidiunFilterPager = new VidiunFilterPager();
+				if (paging.vidiunFilterPager.pageSize != int.MIN_VALUE) {
+					vfp.pageSize = paging.vidiunFilterPager.pageSize;
 				}
 				else {
-					kfp.pageSize = 25;
+					vfp.pageSize = 25;
 				}
 				if (pageNumber) {
-					kfp.pageIndex = pageNumber;
+					vfp.pageIndex = pageNumber;
 				}
 				else {
-					kfp.pageIndex = paging.kalturaFilterPager.pageIndex;
+					vfp.pageIndex = paging.vidiunFilterPager.pageIndex;
 				}
 				
-				var ce:ListItemsEvent = new ListItemsEvent(ListItemsEvent.LIST_USERS, model.usersFilter, kfp);
+				var ce:ListItemsEvent = new ListItemsEvent(ListItemsEvent.LIST_USERS, model.usersFilter, vfp);
 				ce.dispatch();
 			}
 			
@@ -282,13 +282,13 @@
 				ue.dispatch();
 			}
 			
-			private function onNavigate(event:KmcNavigationEvent):void
+			private function onNavigate(event:VmcNavigationEvent):void
 			{
 				// close drilldowns 
 				closeRoleDrilldown(null);
 				closeUserDrilldown(null);
 				// navigate
-				dispatchEvent(new KmcNavigationEvent(event.type, event.module, event.subtab, event.data, event.bubbles, event.cancelable));
+				dispatchEvent(new VmcNavigationEvent(event.type, event.module, event.subtab, event.data, event.bubbles, event.cancelable));
 			}
 			
 			/**
@@ -313,13 +313,13 @@
 			 * */
 			protected function openAddRoleDialog(e:Event):void {
 				_roleDrilldown = new RoleDrilldown();
-				var kur:KalturaUserRole = new KalturaUserRole();
-				kur.tags = 'kmc';
-				kur.permissionNames = Roles.DEFAULT_KMC_PERMISSIONS;
-				_roleDrilldown.init(kur, model.drilldownMode, rolesModel.partnerPermissionsUiconf, rolesModel.partnerPermissions, rolesModel.roles);
+				var vur:VidiunUserRole = new VidiunUserRole();
+				vur.tags = 'vmc';
+				vur.permissionNames = Roles.DEFAULT_VMC_PERMISSIONS;
+				_roleDrilldown.init(vur, model.drilldownMode, rolesModel.partnerPermissionsUiconf, rolesModel.partnerPermissions, rolesModel.roles);
 				_roleDrilldown.addEventListener(RoleDrilldown.SAVE, saveRoleData);
 				_roleDrilldown.addEventListener(RoleDrilldown.CLOSE, closeRoleDrilldown);
-				_roleDrilldown.addEventListener(KmcNavigationEvent.NAVIGATE, onNavigate);
+				_roleDrilldown.addEventListener(VmcNavigationEvent.NAVIGATE, onNavigate);
 				PopUpManager.addPopUp(_roleDrilldown, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(_roleDrilldown);
 			}
@@ -334,7 +334,7 @@
 				PopUpManager.removePopUp(_roleDrilldown);
 				_roleDrilldown.removeEventListener(UserDrilldown.SAVE, saveRoleData);
 				_roleDrilldown.removeEventListener(UserDrilldown.CLOSE, closeRoleDrilldown);
-				_roleDrilldown.removeEventListener(KmcNavigationEvent.NAVIGATE, onNavigate);
+				_roleDrilldown.removeEventListener(VmcNavigationEvent.NAVIGATE, onNavigate);
 				_roleDrilldown = null;
 			}
 			
@@ -374,9 +374,9 @@
 			 * show the "add user" dialog
 			 * */
 			protected function openAddUserDialog(event:MouseEvent):void {
-				// set the selected user to a new KalturaUser.
-				var usr:KalturaUser = new KalturaUser();
-				// kmc user definitions:
+				// set the selected user to a new VidiunUser.
+				var usr:VidiunUser = new VidiunUser();
+				// vmc user definitions:
 				usr.isAdmin = true;
 				usr.loginEnabled = true;
 				var ce:CairngormEvent = new UserEvent(UserEvent.SELECT_USER, usr);
@@ -425,11 +425,11 @@
 			 * toggle between blocked / active stauses of the selected user 
 			 * */
 			protected function toggleUserStatus(event:Event):void {
-				if (model.selectedUser.status != KalturaUserStatus.ACTIVE &&
-					model.selectedUser.status != KalturaUserStatus.BLOCKED) {
+				if (model.selectedUser.status != VidiunUserStatus.ACTIVE &&
+					model.selectedUser.status != VidiunUserStatus.BLOCKED) {
 					// this user is not active or blocked (probably deleted and shouldn't 
 					// be in the table), so we can't toggle status
-					dispatchEvent(new KmcErrorEvent(KmcErrorEvent.ERROR, ResourceManager.getInstance().getString('admin', 'cant_toggle')));
+					dispatchEvent(new VmcErrorEvent(VmcErrorEvent.ERROR, ResourceManager.getInstance().getString('admin', 'cant_toggle')));
 				}
 				var ce:UserEvent = new UserEvent(UserEvent.TOGGLE_USER_STATUS, model.selectedUser);
 				ce.dispatch();

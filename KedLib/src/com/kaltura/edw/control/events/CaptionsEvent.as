@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.vo.EntryCaptionVO;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
-	public class CaptionsEvent extends KMvCEvent
+	public class CaptionsEvent extends VMvCEvent
 	{
 		public static const LIST_CAPTIONS:String = "listCaptions";
 		public static const SAVE_ALL:String = "saveAllCaptions";

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,18 +25,18 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaFileContainer;
+	import com.vidiun.vo.VidiunFileContainer;
 
-	import com.kaltura.vo.KalturaJobData;
+	import com.vidiun.vo.VidiunJobData;
 
 	[Bindable]
-	public dynamic class KalturaCaptureThumbJobData extends KalturaJobData
+	public dynamic class VidiunCaptureThumbJobData extends VidiunJobData
 	{
 		/**
 		**/
-		public var fileContainer : KalturaFileContainer;
+		public var fileContainer : VidiunFileContainer;
 
 		/**
 		* The translated path as used by the scheduler
@@ -60,7 +60,7 @@ package com.kaltura.vo
 		public var srcAssetId : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaAssetType
+		* @see com.vidiun.types.VidiunAssetType
 		**/
 		public var srcAssetType : String = null;
 

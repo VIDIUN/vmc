@@ -14,25 +14,25 @@
 		[Style(name="selectRowsLable",type="String")]
 		
 		[Event(name="change",type="flash.events.Event")]
-		[Event(name="nextPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="prvPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="firstPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="lastPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="getPageNum", type="com.kaltura.events.PagingEvent")]
-		[Event(name="rowsInPageChange", type="com.kaltura.events.PagingEvent")]
+		[Event(name="nextPage", type="com.vidiun.events.PagingEvent")]
+		[Event(name="prvPage", type="com.vidiun.events.PagingEvent")]
+		[Event(name="firstPage", type="com.vidiun.events.PagingEvent")]
+		[Event(name="lastPage", type="com.vidiun.events.PagingEvent")]
+		[Event(name="getPageNum", type="com.vidiun.events.PagingEvent")]
+		[Event(name="rowsInPageChange", type="com.vidiun.events.PagingEvent")]
 		
 		[ResourceBundle("windows")]
 	</mx:Metadata>
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.controls.pagingClasses.IPagingBehavior;
-			import com.kaltura.controls.pagingClasses.MissingTotalPaging;
-			import com.kaltura.controls.pagingClasses.PagingBehaviorEvent;
-			import com.kaltura.controls.pagingClasses.PlaceHolderPagingBehavior;
-			import com.kaltura.controls.pagingClasses.StandardPaging;
-			import com.kaltura.events.PagingEvent;
-			import com.kaltura.vo.KalturaFilterPager;
+			import com.vidiun.controls.pagingClasses.IPagingBehavior;
+			import com.vidiun.controls.pagingClasses.MissingTotalPaging;
+			import com.vidiun.controls.pagingClasses.PagingBehaviorEvent;
+			import com.vidiun.controls.pagingClasses.PlaceHolderPagingBehavior;
+			import com.vidiun.controls.pagingClasses.StandardPaging;
+			import com.vidiun.events.PagingEvent;
+			import com.vidiun.vo.VidiunFilterPager;
 			
 			import mx.controls.Button;
 			import mx.controls.LinkButton;
@@ -76,7 +76,7 @@
 			public var doubleEnd:Boolean = true;
 
 			[Bindable]
-			public var kalturaFilterPager:KalturaFilterPager;
+			public var vidiunFilterPager:VidiunFilterPager;
 			
 			[Bindable]
 			public var rowsInPage:Array = [25, 50, 100, 250, 500];
@@ -155,7 +155,7 @@
 			}
 			
 			private function onSelectedPageChanged(evt:PagingBehaviorEvent = null):void{
-				kalturaFilterPager.pageIndex = _behavior.selectedPage;
+				vidiunFilterPager.pageIndex = _behavior.selectedPage;
 				updatePaging();
 				
 				dispatchEvent(new Event(Event.CHANGE));
@@ -179,7 +179,7 @@
 			 */
 			public function set pageSize(value:int):void {
 				_behavior.pageSize = value;
-				kalturaFilterPager.pageSize = value;
+				vidiunFilterPager.pageSize = value;
 				updatePaging();
 			}
 
@@ -227,10 +227,10 @@
 			 * @ListEvent
 			 */
 			protected function resultSizeChange(event:ListEvent = null):void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
+				var vmcSO:SharedObject = SharedObject.getLocal("vmcSO");
 				pageSize = int(rowInPageCb.selectedItem);
-				kmcSO.data.rowInPage = pageSize;
-				kmcSO.flush();
+				vmcSO.data.rowInPage = pageSize;
+				vmcSO.flush();
 				selectedPage = 1;
 
 				//only if not manually executed dispatch it
@@ -251,9 +251,9 @@
 
 			protected function creationCompleteHandler(event:FlexEvent):void {
 				// pager:
-				kalturaFilterPager = new KalturaFilterPager();
-				kalturaFilterPager.pageIndex = 1;
-				kalturaFilterPager.pageSize = pageSize;
+				vidiunFilterPager = new VidiunFilterPager();
+				vidiunFilterPager.pageIndex = 1;
+				vidiunFilterPager.pageSize = pageSize;
 				
 				// texts:
 				resourcesChanged();
@@ -263,8 +263,8 @@
 				var defaultInd:int = 0;
 				// if page size selection available, used saved value:
 				if (showRowsInPage) {
-					var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-					var soRowInPage:int = kmcSO.data.rowInPage;
+					var vmcSO:SharedObject = SharedObject.getLocal("vmcSO");
+					var soRowInPage:int = vmcSO.data.rowInPage;
 					
 					if (soRowInPage != rowInPageCb.selectedItem) {
 						selectedFromSO = false;

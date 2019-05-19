@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users
+This file is part of the Vidiun Collaborative Media Suite which allows users
 to do with audio, video, and animation what Wiki platfroms allow them to do with
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,22 +20,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles
+package com.vidiun.controls.vobjecthadles
 {
-	import com.kaltura.controls.kobjecthadles.events.KPropChangeEvent;
-	import com.kaltura.controls.kobjecthadles.events.RotateKohEvent;
-	import com.kaltura.controls.kobjecthadles.handles.DownHandle;
-	import com.kaltura.controls.kobjecthadles.handles.DownLeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.DownRightHandle;
-	import com.kaltura.controls.kobjecthadles.handles.FlipHandle;
-	import com.kaltura.controls.kobjecthadles.handles.LeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.RightHandle;
-	import com.kaltura.controls.kobjecthadles.handles.RotateHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpLeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpRightHandle;
-	import com.kaltura.controls.kobjecthadles.managers.HandleCursorManager;
-	import com.kaltura.controls.kobjecthadles.managers.HandleDisplayManager;
+	import com.vidiun.controls.vobjecthadles.events.VPropChangeEvent;
+	import com.vidiun.controls.vobjecthadles.events.RotateVohEvent;
+	import com.vidiun.controls.vobjecthadles.handles.DownHandle;
+	import com.vidiun.controls.vobjecthadles.handles.DownLeftHandle;
+	import com.vidiun.controls.vobjecthadles.handles.DownRightHandle;
+	import com.vidiun.controls.vobjecthadles.handles.FlipHandle;
+	import com.vidiun.controls.vobjecthadles.handles.LeftHandle;
+	import com.vidiun.controls.vobjecthadles.handles.RightHandle;
+	import com.vidiun.controls.vobjecthadles.handles.RotateHandle;
+	import com.vidiun.controls.vobjecthadles.handles.UpHandle;
+	import com.vidiun.controls.vobjecthadles.handles.UpLeftHandle;
+	import com.vidiun.controls.vobjecthadles.handles.UpRightHandle;
+	import com.vidiun.controls.vobjecthadles.managers.HandleCursorManager;
+	import com.vidiun.controls.vobjecthadles.managers.HandleDisplayManager;
 
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
@@ -50,10 +50,10 @@ package com.kaltura.controls.kobjecthadles
 	/**
 	 * Dispatched when object handles rotateion occour.
 	 */
-	[Event(name="rotate", type="com.kaltura.kobjecthandles.events.RotateKohEvent")]
-	[Event(name="selectonChanged", type="com.kaltura.kobjecthandles.events.SelectionKohEvent")]
-	[Event(name="widthChangedEvent", type="com.kaltura.controls.kobjecthadles.events.KPropChangeEvent")]
-	[Event(name="heightChangedEvent", type="com.kaltura.controls.kobjecthadles.events.KPropChangeEvent")]
+	[Event(name="rotate", type="com.vidiun.vobjecthandles.events.RotateVohEvent")]
+	[Event(name="selectonChanged", type="com.vidiun.vobjecthandles.events.SelectionVohEvent")]
+	[Event(name="widthChangedEvent", type="com.vidiun.controls.vobjecthadles.events.VPropChangeEvent")]
+	[Event(name="heightChangedEvent", type="com.vidiun.controls.vobjecthadles.events.VPropChangeEvent")]
 
 	/**
 	* Defines the Dash Stroke Color.
@@ -70,7 +70,7 @@ package com.kaltura.controls.kobjecthadles
 	[Style(name="handleFillColor", type="uint", inherit="no")]
 	[Style(name="handleAlpha", type="Number", inherit="no")]
 
-	public class KObjectHandles extends Canvas implements ISelectable
+	public class VObjectHandles extends Canvas implements ISelectable
 	{
 		/**
 		*the handles display manager give the hid to the object by referance count
@@ -109,7 +109,7 @@ package com.kaltura.controls.kobjecthadles
 		//constructor
 		//////////////////////////////////////////////////////////////////
 
-		public function KObjectHandles()
+		public function VObjectHandles()
 		{
 			super();
 
@@ -132,7 +132,7 @@ package com.kaltura.controls.kobjecthadles
 		{
 			if(this.numChildren >= 1)
 			{
-				throw new Error("KObjectHandler Can't handle more than 1 child");
+				throw new Error("VObjectHandler Can't handle more than 1 child");
 			}
 			_containedChildRef = child;
 			if( child is InteractiveObject )
@@ -307,7 +307,7 @@ package com.kaltura.controls.kobjecthadles
 			if (_downLeftHandle) _downLeftHandle.setNewRotation();
 
 			HandleCursorManager.getInstance().setRotation( this.rotation );
-			dispatchEvent( new RotateKohEvent("rotate" , this.rotation ) );
+			dispatchEvent( new RotateVohEvent("rotate" , this.rotation ) );
 		}
 
 		private function createDashedBorder() : void
@@ -398,7 +398,7 @@ package com.kaltura.controls.kobjecthadles
 			_downLeftHandle.setNewXPosition();
 			_rotateHandle.setNewXPosition();
 
-			dispatchEvent( new KPropChangeEvent(KPropChangeEvent.WIDTH_CHANGED_EVENT ,  this.width ) );
+			dispatchEvent( new VPropChangeEvent(VPropChangeEvent.WIDTH_CHANGED_EVENT ,  this.width ) );
 		}
 
 		private function heightChangeHandler( event : Event ) : void
@@ -417,7 +417,7 @@ package com.kaltura.controls.kobjecthadles
 			_downLeftHandle.setNewYPosition();
 			_rotateHandle.setNewYPosition();
 
-			dispatchEvent( new KPropChangeEvent(KPropChangeEvent.HEIGHT_CHANGED_EVENT ,  this.height ) );
+			dispatchEvent( new VPropChangeEvent(VPropChangeEvent.HEIGHT_CHANGED_EVENT ,  this.height ) );
 		}
 
 		private function addInteractiveHandlers() : void

@@ -1,9 +1,9 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.types.KalturaDVRStatus;
-	import com.kaltura.types.KalturaRecordStatus;
-	import com.kaltura.utils.KTimeUtil;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
+	import com.vidiun.types.VidiunDVRStatus;
+	import com.vidiun.types.VidiunRecordStatus;
+	import com.vidiun.utils.VTimeUtil;
+	import com.vidiun.vo.VidiunLiveStreamEntry;
 	
 	import mx.resources.ResourceManager;
 
@@ -17,27 +17,27 @@ package com.kaltura.edw.business
 		{
 		}
 		
-		public static function getDVRStatus (entry:KalturaLiveStreamEntry):String {
+		public static function getDVRStatus (entry:VidiunLiveStreamEntry):String {
 			var result:String = '';
-			if (!entry.dvrStatus || entry.dvrStatus == KalturaDVRStatus.DISABLED) {
+			if (!entry.dvrStatus || entry.dvrStatus == VidiunDVRStatus.DISABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'off');
 			}
-			else if (entry.dvrStatus == KalturaDVRStatus.ENABLED) {
+			else if (entry.dvrStatus == VidiunDVRStatus.ENABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'on');
 			}
 			return result;
 		}
 		
-		public static function getDVRWindow (entry:KalturaLiveStreamEntry):String {
-			return ResourceManager.getInstance().getString('drilldown', 'dvrWinFormat', [KTimeUtil.formatTime2(entry.dvrWindow*60, true, false, true)]);
+		public static function getDVRWindow (entry:VidiunLiveStreamEntry):String {
+			return ResourceManager.getInstance().getString('drilldown', 'dvrWinFormat', [VTimeUtil.formatTime2(entry.dvrWindow*60, true, false, true)]);
 		}
 		
-		public static function getRecordStatus (entry:KalturaLiveStreamEntry):String {
+		public static function getRecordStatus (entry:VidiunLiveStreamEntry):String {
 			var result:String = '';
-			if (!entry.recordStatus || entry.recordStatus == KalturaRecordStatus.DISABLED) {
+			if (!entry.recordStatus || entry.recordStatus == VidiunRecordStatus.DISABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'off');
 			}
-			else if (entry.recordStatus == KalturaRecordStatus.APPENDED || entry.recordStatus == KalturaRecordStatus.PER_SESSION) {
+			else if (entry.recordStatus == VidiunRecordStatus.APPENDED || entry.recordStatus == VidiunRecordStatus.PER_SESSION) {
 				result = ResourceManager.getInstance().getString('drilldown', 'on');
 			}
 			return result;

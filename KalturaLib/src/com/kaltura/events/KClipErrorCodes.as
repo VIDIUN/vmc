@@ -1,11 +1,11 @@
-package com.kaltura.events
+package com.vidiun.events
 {
 	/**
 	 * Error codes for CLIPPER_ERROR events 
 	 * @author Michal
 	 * 
 	 */	
-	public class KClipErrorCodes
+	public class VClipErrorCodes
 	{
 		public static const CUEPOINT_ADD_FAILED:String = "cuePointAddFailed";
 		

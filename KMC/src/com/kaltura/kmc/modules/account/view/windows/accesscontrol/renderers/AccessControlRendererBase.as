@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers
+package com.vidiun.vmc.modules.account.view.windows.accesscontrol.renderers
 {
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.vo.AccessControlProfileVO;
 	
 	import mx.containers.HBox;
 
@@ -14,7 +14,7 @@ package com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers
 		
 		public function setDefaultContainer():void
 		{
-			if((data as AccessControlProfileVO).profile.isDefault == KalturaNullableBoolean.TRUE_VALUE)
+			if((data as AccessControlProfileVO).profile.isDefault == VidiunNullableBoolean.TRUE_VALUE)
 			{
 				this.toolTip = resourceManager.getString('account', 'defaultAccessContolProfileToolTip');
 				this.setStyle("backgroundColor", "#FFFDEF");

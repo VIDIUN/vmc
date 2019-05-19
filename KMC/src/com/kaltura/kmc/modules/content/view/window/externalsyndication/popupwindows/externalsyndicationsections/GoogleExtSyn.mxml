@@ -3,18 +3,18 @@
 	 Google syndication details.
 	 used as part of <Code>ExternalSyndicationPopUpWindow</code>
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.kaltura.validators.*"
-		 implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed" label="Google">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.vidiun.validators.*"
+		 implements="com.vidiun.vmc.modules.content.view.interfaces.IExternalSyndicationFeed" label="Google">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.model.ExtSynModel;
-			import com.kaltura.types.KalturaGoogleSyndicationFeedAdultValues;
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaGoogleVideoSyndicationFeed;
-			import com.kaltura.vo.KalturaUiConf;
+			import com.vidiun.vmc.modules.content.model.ExtSynModel;
+			import com.vidiun.types.VidiunGoogleSyndicationFeedAdultValues;
+			import com.vidiun.types.VidiunSyndicationFeedType;
+			import com.vidiun.vo.VidiunBaseSyndicationFeed;
+			import com.vidiun.vo.VidiunFlavorParams;
+			import com.vidiun.vo.VidiunGoogleVideoSyndicationFeed;
+			import com.vidiun.vo.VidiunUiConf;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -37,16 +37,16 @@
 			/**
 			 * syndication data
 			 * */
-			private var _feed:KalturaBaseSyndicationFeed;
+			private var _feed:VidiunBaseSyndicationFeed;
 
 
 			[Bindable]
 			private var _playersIndex:Number;
 
 
-			public function get syndication():KalturaBaseSyndicationFeed {
-				var googleFeed:KalturaGoogleVideoSyndicationFeed = (_feed != null) ? (_feed as KalturaGoogleVideoSyndicationFeed) : new KalturaGoogleVideoSyndicationFeed();
-				googleFeed.type = KalturaSyndicationFeedType.GOOGLE_VIDEO;
+			public function get syndication():VidiunBaseSyndicationFeed {
+				var googleFeed:VidiunGoogleVideoSyndicationFeed = (_feed != null) ? (_feed as VidiunGoogleVideoSyndicationFeed) : new VidiunGoogleVideoSyndicationFeed();
+				googleFeed.type = VidiunSyndicationFeedType.GOOGLE_VIDEO;
 				googleFeed.allowEmbed = playBackRadioBtn.selected;
 
 				googleFeed.landingPage = StringUtil.trim(landingPageInputText.text);
@@ -57,14 +57,14 @@
 				if (playBackRadioBtn.selected) {
 					googleFeed.playerUiconfId = getPlayerUIConfId();
 				}
-				googleFeed.adultContent = adultcontentCheckBox.selected ? KalturaGoogleSyndicationFeedAdultValues.YES : KalturaGoogleSyndicationFeedAdultValues.NO;
+				googleFeed.adultContent = adultcontentCheckBox.selected ? VidiunGoogleSyndicationFeedAdultValues.YES : VidiunGoogleSyndicationFeedAdultValues.NO;
 
 				return googleFeed;
 			}
 
 
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
-				_feed = syndication as KalturaGoogleVideoSyndicationFeed;
+			public function set syndication(syndication:VidiunBaseSyndicationFeed):void {
+				_feed = syndication as VidiunGoogleVideoSyndicationFeed;
 				playBackRadioBtn.selected = _feed.allowEmbed;
 				linkBackRadioBtn.selected = !_feed.allowEmbed;
 
@@ -75,12 +75,12 @@
 					setPlayerUIConf(_feed.playerUiconfId);
 				}
 
-				adultcontentCheckBox.selected = (_feed.adultContent == KalturaGoogleSyndicationFeedAdultValues.YES);
+				adultcontentCheckBox.selected = (_feed.adultContent == VidiunGoogleSyndicationFeedAdultValues.YES);
 			}
 
 
 			private function setPlayerUIConf(playerUiconfId:int):void {
-				for each (var uiconf:KalturaUiConf in videoPlayerComboBox.dataProvider) {
+				for each (var uiconf:VidiunUiConf in videoPlayerComboBox.dataProvider) {
 					if (uiconf.id == playerUiconfId) {
 						videoPlayerComboBox.selectedItem = uiconf;
 						_playersIndex = videoPlayerComboBox.selectedIndex;
@@ -94,7 +94,7 @@
 				if (videoPlayerComboBox.selectedItem == null) {
 					Alert.show(resourceManager.getString('cms', 'noPlayersDataErrorMsg'), resourceManager.getString('cms', 'error'));
 				}
-				var selectedPlayer:KalturaUiConf = videoPlayerComboBox.selectedItem as KalturaUiConf;
+				var selectedPlayer:VidiunUiConf = videoPlayerComboBox.selectedItem as VidiunUiConf;
 				return selectedPlayer.id;
 			}
 
@@ -124,7 +124,7 @@
 			private function setFeedFlavorAndSettings():void {
 				// flavor param
 				var fpId:int = _feed.flavorParamId;
-				for each (var fp:KalturaFlavorParams in flavorsComboBox.dataProvider) {
+				for each (var fp:VidiunFlavorParams in flavorsComboBox.dataProvider) {
 					if (fpId == fp.id) {
 						flavorsComboBox.selectedItem = fp;
 						break;
@@ -144,7 +144,7 @@
 
 
 			private function getFlavorParamID():int {
-				return (flavorsComboBox.selectedItem as KalturaFlavorParams).id;
+				return (flavorsComboBox.selectedItem as VidiunFlavorParams).id;
 			}
 
 

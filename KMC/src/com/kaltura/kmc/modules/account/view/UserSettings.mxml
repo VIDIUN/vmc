@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel"
+		 implements="com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel"
 		 paddingLeft="10" paddingRight="10">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel;
-			import com.kaltura.kmc.vo.UserVO;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel;
+			import com.vidiun.vmc.vo.UserVO;
 			private const _lblWidth : Number = 120;
 			private const _textWidth : Number = 190;
 			

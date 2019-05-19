@@ -3,12 +3,12 @@
 	horizontalScrollPolicy="off" paddingLeft="4">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.FlavorVO;
+			import com.vidiun.vo.FlavorVO;
 			
 			override public function set data(value:Object):void {
 				super.data = value;
 				if (value != null) {
-					var str:String = (value as FlavorVO).kFlavor.videoCodec;
+					var str:String = (value as FlavorVO).vFlavor.videoCodec;
 					if (!str) {
 						str = resourceManager.getString('account', 'n_a');
 					}

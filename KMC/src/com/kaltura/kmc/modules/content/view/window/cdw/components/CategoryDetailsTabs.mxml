@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:tabbar="com.kaltura.controls.tabbar.*"
-		 xmlns:categoryTabs="com.kaltura.kmc.modules.content.view.window.cdw.components.categoryTabs.*"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:tabbar="com.vidiun.controls.tabbar.*"
+		 xmlns:categoryTabs="com.vidiun.vmc.modules.content.view.window.cdw.components.categoryTabs.*"
 		 horizontalAlign="center" styleName="noPadding" creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
-		[Event(name="validationComplete",type="com.kaltura.edw.events.ValidationResultEvent")]
+		[Event(name="validationComplete",type="com.vidiun.edw.events.ValidationResultEvent")]
 		[Event(name="saved",type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.kmc.modules.content.view.window.cdw.ICategoryDrilldownPanel;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.vmc.modules.content.model.CategoriesModel;
+			import com.vidiun.vmc.modules.content.view.window.cdw.ICategoryDrilldownPanel;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import flash.utils.setTimeout;
 			
@@ -32,7 +32,7 @@
 
 			public var isNewCategory:Boolean;
 
-			private var _category:KalturaCategory;
+			private var _category:VidiunCategory;
 
 			private var _tabs:Vector.<ICategoryDrilldownPanel>;
 			
@@ -130,14 +130,14 @@
 				var tab:ICategoryDrilldownPanel;
 				for (var i:int = 0; i<viewStack.numChildren; i++) {
 					tab = viewStack.getChildAt(i) as ICategoryDrilldownPanel;
-					if (!tab.hasEventListener(InternalKedEvent.PANEL_DATA_SAVED)) {
-						tab.addEventListener(InternalKedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
+					if (!tab.hasEventListener(InternalVedEvent.PANEL_DATA_SAVED)) {
+						tab.addEventListener(InternalVedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
 					}
 					tab.save();
 				}
 			}
 			
-			private function onPanelSaveComplete(e:InternalKedEvent):void {
+			private function onPanelSaveComplete(e:InternalVedEvent):void {
 				_results.push(e);
 				if (_results.length == viewStack.numChildren) {
 					// all panels finished their save/update process
@@ -202,7 +202,7 @@
 
 			
 			[Bindable]
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:VidiunCategory):void {
 				var refreshView:Boolean = !_category; 	// first opeing the drilldown
 				if (!isNewCategory) {
 					refreshView ||= value.id != _category.id;
@@ -216,7 +216,7 @@
 			}
 
 
-			public function get category():KalturaCategory {
+			public function get category():VidiunCategory {
 				return _category;
 			}
 

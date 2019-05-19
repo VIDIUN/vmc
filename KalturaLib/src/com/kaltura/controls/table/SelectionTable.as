@@ -1,6 +1,6 @@
-package com.kaltura.controls.table
+package com.vidiun.controls.table
 {
-	import com.kaltura.dataStructures.HashMap;
+	import com.vidiun.dataStructures.HashMap;
 	
 	import flash.events.Event;
 	

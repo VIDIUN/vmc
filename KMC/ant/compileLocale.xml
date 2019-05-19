@@ -20,9 +20,9 @@
 
 	
 	<target name="compile" description="compile all locales">
-        <echo>Compiling all KMC locales..</echo>
-        <echo>Compiling locale: KMC</echo>
-		<ant antfile="ant/locale_kmc.xml" target="compile"/>
+        <echo>Compiling all VMC locales..</echo>
+        <echo>Compiling locale: VMC</echo>
+		<ant antfile="ant/locale_vmc.xml" target="compile"/>
         <echo>Compiling locale: account</echo>
 		<ant antfile="ant/locale_account.xml" target="compile"/>
         <echo>Compiling locale: admin</echo>

@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.flavor
+package com.vidiun.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetConvert;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.vidiun.commands.flavorAsset.FlavorAssetConvert;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunFlavorAssetWithParams;
 	
-	public class ConvertFlavorAssetCommand extends KedCommand
+	public class ConvertFlavorAssetCommand extends VedCommand
 	{
 		private var selectedEntryId:String;
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{	
 			_dispatcher = event.dispatcher;
 			_model.increaseLoadCounter();
-			var obj:KalturaFlavorAssetWithParams = event.data as KalturaFlavorAssetWithParams;
+			var obj:VidiunFlavorAssetWithParams = event.data as VidiunFlavorAssetWithParams;
 			selectedEntryId = obj.entryId;
 			var convertCommand:FlavorAssetConvert = new FlavorAssetConvert(selectedEntryId, obj.flavorParams.id);
-            convertCommand.addEventListener(KalturaEvent.COMPLETE, result);
-	        convertCommand.addEventListener(KalturaEvent.FAILED, fault);
+            convertCommand.addEventListener(VidiunEvent.COMPLETE, result);
+	        convertCommand.addEventListener(VidiunEvent.FAILED, fault);
     	    _client.post(convertCommand);
 		}
 		
@@ -27,9 +27,9 @@ package com.kaltura.edw.control.commands.flavor
 		{
 			super.result(event);
  			_model.decreaseLoadCounter();
- 			var entry:KalturaBaseEntry = new KalturaBaseEntry();
+ 			var entry:VidiunBaseEntry = new VidiunBaseEntry();
  			entry.id = selectedEntryId;
- 			var cgEvent : KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_FLAVOR_ASSETS, entry);
+ 			var cgEvent : VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_FLAVOR_ASSETS, entry);
 			_dispatcher.dispatch(cgEvent);
 		}
 	}

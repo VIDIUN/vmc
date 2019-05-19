@@ -1,26 +1,26 @@
-package com.kaltura.edw.components.fltr
+package com.vidiun.edw.components.fltr
 {
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
 	
 	import flash.events.IEventDispatcher;
 
 	
 	/**
-	 * A part of the visual filter that manipulates data of a given KalturaFilter attribute 
+	 * A part of the visual filter that manipulates data of a given VidiunFilter attribute 
 	 * @author Atar
 	 * 
 	 */
 	public interface IFilterComponent extends IEventDispatcher {
 		
 		/**
-		 * Name of the <code>KalturaFilter</code> attribute this component handles  
+		 * Name of the <code>VidiunFilter</code> attribute this component handles  
 		 */		
 		function set attribute(value:String):void;
 		function get attribute():String;
 		
 		
 		/**
-		 * Value for the relevant attribute on <code>KalturaFilter</code>.   
+		 * Value for the relevant attribute on <code>VidiunFilter</code>.   
 		 */		
 		function set filter(value:Object):void;
 		function get filter():Object;

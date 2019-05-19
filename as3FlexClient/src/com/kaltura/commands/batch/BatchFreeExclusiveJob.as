@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,26 +25,26 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.batch
+package com.vidiun.commands.batch
 {
-		import com.kaltura.vo.KalturaExclusiveLockKey;
-	import com.kaltura.delegates.batch.BatchFreeExclusiveJobDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunExclusiveLockKey;
+	import com.vidiun.delegates.batch.BatchFreeExclusiveJobDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* batch freeExclusiveJobAction action allows to get a generic BatchJob
 	**/
-	public class BatchFreeExclusiveJob extends KalturaCall
+	public class BatchFreeExclusiveJob extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param id int
-		* @param lockKey KalturaExclusiveLockKey
+		* @param lockKey VidiunExclusiveLockKey
 		* @param jobType String
 		* @param resetExecutionAttempts Boolean
 		**/
-		public function BatchFreeExclusiveJob( id : int,lockKey : KalturaExclusiveLockKey,jobType : String,resetExecutionAttempts : Boolean=false )
+		public function BatchFreeExclusiveJob( id : int,lockKey : VidiunExclusiveLockKey,jobType : String,resetExecutionAttempts : Boolean=false )
 		{
 			service= 'batch';
 			action= 'freeExclusiveJob';
@@ -54,7 +54,7 @@ package com.kaltura.commands.batch
 			var keyValArr : Array = new Array();
 			keyArr.push('id');
 			valueArr.push(id);
-				keyValArr = kalturaObject2Arrays(lockKey, 'lockKey');
+				keyValArr = vidiunObject2Arrays(lockKey, 'lockKey');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('jobType');

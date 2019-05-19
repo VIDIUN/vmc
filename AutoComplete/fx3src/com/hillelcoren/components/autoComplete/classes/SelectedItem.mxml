@@ -2,7 +2,7 @@
 <base:SelectionItemBase
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:classes="com.hillelcoren.components.autoComplete.classes.*"
-	xmlns:base="com.kaltura.autocomplete.itemRenderers.selection.base.*">
+	xmlns:base="com.vidiun.autocomplete.itemRenderers.selection.base.*">
 	
 		
 	<mx:Script>

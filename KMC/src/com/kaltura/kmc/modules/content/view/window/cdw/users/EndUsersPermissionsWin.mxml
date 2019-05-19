@@ -2,25 +2,25 @@
 <!---
 	This windows allows managing of category users' specific permissions.
 -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
-							xmlns:filter="com.kaltura.kmc.modules.content.view.window.cdw.components.filter.*"
-							xmlns:fltr="com.kaltura.edw.components.fltr.*" xmlns:controls="flexlib.controls.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
+							xmlns:filter="com.vidiun.vmc.modules.content.view.window.cdw.components.filter.*"
+							xmlns:fltr="com.vidiun.edw.components.fltr.*" xmlns:controls="flexlib.controls.*"
 							layout="vertical" width="940" height="520" showCloseButton="true" enabled="{!model.loadingFlag}"
 							close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
-							creationComplete="creationCompleteHandler(event)" xmlns:ctrls="com.kaltura.controls.*"
-							xmlns:users="com.kaltura.kmc.modules.content.view.window.cdw.users.*" xmlns:catusrtable="com.kaltura.kmc.modules.content.view.window.cdw.components.catusrtable.*">
+							creationComplete="creationCompleteHandler(event)" xmlns:ctrls="com.vidiun.controls.*"
+							xmlns:users="com.vidiun.vmc.modules.content.view.window.cdw.users.*" xmlns:catusrtable="com.vidiun.vmc.modules.content.view.window.cdw.components.catusrtable.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaInheritanceType;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaCategoryUserFilter;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+			import com.vidiun.vmc.modules.content.model.CategoriesModel;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunInheritanceType;
+			import com.vidiun.vo.VidiunCategory;
+			import com.vidiun.vo.VidiunCategoryUserFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -42,15 +42,15 @@
 			public var changesEnabled:Boolean = true;
 			
 			[Bindable]
-			private var _category:KalturaCategory;
+			private var _category:VidiunCategory;
 
 
-			public function get category():KalturaCategory {
+			public function get category():VidiunCategory {
 				return _category;
 			}
 
 
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:VidiunCategory):void {
 				_category = value;
 				title = ResourceManager.getInstance().getString('cms', 'usersPermissionsTitle', [_category.name]);
 			}
@@ -72,7 +72,7 @@
 
 
 			private function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_cat_user_permission', true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_cat_user_permission', true));
 			}
 
 
@@ -85,8 +85,8 @@
 					return;
 				}
 				var cgEvent:CategoryEvent = new CategoryEvent(CategoryEvent.LIST_CATEGORY_USERS);
-				(filter.kalturaFilter as KalturaCategoryUserFilter).categoryIdEqual = _category.id;
-				cgEvent.data = [filter.kalturaFilter, paging.kalturaFilterPager];
+				(filter.vidiunFilter as VidiunCategoryUserFilter).categoryIdEqual = _category.id;
+				cgEvent.data = [filter.vidiunFilter, paging.vidiunFilterPager];
 				cgEvent.dispatch();
 			}
 
@@ -134,7 +134,7 @@
 
 			private function addUsersBtn_clickHandler(event:MouseEvent):void {
 				var cauw:AddCategoryUsersWin = new AddCategoryUsersWin();
-				cauw.kClient = model.client;
+				cauw.vClient = model.client;
 				cauw.category = _category;
 				PopUpManager.addPopUp(cauw, this, true);
 				PopUpManager.centerPopUp(cauw);
@@ -153,7 +153,7 @@
 	<mx:HBox width="100%" styleName="noPadding">
 		<fltr:FreeTextSearch id="searchBox" styleName="searchHBox" width="180" attribute="freeText"
 							 defaultText="{resourceManager.getString('cms', 'searchUsers')}" />
-		<mx:HBox styleName="flavorsReplacementVBox" width="100%" visible="{_category.inheritanceType == KalturaInheritanceType.INHERIT}">
+		<mx:HBox styleName="flavorsReplacementVBox" width="100%" visible="{_category.inheritanceType == VidiunInheritanceType.INHERIT}">
 			<mx:Label text="{resourceManager.getString('cms', 'permsInheritFrom', [model.inheritedParentCategory.fullName])}"/>
 		</mx:HBox>
 	</mx:HBox>
@@ -164,10 +164,10 @@
 		<mx:VBox id="tableWrapper" height="100%" width="100%" verticalGap="0" styleName="noPadding">
 			<catusrtable:CategoryUsersTable width="100%" height="100%" dataProvider="{model.categoryUsers}"
 											selectionChanged="table_selectionChangedHandler(event)"
-											allowActions="{_category.inheritanceType == KalturaInheritanceType.MANUAL &amp;&amp; changesEnabled}"/>
+											allowActions="{_category.inheritanceType == VidiunInheritanceType.MANUAL &amp;&amp; changesEnabled}"/>
 			<mx:HBox width="100%" styleName="noPadding" horizontalGap="0">
 				<users:EndUsersBulkActionsMenu id="bulkActions" height="{paging.height}" users="{model.selectedCategoryUsers}"
-											   enabled="{_category.inheritanceType == KalturaInheritanceType.MANUAL &amp;&amp; changesEnabled}"/>
+											   enabled="{_category.inheritanceType == VidiunInheritanceType.MANUAL &amp;&amp; changesEnabled}"/>
 				<ctrls:Paging id="paging" width="100%" styleName="paging" totalCount="{model.totalCategoryUsers}"
 							  rowsInPageChange="loadUsers()" nextPage="loadUsers()" prvPage="loadUsers()" getPageNum="loadUsers()"
 							  showRowsInPage="true" />
@@ -178,10 +178,10 @@
 			<mx:Button id="addUsersBtn" width="100%" styleName="listActionButton" buttonMode="true"
 					   label="{resourceManager.getString('cms', 'addUsersBtn')}" 
 					   click="addUsersBtn_clickHandler(event)"
-					   enabled="{_category.inheritanceType == KalturaInheritanceType.MANUAL}"/>
+					   enabled="{_category.inheritanceType == VidiunInheritanceType.MANUAL}"/>
 			<controls:CanvasButton id="addFromParentBtn" styleName="listActionButton" width="100%"
 								   click="addFromParentBtn_clickHandler(event)"
-								   enabled="{_category.inheritanceType == KalturaInheritanceType.MANUAL &amp;&amp;
+								   enabled="{_category.inheritanceType == VidiunInheritanceType.MANUAL &amp;&amp;
 								   _category.parentId != 0 &amp;&amp; model.inheritedParentCategory.membersCount>0}">
 				<mx:Text text="{resourceManager.getString('cms', 'addFromParentBtn')}" styleName="listActionButton"
 						 width="100%"/>

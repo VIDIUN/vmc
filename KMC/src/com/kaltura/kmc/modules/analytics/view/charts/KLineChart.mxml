@@ -5,8 +5,8 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
-			import com.kaltura.utils.ObjectUtil;
+			import com.vidiun.vmc.modules.analytics.utils.TimeConsts;
+			import com.vidiun.utils.ObjectUtil;
 			
 			import mx.charts.HitData;
 			import mx.charts.chartClasses.IAxis;

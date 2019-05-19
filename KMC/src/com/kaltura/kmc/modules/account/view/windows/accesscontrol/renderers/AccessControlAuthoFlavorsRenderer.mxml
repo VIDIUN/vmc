@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <renderers:AccessControlRendererBase xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
 									 horizontalScrollPolicy="off" styleName="tableCellBoxRendererStyle" paddingLeft="4"
-									 xmlns:renderers="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.*">
+									 xmlns:renderers="com.vidiun.vmc.modules.account.view.windows.accesscontrol.renderers.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.types.KalturaIpAddressRestrictionType;
-			import com.kaltura.types.KalturaLimitFlavorsRestrictionType;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaIpAddressRestriction;
-			import com.kaltura.vo.KalturaLimitFlavorsRestriction;
+			import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+			import com.vidiun.types.VidiunIpAddressRestrictionType;
+			import com.vidiun.types.VidiunLimitFlavorsRestrictionType;
+			import com.vidiun.vo.AccessControlProfileVO;
+			import com.vidiun.vo.FlavorVO;
+			import com.vidiun.vo.VidiunBaseRestriction;
+			import com.vidiun.vo.VidiunIpAddressRestriction;
+			import com.vidiun.vo.VidiunLimitFlavorsRestriction;
 			
 			import mx.collections.ArrayCollection;
 			
@@ -26,18 +26,18 @@
 				
 				var acProfile:AccessControlProfileVO = value as AccessControlProfileVO;
 				var foundRestriction:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in acProfile.profile.restrictions) {
-					if (restriction is KalturaLimitFlavorsRestriction) {
+				for each (var restriction:VidiunBaseRestriction in acProfile.profile.restrictions) {
+					if (restriction is VidiunLimitFlavorsRestriction) {
 						foundRestriction = true;
 						// header:
-						if ((restriction as KalturaLimitFlavorsRestriction).limitFlavorsRestrictionType == KalturaLimitFlavorsRestrictionType.ALLOW_LIST) {
+						if ((restriction as VidiunLimitFlavorsRestriction).limitFlavorsRestrictionType == VidiunLimitFlavorsRestrictionType.ALLOW_LIST) {
 							_text = resourceManager.getString('account', 'ALLOW_IPS') + ":  ";  
 						}
 						else {
 							_text = resourceManager.getString('account', 'RESTRICT_IPS') + ":  ";
 						}
 						// values:
-						var flavorsIds:Array = (restriction as KalturaLimitFlavorsRestriction).flavorParamsIds.split(','); 
+						var flavorsIds:Array = (restriction as VidiunLimitFlavorsRestriction).flavorParamsIds.split(','); 
 						for each (var flavorParamsId:int in flavorsIds) {
 							_text += getFlavorNameById(flavorParamsId) + ", ";
 						}
@@ -57,13 +57,13 @@
 			private function getFlavorNameById(flavorParamsId:int):String {
 				var flavorVo:FlavorVO
 				for each (flavorVo in _model.mediaFlavorsData) {
-					if (flavorVo.kFlavor.id == flavorParamsId) {
-						return flavorVo.kFlavor.name;
+					if (flavorVo.vFlavor.id == flavorParamsId) {
+						return flavorVo.vFlavor.name;
 					}
 				}
 				for each (flavorVo in _model.liveFlavorsData) {
-					if (flavorVo.kFlavor.id == flavorParamsId) {
-						return flavorVo.kFlavor.name;
+					if (flavorVo.vFlavor.id == flavorParamsId) {
+						return flavorVo.vFlavor.name;
 					}
 				}
 				

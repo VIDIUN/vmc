@@ -9,7 +9,7 @@ ItemRenderer for the features list
 	<mx:Script>
 		<![CDATA[
 			import mx.core.IDataRenderer;
-			import com.kaltura.kmc.modules.studio.events.ApsFeatureEvent;
+			import com.vidiun.vmc.modules.studio.events.ApsFeatureEvent;
 
 
 			private function onFeatureOptionBtnClick(evt:MouseEvent):void {
@@ -38,7 +38,7 @@ ItemRenderer for the features list
 
 			private function dataChange():void {
 				if (isActiveCb) {
-					data.@k_value = data.@selected;
+					data.@v_value = data.@selected;
 					isActiveCb.selected = (data.@selected == true);
 
 					if (data.@showCheckbox == "true") {

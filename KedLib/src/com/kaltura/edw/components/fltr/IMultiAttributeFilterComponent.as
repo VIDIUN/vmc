@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.fltr
+package com.vidiun.edw.components.fltr
 {
 	
 	/**
@@ -17,10 +17,10 @@ package com.kaltura.edw.components.fltr
 		/**
 		 * list of matching values for the attributes
 		 * @internal
-		 * named kfilters instead of filters to avoid collision with UIComponent.filters
+		 * named vfilters instead of filters to avoid collision with UIComponent.filters
 		 */		
-		function set kfilters(value:Array):void;
-		function get kfilters():Array;
+		function set vfilters(value:Array):void;
+		function get vfilters():Array;
 		
 		
 	}

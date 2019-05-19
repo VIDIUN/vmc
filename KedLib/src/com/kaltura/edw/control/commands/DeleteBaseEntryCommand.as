@@ -1,17 +1,17 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.baseEntry.BaseEntryDelete;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.commands.baseEntry.BaseEntryDelete;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class DeleteBaseEntryCommand extends KedCommand
+	public class DeleteBaseEntryCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var deleteEntry:BaseEntryDelete = new BaseEntryDelete((event as KedEntryEvent).entryId);
-			deleteEntry.addEventListener(KalturaEvent.COMPLETE, result);
-			deleteEntry.addEventListener(KalturaEvent.FAILED, fault);
+			var deleteEntry:BaseEntryDelete = new BaseEntryDelete((event as VedEntryEvent).entryId);
+			deleteEntry.addEventListener(VidiunEvent.COMPLETE, result);
+			deleteEntry.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(deleteEntry);
 		}

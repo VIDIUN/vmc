@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.analytics.vo.filterMasks
+package com.vidiun.vmc.modules.analytics.vo.filterMasks
 {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
 	
 	import mx.events.PropertyChangeEvent;
 	
@@ -10,7 +10,7 @@ package com.kaltura.kmc.modules.analytics.vo.filterMasks
 	 * which only allows editing certain attributes, accoring to the report in question. <br>
 	 * trying to set other attributes causes an error to be thrown.
 	 * 
-	 * @see  com.kaltura.kmc.modules.analytics.vo.FilterVo
+	 * @see  com.vidiun.vmc.modules.analytics.vo.FilterVo
 	 * @author atar.shadmi
 	 * 
 	 */
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.analytics.vo.filterMasks
 		
 		/**
 		 * days / months
-		 * @see com.kaltura.types.KalturaReportInterval
+		 * @see com.vidiun.types.VidiunReportInterval
 		 */
 		override public function get interval():String {
 			return _filterVo.interval;

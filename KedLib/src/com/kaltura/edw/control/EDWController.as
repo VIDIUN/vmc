@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.*;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 
-	public class EDWController extends KMvCController {
+	public class EDWController extends VMvCController {
 		
 		public function EDWController()
 		{
@@ -12,10 +12,10 @@ package com.kaltura.edw.control
 		}
 		
 		public function initializeCommands():void {
-			addCommand(KedEntryEvent.DELETE_ENTRY, DeleteBaseEntryCommand);
-			addCommand(KedEntryEvent.SET_SELECTED_ENTRY, SetSelectedEntryCommand);
-			addCommand(KedEntryEvent.UPDATE_SINGLE_ENTRY, UpdateSingleEntry);
-			addCommand(KedEntryEvent.LIST_ENTRIES_BY_REFID, ListEntriesByRefidCommand);
+			addCommand(VedEntryEvent.DELETE_ENTRY, DeleteBaseEntryCommand);
+			addCommand(VedEntryEvent.SET_SELECTED_ENTRY, SetSelectedEntryCommand);
+			addCommand(VedEntryEvent.UPDATE_SINGLE_ENTRY, UpdateSingleEntry);
+			addCommand(VedEntryEvent.LIST_ENTRIES_BY_REFID, ListEntriesByRefidCommand);
 			
 		}
 	}

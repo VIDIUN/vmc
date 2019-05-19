@@ -4,7 +4,7 @@
 -->
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" width="224" layout="vertical" styleName="addPanel"
 		   preinitialize="createShowingHandler(event)" creationComplete="creationCompleteHandler(event)"
-		   implements="com.kaltura.kmc.business.IKmcPlugin,com.kaltura.kmc.business.IPopupMenu" visible="false" xmlns:view="com.kaltura.kmc.modules.create.view.*" xmlns:controls="com.kaltura.controls.*">
+		   implements="com.vidiun.vmc.business.IVmcPlugin,com.vidiun.vmc.business.IPopupMenu" visible="false" xmlns:view="com.vidiun.vmc.modules.create.view.*" xmlns:controls="com.vidiun.controls.*">
 	<mx:Metadata>
 		[ResourceBundle("create")]
 		[ResourceBundle("common")]
@@ -12,22 +12,22 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.commands.conversionProfile.ConversionProfileList;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.business.IKmcPlugin;
-			import com.kaltura.kmc.business.IPopupMenu;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.business.MenuHandler;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.create.MultipleMediaFilesSelector;
-			import com.kaltura.kmc.modules.create.types.BulkTypes;
-			import com.kaltura.kmc.modules.create.view.FileUploadSettings;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.vo.KalturaConversionProfile;
-			import com.kaltura.vo.KalturaConversionProfileFilter;
-			import com.kaltura.vo.KalturaFilterPager;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.commands.conversionProfile.ConversionProfileList;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmc.business.IVmcPlugin;
+			import com.vidiun.vmc.business.IPopupMenu;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.business.MenuHandler;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.create.MultipleMediaFilesSelector;
+			import com.vidiun.vmc.modules.create.types.BulkTypes;
+			import com.vidiun.vmc.modules.create.view.FileUploadSettings;
+			import com.vidiun.types.VidiunConversionProfileType;
+			import com.vidiun.vo.VidiunConversionProfile;
+			import com.vidiun.vo.VidiunConversionProfileFilter;
+			import com.vidiun.vo.VidiunFilterPager;
 			
 			import flash.net.navigateToURL;
 			
@@ -39,7 +39,7 @@
 			/**
 			 * extra config the plugin needs - files filters
 			 * @internal
-			 * passed in from uiconf plugin node by KmcPluginManager
+			 * passed in from uiconf plugin node by VmcPluginManager
 			 * */
 			public var config:XML;
 
@@ -47,7 +47,7 @@
 			/**
 			 * url of samples file
 			 * @internal
-			 * passed in from uiconf plugin node by KmcPluginManager
+			 * passed in from uiconf plugin node by VmcPluginManager
 			 * */
 			public var samplesUrl:String;
 			
@@ -99,7 +99,7 @@
 			/**
 			 * @copy #client
 			 * */
-			private var _kc:KalturaClient;
+			private var _vc:VidiunClient;
 
 			/**
 			 * files selector for media upload
@@ -119,7 +119,7 @@
 			protected function showUploadSettingsWindow(e:Event):void {
 				_mmfs.removeEventListener(MultipleMediaFilesSelector.FILES_SELECTED, showUploadSettingsWindow);
 				var fus:FileUploadSettings = new FileUploadSettings();
-				fus.client = _kc;
+				fus.client = _vc;
 				fus.filterDefinitions = config.filter;
 				fus.uploadFiles(_mmfs.getFiles());
 				PopUpManager.addPopUp(fus, (Application.application as DisplayObject), true);
@@ -148,7 +148,7 @@
 			}
 
 			/**
-			 * opens a KCW with only webcam recording option
+			 * opens a VCW with only webcam recording option
 			 * */
 			protected function btnWebcam_clickHandler(event:MouseEvent):void {
 				_state = WEBCAM_STATE;
@@ -167,7 +167,7 @@
 
 
 			/**
-			 * show a kaltura corp upgrade page
+			 * show a vidiun corp upgrade page
 			 * */
 			protected function btnAsperaUpgrade_clickHandler(event:MouseEvent):void {
 				var urlreq:URLRequest = new URLRequest(config.aspera.upgrade);
@@ -176,7 +176,7 @@
 
 
 			/**
-			 * Opens a KCW with audio/video/image online services options only
+			 * Opens a VCW with audio/video/image online services options only
 			 * */
 			protected function btnServices_clickHandler(event:MouseEvent):void {
 				_state = SERVICES_STATE;
@@ -195,7 +195,7 @@
 					showOptionsScreen(resourceManager.getString('create', 'draftvideo_state_title'));
 				}
 				else {
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createVideoEntry"}, true));
+					dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.createVideoEntry"}, true));
 					hidePanel();
 				}
 			}
@@ -211,7 +211,7 @@
 					showOptionsScreen(resourceManager.getString('create', 'draftaudio_state_title'));
 				}
 				else {
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createAudioEntry"}, true));
+					dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.createAudioEntry"}, true));
 					hidePanel();
 				}
 			}
@@ -221,7 +221,7 @@
 			 * Opens the new live stream window on top of content management page
 			 * */
 			protected function btnLive_clickHandler(event:MouseEvent):void {
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createLiveEntry"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.createLiveEntry"}, true));
 				hidePanel();
 			}
 
@@ -236,14 +236,14 @@
 				// get conversion profiles list
 				if (!cbConvProfiles.dataProvider.length) {
 					enabled = false;
-					var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-					f.typeEqual = KalturaConversionProfileType.MEDIA;
-					var p:KalturaFilterPager = new KalturaFilterPager();
+					var f:VidiunConversionProfileFilter = new VidiunConversionProfileFilter();
+					f.typeEqual = VidiunConversionProfileType.MEDIA;
+					var p:VidiunFilterPager = new VidiunFilterPager();
 					p.pageSize = 500;	// realy big number that even QA won't reach
 					var cpl:ConversionProfileList = new ConversionProfileList(f, p);
-					cpl.addEventListener(KalturaEvent.COMPLETE, onConvProfListed);
-					cpl.addEventListener(KalturaEvent.FAILED, onConvProfListed);
-					_kc.post(cpl);
+					cpl.addEventListener(VidiunEvent.COMPLETE, onConvProfListed);
+					cpl.addEventListener(VidiunEvent.FAILED, onConvProfListed);
+					_vc.post(cpl);
 				}
 				else {
 					// select the profile from the cookie
@@ -251,18 +251,18 @@
 				}
 			}
 
-			protected function onConvProfListed(e:KalturaEvent):void {
+			protected function onConvProfListed(e:VidiunEvent):void {
 				enabled = true;
-				if (e.type == KalturaEvent.FAILED) {
+				if (e.type == VidiunEvent.FAILED) {
 					Alert.show(e.error.errorMsg, resourceManager.getString('common', 'error'));
 				}
 				else {
 					var ar:Array = new Array();
-					var def:KalturaConversionProfile;
+					var def:VidiunConversionProfile;
 					for each (var cp:Object in e.data.objects) {
-						if (cp is KalturaConversionProfile) {
-							if ((cp as KalturaConversionProfile).isDefault) {
-								def = cp as KalturaConversionProfile;
+						if (cp is VidiunConversionProfile) {
+							if ((cp as VidiunConversionProfile).isDefault) {
+								def = cp as VidiunConversionProfile;
 							}
 							else {
 								ar.push(cp);
@@ -280,10 +280,10 @@
 			
 			
 			protected function selectDefaultProfile():void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-				var defaultProfileId:int = kmcSO.data.lastConversionProfile;
+				var vmcSO:SharedObject = SharedObject.getLocal("vmcSO");
+				var defaultProfileId:int = vmcSO.data.lastConversionProfile;
 				if (defaultProfileId) {
-					for each (var cp:KalturaConversionProfile in cbConvProfiles.dataProvider) {
+					for each (var cp:VidiunConversionProfile in cbConvProfiles.dataProvider) {
 						if (cp.id == defaultProfileId) {
 							cbConvProfiles.selectedItem = cp;
 						}
@@ -294,10 +294,10 @@
 			
 			
 			protected function saveDefaultProfile():void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-				if (kmcSO.data.lastConversionProfile != cbConvProfiles.selectedItem.id) {
-					kmcSO.data.lastConversionProfile = cbConvProfiles.selectedItem.id;
-					kmcSO.flush();
+				var vmcSO:SharedObject = SharedObject.getLocal("vmcSO");
+				if (vmcSO.data.lastConversionProfile != cbConvProfiles.selectedItem.id) {
+					vmcSO.data.lastConversionProfile = cbConvProfiles.selectedItem.id;
+					vmcSO.flush();
 				}
 			}
 			
@@ -308,21 +308,21 @@
 
 
 			/**
-			 * open KCW with desired config
+			 * open VCW with desired config
 			 * */
-			protected function openKcw(event:MouseEvent):void {
+			protected function openVcw(event:MouseEvent):void {
 				switch (_state) {
 					case WEBCAM_STATE: 
-						JSGate.openKcw(cbConvProfiles.selectedItem.id, "uploadWebCam");
+						JSGate.openVcw(cbConvProfiles.selectedItem.id, "uploadWebCam");
 						break;
 					case SERVICES_STATE:
-						JSGate.openKcw(cbConvProfiles.selectedItem.id, "uploadImport");
+						JSGate.openVcw(cbConvProfiles.selectedItem.id, "uploadImport");
 						break;
 					case DRAFT_VIDEO_STATE:
-						dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createVideoEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
+						dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.createVideoEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
 						break;
 					case DRAFT_VIDEO_STATE:
-						dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createAudioEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
+						dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.createAudioEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
 						break;
 				}
 				// save selected profile as default
@@ -348,7 +348,7 @@
 
 			public function setRoot(doc:DisplayObjectContainer):void {
 				_approot = doc;
-				doc.addEventListener(KmcNavigationEvent.NAVIGATION_COMPLETE, hidePanel);
+				doc.addEventListener(VmcNavigationEvent.NAVIGATION_COMPLETE, hidePanel);
 				if (_showingHandler) {
 					_showingHandler.setRoot(doc);
 				}
@@ -389,15 +389,15 @@
 
 
 			/**
-			 * KalturaClient used for API calls
+			 * VidiunClient used for API calls
 			 * */
-			public function get client():KalturaClient {
-				return _kc;
+			public function get client():VidiunClient {
+				return _vc;
 			}
 
 
-			public function set client(value:KalturaClient):void {
-				_kc = value;
+			public function set client(value:VidiunClient):void {
+				_vc = value;
 			}
 
 
@@ -480,7 +480,7 @@
 			<!-- bulks -->
 			<mx:Label styleName="addPanelLabel" htmlText="{resourceManager.getString('create', 'bulk_lbl')}"
 					  includeInLayout="{bulkBox.includeInLayout}" visible="{bulkBox.visible}"/>
-			<view:BulkSubmissions id="bulkBox" width="100%" hidePanel="hidePanel()" client="{_kc}" 
+			<view:BulkSubmissions id="bulkBox" width="100%" hidePanel="hidePanel()" client="{_vc}" 
 								  samplesUrl="{samplesUrl}" />
 
 		</mx:VBox> 
@@ -496,7 +496,7 @@
 			<mx:HBox horizontalAlign="right" width="100%">
 				<mx:LinkButton click="cancel_clickHandler(event)" styleName="addPanelCancelBtn"
 							   label="{resourceManager.getString('create', 'cancel_label')}" />
-				<mx:Button click="openKcw(event)" styleName="addPanelNextBtn" buttonMode="true"
+				<mx:Button click="openVcw(event)" styleName="addPanelNextBtn" buttonMode="true"
 						   label="{resourceManager.getString('create', 'next_label')}" />
 			</mx:HBox>
 		</mx:VBox>

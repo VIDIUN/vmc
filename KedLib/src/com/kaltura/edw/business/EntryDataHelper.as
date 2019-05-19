@@ -1,11 +1,11 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-	import com.kaltura.types.KalturaEntryModerationStatus;
-	import com.kaltura.types.KalturaEntryType;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaFlavorAsset;
+	import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+	import com.vidiun.types.VidiunEntryModerationStatus;
+	import com.vidiun.types.VidiunEntryType;
+	import com.vidiun.types.VidiunMediaType;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunFlavorAsset;
 	
 	import mx.collections.ArrayCollection;
 	import mx.formatters.DateFormatter;
@@ -51,31 +51,31 @@ package com.kaltura.edw.business
 			var toAdd:Array = [];
 			var toRemove:Array = [];
 			var found:Boolean;
-			var kcat:KalturaCategory, kcat2:KalturaCategory;
+			var vcat:VidiunCategory, vcat2:VidiunCategory;
 			// add categories
-			for each (kcat in newlst) {
+			for each (vcat in newlst) {
 				found = false;
-				for each (kcat2 in oldlst) {
-					if (kcat.id == kcat2.id) {
+				for each (vcat2 in oldlst) {
+					if (vcat.id == vcat2.id) {
 						found = true;
 						break;
 					}
 				}
 				if (!found) {
-					toAdd.push(kcat);
+					toAdd.push(vcat);
 				}
 			}
 			// remove categories
-			for each (kcat in oldlst) {
+			for each (vcat in oldlst) {
 				found = false;
-				for each (kcat2 in newlst) {
-					if (kcat.id == kcat2.id) {
+				for each (vcat2 in newlst) {
+					if (vcat.id == vcat2.id) {
 						found = true;
 						break;
 					}
 				}
 				if (!found) {
-					toRemove.push(kcat);
+					toRemove.push(vcat);
 				}
 			}
 			// result
@@ -91,9 +91,9 @@ package com.kaltura.edw.business
 		 * */
 		public static function entryHasSource(flavors:ArrayCollection):Boolean {
 			var hasSource:Boolean = false;
-			var asset:KalturaFlavorAsset;
+			var asset:VidiunFlavorAsset;
 			for each (var vo:FlavorAssetWithParamsVO in flavors) {
-				asset = vo.kalturaFlavorAssetWithParams.flavorAsset;
+				asset = vo.vidiunFlavorAssetWithParams.flavorAsset;
 				if (asset && asset.isOriginal) {
 					hasSource = true;
 					break;
@@ -106,19 +106,19 @@ package com.kaltura.edw.business
 		public static function getModeration(moderationCode:int):String {
 			var resourceManager:IResourceManager = ResourceManager.getInstance();
 			switch (moderationCode) {
-				case KalturaEntryModerationStatus.APPROVED:  {
+				case VidiunEntryModerationStatus.APPROVED:  {
 					return resourceManager.getString('drilldown', 'approved');
 				}
-				case KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW:  {
+				case VidiunEntryModerationStatus.FLAGGED_FOR_REVIEW:  {
 					return resourceManager.getString('drilldown', 'pending');
 				}
-				case KalturaEntryModerationStatus.REJECTED:  {
+				case VidiunEntryModerationStatus.REJECTED:  {
 					return resourceManager.getString('drilldown', 'rejected');
 				}
-				case KalturaEntryModerationStatus.AUTO_APPROVED:  {
+				case VidiunEntryModerationStatus.AUTO_APPROVED:  {
 					return resourceManager.getString('drilldown', 'autoApproved');
 				}
-				case KalturaEntryModerationStatus.PENDING_MODERATION:  {
+				case VidiunEntryModerationStatus.PENDING_MODERATION:  {
 					return resourceManager.getString('drilldown', 'pendingModeration');
 				}
 					
@@ -136,17 +136,17 @@ package com.kaltura.edw.business
 		 */
 		public static function getMediaTypes(mediaType:int, type:String):String {
 			var resourceManager:IResourceManager = ResourceManager.getInstance();
-			if (type == KalturaEntryType.MIX) {
+			if (type == VidiunEntryType.MIX) {
 				return resourceManager.getString('drilldown', 'videoMix');
 			}
 			switch (mediaType) {
-				case KalturaMediaType.VIDEO:
+				case VidiunMediaType.VIDEO:
 					return resourceManager.getString('drilldown', 'video');
 					break;
-				case KalturaMediaType.IMAGE:
+				case VidiunMediaType.IMAGE:
 					return resourceManager.getString('drilldown', 'image');
 					break;
-				case KalturaMediaType.AUDIO:
+				case VidiunMediaType.AUDIO:
 					return resourceManager.getString('drilldown', 'audio');
 					break;
 				case "6":
@@ -155,7 +155,7 @@ package com.kaltura.edw.business
 				case "10":
 					return resourceManager.getString('drilldown', 'xml');
 					break;
-				case KalturaMediaType.LIVE_STREAM_FLASH:
+				case VidiunMediaType.LIVE_STREAM_FLASH:
 					return resourceManager.getString('drilldown', 'liveStream');
 					break;
 			}

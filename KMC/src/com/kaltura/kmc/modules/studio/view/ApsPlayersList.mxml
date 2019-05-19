@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" 
-		 xmlns:playerlist="com.kaltura.kmc.modules.studio.business.playerlist.*"
-		 xmlns:view="com.kaltura.kmc.modules.studio.view.*" xmlns:controls="com.kaltura.controls.*"
+		 xmlns:playerlist="com.vidiun.vmc.modules.studio.business.playerlist.*"
+		 xmlns:view="com.vidiun.vmc.modules.studio.view.*" xmlns:controls="com.vidiun.controls.*"
 		 creationComplete="onCreationComplete()" styleName="studioPageStyle" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.MultiRequest;
-			import com.kaltura.commands.uiConf.UiConfClone;
-			import com.kaltura.commands.uiConf.UiConfDelete;
-			import com.kaltura.commands.uiConf.UiConfList;
-			import com.kaltura.commands.uiConf.UiConfUpdate;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.studio.events.ApsNavigationEvent;
-			import com.kaltura.kmc.modules.studio.events.ApsUiConfEvent;
-			import com.kaltura.kmc.modules.studio.model.types.UIConfType;
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.vo.Context;
-			import com.kaltura.types.KalturaUiConfCreationMode;
-			import com.kaltura.types.KalturaUiConfObjType;
-			import com.kaltura.types.KalturaUiConfOrderBy;
-			import com.kaltura.vo.KalturaUiConf;
-			import com.kaltura.vo.KalturaUiConfFilter;
-			import com.kaltura.vo.KalturaUiConfListResponse;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.commands.MultiRequest;
+			import com.vidiun.commands.uiConf.UiConfClone;
+			import com.vidiun.commands.uiConf.UiConfDelete;
+			import com.vidiun.commands.uiConf.UiConfList;
+			import com.vidiun.commands.uiConf.UiConfUpdate;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.studio.events.ApsNavigationEvent;
+			import com.vidiun.vmc.modules.studio.events.ApsUiConfEvent;
+			import com.vidiun.vmc.modules.studio.model.types.UIConfType;
+			import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
+			import com.vidiun.vmc.vo.Context;
+			import com.vidiun.types.VidiunUiConfCreationMode;
+			import com.vidiun.types.VidiunUiConfObjType;
+			import com.vidiun.types.VidiunUiConfOrderBy;
+			import com.vidiun.vo.VidiunUiConf;
+			import com.vidiun.vo.VidiunUiConfFilter;
+			import com.vidiun.vo.VidiunUiConfListResponse;
 			
 			import modules.Studio;
 			
@@ -135,7 +135,7 @@
 			/**
 			 * edit selected player
 			 * */
-			private function onEdit(uiconf:KalturaUiConf):void {
+			private function onEdit(uiconf:VidiunUiConf):void {
 				if (!uiconf.confFile || !uiconf.confFileFeatures) {
 					Alert.show(resourceManager.getString('aps', 'playerCorrupt', [uiconf.id]), resourceManager.getString('aps', 'warning'));
 					return;
@@ -159,7 +159,7 @@
 			/**
 			 * Clone selected entry
 			 */
-			private function onDuplicate(uiconf:KalturaUiConf):void {
+			private function onDuplicate(uiconf:VidiunUiConf):void {
 				this.enabled = false;
 				CursorManager.setBusyCursor();
 				//clone is actually 2 actions in a multirequest: clone & rename (update) 
@@ -168,24 +168,24 @@
 				var cloneUiconf:UiConfClone = new UiConfClone(uiconf.id);
 				mr.addAction(cloneUiconf);
 				//take the cloned object from request 1 and update its name (this is request 2 - UiConfUpdate); 
-				var updateUiConf:UiConfUpdate = new UiConfUpdate(int.MIN_VALUE, new KalturaUiConf());
+				var updateUiConf:UiConfUpdate = new UiConfUpdate(int.MIN_VALUE, new VidiunUiConf());
 				//map the keys from req' 1 to req' 2 
 				mr.mapMultiRequestParam(1, "id", 2, "id");
 				mr.addRequestParam("2:uiConf", "{1:result}");
 				mr.addRequestParam("2:uiConf:name", resourceManager.getString('aps', 'newPlayerPrefix') + uint(Math.random() * 1000));
 				mr.addAction(updateUiConf);
 				//complete the MultiRequest
-				mr.addEventListener(KalturaEvent.COMPLETE, duplicationComplete);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(VidiunEvent.COMPLETE, duplicationComplete);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
 				mr.queued = false;
-				Studio.kc.post(mr);
+				Studio.vc.post(mr);
 				
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.STUDIO_DUPLICATE_PLAYER, GoogleAnalyticsConsts.STUDIO);
 			}
 			
 			
 			
-			private function onDelete(uiconf:KalturaUiConf):void {
+			private function onDelete(uiconf:VidiunUiConf):void {
 				Alert.show(resourceManager.getString('aps', 'deleteConfirmationQuestion', [uiconf.name, uiconf.id]), 
 					resourceManager.getString('aps', 'deletePlayer'), 
 					Alert.YES | Alert.NO, null, deleteUiconYesNo);
@@ -193,9 +193,9 @@
 				function deleteUiconYesNo(event:CloseEvent):void {
 					if (event.detail == Alert.YES) {
 						var deleteUiConf:UiConfDelete = new UiConfDelete(uiconf.id);
-						deleteUiConf.addEventListener(KalturaEvent.COMPLETE, onDeleted);
-						deleteUiConf.addEventListener(KalturaEvent.FAILED, fault);
-						Studio.kc.post(deleteUiConf);
+						deleteUiConf.addEventListener(VidiunEvent.COMPLETE, onDeleted);
+						deleteUiConf.addEventListener(VidiunEvent.FAILED, fault);
+						Studio.vc.post(deleteUiConf);
 						
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.STUDIO_DELETE_PLAYER, GoogleAnalyticsConsts.STUDIO);
 						refresh();
@@ -207,7 +207,7 @@
 			
 			
 			
-			private function onDeleted(evt:KalturaEvent):void {
+			private function onDeleted(evt:VidiunEvent):void {
 				loadList();
 				ExternalInterface.call("playlistAdded");
 				ExternalInterface.call("playerAdded");
@@ -246,15 +246,15 @@
 			/**
 			 * populates onscreen players list.
 			 * */
-			private function onListComplete(evt:KalturaEvent):void {
+			private function onListComplete(evt:VidiunEvent):void {
 				this.enabled = true;
 				cursorManager.removeAllCursors();
 				_count = evt.data.totalCount;
 				var temp:ArrayCollection = new ArrayCollection(evt.data.objects);
 				
-				var uiconf:KalturaUiConf;
+				var uiconf:VidiunUiConf;
 				for (var i:int = temp.length-1; i>=0; i--) {
-					uiconf = temp.getItemAt(i) as KalturaUiConf;
+					uiconf = temp.getItemAt(i) as VidiunUiConf;
 					try {
 						XML(uiconf.confFile);
 						XML(uiconf.confFileFeatures);
@@ -266,7 +266,7 @@
 				}
 				
 				playerListDg.dataProvider = temp; 
-				_count = (evt.data as KalturaUiConfListResponse).totalCount;
+				_count = (evt.data as VidiunUiConfListResponse).totalCount;
 				makePaging();
 			}
 			
@@ -302,15 +302,15 @@
 			
 			
 			private function loadList():void {
-				var filter:KalturaUiConfFilter = new KalturaUiConfFilter();
-				filter.orderBy = KalturaUiConfOrderBy.UPDATED_AT_DESC;
-				filter.tagsMultiLikeOr = "kdp3";
-				filter.objTypeEqual = KalturaUiConfObjType.PLAYER;
-				filter.creationModeEqual = KalturaUiConfCreationMode.WIZARD;
-				var uiconfList:UiConfList = new UiConfList(filter, paging.kalturaFilterPager);
-				uiconfList.addEventListener(KalturaEvent.COMPLETE, onListComplete);
-				uiconfList.addEventListener(KalturaEvent.FAILED, fault);
-				Studio.kc.post(uiconfList);
+				var filter:VidiunUiConfFilter = new VidiunUiConfFilter();
+				filter.orderBy = VidiunUiConfOrderBy.UPDATED_AT_DESC;
+				filter.tagsMultiLikeOr = "vdp3";
+				filter.objTypeEqual = VidiunUiConfObjType.PLAYER;
+				filter.creationModeEqual = VidiunUiConfCreationMode.WIZARD;
+				var uiconfList:UiConfList = new UiConfList(filter, paging.vidiunFilterPager);
+				uiconfList.addEventListener(VidiunEvent.COMPLETE, onListComplete);
+				uiconfList.addEventListener(VidiunEvent.FAILED, fault);
+				Studio.vc.post(uiconfList);
 				CursorManager.setBusyCursor();
 				this.enabled = false;
 			}
@@ -358,7 +358,7 @@
 			 * (used in item renderer)
 			 * */
 			private function onActionChange(event:Event):void {
-				var uiconf:KalturaUiConf = event.target.data as KalturaUiConf;
+				var uiconf:VidiunUiConf = event.target.data as VidiunUiConf;
 				switch (event.type) {
 					case 'edit':
 						onEdit(uiconf);
@@ -369,10 +369,10 @@
 						var confFileXml:XML = XML(uiconf.confFile);
 						var isPlaylist:Boolean = confFileXml.@isPlaylist.toString() == "true";
 						if (isPlaylist) {
-							dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "playlists", {previewUiconf: playerId, isPlaylist: confFileXml.@isPlaylist.toString()}));
+							dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "playlists", {previewUiconf: playerId, isPlaylist: confFileXml.@isPlaylist.toString()}));
 						}
 						else {
-							dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {previewUiconf: playerId, isPlaylist: confFileXml.@isPlaylist.toString()}));
+							dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {previewUiconf: playerId, isPlaylist: confFileXml.@isPlaylist.toString()}));
 						}
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.STUDIO_SELECT_CONTENT, GoogleAnalyticsConsts.STUDIO);
 						break;
@@ -610,8 +610,8 @@
 		]]>
 	</mx:Script>
 	<mx:Metadata>
-		[Event(name="newPlayerChosen", type="com.kaltura.kmc.modules.studio.events.ApsUiConfEvent")] 
-		[Event(name="editPlayer", type="com.kaltura.kmc.modules.studio.events.ApsNavigationEvent")] 
+		[Event(name="newPlayerChosen", type="com.vidiun.vmc.modules.studio.events.ApsUiConfEvent")] 
+		[Event(name="editPlayer", type="com.vidiun.vmc.modules.studio.events.ApsNavigationEvent")] 
 	</mx:Metadata>
 	
 	<mx:DateFormatter id="gridDateFormatter" formatString="{resourceManager.getString('aps', 'plCreateFormatString')}"/>
@@ -658,7 +658,7 @@
 					
 					<mx:DataGridColumn id="actions" paddingLeft="4" paddingRight="4" width="130"
 									   headerText="{resourceManager.getString('aps','actions')}"
-									   itemRenderer="com.kaltura.kmc.modules.studio.view.wizard.itemRenderers.StudioActionsIR" />
+									   itemRenderer="com.vidiun.vmc.modules.studio.view.wizard.itemRenderers.StudioActionsIR" />
 				</mx:columns>
 			</mx:DataGrid>
 			

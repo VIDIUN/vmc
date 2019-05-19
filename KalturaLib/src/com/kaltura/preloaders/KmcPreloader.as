@@ -1,4 +1,4 @@
-package com.kaltura.preloaders
+package com.vidiun.preloaders
 {
     import flash.display.*;
     import flash.events.*;
@@ -9,9 +9,9 @@ package com.kaltura.preloaders
     import mx.preloaders.*;
     import mx.utils.StringUtil;
     
-    public class KmcPreloader extends Sprite implements IPreloaderDisplay
+    public class VmcPreloader extends Sprite implements IPreloaderDisplay
     {
-    	[Embed(source="/com/kaltura/assets/flash/preloader/kmcPreloader.swf")]
+    	[Embed(source="/com/vidiun/assets/flash/preloader/vmcPreloader.swf")]
 		private static const preLoaderSwf:Class;
     	
         // Define a Loader control to load the SWF file.
@@ -19,7 +19,7 @@ package com.kaltura.preloaders
         
         private var dso:DisplayObject;
      	
-        public function KmcPreloader() {   
+        public function VmcPreloader() {   
             super();        
         }
         

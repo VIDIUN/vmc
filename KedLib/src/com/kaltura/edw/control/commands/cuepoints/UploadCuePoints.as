@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.vidiun.edw.control.commands.cuepoints
 {
-	import com.kaltura.commands.cuePoint.CuePointAddFromBulk;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.commands.cuePoint.CuePointAddFromBulk;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.CuePointsDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
-	public class UploadCuePoints extends KedCommand {
+	public class UploadCuePoints extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var cnt:CuePointAddFromBulk = new CuePointAddFromBulk(event.data);
 			
-			cnt.addEventListener(KalturaEvent.COMPLETE, result);
-			cnt.addEventListener(KalturaEvent.FAILED, fault);
+			cnt.addEventListener(VidiunEvent.COMPLETE, result);
+			cnt.addEventListener(VidiunEvent.FAILED, fault);
 			cnt.queued = false;
 			
 			(_model.getDataPack(CuePointsDataPack) as CuePointsDataPack).reloadCuePoints = false;

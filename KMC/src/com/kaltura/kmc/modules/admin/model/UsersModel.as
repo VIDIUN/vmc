@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.admin.model
+package com.vidiun.vmc.modules.admin.model
 {
-	import com.kaltura.kmc.vo.UserVO;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.types.KalturaUserOrderBy;
-	import com.kaltura.types.KalturaUserStatus;
-	import com.kaltura.vo.KalturaUser;
-	import com.kaltura.vo.KalturaUserFilter;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.vidiun.vmc.vo.UserVO;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.types.VidiunUserOrderBy;
+	import com.vidiun.types.VidiunUserStatus;
+	import com.vidiun.vo.VidiunUser;
+	import com.vidiun.vo.VidiunUserFilter;
+	import com.vidiun.vo.VidiunUserRole;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,12 +14,12 @@ package com.kaltura.kmc.modules.admin.model
 	public class UsersModel {
 		
 		public function UsersModel() {
-			// init filter - only admin users who have access to KMC and are either active or blocked.
-			usersFilter = new KalturaUserFilter();
-			usersFilter.isAdminEqual = KalturaNullableBoolean.TRUE_VALUE;
-			usersFilter.loginEnabledEqual = KalturaNullableBoolean.TRUE_VALUE;
-			usersFilter.statusIn = KalturaUserStatus.ACTIVE + "," + KalturaUserStatus.BLOCKED;
-			usersFilter.orderBy = KalturaUserOrderBy.CREATED_AT_ASC;
+			// init filter - only admin users who have access to VMC and are either active or blocked.
+			usersFilter = new VidiunUserFilter();
+			usersFilter.isAdminEqual = VidiunNullableBoolean.TRUE_VALUE;
+			usersFilter.loginEnabledEqual = VidiunNullableBoolean.TRUE_VALUE;
+			usersFilter.statusIn = VidiunUserStatus.ACTIVE + "," + VidiunUserStatus.BLOCKED;
+			usersFilter.orderBy = VidiunUserOrderBy.CREATED_AT_ASC;
 		}
 		
 		/**
@@ -30,11 +30,11 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the active user entry.
 		 * */
-		public var selectedUser:KalturaUser;
+		public var selectedUser:VidiunUser;
 		
-		[ArrayElementType("KalturaUser")]
+		[ArrayElementType("VidiunUser")]
 		/**
-		 * a list of all users (KalturaUser objects)
+		 * a list of all users (VidiunUser objects)
 		 * */
 		public var users:ArrayCollection;
 		
@@ -51,7 +51,7 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the filter used for listing users. 
 		 */		
-		public var usersFilter:KalturaUserFilter;
+		public var usersFilter:VidiunUserFilter;
 		
 		/**
 		 * link to upgrade page on corp website
@@ -73,10 +73,10 @@ package com.kaltura.kmc.modules.admin.model
 		
 		/**
 		 * when creating a new role from the user drilldown, need to pass  
-		 * the KalturaUserRole returned from the server back to the user drilldown   
+		 * the VidiunUserRole returned from the server back to the user drilldown   
 		 * window via the model. 
 		 */		
-		public var newRole:KalturaUserRole;
+		public var newRole:VidiunUserRole;
 		
 		[ArrayElementType("String")]
 		/**

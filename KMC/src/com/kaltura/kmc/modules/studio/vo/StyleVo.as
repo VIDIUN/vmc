@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo {
+package com.vidiun.vmc.modules.studio.vo {
 
 	/**
 	 * StyleVo holds data concerning player colors and font.

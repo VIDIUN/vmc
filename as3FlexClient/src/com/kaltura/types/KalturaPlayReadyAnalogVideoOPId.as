@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,9 +25,9 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.types
+package com.vidiun.types
 {
-	public class KalturaPlayReadyAnalogVideoOPId
+	public class VidiunPlayReadyAnalogVideoOPId
 	{
 		public static const EXPLICIT_ANALOG_TV : String = "2098DE8D-7DDD-4BAB-96C6-32EBB6FABEA3";
 		public static const BEST_EFFORT_EXPLICIT_ANALOG_TV : String = "225CD36F-F132-49EF-BA8C-C91EA28E4369";

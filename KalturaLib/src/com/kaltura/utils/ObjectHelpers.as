@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users
+This file is part of the Vidiun Collaborative Media Suite which allows users
 to do with audio, video, and animation what Wiki platfroms allow them to do with
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,12 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.utils
+package com.vidiun.utils
 {
 
 	import com.hurlant.crypto.hash.MD5;
 	import com.hurlant.util.Hex;
-	import com.kaltura.vo.BaseFlexVo;
+	import com.vidiun.vo.BaseFlexVo;
 	
 	import flash.utils.getQualifiedClassName;
 	
@@ -78,19 +78,19 @@ package com.kaltura.utils
     		var obj : Object = new Object
     		for ( var param : String in params )
     		{
-    			obj[KStringUtil.camelize(param).toLowerCase()] = params[param];
+    			obj[VStringUtil.camelize(param).toLowerCase()] = params[param];
     		}
     		return obj;
     	}
 		
 		/**
-		 * compare updateable/insertable properties of 2 given Kaltura API objects 
+		 * compare updateable/insertable properties of 2 given Vidiun API objects 
 		 * @param object1
 		 * @param object2
 		 * @return 
 		 * 
 		 */		
-		public static function compareKalturaObjects(object1:BaseFlexVo, object2:BaseFlexVo):Boolean
+		public static function compareVidiunObjects(object1:BaseFlexVo, object2:BaseFlexVo):Boolean
 		{
 			var cls1:String = getQualifiedClassName(object1);
 			var cls2:String = getQualifiedClassName(object2);

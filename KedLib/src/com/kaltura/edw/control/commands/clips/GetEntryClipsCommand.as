@@ -1,33 +1,33 @@
-package com.kaltura.edw.control.commands.clips
+package com.vidiun.edw.control.commands.clips
 {
-	import com.kaltura.commands.baseEntry.BaseEntryList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.ClipsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaBaseEntryListResponse;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
+	import com.vidiun.commands.baseEntry.BaseEntryList;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.ClipsDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntryFilter;
+	import com.vidiun.vo.VidiunBaseEntryListResponse;
+	import com.vidiun.vo.VidiunMediaEntryFilter;
 	
-	public class GetEntryClipsCommand extends KedCommand {
+	public class GetEntryClipsCommand extends VedCommand {
 		
 		
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var f:KalturaBaseEntryFilter = new KalturaMediaEntryFilter();
+			var f:VidiunBaseEntryFilter = new VidiunMediaEntryFilter();
 			f.rootEntryIdEqual = event.data.id;
 			f.orderBy = event.data.orderBy;
 			
 			var list:BaseEntryList = new BaseEntryList(f, event.data.pager);
-			list.addEventListener(KalturaEvent.COMPLETE, result);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(VidiunEvent.COMPLETE, result);
+			list.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(list);
 		}
 		
 		override public function result(data:Object):void {
 			super.result(data);
-			var res:Array = (data.data as KalturaBaseEntryListResponse).objects;
+			var res:Array = (data.data as VidiunBaseEntryListResponse).objects;
 			if (res) {
 				(_model.getDataPack(ClipsDataPack) as ClipsDataPack).clips = res;
 			}

@@ -4,7 +4,7 @@
 		<path>locale/{locale}/admin_{locale}_ResourceModule.swf</path>
 		<language>en_US</language>
 	</locale>
-	<upgradePage>http://corp.kaltura.com</upgradePage>
-	<upgradeUsersPage>http://site.kaltura.com/Request-Users.html</upgradeUsersPage>
-	<upgradePartnerFeaturesPage>http://corp.kaltura.com</upgradePartnerFeaturesPage>
+	<upgradePage>http://corp.vidiun.com</upgradePage>
+	<upgradeUsersPage>http://site.vidiun.com/Request-Users.html</upgradeUsersPage>
+	<upgradePartnerFeaturesPage>http://corp.vidiun.com</upgradePartnerFeaturesPage>
 </root>

@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileDelete;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.conversionProfile.ConversionProfileDelete;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -57,9 +57,9 @@ package com.kaltura.kmc.modules.account.control.command {
 				}
 				
 				
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(mr);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(mr);
 			}
 		}
 
@@ -79,7 +79,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function fault(info:Object):void {
-			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 				JSGate.expired();
 				return;
 			}

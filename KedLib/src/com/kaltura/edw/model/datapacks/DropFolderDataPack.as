@@ -1,7 +1,7 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
-	import com.kaltura.vo.KalturaDropFolder;
+	import com.vidiun.vmvc.model.IDataPack;
+	import com.vidiun.vo.VidiunDropFolder;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -13,7 +13,7 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * currently selected drop folder 
 		 */		
-		public var selectedDropFolder:KalturaDropFolder;
+		public var selectedDropFolder:VidiunDropFolder;
 		
 		/**
 		 * list of DropFolders 

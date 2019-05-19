@@ -3,11 +3,11 @@
 		 creationComplete="init(event)" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+			import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
 			
 			import mx.binding.utils.BindingUtils;
 
@@ -41,14 +41,14 @@
 			 * */
 			private function selectedReportChange(report:ReportData):void {
 				if (_model.currentScreenState == ScreenTypes.REAL_TIME_CONTENT) {
-					JSGate.triggerJS('kmc.functions.openLiveAnalytics');
+					JSGate.triggerJS('vmc.functions.openLiveAnalytics');
 				}
 			}
 
 
 //			public function help():void {
-//				var anchor:String = (contentViewStack.selectedChild as KalturaReportView).helpUrl;
-//				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+//				var anchor:String = (contentViewStack.selectedChild as VidiunReportView).helpUrl;
+//				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 //			}
 
 

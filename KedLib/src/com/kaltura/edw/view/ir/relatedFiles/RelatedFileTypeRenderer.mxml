@@ -6,9 +6,9 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.constants.RelatedFileActionType;
-			import com.kaltura.edw.vo.RelatedFileVO;
-			import com.kaltura.types.KalturaAttachmentType;
+			import com.vidiun.edw.constants.RelatedFileActionType;
+			import com.vidiun.edw.vo.RelatedFileVO;
+			import com.vidiun.types.VidiunAttachmentType;
 			
 			import mx.resources.ResourceManager;
 			
@@ -34,13 +34,13 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				_relatedFile = value as RelatedFileVO;
-				if (_relatedFile.file.format == KalturaAttachmentType.DOCUMENT) {
+				if (_relatedFile.file.format == VidiunAttachmentType.DOCUMENT) {
 					_selectedIndex = 0;
 				}
-				else if (_relatedFile.file.format == KalturaAttachmentType.MEDIA) {
+				else if (_relatedFile.file.format == VidiunAttachmentType.MEDIA) {
 					_selectedIndex = 1;
 				}
-				else if (_relatedFile.file.format == KalturaAttachmentType.TEXT) {
+				else if (_relatedFile.file.format == VidiunAttachmentType.TEXT) {
 					_selectedIndex = 2;
 				}
 				else {
@@ -53,13 +53,13 @@
 				
 				switch (typeCb.selectedIndex){
 					case 0:
-						_relatedFile.file.format = KalturaAttachmentType.DOCUMENT;
+						_relatedFile.file.format = VidiunAttachmentType.DOCUMENT;
 						break;
 					case 1:
-						_relatedFile.file.format = KalturaAttachmentType.MEDIA;
+						_relatedFile.file.format = VidiunAttachmentType.MEDIA;
 						break;
 					case 2:
-						_relatedFile.file.format = KalturaAttachmentType.TEXT;
+						_relatedFile.file.format = VidiunAttachmentType.TEXT;
 						break;
 				}
 

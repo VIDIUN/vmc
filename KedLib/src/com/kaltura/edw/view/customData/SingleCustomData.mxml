@@ -7,13 +7,13 @@
 		 styleName="customDataProfileContainer" width="100%" minWidth="50">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryFormBuilder;
-			import com.kaltura.edw.business.base.FormBuilderBase;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.vo.CustomMetadataDataVO;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.types.KalturaMetadataProfileStatus;
+			import com.vidiun.edw.business.EntryFormBuilder;
+			import com.vidiun.edw.business.base.FormBuilderBase;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.events.MetadataProfileEvent;
+			import com.vidiun.edw.vo.CustomMetadataDataVO;
+			import com.vidiun.vmvc.control.VMvCController;
+			import com.vidiun.types.VidiunMetadataProfileStatus;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;

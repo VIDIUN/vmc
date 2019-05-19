@@ -1,18 +1,18 @@
-package com.kaltura.edw.components.fltr
+package com.vidiun.edw.components.fltr
 {
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-	import com.kaltura.edw.components.fltr.indicators.Indicators;
-	import com.kaltura.edw.components.fltr.indicators.IndicatorsEvent;
-	import com.kaltura.edw.components.fltr.panels.MetadataProfileFilter;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaContentDistributionSearchItem;
-	import com.kaltura.vo.KalturaFilter;
-	import com.kaltura.vo.KalturaMetadataSearchItem;
-	import com.kaltura.vo.KalturaSearchItem;
-	import com.kaltura.vo.KalturaSearchOperator;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+	import com.vidiun.edw.components.fltr.indicators.Indicators;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorsEvent;
+	import com.vidiun.edw.components.fltr.panels.MetadataProfileFilter;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.types.VidiunSearchOperatorType;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunContentDistributionSearchItem;
+	import com.vidiun.vo.VidiunFilter;
+	import com.vidiun.vo.VidiunMetadataSearchItem;
+	import com.vidiun.vo.VidiunSearchItem;
+	import com.vidiun.vo.VidiunSearchOperator;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -65,21 +65,21 @@ package com.kaltura.edw.components.fltr
 		 */
 		protected function updateFilterValue(event:FilterComponentEvent):void {
 			
-			// update KalturaFilter relevant values
+			// update VidiunFilter relevant values
 			if (event.target is IMultiAttributeFilterComponent) {
 				var atts:Array = (event.target as IMultiAttributeFilterComponent).attributes;
-				var fltrs:Array = (event.target as IMultiAttributeFilterComponent).kfilters;
+				var fltrs:Array = (event.target as IMultiAttributeFilterComponent).vfilters;
 				for (var i:int = 0; i<atts.length; i++) {
-					_kalturaFilter[atts[i]] = fltrs[i];
+					_vidiunFilter[atts[i]] = fltrs[i];
 				}
 			}
 			else if (event.target is IAdvancedSearchFilterComponent) {
-				handelAdvancedSearchComponent((event.target as IAdvancedSearchFilterComponent).filter as KalturaSearchItem,
+				handelAdvancedSearchComponent((event.target as IAdvancedSearchFilterComponent).filter as VidiunSearchItem,
 					(event.target as IAdvancedSearchFilterComponent).attribute);
 			}
 			else if (event.target is IFilterComponent) {
 				var tgt:IFilterComponent = event.target as IFilterComponent;
-				_kalturaFilter[tgt.attribute] = tgt.filter;
+				_vidiunFilter[tgt.attribute] = tgt.filter;
 			}
 			
 			// show correct indicators
@@ -150,14 +150,14 @@ package com.kaltura.edw.components.fltr
 		 * @param filterType	search item identifier
 		 * @param addOnly		if true, existing search item will not be replaced and given item will not be added
 		 */
-		protected function handelAdvancedSearchComponent(searchItem:KalturaSearchItem, filterId:String, addOnly:Boolean=false):void {
+		protected function handelAdvancedSearchComponent(searchItem:VidiunSearchItem, filterId:String, addOnly:Boolean=false):void {
 			// create advanced search item if required:
-			if (!_kalturaFilter.advancedSearch) {
-				_kalturaFilter.advancedSearch = new KalturaSearchOperator();
-				(_kalturaFilter.advancedSearch as KalturaSearchOperator).type = KalturaSearchOperatorType.SEARCH_AND;
-				(_kalturaFilter.advancedSearch as KalturaSearchOperator).items = [];
+			if (!_vidiunFilter.advancedSearch) {
+				_vidiunFilter.advancedSearch = new VidiunSearchOperator();
+				(_vidiunFilter.advancedSearch as VidiunSearchOperator).type = VidiunSearchOperatorType.SEARCH_AND;
+				(_vidiunFilter.advancedSearch as VidiunSearchOperator).items = [];
 			}
-			var items:Array = (_kalturaFilter.advancedSearch as KalturaSearchOperator).items;
+			var items:Array = (_vidiunFilter.advancedSearch as VidiunSearchOperator).items;
 			var i:int;
 			var found:Boolean;
 			if (items) {
@@ -166,12 +166,12 @@ package com.kaltura.edw.components.fltr
 				// find the distribtion search item and remove it.
 				// there is only one distribution item, and we recognise it by the contents of its items.
 				for (i = 0; i<items.length; i++) {
-					var ksi:KalturaSearchOperator = items[i] as KalturaSearchOperator; 
-					if (ksi) { // SearchItems which are not SearchOpreators will fall here
-						if (ksi.items && ksi.items[0] is KalturaContentDistributionSearchItem) {
+					var vsi:VidiunSearchOperator = items[i] as VidiunSearchOperator; 
+					if (vsi) { // SearchItems which are not SearchOpreators will fall here
+						if (vsi.items && vsi.items[0] is VidiunContentDistributionSearchItem) {
 							found = true;
 							if (!addOnly) {
-								(_kalturaFilter.advancedSearch as KalturaSearchOperator).items.splice(i, 1);
+								(_vidiunFilter.advancedSearch as VidiunSearchOperator).items.splice(i, 1);
 							}
 							break;
 						}
@@ -183,12 +183,12 @@ package com.kaltura.edw.components.fltr
 				// remove search item for this profile if exists.
 				// there is only one item which matches the profile (filterType is profile id).
 				for (i = 0; i<items.length; i++) {
-					var msi:KalturaMetadataSearchItem = items[i] as KalturaMetadataSearchItem; 
-					if (msi) { // SearchItems which are not KalturaMetadataSearchItem will fall here
+					var msi:VidiunMetadataSearchItem = items[i] as VidiunMetadataSearchItem; 
+					if (msi) { // SearchItems which are not VidiunMetadataSearchItem will fall here
 						if (msi.metadataProfileId.toString() == filterId) {
 							found = true;
 							if (!addOnly) {
-								(_kalturaFilter.advancedSearch as KalturaSearchOperator).items.splice(i, 1);
+								(_vidiunFilter.advancedSearch as VidiunSearchOperator).items.splice(i, 1);
 							}
 							break;
 						}
@@ -199,7 +199,7 @@ package com.kaltura.edw.components.fltr
 			// add new 
 			if (searchItem) {
 				if (!addOnly || !found) {
-					(_kalturaFilter.advancedSearch as KalturaSearchOperator).items.push(searchItem);
+					(_vidiunFilter.advancedSearch as VidiunSearchOperator).items.push(searchItem);
 				}
 			}
 			}
@@ -360,23 +360,23 @@ package com.kaltura.edw.components.fltr
 		
 		
 		// --------------------
-		// KalturaFilter VO
+		// VidiunFilter VO
 		// --------------------
 		/**
-		 * @copy #kalturaFilter 
+		 * @copy #vidiunFilter 
 		 */		
-		protected var _kalturaFilter:KalturaFilter;
+		protected var _vidiunFilter:VidiunFilter;
 		
-		public function get kalturaFilter():KalturaFilter {
-			return _kalturaFilter;
+		public function get vidiunFilter():VidiunFilter {
+			return _vidiunFilter;
 		}
 		
 		[Bindable]
 		/**
-		 * the Kaltura API filter object being manipulated by this component 
+		 * the Vidiun API filter object being manipulated by this component 
 		 */		
-		public function set kalturaFilter(value:KalturaFilter):void {
-			_kalturaFilter = value;
+		public function set vidiunFilter(value:VidiunFilter):void {
+			_vidiunFilter = value;
 			indicators = new ArrayCollection();
 			if (_metadataProfiles) {
 				// if we didn't build them when the value was set
@@ -388,24 +388,24 @@ package com.kaltura.edw.components.fltr
 		protected function setFilterValuesToComponents():void {
 			var comp:IFilterComponent;
 			var att:String;
-			var keys:Array = ObjectUtil.getObjectAllKeys(_kalturaFilter);
+			var keys:Array = ObjectUtil.getObjectAllKeys(_vidiunFilter);
 			for (var i:int = 0; i<keys.length; i++) {
 				comp = null;
 				att = keys[i];
-				if (_kalturaFilter[att] && _kalturaFilter[att] != int.MIN_VALUE) { // default value for strings is null, numbers int.MIN_VALUE
+				if (_vidiunFilter[att] && _vidiunFilter[att] != int.MIN_VALUE) { // default value for strings is null, numbers int.MIN_VALUE
 					if (att == "advancedSearch") {
-						setFilterValuesToAdvancedSearchComponents(_kalturaFilter[att]);
+						setFilterValuesToAdvancedSearchComponents(_vidiunFilter[att]);
 					}
 					else {
 						comp = getComponentByAttribute(att, this);
 					}
 					
 					if (comp) {
-						comp.filter = _kalturaFilter[att];
+						comp.filter = _vidiunFilter[att];
 					}
 					else {
 						if (_freeTextSearch && att == _freeTextSearch.attribute) {
-							_freeTextSearch.filter = _kalturaFilter[att];
+							_freeTextSearch.filter = _vidiunFilter[att];
 						}
 						
 					}
@@ -415,15 +415,15 @@ package com.kaltura.edw.components.fltr
 		
 		/**
 		 * for each element in advancedSearch, get relevant ui component and set its filter 
-		 * @param kse root search item
+		 * @param vse root search item
 		 * 
 		 */
-		protected function setFilterValuesToAdvancedSearchComponents(kse:KalturaSearchItem):void {
+		protected function setFilterValuesToAdvancedSearchComponents(vse:VidiunSearchItem):void {
 			var comp:IFilterComponent;
-			for each (var kmsi:KalturaMetadataSearchItem in kse.items) {
-				comp = getComponentByAttribute(kmsi.metadataProfileId.toString(), this);
+			for each (var vmsi:VidiunMetadataSearchItem in vse.items) {
+				comp = getComponentByAttribute(vmsi.metadataProfileId.toString(), this);
 				if (comp) {
-					comp.filter = kmsi;
+					comp.filter = vmsi;
 				}
 			}
 			
@@ -445,7 +445,7 @@ package com.kaltura.edw.components.fltr
 		
 		public function set metadataProfiles(value:ArrayCollection):void {
 			_metadataProfiles = value;
-			if (_kalturaFilter) {
+			if (_vidiunFilter) {
 				createMetadataFilters(value);
 			}
 		}
@@ -456,7 +456,7 @@ package com.kaltura.edw.components.fltr
 		 * create a MetadataFilter for the given profile on the given accordion tab
 		 * @param profileVo 	metadata profile with searchable list fields
 		 * */
-		protected function buildMetadataProfileFilter(profileVo:KMCMetadataProfileVO):MetadataProfileFilter {
+		protected function buildMetadataProfileFilter(profileVo:VMCMetadataProfileVO):MetadataProfileFilter {
 			var metadataTab:MetadataProfileFilter = new MetadataProfileFilter();
 			metadataTab.label = profileVo.profile.name;
 			metadataTab.id = profileVo.profile.id.toString();
@@ -467,7 +467,7 @@ package com.kaltura.edw.components.fltr
 			metadataTab.addEventListener(FilterComponentEvent.VALUE_CHANGE, updateFilterValue, false, 0, true);
 			
 			// update filter data 
-			handelAdvancedSearchComponent(metadataTab.filter as KalturaSearchItem, metadataTab.attribute, true);
+			handelAdvancedSearchComponent(metadataTab.filter as VidiunSearchItem, metadataTab.attribute, true);
 			
 			return metadataTab;
 		}

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.liveReports
+package com.vidiun.commands.liveReports
 {
-		import com.kaltura.vo.KalturaLiveReportExportParams;
-	import com.kaltura.delegates.liveReports.LiveReportsExportToCsvDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunLiveReportExportParams;
+	import com.vidiun.delegates.liveReports.LiveReportsExportToCsvDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class LiveReportsExportToCsv extends KalturaCall
+	public class LiveReportsExportToCsv extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param reportType int
-		* @param params KalturaLiveReportExportParams
+		* @param params VidiunLiveReportExportParams
 		**/
-		public function LiveReportsExportToCsv( reportType : int,params : KalturaLiveReportExportParams )
+		public function LiveReportsExportToCsv( reportType : int,params : VidiunLiveReportExportParams )
 		{
 			service= 'livereports';
 			action= 'exportToCsv';
@@ -51,7 +51,7 @@ package com.kaltura.commands.liveReports
 			var keyValArr : Array = new Array();
 			keyArr.push('reportType');
 			valueArr.push(reportType);
-				keyValArr = kalturaObject2Arrays(params, 'params');
+				keyValArr = vidiunObject2Arrays(params, 'params');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

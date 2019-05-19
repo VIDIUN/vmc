@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" verticalAlign="middle" 
-		 implements="com.kaltura.edw.components.fltr.IFilterComponent">
+		 implements="com.vidiun.edw.components.fltr.IFilterComponent">
 	<mx:Metadata>
-		[Event(name="valueChange", type="com.kaltura.edw.components.fltr.FilterComponentEvent")] 
+		[Event(name="valueChange", type="com.vidiun.edw.components.fltr.FilterComponentEvent")] 
 		[Event(name="help", type="flash.events.Event")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
 			
 			import mx.controls.Alert;
 			import mx.resources.ResourceManager;

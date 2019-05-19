@@ -1,10 +1,10 @@
-package com.kaltura.edw.components.fltr.panels
+package com.vidiun.edw.components.fltr.panels
 {
-	import com.kaltura.edw.components.fltr.IAdvancedSearchFilterComponent;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.vo.KalturaContentDistributionSearchItem;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaSearchOperator;
+	import com.vidiun.edw.components.fltr.IAdvancedSearchFilterComponent;
+	import com.vidiun.types.VidiunSearchOperatorType;
+	import com.vidiun.vo.VidiunContentDistributionSearchItem;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunSearchOperator;
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
@@ -19,7 +19,7 @@ package com.kaltura.edw.components.fltr.panels
 		/**
 		 * container for initial filter if buttons not created yet 
 		 */
-		protected var _initialFilter:KalturaSearchOperator;
+		protected var _initialFilter:VidiunSearchOperator;
 		
 		
 		override public function set filter(value:Object):void {
@@ -35,11 +35,11 @@ package com.kaltura.edw.components.fltr.panels
 				}
 				else {
 					_buttons[0].selected = false;
-					var profiles:Array = (value as KalturaSearchOperator).items;
-					for each (var searchItem:KalturaContentDistributionSearchItem in profiles) {
+					var profiles:Array = (value as VidiunSearchOperator).items;
+					for each (var searchItem:VidiunContentDistributionSearchItem in profiles) {
 						// find a matching checkbox and mark it
 						for (i = 1; i < _buttons.length; i++) {
-							if ((_buttons[i].data as KalturaDistributionProfile).id == searchItem.distributionProfileId) {
+							if ((_buttons[i].data as VidiunDistributionProfile).id == searchItem.distributionProfileId) {
 								_buttons[i].selected = true;
 								break;
 							}
@@ -48,21 +48,21 @@ package com.kaltura.edw.components.fltr.panels
 				}
 			}
 			else {
-				_initialFilter = value as KalturaSearchOperator;
+				_initialFilter = value as VidiunSearchOperator;
 			}
 		}
 		
 		
 		override public function get filter():Object {
 			if (_buttons) {
-				var searchItem:KalturaContentDistributionSearchItem;
-				var distributionSearchOperator:KalturaSearchOperator = new KalturaSearchOperator();
-				distributionSearchOperator.type = KalturaSearchOperatorType.SEARCH_OR;
+				var searchItem:VidiunContentDistributionSearchItem;
+				var distributionSearchOperator:VidiunSearchOperator = new VidiunSearchOperator();
+				distributionSearchOperator.type = VidiunSearchOperatorType.SEARCH_OR;
 				distributionSearchOperator.items = new Array();
 				for (var i:int = 1; i < _buttons.length; i++) {
 					if (_buttons[i].selected) {
-						searchItem = new KalturaContentDistributionSearchItem();
-						searchItem.distributionProfileId = (_buttons[i].data as KalturaDistributionProfile).id;
+						searchItem = new VidiunContentDistributionSearchItem();
+						searchItem.distributionProfileId = (_buttons[i].data as VidiunDistributionProfile).id;
 						distributionSearchOperator.items.push(searchItem);
 					}
 				}

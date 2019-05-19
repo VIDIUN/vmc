@@ -13,16 +13,16 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.MetadataFieldEvent;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.vmc.modules.account.control.events.MetadataFieldEvent;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.MetadataFieldVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			
 
-			private var _metadataProfile:KMCMetadataProfileVO;
+			private var _metadataProfile:VMCMetadataProfileVO;
 			private var _currentField:MetadataFieldVO
 			
 			override public function set data(value:Object):void {

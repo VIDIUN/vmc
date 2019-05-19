@@ -1,4 +1,4 @@
-package com.kaltura.resources
+package com.vidiun.resources
 {
 	public class ResourceModifiers
 	{

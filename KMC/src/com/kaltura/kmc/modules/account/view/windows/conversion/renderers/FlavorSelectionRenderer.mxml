@@ -4,8 +4,8 @@
 		 paddingLeft="4">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.view.windows.conversion.ConversionSettingsTable;
-			import com.kaltura.vo.FlavorVO;
+			import com.vidiun.vmc.modules.account.view.windows.conversion.ConversionSettingsTable;
+			import com.vidiun.vo.FlavorVO;
 
 
 			override public function set data(value:Object):void {

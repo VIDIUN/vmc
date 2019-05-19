@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>KedPanels</name>
+	<name>VedPanels</name>
 	<comment></comment>
 	<projects>
-		<project>KedLib</project>
-		<project>KMC</project>
+		<project>VedLib</project>
+		<project>VMC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -21,12 +21,12 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/bin-debug</locationURI>
+			<locationURI>DOCUMENTS/VMC/bin-debug</locationURI>
 		</link>
 		<link>
 			<name>bin-release</name>
 			<type>2</type>
-			<location>C:/workspaces/kmc/KMC/bin-release</location>
+			<location>C:/workspaces/vmc/VMC/bin-release</location>
 		</link>
 	</linkedResources>
 </projectDescription>

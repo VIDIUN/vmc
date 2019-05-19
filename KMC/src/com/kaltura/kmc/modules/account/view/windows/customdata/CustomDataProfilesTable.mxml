@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*"
+<table:SelectionTable xmlns:table="com.vidiun.controls.table.*"
 					  xmlns:mx="http://www.adobe.com/2006/mxml" rowCount="10" rowHeight="36"
 					  sortableColumns="false" verticalAlign="middle">
 	<mx:Metadata>
@@ -11,9 +11,9 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.MetadataProfileEvent;
-			import com.kaltura.types.KalturaMetadataObjectType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
+			import com.vidiun.vmc.modules.account.control.events.MetadataProfileEvent;
+			import com.vidiun.types.VidiunMetadataObjectType;
+			import com.vidiun.vo.VMCMetadataProfileVO;
 			
 			/**
 			 * get the correct text to show on the "apply on" (metadataObjectType) column
@@ -22,10 +22,10 @@
 			private function getSchemaObjectTypeLabel(item:Object, column:DataGridColumn):String {
 				var oType:String = item.profile.metadataObjectType;
 				var result:String = '';
-				if (oType == KalturaMetadataObjectType.ENTRY) {
+				if (oType == VidiunMetadataObjectType.ENTRY) {
 					result = resourceManager.getString('account', 'customSchemasEntryType');
 				}
-				else if (oType == KalturaMetadataObjectType.CATEGORY) {
+				else if (oType == VidiunMetadataObjectType.CATEGORY) {
 					result = resourceManager.getString('account', 'customSchemasCategoryType');
 				}
 				else {
@@ -38,8 +38,8 @@
 	</mx:Script>
 	<table:columns>
 		<mx:DataGridColumn width="32" minWidth="32" 
-						   headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer" />
+						   headerRenderer="com.vidiun.controls.table.SelectionRenderer"
+						   itemRenderer="com.vidiun.controls.table.SelectionRenderer" />
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customSchemasIdCol')}" width="90" paddingLeft="5">
 			<mx:itemRenderer>
@@ -58,7 +58,7 @@
 		</mx:DataGridColumn>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customSchemasNameCol')}" width="140"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataProfileNameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataProfileNameRenderer"/>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customSchemasDescriptionCol')}" paddingLeft="5">
 			<mx:itemRenderer>
@@ -72,7 +72,7 @@
 						   dataField="metadataObjectType" labelFunction="getSchemaObjectTypeLabel" />
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customSchemasFieldsIncludedCol')}" paddingLeft="5"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataFieldsIncludedRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataFieldsIncludedRenderer"/>
 		
 	</table:columns>
 </table:SelectionTable>

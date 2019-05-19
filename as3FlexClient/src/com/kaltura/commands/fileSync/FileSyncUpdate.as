@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.fileSync
+package com.vidiun.commands.fileSync
 {
-		import com.kaltura.vo.KalturaFileSync;
-	import com.kaltura.delegates.fileSync.FileSyncUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunFileSync;
+	import com.vidiun.delegates.fileSync.FileSyncUpdateDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Update file sync by id
 	**/
-	public class FileSyncUpdate extends KalturaCall
+	public class FileSyncUpdate extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param id int
-		* @param fileSync KalturaFileSync
+		* @param fileSync VidiunFileSync
 		**/
-		public function FileSyncUpdate( id : int,fileSync : KalturaFileSync )
+		public function FileSyncUpdate( id : int,fileSync : VidiunFileSync )
 		{
 			service= 'filesync_filesync';
 			action= 'update';
@@ -52,7 +52,7 @@ package com.kaltura.commands.fileSync
 			var keyValArr : Array = new Array();
 			keyArr.push('id');
 			valueArr.push(id);
-				keyValArr = kalturaObject2Arrays(fileSync, 'fileSync');
+				keyValArr = vidiunObject2Arrays(fileSync, 'fileSync');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

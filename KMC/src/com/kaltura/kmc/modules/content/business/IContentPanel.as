@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business
+package com.vidiun.vmc.modules.content.business
 {
-	import com.kaltura.vo.KalturaBaseEntryFilter;
+	import com.vidiun.vo.VidiunBaseEntryFilter;
 
 	/**
 	 * This interface declares methods that allow the Content module to comunicate with its subtabs.
@@ -11,9 +11,9 @@ package com.kaltura.kmc.modules.content.business
 		
 		/**
 		 * initialize the panel, refresh data, etc.
-		 * @param kbef	(optional) initial filtering data
+		 * @param vbef	(optional) initial filtering data
 		 */		
-		function init(kbef:KalturaBaseEntryFilter = null):void;
+		function init(vbef:VidiunBaseEntryFilter = null):void;
 		
 
 	}

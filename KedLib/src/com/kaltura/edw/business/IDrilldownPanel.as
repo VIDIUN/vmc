@@ -1,7 +1,7 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.kmvc.model.IDataPackRepository;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.vidiun.vmvc.model.IDataPackRepository;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
 	import flash.events.IEventDispatcher;
 
@@ -18,8 +18,8 @@ package com.kaltura.edw.business
 		/**
 		 * reference to the current entry 
 		 */		
-		function get selectedEntry():KalturaBaseEntry;		
-		function set selectedEntry(value:KalturaBaseEntry):void;
+		function get selectedEntry():VidiunBaseEntry;		
+		function set selectedEntry(value:VidiunBaseEntry):void;
 		
 		function get styleName():Object;
 		function set styleName(value:Object):void;

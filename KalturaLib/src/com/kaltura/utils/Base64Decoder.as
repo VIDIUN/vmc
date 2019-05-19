@@ -19,7 +19,7 @@
  *  Incorporated. All Rights Reserved. 
  *  
  *****************************************************/
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	import flash.utils.ByteArray;
 	

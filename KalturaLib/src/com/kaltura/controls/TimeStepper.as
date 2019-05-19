@@ -1,4 +1,4 @@
-package com.kaltura.controls {
+package com.vidiun.controls {
 	
 	import flash.events.Event;
 	import flash.events.FocusEvent;

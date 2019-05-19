@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- This window holds a list of available distributors and their distribution state -->
-<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 								width="550" height="500"
 				title="{resourceManager.getString('drilldown','selectDistributors')}" layout="vertical"
 				showCloseButton="true" close="onClose()"
@@ -10,20 +10,20 @@
 				creationComplete="{onCreationComplete()}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.control.events.DistributionProfileEvent;
-			import com.kaltura.edw.control.events.EntryDistributionEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
-			import com.kaltura.types.KalturaDistributionProfileActionStatus;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaDistributionProfile;
-			import com.kaltura.vo.KalturaDistributionThumbDimensions;
-			import com.kaltura.vo.KalturaEntryDistribution;
-			import com.kaltura.vo.KalturaThumbAsset;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.events.DistributionProfileEvent;
+			import com.vidiun.edw.control.events.EntryDistributionEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.types.VidiunDistributionProfileActionStatus;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunDistributionProfile;
+			import com.vidiun.vo.VidiunDistributionThumbDimensions;
+			import com.vidiun.vo.VidiunEntryDistribution;
+			import com.vidiun.vo.VidiunThumbAsset;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -34,7 +34,7 @@
 			 * */
 			public static const UPDATE_LISTS:String = "updateLists";
 			
-			public var selectedEntry:KalturaBaseEntry;
+			public var selectedEntry:VidiunBaseEntry;
 			
 			[Bindable]
 			private var _distributionDataProvider:Array;
@@ -79,34 +79,34 @@
 			
 				_distributionDataProvider = new Array;
 				for each (var distribution:EntryDistributionWithProfile in entryDistributions) {	
-					if ((distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.QUEUED) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.PENDING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.READY) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.ERROR_DELETING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.ERROR_SUBMITTING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.ERROR_UPDATING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.DELETING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.SUBMITTING) ||
-						(distribution.kalturaEntryDistribution.status ==KalturaEntryDistributionStatus.UPDATING)) 
+					if ((distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.QUEUED) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.PENDING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.READY) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_DELETING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_SUBMITTING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.ERROR_UPDATING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.DELETING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.SUBMITTING) ||
+						(distribution.vidiunEntryDistribution.status ==VidiunEntryDistributionStatus.UPDATING)) 
 					{
 						distribution.distributorSelected = distribution.distributorInitState = true;
 					}	
 					setAutomaticDistribute(distribution);
 					_distributionDataProvider.push(distribution);
 					
-					var unusedIndex:int = unusedDistributionProfiles.getItemIndex(distribution.kalturaDistributionProfile);
+					var unusedIndex:int = unusedDistributionProfiles.getItemIndex(distribution.vidiunDistributionProfile);
 					if (unusedIndex != -1){
 						unusedDistributionProfiles.removeItemAt(unusedIndex);					
 					}					
 				}
 				
-				for each (var profile:KalturaDistributionProfile in unusedDistributionProfiles) {
+				for each (var profile:VidiunDistributionProfile in unusedDistributionProfiles) {
 					var newDistributionWithProfile:EntryDistributionWithProfile = new EntryDistributionWithProfile();
-					var newDistribution:KalturaEntryDistribution = new KalturaEntryDistribution();
+					var newDistribution:VidiunEntryDistribution = new VidiunEntryDistribution();
 					newDistribution.entryId = selectedEntry.id;
 					newDistribution.distributionProfileId = profile.id;
-					newDistributionWithProfile.kalturaEntryDistribution = newDistribution;
-					newDistributionWithProfile.kalturaDistributionProfile = profile;
+					newDistributionWithProfile.vidiunEntryDistribution = newDistribution;
+					newDistributionWithProfile.vidiunDistributionProfile = profile;
 					setAutomaticDistribute(newDistributionWithProfile);
 					_distributionDataProvider.push(newDistributionWithProfile);
 				}	
@@ -116,8 +116,8 @@
 			 * sets whether the entry is automatic distributed or not
 			 * */
 			private function setAutomaticDistribute(distribution:EntryDistributionWithProfile) : void {
-				if ((distribution.kalturaDistributionProfile.submitEnabled == KalturaDistributionProfileActionStatus.AUTOMATIC) ||
-					(distribution.kalturaEntryDistribution.status == KalturaEntryDistributionStatus.QUEUED)) {
+				if ((distribution.vidiunDistributionProfile.submitEnabled == VidiunDistributionProfileActionStatus.AUTOMATIC) ||
+					(distribution.vidiunEntryDistribution.status == VidiunEntryDistributionStatus.QUEUED)) {
 					distribution.distributeAutomatically = true;
 				}
 			}
@@ -131,7 +131,7 @@
 				var profilesToUpdate:Array = new Array();
 				for each (var distribution:EntryDistributionWithProfile in _distributionDataProvider) {
 					if (distribution.distributorInitState && !distribution.distributorSelected) {
-						removeDistributors.push(distribution.kalturaEntryDistribution);
+						removeDistributors.push(distribution.vidiunEntryDistribution);
 					}
 					else if (!distribution.distributorInitState && distribution.distributorSelected) {
 						if (distribution.distributeAutomatically) {
@@ -141,7 +141,7 @@
 					}
 				}
 				
-				var e:KedDataEvent = new KedDataEvent(SelectDistributorsWindow.UPDATE_LISTS);
+				var e:VedDataEvent = new VedDataEvent(SelectDistributorsWindow.UPDATE_LISTS);
 				e.data = {addDistributors:addDistributors, removeDistributors:removeDistributors};
 				dispatchEvent(e);
 				
@@ -172,7 +172,7 @@
 	<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{_distributionDataProvider}" draggableColumns="false" 
 				 sortableColumns="false" selectable="false" rowHeight="40">
 		<mx:columns>
-			<mx:DataGridColumn width="235" itemRenderer="com.kaltura.edw.view.distribution.DistributorComponent">
+			<mx:DataGridColumn width="235" itemRenderer="com.vidiun.edw.view.distribution.DistributorComponent">
 				<mx:headerRenderer>
 					<mx:Component>
 						<mx:HBox width="100%" horizontalGap="0" paddingLeft="6" paddingRight="6"  horizontalScrollPolicy="off" paddingTop="0" paddingBottom="0">
@@ -185,7 +185,7 @@
 					</mx:Component>
 				</mx:headerRenderer>
 			</mx:DataGridColumn>
-			<mx:DataGridColumn width="235" itemRenderer="com.kaltura.edw.view.distribution.DistributeWhenReadyComponent">
+			<mx:DataGridColumn width="235" itemRenderer="com.vidiun.edw.view.distribution.DistributeWhenReadyComponent">
 				<mx:headerRenderer>
 					<mx:Component>
 						<mx:HBox width="100%" horizontalGap="0" paddingLeft="6" paddingRight="6" horizontalScrollPolicy="off" paddingTop="0" paddingBottom="0">

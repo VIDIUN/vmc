@@ -1,6 +1,6 @@
-package com.kaltura.controls
+package com.vidiun.controls
 {
-	import com.kaltura.controls.text.NoTruncationUITextField;
+	import com.vidiun.controls.text.NoTruncationUITextField;
 	
 	import flash.display.DisplayObject;
 	import flash.text.TextLineMetrics;

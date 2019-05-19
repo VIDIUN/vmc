@@ -1,4 +1,4 @@
-package com.kaltura.analytics {
+package com.vidiun.analytics {
 	import com.google.analytics.AnalyticsTracker;
 	import com.google.analytics.GATracker;
 	
@@ -64,7 +64,7 @@ package com.kaltura.analytics {
 		 * @param partnerId		partner in current session
 		 * @param userId		user in current session
 		 * @param parentDisplayObject	to be used in tracker debug mode
-		 * @param baseModule	current kmc version, used as default value when 
+		 * @param baseModule	current vmc version, used as default value when 
 		 * 		no module path is given for events
 		 * @param urchinNumber	google analytics account to use for tracking
 		 * @param langCode		language version code (AS3)

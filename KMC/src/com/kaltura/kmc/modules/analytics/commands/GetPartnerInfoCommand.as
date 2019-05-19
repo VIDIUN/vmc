@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.vo.NotificationVO;
-	import com.kaltura.kmc.modules.analytics.vo.PartnerVO;
-	import com.kaltura.vo.KalturaPartner;
+	import com.vidiun.commands.partner.PartnerGetInfo;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.vo.NotificationVO;
+	import com.vidiun.vmc.modules.analytics.vo.PartnerVO;
+	import com.vidiun.vo.VidiunPartner;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -26,30 +26,30 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingPartnerInfo = true;
 
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(getPartnerInfo);
+			getPartnerInfo.addEventListener(VidiunEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(getPartnerInfo);
 		}
 
 
 		public function result(data:Object):void {
 			_model.loadingPartnerInfo = false;
 			_model.checkLoading();
-			if (data.data is KalturaPartner) {
-				var resultKp:KalturaPartner = data.data as KalturaPartner;
+			if (data.data is VidiunPartner) {
+				var resultVp:VidiunPartner = data.data as VidiunPartner;
 				var pvo:PartnerVO = new PartnerVO;
 				pvo.subPId = _model.context.subpId;
 
-				pvo.adminEmail = resultKp.adminEmail;
-				pvo.adminName = resultKp.adminName;
-				pvo.adultContent = resultKp.adultContent;
-				//		pvo.allowEmptyField = resultKp.;
-				//		pvo.allowMultiNotification = resultKp.;
-				pvo.allowQuickEdit = resultKp.allowQuickEdit == 1;
-				pvo.appearInSearch = resultKp.appearInSearch;
-				pvo.commercialUse = int(resultKp.commercialUse);
-				pvo.contentCategories = (resultKp.contentCategories == null) ? '' : resultKp.contentCategories;
-				pvo.createdAt = resultKp.createdAt;
+				pvo.adminEmail = resultVp.adminEmail;
+				pvo.adminName = resultVp.adminName;
+				pvo.adultContent = resultVp.adultContent;
+				//		pvo.allowEmptyField = resultVp.;
+				//		pvo.allowMultiNotification = resultVp.;
+				pvo.allowQuickEdit = resultVp.allowQuickEdit == 1;
+				pvo.appearInSearch = resultVp.appearInSearch;
+				pvo.commercialUse = int(resultVp.commercialUse);
+				pvo.contentCategories = (resultVp.contentCategories == null) ? '' : resultVp.contentCategories;
+				pvo.createdAt = resultVp.createdAt;
 
 				//var dateArr : Array = (pvo.createdAt).split('-');
 				var date:Date = new Date((pvo.createdAt) * 1000);
@@ -58,26 +58,26 @@ package com.kaltura.kmc.modules.analytics.commands {
 				pvo.createdMonth = date.month;
 				pvo.createdDay = date.date;
 
-				pvo.defConversionProfileType = resultKp.defConversionProfileType;
-				pvo.describeYourself = resultKp.describeYourself;
-				pvo.description = resultKp.description;
-				pvo.landingPage = resultKp.landingPage;
-				pvo.maxUploadSize = resultKp.maxUploadSize;
-				pvo.mergeEntryLists = resultKp.mergeEntryLists == 1;
-				pvo.name = resultKp.name;
-				pvo.notificationsConfig = resultKp.notificationsConfig;
+				pvo.defConversionProfileType = resultVp.defConversionProfileType;
+				pvo.describeYourself = resultVp.describeYourself;
+				pvo.description = resultVp.description;
+				pvo.landingPage = resultVp.landingPage;
+				pvo.maxUploadSize = resultVp.maxUploadSize;
+				pvo.mergeEntryLists = resultVp.mergeEntryLists == 1;
+				pvo.name = resultVp.name;
+				pvo.notificationsConfig = resultVp.notificationsConfig;
 				//pvo.notifications  
-				createNotificationArray(resultKp.notificationsConfig, pvo.notifications);
-				pvo.notify = resultKp.notify == 1;
-				pvo.partnerPackage = resultKp.partnerPackage;
-				pvo.phone = resultKp.phone;
-				pvo.pId = _model.kc.partnerId;
-				pvo.secret = resultKp.secret;
-				pvo.status = resultKp.status;
-				pvo.type = resultKp.type;
-				pvo.url1 = resultKp.website;
-				pvo.url2 = resultKp.notificationUrl;
-				pvo.userLandingPage = resultKp.userLandingPage;
+				createNotificationArray(resultVp.notificationsConfig, pvo.notifications);
+				pvo.notify = resultVp.notify == 1;
+				pvo.partnerPackage = resultVp.partnerPackage;
+				pvo.phone = resultVp.phone;
+				pvo.pId = _model.vc.partnerId;
+				pvo.secret = resultVp.secret;
+				pvo.status = resultVp.status;
+				pvo.type = resultVp.type;
+				pvo.url1 = resultVp.website;
+				pvo.url2 = resultVp.notificationUrl;
+				pvo.userLandingPage = resultVp.userLandingPage;
 
 				_model.partnerData = pvo;
 			}

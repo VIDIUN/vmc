@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.fltr.cat
+package com.vidiun.edw.components.fltr.cat
 {
 	/**
 	 * optional values for CategoryVO.selected attribute 

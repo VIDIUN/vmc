@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business
+package com.vidiun.vmc.modules.content.business
 {
-	import com.kaltura.kmc.modules.content.events.CatTrackEvent;
+	import com.vidiun.vmc.modules.content.events.CatTrackEvent;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;

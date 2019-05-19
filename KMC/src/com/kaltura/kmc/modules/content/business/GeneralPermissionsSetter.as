@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business {
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.kmc.modules.content.events.ChangeModelEvent;
+package com.vidiun.vmc.modules.content.business {
+	import com.vidiun.edw.business.permissions.PermissionManager;
+	import com.vidiun.vmc.modules.content.events.ChangeModelEvent;
 	
 	import flash.events.Event;
 	
@@ -154,7 +154,7 @@ package com.kaltura.kmc.modules.content.business {
 
 
 		/**
-		 * should KMC try to resize thumbnail images (entry table)? 
+		 * should VMC try to resize thumbnail images (entry table)? 
 		 */
 		public function set enableThumbResize(value:Boolean):void {
 			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.SET_ENABLE_THUMB_RESIZE, value);
@@ -236,41 +236,41 @@ package com.kaltura.kmc.modules.content.business {
 		
 		
 		/**
-		 * enable provisioning of Kaltura live streams 
+		 * enable provisioning of Vidiun live streams 
 		 */
-		public function set enableKalturaLive(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_LIVE, value);
+		public function set enableVidiunLive(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_VIDIUN_LIVE, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaLive():Boolean {
+		public function get enableVidiunLive():Boolean {
 			return true;
 		}
 		
 		
 		/**
-		 * by default, record kaltura live streams 
+		 * by default, record vidiun live streams 
 		 */
-		public function set enableKalturaRecording(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_RECORDING, value);
+		public function set enableVidiunRecording(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_VIDIUN_RECORDING, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaRecording():Boolean {
+		public function get enableVidiunRecording():Boolean {
 			return true;
 		}
 		
 		
 		
 		/**
-		 * enable creating Kaltura multicast live streams 
+		 * enable creating Vidiun multicast live streams 
 		 */
-		public function set enableKalturaMulticast(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_MULTICAST, value);
+		public function set enableVidiunMulticast(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_VIDIUN_MULTICAST, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaMulticast():Boolean {
+		public function get enableVidiunMulticast():Boolean {
 			return true;
 		}
 		

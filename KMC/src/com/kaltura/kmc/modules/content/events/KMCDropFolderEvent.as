@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaDropFolder;
+	import com.vidiun.vo.VidiunDropFolder;
 	
-	public class KMCDropFolderEvent extends CairngormEvent {
+	public class VMCDropFolderEvent extends CairngormEvent {
 		
 		
 		/**
@@ -25,12 +25,12 @@ package com.kaltura.kmc.modules.content.events
 		public static const LIST_ALL_FILES:String = "list_all";
 		
 		
-		private var _folder:KalturaDropFolder;
+		private var _folder:VidiunDropFolder;
 		
 		private var _flags:uint;
 		
 		
-		public function KMCDropFolderEvent(type:String, folder:KalturaDropFolder = null, folderFlags:uint = 0x0, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function VMCDropFolderEvent(type:String, folder:VidiunDropFolder = null, folderFlags:uint = 0x0, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			_folder = folder;
 			_flags = folderFlags;
@@ -41,7 +41,7 @@ package com.kaltura.kmc.modules.content.events
 			return _flags;
 		}
 
-		public function get folder():KalturaDropFolder
+		public function get folder():VidiunDropFolder
 		{
 			return _folder;
 		}

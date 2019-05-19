@@ -2,8 +2,8 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="90" horizontalAlign="left" paddingLeft="6" verticalAlign="middle">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
-			import com.kaltura.vo.KalturaDistributionProfile;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.vo.VidiunDistributionProfile;
 			
 			import mx.collections.ArrayCollection;
 			

@@ -3,32 +3,32 @@
 "Drop Folders" section of content viewstack. Displays all files in drop folders.
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
-		 xmlns:controls="com.kaltura.controls.*"
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel"
+		 xmlns:controls="com.vidiun.controls.*"
 		 creationComplete="creationCompleteHandler(event)"
-		 width="100%" height="100%" xmlns:filter2="com.kaltura.edw.components.filter.*" xmlns:fltr="com.kaltura.edw.components.fltr.*" xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" xmlns:dropfolder="com.kaltura.kmc.modules.content.view.dropfolder.*">
+		 width="100%" height="100%" xmlns:filter2="com.vidiun.edw.components.filter.*" xmlns:fltr="com.vidiun.edw.components.fltr.*" xmlns:indicators="com.vidiun.edw.components.fltr.indicators.*" xmlns:dropfolder="com.vidiun.vmc.modules.content.view.dropfolder.*">
 	<mx:Metadata>
 		[ResourceBundle("dropfolders")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.ModelEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.types.DropFolderListType;
-			import com.kaltura.kmc.modules.content.events.KMCDropFolderEvent;
-			import com.kaltura.kmc.modules.content.model.DropFolderModel;
-			import com.kaltura.kmc.modules.content.utils.DropFolderTableStringUtil;
-			import com.kaltura.kmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaDropFolderFileStatus;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaDropFolder;
-			import com.kaltura.vo.KalturaDropFolderFile;
-			import com.kaltura.vo.KalturaDropFolderFileFilter;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.DataTabController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.ModelEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.types.DropFolderListType;
+			import com.vidiun.vmc.modules.content.events.VMCDropFolderEvent;
+			import com.vidiun.vmc.modules.content.model.DropFolderModel;
+			import com.vidiun.vmc.modules.content.utils.DropFolderTableStringUtil;
+			import com.vidiun.vmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunDropFolderFileStatus;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunDropFolder;
+			import com.vidiun.vo.VidiunDropFolderFile;
+			import com.vidiun.vo.VidiunDropFolderFileFilter;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -43,7 +43,7 @@
 			/**
 			 * @inheritDoc
 			 * */
-			public function init(kbef:KalturaBaseEntryFilter = null):void {
+			public function init(vbef:VidiunBaseEntryFilter = null):void {
 				refreshList(null);
 			}
 			
@@ -52,7 +52,7 @@
 			 * */
 			private function refreshList(event:Event):void {
 				// only get files from the folders that return in the folders list
-				var listFoldersEvent:KMCDropFolderEvent = new KMCDropFolderEvent(KMCDropFolderEvent.LIST_FOLDERS_AND_FILES, null, DropFolderListType.ADD_NEW|DropFolderListType.MATCH_OR_KEEP|DropFolderListType.MATCH_OR_NEW|DropFolderListType.XML_FOLDER);
+				var listFoldersEvent:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.LIST_FOLDERS_AND_FILES, null, DropFolderListType.ADD_NEW|DropFolderListType.MATCH_OR_KEEP|DropFolderListType.MATCH_OR_NEW|DropFolderListType.XML_FOLDER);
 				if (event) {
 					listFoldersEvent.data = dropFolderModel.filter;
 				}
@@ -68,9 +68,9 @@
 			 * Create suitable string to display in the "Folder Name" column
 			 * */
 			private function folderNameFunc(item:Object, column:DataGridColumn): String {
-				var curFile:KalturaDropFolderFile = item as KalturaDropFolderFile;
+				var curFile:VidiunDropFolderFile = item as VidiunDropFolderFile;
 				
-				for each (var folder:KalturaDropFolder in dropFolderModel.dropFolders) {
+				for each (var folder:VidiunDropFolder in dropFolderModel.dropFolders) {
 					if (curFile.dropFolderId == folder.id) {
 						return folder.name;
 					}
@@ -93,11 +93,11 @@
 				var delStr:String = '';
 				var fileName:String;
 				for each (var item:Object in dg.selectedItems) {
-					if ((item as KalturaDropFolderFile).name) {
-						fileName = (item as KalturaDropFolderFile).name;
+					if ((item as VidiunDropFolderFile).name) {
+						fileName = (item as VidiunDropFolderFile).name;
 					}
 					else {
-						fileName = (item as KalturaDropFolderFile).fileName;
+						fileName = (item as VidiunDropFolderFile).fileName;
 					}
 					delStr += '\n' + fileName;
 				}
@@ -112,7 +112,7 @@
 						deleteArray.push(item);
 					}
 					
-					var deleteEvent:KMCDropFolderEvent = new KMCDropFolderEvent(KMCDropFolderEvent.DELETE_FILES);
+					var deleteEvent:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.DELETE_FILES);
 					deleteEvent.data = deleteArray;
 					deleteEvent.dispatch();
 				}
@@ -151,32 +151,32 @@
 						dg.rowCount = -1;
 					}
 					
-					dropFolderModel.pager = paging.kalturaFilterPager;
+					dropFolderModel.pager = paging.vidiunFilterPager;
 				}
 				
 				if (filter) {
-					var dfFilter:KalturaDropFolderFileFilter = filter.kalturaFilter as KalturaDropFolderFileFilter;
+					var dfFilter:VidiunDropFolderFileFilter = filter.vidiunFilter as VidiunDropFolderFileFilter;
 					if (dfFilter.dropFolderIdEqual == int.MIN_VALUE && !dfFilter.dropFolderIdIn) {
 						dfFilter.dropFolderIdIn = getEnabledFolderIds();
 					}
 					if (!dfFilter.statusIn && dfFilter.statusEqual == int.MIN_VALUE) {
-						dfFilter.statusIn = KalturaDropFolderFileStatus.DOWNLOADING + "," +
-							KalturaDropFolderFileStatus.ERROR_DELETING + "," + 
-							KalturaDropFolderFileStatus.ERROR_DOWNLOADING + "," + 
-							KalturaDropFolderFileStatus.ERROR_HANDLING + "," + 
-							KalturaDropFolderFileStatus.HANDLED + "," + 
-							KalturaDropFolderFileStatus.NO_MATCH + "," + 
-							KalturaDropFolderFileStatus.PENDING + "," + 
-							KalturaDropFolderFileStatus.PROCESSING + "," + 
-							KalturaDropFolderFileStatus.PARSED + "," + 
-							KalturaDropFolderFileStatus.UPLOADING + "," + 
-							KalturaDropFolderFileStatus.DETECTED + "," + 
-							KalturaDropFolderFileStatus.WAITING;
+						dfFilter.statusIn = VidiunDropFolderFileStatus.DOWNLOADING + "," +
+							VidiunDropFolderFileStatus.ERROR_DELETING + "," + 
+							VidiunDropFolderFileStatus.ERROR_DOWNLOADING + "," + 
+							VidiunDropFolderFileStatus.ERROR_HANDLING + "," + 
+							VidiunDropFolderFileStatus.HANDLED + "," + 
+							VidiunDropFolderFileStatus.NO_MATCH + "," + 
+							VidiunDropFolderFileStatus.PENDING + "," + 
+							VidiunDropFolderFileStatus.PROCESSING + "," + 
+							VidiunDropFolderFileStatus.PARSED + "," + 
+							VidiunDropFolderFileStatus.UPLOADING + "," + 
+							VidiunDropFolderFileStatus.DETECTED + "," + 
+							VidiunDropFolderFileStatus.WAITING;
 					}
 					dropFolderModel.filter = dfFilter;
 				}
 
-				var listFiles:KMCDropFolderEvent = new KMCDropFolderEvent(KMCDropFolderEvent.LIST_ALL_FILES);
+				var listFiles:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.LIST_ALL_FILES);
 				listFiles.dispatch();
 			} 
 			
@@ -187,8 +187,8 @@
 			 * */
 			private function getEnabledFolderIds():String {
 				var str:String = '';
-				for each (var kdf:KalturaDropFolder in dropFolderModel.dropFolders) {
-					str += kdf.id + ",";
+				for each (var vdf:VidiunDropFolder in dropFolderModel.dropFolders) {
+					str += vdf.id + ",";
 				}
 				return str;
 			}
@@ -206,7 +206,7 @@
 			}
 			
 			private function onPagerCreationComplete(event:Event):void {
-				dropFolderModel.pager = paging.kalturaFilterPager;
+				dropFolderModel.pager = paging.vidiunFilterPager;
 				paging.selectedPage = 1;
 				paging.pageSize = paging.rowInPageCb.value as int;
 			}
@@ -220,11 +220,11 @@
 			
 
 			private function openEntryDetails(event:Event):void {
-				var entryId:String = (event.target.data as KalturaDropFolderFile).entryId;
+				var entryId:String = (event.target.data as VidiunDropFolderFile).entryId;
 				// create the new model 
-				var cg:KMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
+				var cg:VMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
 				DataTabController.getInstance().dispatch(cg);
-				cg = new KedEntryEvent(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, entryId);
+				cg = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, entryId);
 				DataTabController.getInstance().dispatch(cg);
 			}
 			
@@ -249,7 +249,7 @@
 	<mx:HDividedBox id="topContainer" width="100%" height="100%" verticalScrollPolicy="off" >
 		<dropfolder:DropFilesFilter id="filter" height="100%" width="245"
 							  freeTextSearch="{searchBox}"
-							  kalturaFilter="{dropFolderModel.filter}"
+							  vidiunFilter="{dropFolderModel.filter}"
 							  dropFolders="{dropFolderModel.dropFolders}"
 							  filterChanged="{newSearchFromFilter()}" />
 
@@ -266,7 +266,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileSizeTitle')}" dataField="fileSize" 
 									   labelFunction="{DropFolderTableStringUtil.fileSizeLabelFunc}"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileEntryTitle')}" dataField="entryId"
-									   itemRenderer="com.kaltura.kmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer"/>
+									   itemRenderer="com.vidiun.vmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileStatusTitle')}" dataField="status" 
 									   labelFunction="{DropFolderTableStringUtil.statusLabelFunc}" 
 									   dataTipFunction="{DropFolderTableStringUtil.getStatusInfo}" showDataTips="true"/>
@@ -276,7 +276,7 @@
 								<mx:Label text="{DropFolderTableStringUtil.getErrorDescription(data)}" paddingLeft="7">
 									<mx:Script>
 										<![CDATA[
-											import com.kaltura.kmc.modules.content.utils.DropFolderTableStringUtil;
+											import com.vidiun.vmc.modules.content.utils.DropFolderTableStringUtil;
 										]]>
 									</mx:Script>
 								</mx:Label>

@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.business
+package com.vidiun.vmc.modules.account.business
 {
 	import com.adobe.cairngorm.business.ServiceLocator;
-	import com.kaltura.kmc.business.JSGate;
+	import com.vidiun.vmc.business.JSGate;
 	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.IResponder;

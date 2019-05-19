@@ -1,4 +1,4 @@
-package com.kaltura.edw.view.customData
+package com.vidiun.edw.view.customData
 {
 	import flash.events.Event;
 	import flash.events.FocusEvent;
@@ -15,7 +15,7 @@ package com.kaltura.edw.view.customData
 	 * @author atar.shadmi
 	 * 
 	 */
-	public class KDateField extends DateField
+	public class VDateField extends DateField
 	{
 		
 		

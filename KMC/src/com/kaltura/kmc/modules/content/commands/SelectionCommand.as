@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.SelectionEvent;
+	import com.vidiun.vmc.modules.content.events.SelectionEvent;
 	
-	public class SelectionCommand extends KalturaCommand
+	public class SelectionCommand extends VidiunCommand
 	{
 		
 		override public function execute(event:CairngormEvent):void {

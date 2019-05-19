@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.userRole.UserRoleDelete;
-	import com.kaltura.commands.userRole.UserRoleList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaUserRoleListResponse;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.userRole.UserRoleDelete;
+	import com.vidiun.commands.userRole.UserRoleList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.vo.VidiunUserRoleListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -19,17 +19,17 @@ package com.kaltura.kmc.modules.admin.control.commands
 		override public function execute(event:CairngormEvent):void {
 			var mr:MultiRequest = new MultiRequest();
 			// delete
-			var call:KalturaCall = new UserRoleDelete((event as RoleEvent).role.id);
+			var call:VidiunCall = new UserRoleDelete((event as RoleEvent).role.id);
 			mr.addAction(call);
 			// list
 			call = new UserRoleList(_model.rolesModel.rolesFilter);
 			mr.addAction(call);
 			
 			// post
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
-			_model.kc.post(mr);
+			_model.vc.post(mr);
 		}
 		
 		override protected function result(data:Object):void {
@@ -41,7 +41,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 				Alert.show(rm.getString('admin', 'role_in_use'), rm.getString('admin', 'error')) ;
 			}
 			
-			var response:KalturaUserRoleListResponse = data.data[1] as KalturaUserRoleListResponse;
+			var response:VidiunUserRoleListResponse = data.data[1] as VidiunUserRoleListResponse;
 			_model.rolesModel.roles = new ArrayCollection(response.objects);
 			_model.decreaseLoadCounter();
 		}

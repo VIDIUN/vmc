@@ -1,19 +1,19 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.EntryDetailsModel;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.kmvc.model.KMvCModel;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.EntryDetailsModel;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vmvc.model.VMvCModel;
 
-	public class DuplicateEntryDetailsModelCommand extends KedCommand {
+	public class DuplicateEntryDetailsModelCommand extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			// need to copy maxCats because entry data pack is not shared.
-			var maxCats:int = (KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories;
-			KMvCModel.addModel();
-			(KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories = maxCats;
+			var maxCats:int = (VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories;
+			VMvCModel.addModel();
+			(VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories = maxCats;
 		}
 	}
 }

@@ -2,8 +2,8 @@
 <mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" width="150" styleName="analyticsCombo" change="{ onChange() }">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.LocalizedVo;
-			import com.kaltura.kmc.modules.analytics.control.GraphEvent;
+			import com.vidiun.edw.vo.LocalizedVo;
+			import com.vidiun.vmc.modules.analytics.control.GraphEvent;
 
 
 			private function onChange():void {

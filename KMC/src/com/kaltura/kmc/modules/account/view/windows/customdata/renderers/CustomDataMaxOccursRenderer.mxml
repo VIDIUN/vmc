@@ -2,7 +2,7 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.base.types.MetadataCustomFieldMaxOccursTypes;
+			import com.vidiun.base.types.MetadataCustomFieldMaxOccursTypes;
 		]]>
 	</mx:Script>
 	<mx:Label id="myLabel" toolTip="{myLabel.text}" width="100%"

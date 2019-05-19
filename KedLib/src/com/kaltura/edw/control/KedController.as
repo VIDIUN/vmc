@@ -1,27 +1,27 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.commands.usrs.GetEntryUserCommand;
-	import com.kaltura.edw.control.events.*;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.*;
+	import com.vidiun.edw.control.commands.usrs.GetEntryUserCommand;
+	import com.vidiun.edw.control.events.*;
+	import com.vidiun.vmvc.control.VMvCController;
 	
 	/**
-	 * Controller which is accessible from all elements, so that KMC
-	 * can use KED commands. 
+	 * Controller which is accessible from all elements, so that VMC
+	 * can use VED commands. 
 	 * @author Atar
 	 */	
-	public class KedController extends KMvCController {
+	public class VedController extends VMvCController {
 		
-		private static var _instance:KedController;
+		private static var _instance:VedController;
 		
-		public static function getInstance():KedController {
+		public static function getInstance():VedController {
 			if (!_instance) {
-				_instance = new KedController(new Enforcer());
+				_instance = new VedController(new Enforcer());
 			}
 			return _instance;
 		}
 		
-		public function KedController(enf:Enforcer) {
+		public function VedController(enf:Enforcer) {
 			
 			initializeCommands();
 		}
@@ -29,9 +29,9 @@ package com.kaltura.edw.control
 		
 		public function initializeCommands():void {
 			addCommand(LoadEvent.LOAD_FILTER_DATA, LoadFilterDataCommand);
-			addCommand(KedEntryEvent.SET_SELECTED_ENTRY, SetSelectedEntryCommand);
-			addCommand(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
-			addCommand(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, GetSingleEntryCommand);
+			addCommand(VedEntryEvent.SET_SELECTED_ENTRY, SetSelectedEntryCommand);
+			addCommand(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
+			addCommand(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, GetSingleEntryCommand);
 			addCommand(UsersEvent.GET_ENTRY_OWNER, GetEntryUserCommand);
 			addCommand(SearchEvent.SEARCH_ENTRIES, ListEntriesCommand);
 		}

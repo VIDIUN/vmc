@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.permission.PermissionList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaPermission;
-	import com.kaltura.vo.KalturaPermissionListResponse;
+	import com.vidiun.commands.permission.PermissionList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunPermission;
+	import com.vidiun.vo.VidiunPermissionListResponse;
 	
 	public class ListPartnerPermissionsCommand extends BaseCommand {
 		
@@ -13,14 +13,14 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 * @inheritDocs
 		 */
 		override public function execute(event:CairngormEvent):void {
-			var largePager:KalturaFilterPager = new KalturaFilterPager();
+			var largePager:VidiunFilterPager = new VidiunFilterPager();
 			largePager.pageSize = 500;
 			var ul:PermissionList = new PermissionList(_model.rolesModel.permissionsFilter, largePager);
-			ul.addEventListener(KalturaEvent.COMPLETE, result);
-			ul.addEventListener(KalturaEvent.FAILED, fault);
-			if (_model.kc) {
+			ul.addEventListener(VidiunEvent.COMPLETE, result);
+			ul.addEventListener(VidiunEvent.FAILED, fault);
+			if (_model.vc) {
 				_model.increaseLoadCounter();
-				_model.kc.post(ul);
+				_model.vc.post(ul);
 			}
 		}
 		
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 */
 		override protected function result(data:Object):void {
 			super.result(data);
-			var response:KalturaPermissionListResponse = data.data as KalturaPermissionListResponse;
+			var response:VidiunPermissionListResponse = data.data as VidiunPermissionListResponse;
 			_model.rolesModel.partnerPermissions = parsePartnerPermissions(response);
 			_model.decreaseLoadCounter();
 		}
@@ -42,10 +42,10 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 * @param klr	the permissions list response
 		 * @return a comma separated string of partner permission ids.
 		 * */
-		protected function parsePartnerPermissions(klr:KalturaPermissionListResponse):String {
+		protected function parsePartnerPermissions(klr:VidiunPermissionListResponse):String {
 			var result:String = '';
-			for each (var kperm:KalturaPermission in klr.objects) {
-				result += kperm.name + ",";
+			for each (var vperm:VidiunPermission in klr.objects) {
+				result += vperm.name + ",";
 			}
 			// remove last ","
 			result = result.substring(0, result.length - 1);

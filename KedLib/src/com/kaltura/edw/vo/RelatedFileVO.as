@@ -1,9 +1,9 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.vidiun.vo.VidiunAttachmentAsset;
 	
 	import flash.net.FileReference;
-	import com.kaltura.edw.vo.AssetVO;
+	import com.vidiun.edw.vo.AssetVO;
 
 	[Bindable]
 	/**
@@ -17,7 +17,7 @@ package com.kaltura.edw.vo
 		/**
 		 * file asset
 		 * */
-		public var file:KalturaAttachmentAsset;
+		public var file:VidiunAttachmentAsset;
 		
 		public var fileReference:FileReference;
 	

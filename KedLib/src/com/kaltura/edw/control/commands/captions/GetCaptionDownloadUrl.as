@@ -1,17 +1,17 @@
-package com.kaltura.edw.control.commands.captions
+package com.vidiun.edw.control.commands.captions
 {
-	import com.kaltura.commands.captionAsset.CaptionAssetGet;
-	import com.kaltura.commands.captionAsset.CaptionAssetGetUrl;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.CaptionsEvent;
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaFlavorAssetStatus;
-	import com.kaltura.vo.KalturaCaptionAsset;
+	import com.vidiun.commands.captionAsset.CaptionAssetGet;
+	import com.vidiun.commands.captionAsset.CaptionAssetGetUrl;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.CaptionsEvent;
+	import com.vidiun.edw.vo.EntryCaptionVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunFlavorAssetStatus;
+	import com.vidiun.vo.VidiunCaptionAsset;
 	
 	
-	public class GetCaptionDownloadUrl extends KedCommand
+	public class GetCaptionDownloadUrl extends VedCommand
 	{
 		private var _captionVo:EntryCaptionVO;
 		
@@ -20,14 +20,14 @@ package com.kaltura.edw.control.commands.captions
 		 * @param event
 		 * 
 		 */		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_captionVo = (event as CaptionsEvent).captionVo;
 			if (_captionVo.caption && _captionVo.caption.id) {
 				_model.increaseLoadCounter();
 				
 				var getCaption:CaptionAssetGet = new CaptionAssetGet(_captionVo.caption.id);
-				getCaption.addEventListener(KalturaEvent.COMPLETE, captionRecieved);
-				getCaption.addEventListener(KalturaEvent.FAILED, fault);
+				getCaption.addEventListener(VidiunEvent.COMPLETE, captionRecieved);
+				getCaption.addEventListener(VidiunEvent.FAILED, fault);
 				
 				_client.post(getCaption);
 			}
@@ -38,15 +38,15 @@ package com.kaltura.edw.control.commands.captions
 		 * @param event
 		 * 
 		 */		
-		private function captionRecieved(event:KalturaEvent):void {
-			if (event.data is KalturaCaptionAsset) {
-				var resultCaption:KalturaCaptionAsset = event.data as KalturaCaptionAsset;
+		private function captionRecieved(event:VidiunEvent):void {
+			if (event.data is VidiunCaptionAsset) {
+				var resultCaption:VidiunCaptionAsset = event.data as VidiunCaptionAsset;
 				_captionVo.caption.status = resultCaption.status;
-				if (_captionVo.caption.status == KalturaFlavorAssetStatus.READY) {
+				if (_captionVo.caption.status == VidiunFlavorAssetStatus.READY) {
 //					var getUrl:CaptionAssetGetDownloadUrl = new CaptionAssetGetDownloadUrl(_captionVo.caption.id);
 					var getUrl:CaptionAssetGetUrl = new CaptionAssetGetUrl(_captionVo.caption.id);
-					getUrl.addEventListener(KalturaEvent.COMPLETE, result);
-					getUrl.addEventListener(KalturaEvent.FAILED, fault);
+					getUrl.addEventListener(VidiunEvent.COMPLETE, result);
+					getUrl.addEventListener(VidiunEvent.FAILED, fault);
 					_client.post(getUrl);
 				}
 				else {

@@ -6,7 +6,7 @@
 	This popup window is used to remove a domain name from the Sites Restriction list
 
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true" 
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true" 
 	close="closeWindow(event)" title="{rm.getString('windows', 'removeDomainTitle')}" showHelpButton="false"
 	width="350" defaultButton="{delBtn}">
 	<mx:Script>
@@ -15,7 +15,7 @@
 			import mx.resources.ResourceManager;
 			import mx.resources.ResourceBundle;
 			import mx.events.CloseEvent;
-			import com.kaltura.utils.KArrayUtil;
+			import com.vidiun.utils.VArrayUtil;
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.collections.ArrayCollection;
@@ -84,7 +84,7 @@
 				{
 					for each(var domain:String in domainList.selectedItems)
 					{
-						KArrayUtil.removeItemFromArray(domain, domainsListData.source);
+						VArrayUtil.removeItemFromArray(domain, domainsListData.source);
 					}
 					domainsListData.refresh();
 					PopUpManager.removePopUp(this);

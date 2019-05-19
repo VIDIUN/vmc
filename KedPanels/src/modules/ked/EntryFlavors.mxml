@@ -2,50 +2,50 @@
 <!---
 Flavours tab of EntryDetailsWin
 -->
-<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:entryDetails="com.kaltura.edw.view.*" width="100%"
-		   height="100%" creationComplete="onCreationComplete()" implements="com.kaltura.edw.business.IDrilldownPanel"
-		   xmlns:edw="com.kaltura.edw.*" xmlns:view="com.kaltura.edw.view.*" xmlns:control="com.kaltura.edw.control.*"
+<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:entryDetails="com.vidiun.edw.view.*" width="100%"
+		   height="100%" creationComplete="onCreationComplete()" implements="com.vidiun.edw.business.IDrilldownPanel"
+		   xmlns:edw="com.vidiun.edw.*" xmlns:view="com.vidiun.edw.view.*" xmlns:control="com.vidiun.edw.control.*"
 		   label="{resourceManager.getString('drilldown', 'videoFiles')}" >
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.FileTypes;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.DropFolderEvent;
-			import com.kaltura.edw.control.events.FlavorAssetEvent;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.MediaEvent;
-			import com.kaltura.edw.control.events.ProfileEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.model.datapacks.DropFolderDataPack;
-			import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-			import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-			import com.kaltura.edw.model.types.DropFolderListType;
-			import com.kaltura.edw.view.window.flavors.AddFlavorAssetsWindow;
-			import com.kaltura.edw.view.window.flavors.MatchFromDropFolderWindow;
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.edw.vo.UploadFileVo;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaEntryReplacementStatus;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaFlavorAssetWithParams;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMixEntry;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.FileTypes;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.events.DropFolderEvent;
+			import com.vidiun.edw.control.events.FlavorAssetEvent;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.MediaEvent;
+			import com.vidiun.edw.control.events.ProfileEvent;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.DistributionDataPack;
+			import com.vidiun.edw.model.datapacks.DropFolderDataPack;
+			import com.vidiun.edw.model.datapacks.FlavorsDataPack;
+			import com.vidiun.edw.model.datapacks.PermissionsDataPack;
+			import com.vidiun.edw.model.types.DropFolderListType;
+			import com.vidiun.edw.view.window.flavors.AddFlavorAssetsWindow;
+			import com.vidiun.edw.view.window.flavors.MatchFromDropFolderWindow;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.edw.vo.UploadFileVo;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.types.VidiunEntryReplacementStatus;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunFlavorAssetWithParams;
+			import com.vidiun.vo.VidiunMediaEntry;
+			import com.vidiun.vo.VidiunMixEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -60,14 +60,14 @@ Flavours tab of EntryDetailsWin
 			// Data
 			// =====================================================================
 			[Bindable]
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 			
 			
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				if (!value)
 					return;
 				
@@ -169,7 +169,7 @@ Flavours tab of EntryDetailsWin
 			/**
 			 * the flavour selected for "edit"
 			 * */
-			private var _selectedFlavorWithParams:KalturaFlavorAssetWithParams;
+			private var _selectedFlavorWithParams:VidiunFlavorAssetWithParams;
 			
 			
 			// =====================================================================
@@ -228,17 +228,17 @@ Flavours tab of EntryDetailsWin
 					_approveEnabled = true;
 					
 					switch (_selectedEntry.replacementStatus) {
-						case KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY:
+						case VidiunEntryReplacementStatus.APPROVED_BUT_NOT_READY:
 							_approveEnabled = false;
-						case KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
+						case VidiunEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementProcessState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'processClickToReview');
 							break;
-						case KalturaEntryReplacementStatus.READY_BUT_NOT_APPROVED:
+						case VidiunEntryReplacementStatus.READY_BUT_NOT_APPROVED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementRFRState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'readyClickToReview');
 							break;
-						case KalturaEntryReplacementStatus.FAILED:
+						case VidiunEntryReplacementStatus.FAILED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementErrState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'errorClickToReview');
 							_approveEnabled = false;
@@ -249,11 +249,11 @@ Flavours tab of EntryDetailsWin
 					_showReplacenentInfo = false;
 					// sets labels according to entry's status
 					switch (_selectedEntry.status) {
-						case KalturaEntryStatus.NO_CONTENT:
+						case VidiunEntryStatus.NO_CONTENT:
 							stateLabel.text = resourceManager.getString('drilldown', 'noContentState');
-							setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+							setActionsLabel((_selectedEntry as VidiunMediaEntry).mediaType, _selectedEntry.status);
 							break;
-						case KalturaEntryStatus.READY:
+						case VidiunEntryStatus.READY:
 							// if this is a replacement entry
 							if (_selectedEntry.replacedEntryId) {
 								stateLabel.text = resourceManager.getString('drilldown', 'replacementReadyState');
@@ -261,13 +261,13 @@ Flavours tab of EntryDetailsWin
 							}
 							else {
 								stateLabel.text = resourceManager.getString('drilldown', 'readyState');
-								setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+								setActionsLabel((_selectedEntry as VidiunMediaEntry).mediaType, _selectedEntry.status);
 							}
 							break;
-						case KalturaEntryStatus.ERROR_CONVERTING:
-						case KalturaEntryStatus.ERROR_IMPORTING:
+						case VidiunEntryStatus.ERROR_CONVERTING:
+						case VidiunEntryStatus.ERROR_IMPORTING:
 							stateLabel.text = resourceManager.getString('drilldown', 'errorState');
-							setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+							setActionsLabel((_selectedEntry as VidiunMediaEntry).mediaType, _selectedEntry.status);
 							if (_selectedEntry.replacedEntryId) {
 								_showActions = false;
 							}
@@ -303,8 +303,8 @@ Flavours tab of EntryDetailsWin
 			
 			
 			public function clear():void {
-				if ((_selectedEntry is KalturaMixEntry || 
-					(_selectedEntry is KalturaMediaEntry && (_selectedEntry as KalturaMediaEntry).mediaType == KalturaMediaType.IMAGE))) {
+				if ((_selectedEntry is VidiunMixEntry || 
+					(_selectedEntry is VidiunMediaEntry && (_selectedEntry as VidiunMediaEntry).mediaType == VidiunMediaType.IMAGE))) {
 					_distributionData.clearFlavorUpdates();
 				}
 				
@@ -327,7 +327,7 @@ Flavours tab of EntryDetailsWin
 			
 			public function save():void {
 				// this panel's data is saved as it changes, so save here isn't required
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 			
 			public function validate():void {
@@ -365,7 +365,7 @@ Flavours tab of EntryDetailsWin
 			public function set replacementStatus(value:String):void {
 				// if replacement status was not changed, this binding won't fire. 
 				if (_drillDownClicked) {
-					if (value && (value != KalturaEntryReplacementStatus.NONE)) {
+					if (value && (value != VidiunEntryReplacementStatus.NONE)) {
 						openReplacementDrilldown();
 					}
 					//if replacement entry doesn't exist anymore
@@ -391,7 +391,7 @@ Flavours tab of EntryDetailsWin
 			public function set replacingEntryId(value:String):void {
 				//if we have a replacement entry that we didn't have before, request the entry from server
 				if (value && (!_replacingEntryId || (_replacingEntryId != value))) {
-					var getReferenceEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_REPLACEMENT_ENTRY, null, _selectedEntry.replacingEntryId);
+					var getReferenceEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_REPLACEMENT_ENTRY, null, _selectedEntry.replacingEntryId);
 					controller.dispatch(getReferenceEntry);
 				}
 				
@@ -470,10 +470,10 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function refreshData(refreshEntry:Boolean):void {
 				if (_selectedEntry != null) {
-					var cgEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_FLAVOR_ASSETS, _selectedEntry);
+					var cgEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_FLAVOR_ASSETS, _selectedEntry);
 					controller.dispatch(cgEvent);
 					if (refreshEntry) {
-						cgEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, _selectedEntry.id);
+						cgEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, _selectedEntry.id);
 						controller.dispatch(cgEvent);
 					}
 					
@@ -500,21 +500,21 @@ Flavours tab of EntryDetailsWin
 				var faEvent:FlavorAssetEvent;
 				switch (event.type) {
 					case FlavorsTable.CONVERT_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.CREATE_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.CREATE_FLAVOR_ASSET, flavorWithParams.vidiunFlavorAssetWithParams);
 						break;
 					case FlavorsTable.DELETE_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DELETE_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DELETE_FLAVOR_ASSET, flavorWithParams.vidiunFlavorAssetWithParams);
 						break;
 					case FlavorsTable.DOWNLOAD_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DOWNLOAD_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_DOWNLOAD, "EntryDrillDown>FlavorTab>DownloadAsset", flavorWithParams.kalturaFlavorAssetWithParams.entryId);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DOWNLOAD_FLAVOR_ASSET, flavorWithParams.vidiunFlavorAssetWithParams);
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_DOWNLOAD, "EntryDrillDown>FlavorTab>DownloadAsset", flavorWithParams.vidiunFlavorAssetWithParams.entryId);
 						break;
 					case FlavorsTable.PREVIEW_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.PREVIEW_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.PREVIEW_FLAVOR_ASSET, flavorWithParams.vidiunFlavorAssetWithParams);
 						break;
 					case FlavorsTable.WV_FLAVOR_DETAILS:
 						faEvent = new FlavorAssetEvent(FlavorAssetEvent.VIEW_WV_ASSET_DETAILS, null);
-						// the constructor takes KalturaFlavorAssetWithParams as data, we override here:
+						// the constructor takes VidiunFlavorAssetWithParams as data, we override here:
 						faEvent.data = flavorWithParams;
 						break;
 				}
@@ -529,7 +529,7 @@ Flavours tab of EntryDetailsWin
 			 * handler for dropdown "import" selection
 			 * */
 			private function onFlavorImportSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).vidiunFlavorAssetWithParams;
 				var uploadFile:UploadFileVo = new UploadFileVo();
 				if (_selectedFlavorWithParams) {
 					if (_selectedFlavorWithParams.flavorAsset)
@@ -550,7 +550,7 @@ Flavours tab of EntryDetailsWin
 			 * handler for dropdown "link" selection
 			 * */
 			private function onFlavorLinkSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).vidiunFlavorAssetWithParams;
 				var uploadFile:UploadFileVo = new UploadFileVo();
 				if (_selectedFlavorWithParams) {
 					if (_selectedFlavorWithParams.flavorAsset)
@@ -569,7 +569,7 @@ Flavours tab of EntryDetailsWin
 			 * will be called when selecting to upload a specific flavor
 			 * */
 			private function onFlavorUploadSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).vidiunFlavorAssetWithParams;
 				uploadSingleFlavor();
 			}
 			
@@ -615,7 +615,7 @@ Flavours tab of EntryDetailsWin
 			 * user selects to match from a drop folder a selected flavor
 			 * */
 			private function onFlavorMatchSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).vidiunFlavorAssetWithParams;
 				openMatchFromDropFolderWindow();
 			}
 			
@@ -648,16 +648,16 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function setActionsLabel(mediaType:int, entryStatus:String):void {
 				_showActions = true;
-				if (mediaType == KalturaMediaType.VIDEO) {
-					if (entryStatus == KalturaEntryStatus.NO_CONTENT) {
+				if (mediaType == VidiunMediaType.VIDEO) {
+					if (entryStatus == VidiunEntryStatus.NO_CONTENT) {
 						actionLabel.text = resourceManager.getString('drilldown', 'addVideo');
 					}
 					else {
 						actionLabel.text = resourceManager.getString('drilldown', 'replaceVideo');
 					}
 				}
-				else if (mediaType == KalturaMediaType.AUDIO) {
-					if (entryStatus == KalturaEntryStatus.NO_CONTENT) {
+				else if (mediaType == VidiunMediaType.AUDIO) {
+					if (entryStatus == VidiunEntryStatus.NO_CONTENT) {
 						actionLabel.text = resourceManager.getString('drilldown', 'addAudio');
 					}
 					else {
@@ -695,9 +695,9 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function getTypeFilter(mediaType:int):FileFilter {
 				var fileFilter:FileFilter;
-				if (mediaType == KalturaMediaType.VIDEO)
+				if (mediaType == VidiunMediaType.VIDEO)
 					fileFilter = new FileFilter(resourceManager.getString('drilldown', 'video') + "(" + FileTypes.VIDEO_TYPES + ")", FileTypes.VIDEO_TYPES);
-				else if (mediaType == KalturaMediaType.AUDIO)
+				else if (mediaType == VidiunMediaType.AUDIO)
 					fileFilter = new FileFilter(resourceManager.getString('drilldown', 'audio') + "(" + FileTypes.AUDIO_TYPES + ")", FileTypes.AUDIO_TYPES);
 				
 				return fileFilter;
@@ -764,10 +764,10 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function onReplacementStatusBtnClick():void {
 				//replacement entry is processing - check for updates (Atar: this happens anyway when opening replacement, in WindowsManager)
-//				if ((_selectedEntry.replacementStatus == KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED) || (_selectedEntry.replacementStatus == KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY)) {
+//				if ((_selectedEntry.replacementStatus == VidiunEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED) || (_selectedEntry.replacementStatus == VidiunEntryReplacementStatus.APPROVED_BUT_NOT_READY)) {
 //					_drillDownClicked = true;
 //					var entryid:String = (_dpModel.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;
-//					var getSelectedEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, entryid);
+//					var getSelectedEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, entryid);
 //					controller.dispatch(getSelectedEntry);
 //				}
 //				else {
@@ -781,7 +781,7 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function openReplacementDrilldown():void {
 				var dispatcher:IEventDispatcher = (_dpModel.getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
-				dispatcher.dispatchEvent(new KedDataEvent(KedDataEvent.OPEN_REPLACEMENT));
+				dispatcher.dispatchEvent(new VedDataEvent(VedDataEvent.OPEN_REPLACEMENT));
 			}
 			
 			
@@ -789,7 +789,7 @@ Flavours tab of EntryDetailsWin
 			 * cancel entry replacement
 			 * */
 			private function onCancelReplacementClick():void {
-				var cancelReplacement:MediaEvent = new MediaEvent(MediaEvent.CANCEL_REPLACEMENT, (_selectedEntry as KalturaMediaEntry));
+				var cancelReplacement:MediaEvent = new MediaEvent(MediaEvent.CANCEL_REPLACEMENT, (_selectedEntry as VidiunMediaEntry));
 				controller.dispatch(cancelReplacement);
 				
 				// analytics
@@ -801,7 +801,7 @@ Flavours tab of EntryDetailsWin
 			 * approve replacement
 			 * */
 			private function onApproveReplacementClick():void {
-				var approveReplacement:MediaEvent = new MediaEvent(MediaEvent.APPROVE_REPLACEMENT, (_selectedEntry as KalturaMediaEntry));
+				var approveReplacement:MediaEvent = new MediaEvent(MediaEvent.APPROVE_REPLACEMENT, (_selectedEntry as VidiunMediaEntry));
 				controller.dispatch(approveReplacement);
 				
 				// analytics
@@ -860,9 +860,9 @@ Flavours tab of EntryDetailsWin
 			 * @param allowAdd		allow adding media to a no_content entry
 			 * @param allowReplace	allow replacing media of a ready entry
 			 * */
-			private function showActionsBox(entryState:Boolean, allowAdd:Boolean, allowReplace:Boolean, entry:KalturaBaseEntry):Boolean {
+			private function showActionsBox(entryState:Boolean, allowAdd:Boolean, allowReplace:Boolean, entry:VidiunBaseEntry):Boolean {
 				var result:Boolean = entryState;
-				if (entry && (entry.status == KalturaEntryStatus.NO_CONTENT)) {
+				if (entry && (entry.status == VidiunEntryStatus.NO_CONTENT)) {
 					result &&= allowAdd;
 				}
 				else {

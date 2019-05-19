@@ -2,8 +2,8 @@
 <mx:VBox width="100%" xmlns:mx="http://www.adobe.com/2006/mxml" >
 <mx:Script>
 	<![CDATA[
-		import com.kaltura.types.KalturaModerationFlagType;
-		import com.kaltura.vo.KalturaModerationFlag;
+		import com.vidiun.types.VidiunModerationFlagType;
+		import com.vidiun.vo.VidiunModerationFlag;
 		
 		import mx.formatters.DateFormatter;
 		import mx.resources.ResourceManager;
@@ -18,23 +18,23 @@
 		
 		override public function set data(o:Object):void {
 			super.data = o;
-			header.text = getReason(o as KalturaModerationFlag);
+			header.text = getReason(o as VidiunModerationFlag);
 		} 
 		
-		private function getReason(data:KalturaModerationFlag):String {
+		private function getReason(data:VidiunModerationFlag):String {
 			if (data) {
 				var reason:String = '';
 				switch (data.flagType) {
-					case KalturaModerationFlagType.SEXUAL_CONTENT:
+					case VidiunModerationFlagType.SEXUAL_CONTENT:
 						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_sex');
 						break;
-					case KalturaModerationFlagType.HARMFUL_DANGEROUS:
+					case VidiunModerationFlagType.HARMFUL_DANGEROUS:
 						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_harmful');
 						break;
-					case KalturaModerationFlagType.SPAM_COMMERCIALS:
+					case VidiunModerationFlagType.SPAM_COMMERCIALS:
 						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_spam');
 						break;
-					case KalturaModerationFlagType.VIOLENT_REPULSIVE:
+					case VidiunModerationFlagType.VIOLENT_REPULSIVE:
 						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_violence');
 						break;
 				}

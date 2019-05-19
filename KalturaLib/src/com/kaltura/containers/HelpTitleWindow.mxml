@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:ConfinedTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 								layout="vertical" resize="onResize()" styleName="TitleWindowType2"
 								implements="mx.managers.IFocusManagerComponent">
 	<mx:Script>

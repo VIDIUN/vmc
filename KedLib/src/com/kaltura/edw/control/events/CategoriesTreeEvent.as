@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class CategoriesTreeEvent extends KMvCEvent {
+	public class CategoriesTreeEvent extends VMvCEvent {
 		
 		
 		/**

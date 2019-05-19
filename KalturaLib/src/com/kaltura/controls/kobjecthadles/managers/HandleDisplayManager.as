@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users 
+This file is part of the Vidiun Collaborative Media Suite which allows users 
 to do with audio, video, and animation what Wiki platfroms allow them to do with 
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles.managers
+package com.vidiun.controls.vobjecthadles.managers
 {
-	import com.kaltura.controls.kobjecthadles.KObjectHandles;
+	import com.vidiun.controls.vobjecthadles.VObjectHandles;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -31,64 +31,64 @@ package com.kaltura.controls.kobjecthadles.managers
 	{	
 		public static var handleDisplayManager : HandleDisplayManager;
 		
-		private var _selectedKObject : KObjectHandles;
-		private var _selectedKObjectHandleMap : Object = {};
+		private var _selectedVObject : VObjectHandles;
+		private var _selectedVObjectHandleMap : Object = {};
 		private var _refCount : int = 0;
 		
 		public function deSelectAll() : void
 		{
-			if(_selectedKObject != null)
+			if(_selectedVObject != null)
 			{
-				_selectedKObject.deselect();
-				_selectedKObject = null;
+				_selectedVObject.deselect();
+				_selectedVObject = null;
 			}
 		}
 		
-		public function setSelected( kObjectHandles : KObjectHandles ): void
+		public function setSelected( vObjectHandles : VObjectHandles ): void
 		{
-			if( kObjectHandles == _selectedKObject)
+			if( vObjectHandles == _selectedVObject)
 				return;
 				
-			setChildAsFirst( kObjectHandles );
+			setChildAsFirst( vObjectHandles );
 			
-			if( _selectedKObject != null )
-				_selectedKObject.deselect();
+			if( _selectedVObject != null )
+				_selectedVObject.deselect();
 			
-			_selectedKObject = kObjectHandles;
-			_selectedKObject.select();
+			_selectedVObject = vObjectHandles;
+			_selectedVObject.select();
 		}
 		
-		public function getSelectedKObject() : KObjectHandles
+		public function getSelectedVObject() : VObjectHandles
 		{
-			return _selectedKObject;
+			return _selectedVObject;
 		}
 		
-		public function setHId(  kObjectHandles : KObjectHandles ) : void
+		public function setHId(  vObjectHandles : VObjectHandles ) : void
 		{	
-			if(_selectedKObject != null)
-				_selectedKObject.deselect();
+			if(_selectedVObject != null)
+				_selectedVObject.deselect();
 				
-			kObjectHandles.hid = _refCount++;
+			vObjectHandles.hid = _refCount++;
 	
-			_selectedKObject = kObjectHandles;
-			_selectedKObjectHandleMap[ kObjectHandles.hid ] = kObjectHandles;
-			_selectedKObject.select();	
+			_selectedVObject = vObjectHandles;
+			_selectedVObjectHandleMap[ vObjectHandles.hid ] = vObjectHandles;
+			_selectedVObject.select();	
 		}
 		
 		public function setUnselectableToAll() : void
 		{
 			deSelectAll();
-			for each( var koh : KObjectHandles in _selectedKObjectHandleMap)
+			for each( var voh : VObjectHandles in _selectedVObjectHandleMap)
 			{
-				koh.selectable = false;
+				voh.selectable = false;
 			}
 		}
 		
 		public function setSelectableToAll() : void
 		{
-			for each( var koh : KObjectHandles in _selectedKObjectHandleMap)
+			for each( var voh : VObjectHandles in _selectedVObjectHandleMap)
 			{
-				koh.selectable = true;
+				voh.selectable = true;
 			}
 		}
 		

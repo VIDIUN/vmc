@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" styleName="TitleWindowType2"
+<containers:ConfinedTitleWindow xmlns:containers="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" styleName="TitleWindowType2"
 				title="{resourceManager.getString('drilldown','grabFromVideo')}" showCloseButton="true"
 				horizontalAlign="center" close="{closeWindow(event)}" height="400" width="500"
 				creationComplete="{onCreationComplete()}">
@@ -10,19 +10,19 @@
 		<![CDATA[
 			import mx.resources.ResourceManager;
 			import mx.resources.ResourceBundle;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.events.KdpEventTypes;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.control.events.ThumbnailAssetEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.events.VdpEventTypes;
+			import com.vidiun.vmvc.control.VMvCController;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			import mx.managers.PopUpManager;
 			
-			private static var _kdp3SwfLoader:SWFLoader;
+			private static var _vdp3SwfLoader:SWFLoader;
 			
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 			
 			private var _refreshRequired:Boolean = true;
 
@@ -31,15 +31,15 @@
 			/**
 			 * application controller
 			 * */
-			public var controller:KMvCController;
+			public var controller:VMvCController;
 			
 
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				_selectedEntry = value;
 			}
 
@@ -50,8 +50,8 @@
 					controller.dispatch(listThumbs);
 				}
 
-				if (_kdp3SwfLoader && _kdp3SwfLoader.content) {
-					_kdp3SwfLoader.content['sendNotification'](KdpEventTypes.DO_PAUSE);
+				if (_vdp3SwfLoader && _vdp3SwfLoader.content) {
+					_vdp3SwfLoader.content['sendNotification'](VdpEventTypes.DO_PAUSE);
 				}
 				PopUpManager.removePopUp(this);
 			}
@@ -60,71 +60,71 @@
 			private function onCreationComplete():void {
 				this.mx_internal::closeButton.buttonMode = true;
 				_refreshRequired = false;
-				loadKdp();
+				loadVdp();
 			}
 
 
-			private function loadKdp():void {
+			private function loadVdp():void {
 				//if this is the second time we open the content
-				if (_kdp3SwfLoader && _kdp3SwfLoader.content) {
-					var kdp3LoaderParent:DisplayObjectContainer = kdp3Loader.parent;
+				if (_vdp3SwfLoader && _vdp3SwfLoader.content) {
+					var vdp3LoaderParent:DisplayObjectContainer = vdp3Loader.parent;
 
-					kdp3LoaderParent.addChildAt(_kdp3SwfLoader, kdp3LoaderParent.getChildIndex(kdp3Loader));
-					kdp3LoaderParent.removeChild(kdp3Loader);
-					//listen to kdp ready to show it because on the second time if we won't do that we will see the prev thumb
-					//because this is static KDP (due to performance issue that we fixed)
-					_kdp3SwfLoader.visible = false;
-					_kdp3SwfLoader.content.addEventListener(KdpEventTypes.ENTRY_READY, showKDP);
-					_kdp3SwfLoader.content.addEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
-					_kdp3SwfLoader.content["sendNotification"](KdpEventTypes.CHANGE_MEDIA, {entryId: _selectedEntry.id});
+					vdp3LoaderParent.addChildAt(_vdp3SwfLoader, vdp3LoaderParent.getChildIndex(vdp3Loader));
+					vdp3LoaderParent.removeChild(vdp3Loader);
+					//listen to vdp ready to show it because on the second time if we won't do that we will see the prev thumb
+					//because this is static VDP (due to performance issue that we fixed)
+					_vdp3SwfLoader.visible = false;
+					_vdp3SwfLoader.content.addEventListener(VdpEventTypes.ENTRY_READY, showVDP);
+					_vdp3SwfLoader.content.addEventListener(VdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+					_vdp3SwfLoader.content["sendNotification"](VdpEventTypes.CHANGE_MEDIA, {entryId: _selectedEntry.id});
 				}
 				else {
-					var newUrl:String = context.protocol + context.cdnHost + "/kwidget/wid/_" + context.kc.partnerId + "/ui_conf_id/" + context.captureThumbnailUiconf + "/nowrapper/1/a";
-					kdp3Loader.scaleContent = false;
-					kdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */);
-					kdp3Loader.load(newUrl);
+					var newUrl:String = context.protocol + context.cdnHost + "/vwidget/wid/_" + context.vc.partnerId + "/ui_conf_id/" + context.captureThumbnailUiconf + "/nowrapper/1/a";
+					vdp3Loader.scaleContent = false;
+					vdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */);
+					vdp3Loader.load(newUrl);
 				}
 			}
 
 
-			private function showKDP(event:Event = null):void {
-				_kdp3SwfLoader.visible = true;
+			private function showVDP(event:Event = null):void {
+				_vdp3SwfLoader.visible = true;
 			}
 
 
 			/**
-			 * Kdp loaded, initialize it.
+			 * Vdp loaded, initialize it.
 			 */
-			private function onKDP3Loaded(event:Event):void {
-				_kdp3SwfLoader = kdp3Loader;
+			private function onVDP3Loaded(event:Event):void {
+				_vdp3SwfLoader = vdp3Loader;
 
-				//set kdp params
+				//set vdp params
 				var params:Object = new Object();
 				params.entryId = _selectedEntry.id;
-				params.ks = context.kc.ks;
-				params.partnerId = context.kc.partnerId;
-				params.subpId = context.kc.partnerId + "00";
+				params.vs = context.vc.vs;
+				params.partnerId = context.vc.partnerId;
+				params.subpId = context.vc.partnerId + "00";
 				params.cdnHost = context.cdnHost;
 				params.host = context.rootUrl;
 				params.debugMode = context.debugMode;
 				params.allowCookies = true;
-				params = overrideKDPStrings(params);
+				params = overrideVDPStrings(params);
 				
-				_kdp3SwfLoader.content.addEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
-				_kdp3SwfLoader.content["flashvars"] = params;
-				//start the loading sqeunce of the kdp	
-				_kdp3SwfLoader.content["init"]();
+				_vdp3SwfLoader.content.addEventListener(VdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_vdp3SwfLoader.content["flashvars"] = params;
+				//start the loading sqeunce of the vdp	
+				_vdp3SwfLoader.content["init"]();
 
 			}
 			
 			
 			/**
-			 * override the messages KDP shows for captureThumbnail.
+			 * override the messages VDP shows for captureThumbnail.
 			 * first get all en_US strings (last locale in chain), then override whatever appears in any previous locale
-			 * @param params	KDP parameters object
+			 * @param params	VDP parameters object
 			 * @return	adjusted parameters object with required strings, if they appear in locale file.
 			 * */
-			private function overrideKDPStrings(params:Object):Object {
+			private function overrideVDPStrings(params:Object):Object {
 				var rb:ResourceBundle;
 				// get the first locale that has this resource bundle
 				for (var i:int = resourceManager.localeChain.length-1; i>=0; i--) {
@@ -141,14 +141,14 @@
 
 
 			private function onThumbnailSaved(event:Event):void {
-				_kdp3SwfLoader.content.removeEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_vdp3SwfLoader.content.removeEventListener(VdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
 				_refreshRequired = true;
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_DRILLDOWN_THUMBNAIL_ADD, GoogleAnalyticsConsts.CONTENT);
 			}
 		]]>
 	</mx:Script>
 	<mx:VBox width="300" height="285" verticalAlign="middle" horizontalAlign="center">
-		<mx:SWFLoader id="kdp3Loader" width="300" height="255" complete="{onKDP3Loaded(event)}"/>
+		<mx:SWFLoader id="vdp3Loader" width="300" height="255" complete="{onVDP3Loaded(event)}"/>
 	</mx:VBox>
 
 	<mx:Text width="300" text="{resourceManager.getString('drilldown','grabFromVideoText')}"/>

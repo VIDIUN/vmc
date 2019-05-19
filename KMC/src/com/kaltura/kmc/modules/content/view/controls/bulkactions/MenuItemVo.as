@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.view.controls.bulkactions
+package com.vidiun.vmc.modules.content.view.controls.bulkactions
 {
 	/**
 	 * the data vo that builds a menu item in a BulkActionsMenu 

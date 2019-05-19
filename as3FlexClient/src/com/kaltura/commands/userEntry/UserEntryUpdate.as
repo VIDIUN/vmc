@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.userEntry
+package com.vidiun.commands.userEntry
 {
-		import com.kaltura.vo.KalturaUserEntry;
-	import com.kaltura.delegates.userEntry.UserEntryUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunUserEntry;
+	import com.vidiun.delegates.userEntry.UserEntryUpdateDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class UserEntryUpdate extends KalturaCall
+	public class UserEntryUpdate extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param id int
-		* @param userEntry KalturaUserEntry
+		* @param userEntry VidiunUserEntry
 		**/
-		public function UserEntryUpdate( id : int,userEntry : KalturaUserEntry )
+		public function UserEntryUpdate( id : int,userEntry : VidiunUserEntry )
 		{
 			service= 'userentry';
 			action= 'update';
@@ -51,7 +51,7 @@ package com.kaltura.commands.userEntry
 			var keyValArr : Array = new Array();
 			keyArr.push('id');
 			valueArr.push(id);
-				keyValArr = kalturaObject2Arrays(userEntry, 'userEntry');
+				keyValArr = vidiunObject2Arrays(userEntry, 'userEntry');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

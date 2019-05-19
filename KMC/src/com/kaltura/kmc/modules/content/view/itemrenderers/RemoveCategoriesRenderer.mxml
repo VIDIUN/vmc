@@ -8,7 +8,7 @@
 
 			protected function checkbox1_clickHandler(event:MouseEvent):void {
 				data.selected = cb.selected; 
-				//data is KalturaCategory
+				//data is VidiunCategory
 			}
 
 		]]>

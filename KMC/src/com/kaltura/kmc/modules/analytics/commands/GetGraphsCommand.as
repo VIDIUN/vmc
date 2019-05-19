@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetGraphs;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaReportBaseTotal;
-	import com.kaltura.vo.KalturaReportGraph;
-	import com.kaltura.vo.KalturaReportInputFilter;
+	import com.vidiun.commands.report.ReportGetGraphs;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.analytics.control.ReportEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vo.VidiunEndUserReportInputFilter;
+	import com.vidiun.vo.VidiunReportBaseTotal;
+	import com.vidiun.vo.VidiunReportGraph;
+	import com.vidiun.vo.VidiunReportInputFilter;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -53,16 +53,16 @@ package com.kaltura.kmc.modules.analytics.commands {
 				_screenType = _model.currentScreenState;
 			}
 
-			var krif:KalturaReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
+			var vrif:VidiunReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
 			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs((event as ReportEvent).reportType,
-																		krif,
+																		vrif,
 																		_model.selectedReportData.selectedDim,
 																		ExecuteReportHelper.getObjectIds(_screenType));
 
 			reportGetGraphs.queued = false;
-			reportGetGraphs.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetGraphs.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(reportGetGraphs);
+			reportGetGraphs.addEventListener(VidiunEvent.COMPLETE, result);
+			reportGetGraphs.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(reportGetGraphs);
 		}
 
 
@@ -110,15 +110,15 @@ package com.kaltura.kmc.modules.analytics.commands {
 			reportData.dimToChartDpMap = new Object();
 			reportData.dimArrColl = new ArrayCollection();
 
-			var krp:KalturaReportGraph;
+			var vrp:VidiunReportGraph;
 			for (var i:int = 0; i < _graphDataArr.length; i++) {
-				parseSingleReport(_graphDataArr[i] as KalturaReportGraph, reportData);
+				parseSingleReport(_graphDataArr[i] as VidiunReportGraph, reportData);
 			}
 
 			var initDim:String = null; // initial dimension of the graph 
 			// use the first received report as default graph dimension
 			if (_graphDataArr.length > 0)
-				initDim = (_graphDataArr[0] as KalturaReportGraph).id;
+				initDim = (_graphDataArr[0] as VidiunReportGraph).id;
 
 			// set chart DP
 			setChartDp(reportData, initDim);
@@ -128,11 +128,11 @@ package com.kaltura.kmc.modules.analytics.commands {
 		}
 
 
-		private function parseSingleReport(krp:KalturaReportGraph, reportData:ReportData):void {
+		private function parseSingleReport(vrp:VidiunReportGraph, reportData:ReportData):void {
 			var obj:Object;
 			var j:int;
-			var addTotalsReport:Boolean = _addTotals && krp.id.substr(0, 5) == "added"; // this report should be followed by a "totals" report
-			var deductTotalsReport:Boolean = _addTotals && krp.id.substr(0, 7) == "deleted"; // this report should be considered in the "totals" report
+			var addTotalsReport:Boolean = _addTotals && vrp.id.substr(0, 5) == "added"; // this report should be followed by a "totals" report
+			var deductTotalsReport:Boolean = _addTotals && vrp.id.substr(0, 7) == "deleted"; // this report should be considered in the "totals" report
 			/*
 			 *	in deleted_x report we assume the added_x already created 
 			 *	the totals report, and we will only update it. 
@@ -141,16 +141,16 @@ package com.kaltura.kmc.modules.analytics.commands {
 			var totalsGraphPoints:ArrayCollection; // points for totals graph
 			var totalsSum:Number; // sums up y values
 
-			reportData.dimArrColl.addItem(createDimObject(krp.id));
+			reportData.dimArrColl.addItem(createDimObject(vrp.id));
 			if (!reportData.selectedDim)
-				reportData.selectedDim = krp.id;
+				reportData.selectedDim = vrp.id;
 
 			
 			var totalDimName:String;
 			if (addTotalsReport) {
 				// add graph dimension for relevant "total"
 				totalsGraphPoints = new ArrayCollection();
-				totalDimName = "total" + krp.id.slice(5); // remove "added" from id
+				totalDimName = "total" + vrp.id.slice(5); // remove "added" from id
 				totalsSum = getBaseTotal(totalDimName);
 				var totalDimObj:Object = createDimObject(totalDimName);
 				reportData.dimArrColl.addItem(totalDimObj);
@@ -158,10 +158,10 @@ package com.kaltura.kmc.modules.analytics.commands {
 			else if (deductTotalsReport) {
 				totalsGraphPoints = new ArrayCollection();
 				totalsSum = 0;
-				totalDimName = "total" + krp.id.slice(7);	// remove "deleted" from id
+				totalDimName = "total" + vrp.id.slice(7);	// remove "deleted" from id
 			}
 
-			var pointsArr:Array = krp.data.split(";"); // each element is string: x,y
+			var pointsArr:Array = vrp.data.split(";"); // each element is string: x,y
 			var graphPoints:ArrayCollection = new ArrayCollection();
 
 			if (_screenType == ScreenTypes.PLATFORM) {
@@ -187,7 +187,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 				for (var str:String in chartHeadersObj) {
 					chartHeaders.push(str);
 				}
-				reportData.dimToChartHeadersMap[krp.id] = chartHeaders;
+				reportData.dimToChartHeadersMap[vrp.id] = chartHeaders;
 			}
 			else {
 				// single line graphs
@@ -206,16 +206,16 @@ package com.kaltura.kmc.modules.analytics.commands {
 						}
 						else if (_screenType == ScreenTypes.LIVE_CONTENT) {
 							// 10 digit string - probably a date-time like 1979011510 (YYYYMMDDHH)
-							obj = generateFullDateVo(String(xYArr[0]), yVal, krp.id);
+							obj = generateFullDateVo(String(xYArr[0]), yVal, vrp.id);
 						}
 						else {
 							if (String(xYArr[0]).length == 8 && !isNaN(parseInt(xYArr[0]))) {
 								// 8 digit string - probably a date like 19790115
-								obj = generateFullDateVo(String(xYArr[0]), yVal, krp.id);
+								obj = generateFullDateVo(String(xYArr[0]), yVal, vrp.id);
 							}
 							else {
 								obj.x = xYArr[0];
-								obj.y = standartize(yVal, krp.id);
+								obj.y = standartize(yVal, vrp.id);
 
 							}
 
@@ -244,7 +244,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 				}
 			}
 
-			reportData.dimToChartDpMap[krp.id] = graphPoints;
+			reportData.dimToChartDpMap[vrp.id] = graphPoints;
 		}
 
 
@@ -344,7 +344,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 		 * @return base total value
 		 */
 		private function getBaseTotal(totalDim:String):Number {
-			for each (var baseTotal:KalturaReportBaseTotal in _model.selectedReportData.baseTotals) {
+			for each (var baseTotal:VidiunReportBaseTotal in _model.selectedReportData.baseTotals) {
 				if (baseTotal.id == totalDim) {
 					return parseFloat(baseTotal.data);
 				}
@@ -361,14 +361,14 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingChartFlag = false;
 			_model.checkLoading();
 
-			if ((info as KalturaEvent).error) {
-				if ((info as KalturaEvent).error.errorMsg) {
-					if ((info as KalturaEvent).error.errorMsg.substr(0, 10) == "Invalid KS") {
+			if ((info as VidiunEvent).error) {
+				if ((info as VidiunEvent).error.errorMsg) {
+					if ((info as VidiunEvent).error.errorMsg.substr(0, 10) == "Invalid VS") {
 						JSGate.expired();
 						return;
 					}
 					else
-						Alert.show((info as KalturaEvent).error.errorMsg, "Error");
+						Alert.show((info as VidiunEvent).error.errorMsg, "Error");
 				}
 			}
 		}

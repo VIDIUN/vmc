@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.UploadTokenCommand;
-	import com.kaltura.edw.control.commands.relatedFiles.*;
-	import com.kaltura.edw.control.events.RelatedFileEvent;
-	import com.kaltura.edw.control.events.UploadTokenEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.UploadTokenCommand;
+	import com.vidiun.edw.control.commands.relatedFiles.*;
+	import com.vidiun.edw.control.events.RelatedFileEvent;
+	import com.vidiun.edw.control.events.UploadTokenEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class RelatedTabController extends KMvCController {
+	public class RelatedTabController extends VMvCController {
 		
 		public function RelatedTabController()
 		{

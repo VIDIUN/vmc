@@ -1,13 +1,13 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	/**
 	 * This class represents event related to metadata
 	 * @author Michal
 	 * 
 	 */
-	public class MetadataDataEvent extends KMvCEvent
+	public class MetadataDataEvent extends VMvCEvent
 	{
 		public static const ADD : String = "content_add_metadata_data";
 		

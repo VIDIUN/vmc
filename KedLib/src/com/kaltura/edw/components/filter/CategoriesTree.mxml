@@ -3,8 +3,8 @@
 		 creationComplete="onCreationComplete(event)" doubleClickEnabled="true"
 		 itemDoubleClick="onCategoryDoubleClick(event)" editable="true" labelField="name" 
 		 focusEnabled="false"
-		 itemEditor="com.kaltura.edw.components.filter.cat.CategoriesTreeEditorRenderer"
-		 itemRenderer="com.kaltura.edw.components.filter.cat.CategoriesTreeItemRenderer"
+		 itemEditor="com.vidiun.edw.components.filter.cat.CategoriesTreeEditorRenderer"
+		 itemRenderer="com.vidiun.edw.components.filter.cat.CategoriesTreeItemRenderer"
 		 itemEditBegin="disableEditing(event)" itemEditBeginning="disableEditing(event)"
 		 itemEditEnd="onItemEndEdit(event)" allowMultipleSelection="true" dropEnabled="false" 
 		 allowDragSelection="false"
@@ -12,23 +12,23 @@
 		 borderColor="#FFFFFF" borderStyle="solid"
 		 rowHeight="30" backgroundColor="#FFFFFF" backgroundAlpha="0.1">
 	<mx:Metadata>
-		  [Event(name="newSearch", type="com.kaltura.edw.components.filter.events.FilterEvent")] 
-		  [Event(name="updateEntries", type="com.kaltura.edw.components.filter.events.FilterEvent")] 
-		  [Event(name="updateCategory", type="com.kaltura.edw.components.filter.events.FilterEvent")] 
-		  [Event(name="addCategory", type="com.kaltura.edw.components.filter.events.FilterEvent")] 
-		  [Event(name="deleteCategory", type="com.kaltura.edw.components.filter.events.FilterEvent")] 
+		  [Event(name="newSearch", type="com.vidiun.edw.components.filter.events.FilterEvent")] 
+		  [Event(name="updateEntries", type="com.vidiun.edw.components.filter.events.FilterEvent")] 
+		  [Event(name="updateCategory", type="com.vidiun.edw.components.filter.events.FilterEvent")] 
+		  [Event(name="addCategory", type="com.vidiun.edw.components.filter.events.FilterEvent")] 
+		  [Event(name="deleteCategory", type="com.vidiun.edw.components.filter.events.FilterEvent")] 
 	 </mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.components.et.EntryTable;
-			import com.kaltura.edw.components.filter.cat.CategoriesTreeItemRenderer;
-			import com.kaltura.edw.components.filter.events.FilterEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.view.window.AddNewCategoryWin;
-			import com.kaltura.edw.view.window.DeleteCategoryWin;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.dataStructures.HashMap;
+			import com.vidiun.edw.components.et.EntryTable;
+			import com.vidiun.edw.components.filter.cat.CategoriesTreeItemRenderer;
+			import com.vidiun.edw.components.filter.events.FilterEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.view.window.AddNewCategoryWin;
+			import com.vidiun.edw.view.window.DeleteCategoryWin;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.containers.TitleWindow;
@@ -90,7 +90,7 @@
 			
 			private var _catSelectedNames:HashMap;
 			
-			[ArrayElementType("com.kaltura.edw.vo.CategoryVO")]
+			[ArrayElementType("com.vidiun.edw.vo.CategoryVO")]
 			private var _selectedCatsArr:Array;
 			
 			private var _isInRenameMode:Boolean = false;
@@ -286,7 +286,7 @@
 			/**
 			 * delete a category according to the received data
 			 * */
-			private function deleteCategory(e:KedDataEvent):void {
+			private function deleteCategory(e:VedDataEvent):void {
 				var event:FilterEvent = new FilterEvent(FilterEvent.DELETE_CATEGORY);
 				event.data = e.data;
 				dispatchEvent(event);
@@ -300,7 +300,7 @@
 			/**
 			 * add a new category with the details received from the window
 			 * */
-			private function addCategory(e:KedDataEvent):void {
+			private function addCategory(e:VedDataEvent):void {
 				var event:FilterEvent = new FilterEvent(FilterEvent.ADD_CATEGORY);
 				event.data = e.data;
 				dispatchEvent(event);
@@ -513,8 +513,8 @@
 						var entries:Array = (dragSource as EntryTable).selectedItems;
 						var alreadyHasCatArr:ArrayCollection = new ArrayCollection();
 						var has8CatArr:ArrayCollection = new ArrayCollection();
-						for each (var entry:KalturaBaseEntry in entries) {
-							var clonedEntry:KalturaBaseEntry = new KalturaBaseEntry();
+						for each (var entry:VidiunBaseEntry in entries) {
+							var clonedEntry:VidiunBaseEntry = new VidiunBaseEntry();
 							if ((entry.categories != null) && (entry.categories != '')) {
 								entry.categories += ',';
 							}
@@ -553,7 +553,7 @@
 						var ms:String;
 						if (alreadyHasCatArr.length > 0) {
 							ms = '';
-							for each (var ent:KalturaBaseEntry in alreadyHasCatArr) {
+							for each (var ent:VidiunBaseEntry in alreadyHasCatArr) {
 								ms += ent.name + '\n';
 							}
 							Alert.show(resourceManager.getString('cms', 'alreadyHasEntryMsg') + "\n" + ms,
@@ -562,7 +562,7 @@
 
 						if (has8CatArr.length > 0) {
 							ms = '';
-							for each (var ent1:KalturaBaseEntry in has8CatArr) {
+							for each (var ent1:VidiunBaseEntry in has8CatArr) {
 								ms += ent1.name + '\n';
 							}
 							Alert.show(resourceManager.getString('cms', 'alreadyHas8EntryMsg') + "\n" + ms,

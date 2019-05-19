@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							width="594" height="514" help="{onHelp()}" showCloseButton="true" close="closeHandler(event)"
 							creationComplete="creationCompleteHandler(event)" enabled="{!isLoading}">
 	<mx:Metadata>
@@ -9,12 +9,12 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-			import com.kaltura.utils.ObjectUtil;
-			import com.kaltura.vo.KalturaUser;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+			import com.vidiun.utils.ObjectUtil;
+			import com.vidiun.vo.VidiunUser;
+			import com.vidiun.vo.VidiunUserRole;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -55,13 +55,13 @@
 			 * all changes are being made on <code>_undoUser</code>, which is a
 			 * copy of this object.
 			 * */
-			private var _user:KalturaUser;
+			private var _user:VidiunUser;
 
 			[Bindable]
 			/**
 			 * make changes to this user, so we can revert easily.
 			 * */
-			private var _undoUser:KalturaUser;
+			private var _undoUser:VidiunUser;
 
 			/**
 			 * @copy #mode
@@ -109,7 +109,7 @@
 			 * @param mode	add / edit
 			 * @param allowSetRole	if the user's role can be chagned
 			 * */
-			public function init(roles:ArrayCollection, user:KalturaUser, mode:String, allowSetRole:Boolean):void {
+			public function init(roles:ArrayCollection, user:VidiunUser, mode:String, allowSetRole:Boolean):void {
 				_roles = roles;
 				_allowSetRole = allowSetRole;
 				// the following intentionaly use setters. 
@@ -122,7 +122,7 @@
 			 * dispatch help event with relevant anchor
 			 * */
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_user_drilldown'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_user_drilldown'));
 			}
 
 
@@ -170,7 +170,7 @@
 						_undoUser.id = emailTi.text;
 					}
 				}
-				_undoUser.roleIds = (roleCb.selectedItem as KalturaUserRole).id.toString();
+				_undoUser.roleIds = (roleCb.selectedItem as VidiunUserRole).id.toString();
 				
 				if (validateInput()) {
 					requestSave();
@@ -272,12 +272,12 @@
 			/**
 			 * get the item matching the user's roleId
 			 * */
-			protected function findSelectedRole():KalturaUserRole {
+			protected function findSelectedRole():VidiunUserRole {
 				var lst:Array = _roles.source;
-				var res:KalturaUserRole;
+				var res:VidiunUserRole;
 				for (var i:int = 0; i < lst.length; i++) {
-					if ((lst[i] as KalturaUserRole).id.toString() == _undoUser.roleIds) {
-						res = (lst[i] as KalturaUserRole);
+					if ((lst[i] as VidiunUserRole).id.toString() == _undoUser.roleIds) {
+						res = (lst[i] as VidiunUserRole);
 						break;
 					}
 				}
@@ -293,9 +293,9 @@
 			public function setUserRole(roleId:String):void {
 				var t:String = _undoUser.roleIds;
 				_undoUser.roleIds = roleId;
-				var kr:KalturaUserRole = findSelectedRole();
-				if (kr) {
-					roleCb.selectedItem = kr;
+				var vr:VidiunUserRole = findSelectedRole();
+				if (vr) {
+					roleCb.selectedItem = vr;
 				}
 				else {
 					_undoUser.roleIds = t;
@@ -337,10 +337,10 @@
 			 * NOTE: when setting this attribute a new User is created and used,
 			 * so when getting this attribute the NEW entity is returned.
 			 */
-			protected function setUser(value:KalturaUser):void {
+			protected function setUser(value:VidiunUser):void {
 				_user = value;
 				// create working copy
-				_undoUser = new KalturaUser();
+				_undoUser = new VidiunUser();
 				var atts:Array = ObjectUtil.getObjectAllKeys(value);
 				for (var i:int = 0; i < atts.length; i++) {
 					_undoUser[atts[i]] = value[atts[i]];
@@ -369,7 +369,7 @@
 			/**
 			 * user data shown in the window
 			 * */
-			public function get user():KalturaUser {
+			public function get user():VidiunUser {
 				return _undoUser;
 			}
 			

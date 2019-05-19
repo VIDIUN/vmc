@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.commands.user.UserGet;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunUser;
 	
-	public class GetCategoryOwnerCommand extends KalturaCommand {
+	public class GetCategoryOwnerCommand extends VidiunCommand {
 		
 		override public function execute(event:CairngormEvent):void{
 			
@@ -21,14 +21,14 @@ package com.kaltura.kmc.modules.content.commands.cat
 				
 				case CategoryEvent.GET_CATEGORY_OWNER:
 					
-					var selectedCat:KalturaCategory = event.data as KalturaCategory;
+					var selectedCat:VidiunCategory = event.data as VidiunCategory;
 					var req:UserGet = new UserGet(selectedCat.owner);
 					
-					req.addEventListener(KalturaEvent.COMPLETE, result);
-					req.addEventListener(KalturaEvent.FAILED, fault);
+					req.addEventListener(VidiunEvent.COMPLETE, result);
+					req.addEventListener(VidiunEvent.FAILED, fault);
 					
 					_model.increaseLoadCounter();
-					_model.context.kc.post(req);
+					_model.context.vc.post(req);
 					break;
 				
 			}
@@ -39,7 +39,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.decreaseLoadCounter();
 			
 			if (!checkError(data)) {
-				_model.categoriesModel.categoryOwner = data.data as KalturaUser;
+				_model.categoriesModel.categoryOwner = data.data as VidiunUser;
 			}
 		}
 	}

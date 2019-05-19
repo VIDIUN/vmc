@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedDelete;
-	import com.kaltura.events.KalturaEvent;
+	import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.syndicationFeed.SyndicationFeedDelete;
+	import com.vidiun.events.VidiunEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 	
-	public class DeleteExternalSyndicationCommand extends KalturaCommand implements ICommand, IResponder
+	public class DeleteExternalSyndicationCommand extends VidiunCommand implements ICommand, IResponder
 	{
 			
 		override public function execute(event:CairngormEvent):void
@@ -24,9 +24,9 @@ package com.kaltura.kmc.modules.content.commands
 				mr.addAction(deleteFeed);
 			}
 					
-            mr.addEventListener(KalturaEvent.COMPLETE, result);
-            mr.addEventListener(KalturaEvent.FAILED, fault);
-            _model.context.kc.post(mr); 
+            mr.addEventListener(VidiunEvent.COMPLETE, result);
+            mr.addEventListener(VidiunEvent.FAILED, fault);
+            _model.context.vc.post(mr); 
 		}
 		
 		override public function result(data:Object):void

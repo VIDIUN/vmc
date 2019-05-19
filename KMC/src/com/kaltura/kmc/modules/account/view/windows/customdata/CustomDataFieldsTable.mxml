@@ -3,27 +3,27 @@
 			 sortableColumns="false" creationComplete="datagrid1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.view.windows.customdata.popupWindows.CustomDataFieldDetails;
-			import com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataNameRenderer;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.vmc.modules.account.view.windows.customdata.popupWindows.CustomDataFieldDetails;
+			import com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataNameRenderer;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.MetadataFieldVO;
 
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 
-			private var _metadataProfile:KMCMetadataProfileVO;
+			private var _metadataProfile:VMCMetadataProfileVO;
 
 
 
 			[Bindable]
-			public function get metadataProfile():KMCMetadataProfileVO {
+			public function get metadataProfile():VMCMetadataProfileVO {
 				return _metadataProfile;
 			}
 
 
-			public function set metadataProfile(value:KMCMetadataProfileVO):void {
+			public function set metadataProfile(value:VMCMetadataProfileVO):void {
 				_metadataProfile = value;
 			}
 
@@ -74,24 +74,24 @@
 			</mx:itemRenderer>
 		</mx:DataGridColumn>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsName')}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataNameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataNameRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsDescription')}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataDescriptionRenderer"
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataDescriptionRenderer"
 						   paddingLeft="5"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsFullDescription')}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataFullDescRenderer"
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataFullDescRenderer"
 						   paddingLeft="5"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsType')}" width="90"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataTypeRenderer"
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataTypeRenderer"
 						   paddingLeft="5"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsMaxValues')}" width="80"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataMaxOccursRenderer"
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataMaxOccursRenderer"
 						   paddingLeft="5"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsAppearInSearch')}" width="72"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataAppearInSearchRenderer"
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataAppearInSearchRenderer"
 						   paddingLeft="5"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','customFieldsPositions')}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.customdata.renderers.CustomDataPositionsRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.customdata.renderers.CustomDataPositionsRenderer"/>
 	</mx:columns>
 
 </mx:DataGrid>

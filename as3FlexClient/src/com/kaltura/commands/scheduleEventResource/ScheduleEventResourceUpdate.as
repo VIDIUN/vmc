@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleEventResource
+package com.vidiun.commands.scheduleEventResource
 {
-		import com.kaltura.vo.KalturaScheduleEventResource;
-	import com.kaltura.delegates.scheduleEventResource.ScheduleEventResourceUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduleEventResource;
+	import com.vidiun.delegates.scheduleEventResource.ScheduleEventResourceUpdateDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* Update an existing KalturaScheduleEventResource object
+	* Update an existing VidiunScheduleEventResource object
 	**/
-	public class ScheduleEventResourceUpdate extends KalturaCall
+	public class ScheduleEventResourceUpdate extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param scheduleEventId int
 		* @param scheduleResourceId int
-		* @param scheduleEventResource KalturaScheduleEventResource
+		* @param scheduleEventResource VidiunScheduleEventResource
 		**/
-		public function ScheduleEventResourceUpdate( scheduleEventId : int,scheduleResourceId : int,scheduleEventResource : KalturaScheduleEventResource )
+		public function ScheduleEventResourceUpdate( scheduleEventId : int,scheduleResourceId : int,scheduleEventResource : VidiunScheduleEventResource )
 		{
 			service= 'schedule_scheduleeventresource';
 			action= 'update';
@@ -55,7 +55,7 @@ package com.kaltura.commands.scheduleEventResource
 			valueArr.push(scheduleEventId);
 			keyArr.push('scheduleResourceId');
 			valueArr.push(scheduleResourceId);
-				keyValArr = kalturaObject2Arrays(scheduleEventResource, 'scheduleEventResource');
+				keyValArr = vidiunObject2Arrays(scheduleEventResource, 'scheduleEventResource');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

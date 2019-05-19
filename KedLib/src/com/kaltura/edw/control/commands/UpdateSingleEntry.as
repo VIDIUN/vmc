@@ -1,29 +1,29 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
-	import com.kaltura.vo.KalturaStreamContainer;
+package com.vidiun.edw.control.commands {
+	import com.vidiun.commands.baseEntry.BaseEntryUpdate;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.events.VedDataEvent;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunEntryStatus;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunLiveStreamEntry;
+	import com.vidiun.vo.VidiunStreamContainer;
 
-	public class UpdateSingleEntry extends KedCommand {
+	public class UpdateSingleEntry extends VedCommand {
 		
-		private var dummy: KalturaStreamContainer;
+		private var dummy: VidiunStreamContainer;
 		
-		private var _event:KedEntryEvent;
+		private var _event:VedEntryEvent;
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			
-			_event = event as KedEntryEvent;
-			var entry:KalturaBaseEntry = _event.entryVo;
+			_event = event as VedEntryEvent;
+			var entry:VidiunBaseEntry = _event.entryVo;
 
 			entry.setUpdatedFieldsOnly(true);
-			if (entry.status != KalturaEntryStatus.NO_CONTENT && !(entry is KalturaLiveStreamEntry)) {
+			if (entry.status != VidiunEntryStatus.NO_CONTENT && !(entry is VidiunLiveStreamEntry)) {
 				entry.conversionProfileId = int.MIN_VALUE;
 			}
 			// don't send categories - we use categoryEntry service to update them in EntryData panel
@@ -36,8 +36,8 @@ package com.kaltura.edw.control.commands {
 
 			var mu:BaseEntryUpdate = new BaseEntryUpdate(entry.id, entry);
 			// add listeners and post call
-			mu.addEventListener(KalturaEvent.COMPLETE, result);
-			mu.addEventListener(KalturaEvent.FAILED, fault);
+			mu.addEventListener(VidiunEvent.COMPLETE, result);
+			mu.addEventListener(VidiunEvent.FAILED, fault);
 
 			_client.post(mu);
 		}
@@ -51,7 +51,7 @@ package com.kaltura.edw.control.commands {
 				return;
 			}
 			
-			var e:KedDataEvent = new KedDataEvent(KedDataEvent.ENTRY_UPDATED);
+			var e:VedDataEvent = new VedDataEvent(VedDataEvent.ENTRY_UPDATED);
 			e.data = data.data; // send the updated entry as event data
 			(_model.getDataPack(ContextDataPack) as ContextDataPack).dispatcher.dispatchEvent(e);
 

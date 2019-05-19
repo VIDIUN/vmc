@@ -7,7 +7,7 @@
 		 creationComplete="showValues()" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.vo.ads.CompanionAdVo;
+			import com.vidiun.vmc.modules.studio.vo.ads.CompanionAdVo;
 			
 			import mx.collections.ArrayCollection;
 			

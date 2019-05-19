@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.categories
+package com.vidiun.edw.control.commands.categories
 {
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.ContentDataPack;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.datapacks.ContentDataPack;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunCategoryOrderBy;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class ListCategoriesUnderCommand extends KedCommand {
+	public class ListCategoriesUnderCommand extends VedCommand {
 		
 		
 		private var _branchCat:CategoryVO;
@@ -30,26 +30,26 @@ package com.kaltura.edw.control.commands.categories
 		
 		private var _onComplete:Function;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			_filterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			_branchCat = event.data as CategoryVO;
 			_source = event.source;
 			_onComplete = event.onComplete;
 			
-			var kcf:KalturaCategoryFilter = new KalturaCategoryFilter();
-			kcf.orderBy = KalturaCategoryOrderBy.NAME_ASC;
+			var vcf:VidiunCategoryFilter = new VidiunCategoryFilter();
+			vcf.orderBy = VidiunCategoryOrderBy.NAME_ASC;
 			if (_branchCat) {
-				kcf.parentIdEqual = _branchCat.id;
+				vcf.parentIdEqual = _branchCat.id;
 			}
 			else {
-				kcf.parentIdEqual = 0;
+				vcf.parentIdEqual = 0;
 			}
-//			kcf.orderBy = KalturaCategoryOrderBy.PARTNER_SORT_VALUE_DESC;
-			var listCategories:CategoryList = new CategoryList(kcf);
+//			vcf.orderBy = VidiunCategoryOrderBy.PARTNER_SORT_VALUE_DESC;
+			var listCategories:CategoryList = new CategoryList(vcf);
 			
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
+			listCategories.addEventListener(VidiunEvent.COMPLETE, result);
+			listCategories.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(listCategories);
 		}
@@ -57,23 +57,23 @@ package com.kaltura.edw.control.commands.categories
 		override public function result(data:Object):void {
 			super.result(data);
 			var limit:int = (_model.getDataPack(ContextDataPack) as ContextDataPack).singleLevelMaxCategories;
-			if ((data.data as KalturaCategoryListResponse).totalCount > limit - 1) {
+			if ((data.data as VidiunCategoryListResponse).totalCount > limit - 1) {
 				Alert.show(ResourceManager.getInstance().getString('filter', 'catsSingleLevelExceeded', [limit - 1]));
 			}
 			else {
 				if (_branchCat) {
 					// set result in the existing tree 
-					addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
-					addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForMod);
-					addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForCats);
-					addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
+					addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
+					addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForMod);
+					addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForCats);
+					addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
 				}
 				else {
 					// use result as tree base
-					_filterModel.categoriesForEntries = addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
-					_filterModel.categoriesForMod = addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForMod);
-					_filterModel.categoriesForCats = addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForCats);
-					_filterModel.categoriesGeneral = addCategoriesToTree((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
+					_filterModel.categoriesForEntries = addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
+					_filterModel.categoriesForMod = addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForMod);
+					_filterModel.categoriesForCats = addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapForCats);
+					_filterModel.categoriesGeneral = addCategoriesToTree((data.data as VidiunCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
 				}
 			}
 			if (_source && _onComplete != null) {
@@ -82,15 +82,15 @@ package com.kaltura.edw.control.commands.categories
 			_model.decreaseLoadCounter();
 		}
 		
-		private function addCategoriesToTree(kCats:Array, catMap:HashMap):ArrayCollection {
+		private function addCategoriesToTree(vCats:Array, catMap:HashMap):ArrayCollection {
 			// create category VOs
 			var categories:ArrayCollection = new ArrayCollection();
 			var category:CategoryVO;
 			
 			// add to hashmap
-			for each (var kCat:KalturaCategory in kCats) {
-				category = new CategoryVO(kCat.id, kCat.name, kCat);
-				catMap.put(kCat.id + '', category);
+			for each (var vCat:VidiunCategory in vCats) {
+				category = new CategoryVO(vCat.id, vCat.name, vCat);
+				catMap.put(vCat.id + '', category);
 				categories.addItem(category)
 			}
 			

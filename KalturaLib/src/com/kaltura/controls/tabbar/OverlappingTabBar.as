@@ -1,4 +1,4 @@
-package com.kaltura.controls.tabbar
+package com.vidiun.controls.tabbar
 {
 	import flash.display.DisplayObject;
 	import flash.utils.Dictionary;

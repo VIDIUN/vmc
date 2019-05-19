@@ -1,4 +1,4 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
 	import flash.net.FileReference;
 	
@@ -39,7 +39,7 @@ package com.kaltura.edw.vo
 		
 		/**
 		 * list of optional conversion flavors for the selected profile 
-		 * (KalturaConversionProfileAssetParams objects)
+		 * (VidiunConversionProfileAssetParams objects)
 		 */
 		public var flavors:ArrayCollection;
 		

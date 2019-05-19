@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.DownloadEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-	import com.kaltura.commands.*;
-	import com.kaltura.commands.xInternal.XInternalXAddBulkDownload;
-	import com.kaltura.events.KalturaEvent;
+	import com.vidiun.vmc.modules.content.events.DownloadEvent;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.commands.*;
+	import com.vidiun.commands.xInternal.XInternalXAddBulkDownload;
+	import com.vidiun.events.VidiunEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class AddDownloadCommand extends KalturaCommand
+	public class AddDownloadCommand extends VidiunCommand
 	{
 		
 		override public function execute(event:CairngormEvent):void
@@ -21,9 +21,9 @@ package com.kaltura.kmc.modules.content.commands
 			var de:DownloadEvent = event as DownloadEvent;
 			
 		 	var addDownload:XInternalXAddBulkDownload = new XInternalXAddBulkDownload(de.entriesIds, de.flavorParamId);
-		 	addDownload.addEventListener(KalturaEvent.COMPLETE, result);
-			addDownload.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(addDownload);	   
+		 	addDownload.addEventListener(VidiunEvent.COMPLETE, result);
+			addDownload.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(addDownload);	   
 		}
 		
 		override public function result(data:Object):void

@@ -1,11 +1,11 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.AddNewAccessControlProfileCommand;
-	import com.kaltura.edw.control.commands.ListAccessControlsCommand;
-	import com.kaltura.edw.control.events.AccessControlEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.AddNewAccessControlProfileCommand;
+	import com.vidiun.edw.control.commands.ListAccessControlsCommand;
+	import com.vidiun.edw.control.events.AccessControlEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class AccessTabController extends KMvCController {
+	public class AccessTabController extends VMvCController {
 		
 		public function AccessTabController()
 		{

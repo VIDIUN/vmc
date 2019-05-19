@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" layout="vertical"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" layout="vertical"
 				 title="{resourceManager.getString('cms', 'setSchedulingTitle')}"
 				 xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true" close="closeWindow(event)"
-				 help="onHelp(event)" xmlns:view="com.kaltura.edw.view.*" >
+				 help="onHelp(event)" xmlns:view="com.vidiun.edw.view.*" >
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.util.CompositeKBaseEntry;
-			import com.kaltura.edw.view.panels.PanelLoader;
-			import com.kaltura.edw.view.panels.PanelMetadataParser;
-			import com.kaltura.edw.view.panels.PanelMetadataVO;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.Cloner;
+			import com.vidiun.edw.business.IDrilldownPanel;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.util.CompositeVBaseEntry;
+			import com.vidiun.edw.view.panels.PanelLoader;
+			import com.vidiun.edw.view.panels.PanelMetadataParser;
+			import com.vidiun.edw.view.panels.PanelMetadataVO;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.EntriesEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
@@ -64,9 +64,9 @@
 					var startTime:int = _entrySched["getStartTime"]();
 					var endTime:int = _entrySched["getEndTime"]();
 					
-					for each (var entry:KalturaBaseEntry in _clonedSelectedEntries) {
+					for each (var entry:VidiunBaseEntry in _clonedSelectedEntries) {
 						if (entry.startDate > 0) {
-							entry.startDate = (startTime > 0) ? startTime : KalturaClient.NULL_INT;
+							entry.startDate = (startTime > 0) ? startTime : VidiunClient.NULL_INT;
 						}
 						else if (startTime > 0) {
 							// was not set before and is set now
@@ -74,7 +74,7 @@
 						}
 						
 						if (entry.endDate > 0) {
-							entry.endDate = (endTime > 0) ? endTime : KalturaClient.NULL_INT;
+							entry.endDate = (endTime > 0) ? endTime : VidiunClient.NULL_INT;
 						}
 						else if (endTime > 0) {
 							// was not set before and is set now
@@ -88,7 +88,7 @@
 	
 					// stats:
 					for each (var etr:Object in _clonedSelectedEntries) {
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_EDIT_ENTRY, "setSchedulingForEntries", etr.id);
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_EDIT_ENTRY, "setSchedulingForEntries", etr.id);
 					}
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_SET_SCHEDULING, GoogleAnalyticsConsts.CONTENT);
 				}
@@ -111,7 +111,7 @@
 			}
 			
 			protected function onHelp(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_bulk_sched'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_bulk_sched'));
 			}
 
 
@@ -149,11 +149,11 @@
 				// we edit dummy entries, not the original 
 				_clonedSelectedEntries = new ArrayCollection();
 				for (var i:int = 0; i < _selectedEntries.length; i++) {
-					_clonedSelectedEntries.addItem(Cloner.cloneKalturaBaseEntry(_selectedEntries[i]));
+					_clonedSelectedEntries.addItem(Cloner.cloneVidiunBaseEntry(_selectedEntries[i]));
 				}
 				
-				var entryVect:Vector.<KalturaBaseEntry> = Vector.<KalturaBaseEntry>(_clonedSelectedEntries.source);
-				var compositeEntry:CompositeKBaseEntry = new CompositeKBaseEntry(entryVect);
+				var entryVect:Vector.<VidiunBaseEntry> = Vector.<VidiunBaseEntry>(_clonedSelectedEntries.source);
+				var compositeEntry:CompositeVBaseEntry = new CompositeVBaseEntry(entryVect);
 				
 				_entrySched.selectedEntry = compositeEntry;
 				

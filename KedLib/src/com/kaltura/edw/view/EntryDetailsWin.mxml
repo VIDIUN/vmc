@@ -2,48 +2,48 @@
 <!---
 	 entry drill-down screen.
 -->
-<navigation:ChangeableDataViewer xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<navigation:ChangeableDataViewer xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							height="595" width="930" layout="horizontal" horizontalScrollPolicy="off" paddingTop="18"
 							showCloseButton="true" close="{onClose()}" help="{onHelp()}"
-							xmlns:navigation="com.kaltura.edw.business.*"
-							xmlns:ed="com.kaltura.edw.view.*" xmlns:adobe="http://www.adobe.com/2006/fc"
+							xmlns:navigation="com.vidiun.edw.business.*"
+							xmlns:ed="com.vidiun.edw.view.*" xmlns:adobe="http://www.adobe.com/2006/fc"
 							creationComplete="{onWindowCreationComplete()}" 
-							xmlns:window="com.kaltura.kmc.modules.content.view.window.*"
-							xmlns:control="com.kaltura.edw.control.*">
+							xmlns:window="com.vidiun.vmc.modules.content.view.window.*"
+							xmlns:control="com.vidiun.edw.control.*">
 	<mx:Metadata>
 		[ResourceBundle("drilldown")]
 		[ResourceBundle("cms")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.events.*;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.*;
-			import com.kaltura.edw.view.panels.PanelLoader;
-			import com.kaltura.edw.view.panels.PanelMetadataParser;
-			import com.kaltura.edw.view.panels.PanelMetadataVO;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaLiveStreamAdminEntry;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMixEntry;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.Cloner;
+			import com.vidiun.edw.business.IDrilldownPanel;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.events.*;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.*;
+			import com.vidiun.edw.view.panels.PanelLoader;
+			import com.vidiun.edw.view.panels.PanelMetadataParser;
+			import com.vidiun.edw.view.panels.PanelMetadataVO;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.utils.VArrayUtil;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunLiveStreamAdminEntry;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
+			import com.vidiun.vo.VidiunMediaEntry;
+			import com.vidiun.vo.VidiunMixEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -63,7 +63,7 @@
 			// ===================================================================
 
 			/**
-			 * the string to dispatch on help events so KMC can interpret them
+			 * the string to dispatch on help events so VMC can interpret them
 			 * */
 
 			public static const HELP_REQUEST:String = 'helpRequest';
@@ -107,7 +107,7 @@
 			/**
 			 * entry details window data
 			 * */
-			private var _entryDetailsModel:KMvCModel;
+			private var _entryDetailsModel:VMvCModel;
 
 			[Bindable]
 			/**
@@ -120,7 +120,7 @@
 			 * */
 			public var panels:Object = new Object();
 			
-			public function set entryDetailsModel(value:KMvCModel):void {
+			public function set entryDetailsModel(value:VMvCModel):void {
 				_entryDetailsModel = value;
 				if (value) {
 					// let commands dispatch events from the current window
@@ -153,7 +153,7 @@
 				}
 			}
 			
-			public function get entryDetailsModel():KMvCModel {
+			public function get entryDetailsModel():VMvCModel {
 				return _entryDetailsModel;
 			}
 
@@ -167,9 +167,9 @@
 			 * we work on this instead of the actual selected entry
 			 * (model.selectedEntry) so we can easily revert if needed.
 			 * */
-			public var undoToEntry:KalturaBaseEntry;
+			public var undoToEntry:VidiunBaseEntry;
 
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 
 			/**
 			 * this js function will be triggered to show preview
@@ -277,11 +277,11 @@
 			 * The entry to refer to in the current window.
 			 * refers to entryDetailsModel.selectedEntry
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				var shouldInit:Boolean;
 				if (_selectedEntry == null && value) {
 					shouldInit = true;
@@ -407,17 +407,17 @@
 			 * will set the title according to entry type
 			 * */
 			private function setWindowTitle():void {
-				if (undoToEntry.status == KalturaEntryStatus.NO_CONTENT) {
+				if (undoToEntry.status == VidiunEntryStatus.NO_CONTENT) {
 					if (isNewEntry) {
 						var mediaType:int = parseInt(undoToEntry.mediaType);
 						switch (mediaType) {
-							case KalturaMediaType.IMAGE:
+							case VidiunMediaType.IMAGE:
 								title = resourceManager.getString('drilldown', 'newImageEntry');
 								break;
-							case KalturaMediaType.AUDIO:
+							case VidiunMediaType.AUDIO:
 								title = resourceManager.getString('drilldown', 'newAudioEntry');
 								break;
-							case KalturaMediaType.VIDEO:
+							case VidiunMediaType.VIDEO:
 								title = resourceManager.getString('drilldown', 'newVideoEntry');
 								break;
 						}
@@ -439,7 +439,7 @@
 			private function onWindowCreationComplete():void {
 				// roles and permissions 
 				PermissionManager.getInstance().applyAllAttributes(this, "entryDrilldown");
-				addEventListener(KedDataEvent.NAVIGATE, switchTab, false, 0, true);
+				addEventListener(VedDataEvent.NAVIGATE, switchTab, false, 0, true);
 				_isCreationComplete = true;
 				mx_internal::closeButton.enabled = isUiEnabled;
 				initWindow();
@@ -450,7 +450,7 @@
 			 * switch to another tab (panel)
 			 * e.data is the id of the required tab
 			 * */
-			private function switchTab(e:KedDataEvent):void {
+			private function switchTab(e:VedDataEvent):void {
 				var tabid:String = e.data as String;
 				viewStack.selectedChild = panels[tabid] as Container;
 			}
@@ -472,7 +472,7 @@
 			 * */
 			private function removeTabs(tabsToRemove:Array, tabsList:Array):void {
 				for each (var tab:UIComponent in tabsToRemove) {
-					KArrayUtil.removeItemFromArray(tab, tabsList);
+					VArrayUtil.removeItemFromArray(tab, tabsList);
 				}
 			}
 
@@ -495,10 +495,10 @@
 					allTabs =  _visibleTabs;
 				}
 				// remove tabs which aren't relevant to the different entry types
-				if (undoToEntry is KalturaLiveStreamEntry) {
+				if (undoToEntry is VidiunLiveStreamEntry) {
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.ASSETS_PANEL, PanelConsts.CONTENT_PANEL, PanelConsts.ADS_PANEL, PanelConsts.CAPTIONS_PANEL, PanelConsts.DISTRIBUTION_PANEL]));
 				}
-				else if (selectedEntry is KalturaMixEntry) {
+				else if (selectedEntry is VidiunMixEntry) {
 					//this is a mix
 					
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.ASSETS_PANEL, PanelConsts.LIVE_STREAM_PANEL, PanelConsts.ADS_PANEL, PanelConsts.DISTRIBUTION_PANEL, PanelConsts.CLIPS_PANEL]));
@@ -509,16 +509,16 @@
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.LIVE_STREAM_PANEL]));
 					
 					//remove redundant tabs in image and audio cases
-					if (selectedEntry.mediaType == KalturaMediaType.IMAGE) {
+					if (selectedEntry.mediaType == VidiunMediaType.IMAGE) {
 						allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.THUMBNAILS_PANEL, PanelConsts.ASSETS_PANEL, PanelConsts.DISTRIBUTION_PANEL, PanelConsts.CAPTIONS_PANEL, PanelConsts.ADS_PANEL, PanelConsts.CLIPS_PANEL]));
 					}
-					else if (selectedEntry.mediaType == KalturaMediaType.AUDIO) {
+					else if (selectedEntry.mediaType == VidiunMediaType.AUDIO) {
 						allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.DISTRIBUTION_PANEL]));
 					}
 				}
 				
 //				// if uiconf requires removing content tab
-//				var cdp:ContentDataPack = KMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
+//				var cdp:ContentDataPack = VMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
 //				if (!cdp.showMixesTab) {
 //					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.CONTENT_PANEL]));
 //				}	// (QC 4569 - content tab is controlled by RnP)
@@ -534,7 +534,7 @@
 							// Determining if custom data tab is necessary.
 							var isCustomDataIn:Boolean = false;
 							for (var i:int = 0; i < _filterModel.metadataProfiles.length; i++) {
-								var curProfile:KMCMetadataProfileVO = _filterModel.metadataProfiles.getItemAt(i) as KMCMetadataProfileVO;
+								var curProfile:VMCMetadataProfileVO = _filterModel.metadataProfiles.getItemAt(i) as VMCMetadataProfileVO;
 								
 								if (curProfile.profile && curProfile.metadataFieldVOArray && curProfile.metadataFieldVOArray.length > 0) {
 									isCustomDataIn = true;
@@ -584,11 +584,11 @@
 				if (event.detail == Alert.YES) {
 					submitChanges(true);
 //					//a new entry was added so we should refresh
-//					dispatchEvent(new KedDataEvent(KedDataEvent.ENTRY_UPDATED));
+//					dispatchEvent(new VedDataEvent(VedDataEvent.ENTRY_UPDATED));
 				}
 				else {
 					// delete the entry we created
-					var deleteEntryEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.DELETE_ENTRY, undoToEntry, undoToEntry.id);
+					var deleteEntryEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.DELETE_ENTRY, undoToEntry, undoToEntry.id);
 					edwController.dispatch(deleteEntryEvent);
 				}
 				removeMe();
@@ -649,8 +649,8 @@
 					removeWatchers();
 					undoToEntry = null;
 
-//					var dsp:IEventDispatcher = (KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
-					/* dsp. */dispatchEvent(new KedDataEvent(KedDataEvent.CLOSE_WINDOW));
+//					var dsp:IEventDispatcher = (VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
+					/* dsp. */dispatchEvent(new VedDataEvent(VedDataEvent.CLOSE_WINDOW));
 				}
 			}
 
@@ -681,7 +681,7 @@
 				for (var i:int = 0; i < viewStack.numChildren; i++) {
 					if (viewStack.getChildAt(i) is IDrilldownPanel) {
 						var panel:IDrilldownPanel = viewStack.getChildAt(i) as IDrilldownPanel;
-						panel.removeEventListener(InternalKedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
+						panel.removeEventListener(InternalVedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
 						panel.removeEventListener(ValidationResultEvent.VALIDATION_COMPLETE, onPanelValidationComplete);
 						removeBindings(panel);
 						panel.clear();
@@ -721,13 +721,13 @@
 					}
 					if (success) {
 						// if referenceId was changed
-						if (undoToEntry.referenceId && undoToEntry.referenceId != KalturaClient.NULL_STRING && _selectedEntry.referenceId != undoToEntry.referenceId) {
+						if (undoToEntry.referenceId && undoToEntry.referenceId != VidiunClient.NULL_STRING && _selectedEntry.referenceId != undoToEntry.referenceId) {
 							// list all entries with the same refid , if any - show message
 							if (!_sameRefidWatcher) {
 								_entryDp.entriesWSameRefidAsSelected = new Array();
 								_sameRefidWatcher = BindingUtils.bindSetter(confirmSameRefid, _entryDp, "entriesWSameRefidAsSelected");
 							}
-							var cg:KMvCEvent = new KedEntryEvent(KedEntryEvent.LIST_ENTRIES_BY_REFID, undoToEntry);
+							var cg:VMvCEvent = new VedEntryEvent(VedEntryEvent.LIST_ENTRIES_BY_REFID, undoToEntry);
 							edwController.dispatch(cg);
 						}
 						else {
@@ -768,7 +768,7 @@
 				if (value && value.length > 0) {
 					// we have entries with the same refid
 					var ar:Array = [];
-					for each (var o:KalturaBaseEntry in value) {
+					for each (var o:VidiunBaseEntry in value) {
 						ar.push(o.id);
 					}
 					Alert.show(resourceManager.getString('drilldown', 'existingRefid', [undoToEntry.referenceId, ar]),
@@ -784,7 +784,7 @@
 			}
 
 
-			private function onPanelSaveComplete(e:InternalKedEvent):void {
+			private function onPanelSaveComplete(e:InternalVedEvent):void {
 				_results.push(e);
 				if (_results.length == viewStack.numChildren) {
 					// all panels finished their save/update process
@@ -808,8 +808,8 @@
 				for (var i:int = 0; i < viewStack.numChildren; i++) {
 					if (viewStack.getChildAt(i) is IDrilldownPanel) {
 						panel = viewStack.getChildAt(i) as IDrilldownPanel;
-						if (!panel.hasEventListener(InternalKedEvent.PANEL_DATA_SAVED)) {
-							panel.addEventListener(InternalKedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
+						if (!panel.hasEventListener(InternalVedEvent.PANEL_DATA_SAVED)) {
+							panel.addEventListener(InternalVedEvent.PANEL_DATA_SAVED, onPanelSaveComplete);
 						}
 						panel.save();
 					}
@@ -821,13 +821,13 @@
 			 * update selected entry on server
 			 * */
 			private function saveEntryDetails():void {
-				var cgEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SINGLE_ENTRY, undoToEntry, undoToEntry.id);
+				var cgEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SINGLE_ENTRY, undoToEntry, undoToEntry.id);
 				cgEvent.data = {entry: undoToEntry, closeAfterSave: _closeAfterSave, nextEntryPending: _nextPendingEntry};
 				cgEvent.source = this;
 				cgEvent.onComplete = handleSaveComplete;
 				edwController.dispatch(cgEvent);
 				
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_EDIT_ENTRY, "EditedtDrillDown", undoToEntry.id);
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_EDIT_ENTRY, "EditedtDrillDown", undoToEntry.id);
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_EDIT_ENTRY, GoogleAnalyticsConsts.CONTENT);
 			}
 
@@ -972,7 +972,7 @@
 				}
 				if ((event == null || event.detail == Alert.YES)) {
 					itemIndex = getNavigatableItemIndex(_nextPendingEntry == 1, itemIndex);
-					var selectEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, _itemsAC.getItemAt(itemIndex) as KalturaBaseEntry, '', itemIndex, true);
+					var selectEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, _itemsAC.getItemAt(itemIndex) as VidiunBaseEntry, '', itemIndex, true);
 					edwController.dispatch(selectEntry);
 				}
 				_nextPendingEntry = 0;
@@ -1087,8 +1087,8 @@
 					return nextEntryIndex;
 				}
 				
-				var nextEntry:KalturaMediaEntry = _itemsAC.getItemAt(nextEntryIndex) as KalturaMediaEntry;
-				if (nextEntry && nextEntry.mediaType == KalturaMediaType.LIVE_STREAM_FLASH && nextEntry.status != KalturaEntryStatus.READY) {
+				var nextEntry:VidiunMediaEntry = _itemsAC.getItemAt(nextEntryIndex) as VidiunMediaEntry;
+				if (nextEntry && nextEntry.mediaType == VidiunMediaType.LIVE_STREAM_FLASH && nextEntry.status != VidiunEntryStatus.READY) {
 					return getNavigatableItemIndex(goForward, nextEntryIndex);
 				}
 				else {

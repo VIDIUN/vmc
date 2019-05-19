@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.business
+package com.vidiun.vmc.modules.content.business
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.components.et.EntryTable;
-	import com.kaltura.edw.components.et.events.EntryTableEvent;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-	import com.kaltura.kmc.modules.content.events.SelectionEvent;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaPlaylistType;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.edw.components.et.EntryTable;
+	import com.vidiun.edw.components.et.events.EntryTableEvent;
+	import com.vidiun.edw.control.VedController;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.model.types.WindowsStates;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
+	import com.vidiun.vmc.modules.content.events.SelectionEvent;
+	import com.vidiun.vmc.modules.content.events.WindowEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunPlaylistType;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunMediaEntry;
+	import com.vidiun.vo.VidiunMixEntry;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	import mx.collections.ArrayCollection;
 
@@ -41,12 +41,12 @@ package com.kaltura.kmc.modules.content.business
 		 * @param event
 		 */
 		public function preview(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
-			var cgEvent:KMCEntryEvent;
-			if (entry is KalturaPlaylist)
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.PREVIEW, entry as KalturaPlaylist);
-			else if (entry is KalturaMediaEntry || entry is KalturaMixEntry)
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.PREVIEW, entry as KalturaBaseEntry);
+			var entry:VidiunBaseEntry = event.data as VidiunBaseEntry;
+			var cgEvent:VMCEntryEvent;
+			if (entry is VidiunPlaylist)
+				cgEvent = new VMCEntryEvent(VMCEntryEvent.PREVIEW, entry as VidiunPlaylist);
+			else if (entry is VidiunMediaEntry || entry is VidiunMixEntry)
+				cgEvent = new VMCEntryEvent(VMCEntryEvent.PREVIEW, entry as VidiunBaseEntry);
 			else {
 				trace("Error: no PlaylistVO nor EntryVO");
 				return;
@@ -61,36 +61,36 @@ package com.kaltura.kmc.modules.content.business
 		 * @param event
 		 */
 		public function showLiveDashboard(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
-			var cgEvent:KMCEntryEvent;
-			cgEvent = new KMCEntryEvent(KMCEntryEvent.SHOW_LIVE_DASHBOARD, entry as KalturaBaseEntry);
+			var entry:VidiunBaseEntry = event.data as VidiunBaseEntry;
+			var cgEvent:VMCEntryEvent;
+			cgEvent = new VMCEntryEvent(VMCEntryEvent.SHOW_LIVE_DASHBOARD, entry as VidiunBaseEntry);
 			cgEvent.dispatch();
 		}
 		
 		
 		public function showEntryDetailsHandler(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
+			var entry:VidiunBaseEntry = event.data as VidiunBaseEntry;
 			var et:EntryTable = event.target as EntryTable;
-			var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
-			KedController.getInstance().dispatch(kEvent);
+			var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
+			VedController.getInstance().dispatch(vEvent);
 			var cgEvent:CairngormEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.ENTRY_DETAILS_WINDOW);
 			cgEvent.dispatch();
 		}
 		
 		
 		public function showPlaylistDetailsHandler(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
+			var entry:VidiunBaseEntry = event.data as VidiunBaseEntry;
 			var et:EntryTable = event.target as EntryTable;
 			var cgEvent:CairngormEvent;
-			var kEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry as KalturaBaseEntry, (entry as KalturaBaseEntry).id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
-			KedController.getInstance().dispatchEvent(kEvent);
+			var vEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, entry as VidiunBaseEntry, (entry as VidiunBaseEntry).id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
+			VedController.getInstance().dispatchEvent(vEvent);
 			//switch manual / rule base
-			if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.STATIC_LIST) {
+			if ((entry as VidiunPlaylist).playlistType == VidiunPlaylistType.STATIC_LIST) {
 				// manual list
 				cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_MANUAL_WINDOW);
 				cgEvent.dispatch();
 			}
-			if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.DYNAMIC) {
+			if ((entry as VidiunPlaylist).playlistType == VidiunPlaylistType.DYNAMIC) {
 				cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_RULE_BASED_WINDOW);
 				cgEvent.dispatch();
 			}

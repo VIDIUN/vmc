@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 @ignore
 */
-package com.kaltura.kmvc
+package com.vidiun.vmvc
 {
 	import mx.resources.ResourceBundle;
 	import mx.resources.ResourceManager;
@@ -39,19 +39,19 @@ package com.kaltura.kmvc
 	 * Error class thrown when a Cairngorm error occurs.
 	 * Used to substitute data in error messages.
 	 */
-	public class KMvCError extends Error
+	public class VMvCError extends Error
 	{
-		[ResourceBundle("KMvCMessages")] 
+		[ResourceBundle("VMvCMessages")] 
 	 	private static var rb : ResourceBundle;
 		
-		public function KMvCError( errorCode : String, ... rest )
+		public function VMvCError( errorCode : String, ... rest )
 		{
 			super( formatMessage( errorCode, rest.toString() ) );
 		}
 		
 		private function formatMessage( errorCode : String, ... rest ) : String
 		{
-			var message : String =  StringUtil.substitute( ResourceManager.getInstance().getString('KMvCMessages', errorCode ), rest );
+			var message : String =  StringUtil.substitute( ResourceManager.getInstance().getString('VMvCMessages', errorCode ), rest );
 			
 			return StringUtil.substitute( "{0}: {1}", errorCode, message);
 		}

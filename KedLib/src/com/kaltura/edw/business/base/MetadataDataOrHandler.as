@@ -1,4 +1,4 @@
-package com.kaltura.edw.business.base
+package com.vidiun.edw.business.base
 {
 	import flash.events.EventDispatcher;
 	import flash.utils.setTimeout;

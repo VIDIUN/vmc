@@ -3,12 +3,12 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KMCMetadataProfileVO;
+			import com.vidiun.vo.VMCMetadataProfileVO;
 			
 			
 			override public function set data(value:Object):void {
 				super.data = value;
-				var profile:KMCMetadataProfileVO = value as KMCMetadataProfileVO;
+				var profile:VMCMetadataProfileVO = value as VMCMetadataProfileVO;
 				linkBtn.label = profile.profile.name;
 				if (profile.profileDisabled ) {
 					linkBtn.label += '*';

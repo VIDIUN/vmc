@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.admin.model
+package com.vidiun.vmc.modules.admin.model
 {
 	/**
 	 * the <code>UserDrilldownMode</code> class lists the optional states for 

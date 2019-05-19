@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.business.PartnerInfoUtil;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.NotificationVO;
-	import com.kaltura.kmc.modules.account.vo.PartnerVO;
-	import com.kaltura.vo.KalturaPartner;
+	import com.vidiun.commands.partner.PartnerGetInfo;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.business.PartnerInfoUtil;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.modules.account.vo.NotificationVO;
+	import com.vidiun.vmc.modules.account.vo.PartnerVO;
+	import com.vidiun.vo.VidiunPartner;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -27,23 +27,23 @@ package com.kaltura.kmc.modules.account.control.command {
 			_model.loadingFlag = true;
 
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(getPartnerInfo);
+			getPartnerInfo.addEventListener(VidiunEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(getPartnerInfo);
 		}
 
 
 		public function result(data:Object):void {
 			_model.loadingFlag = false;
-			if (data.data is KalturaPartner) {
-				var resultKp:KalturaPartner = data.data as KalturaPartner;
+			if (data.data is VidiunPartner) {
+				var resultVp:VidiunPartner = data.data as VidiunPartner;
 				var pvo:PartnerVO = new PartnerVO;
-				pvo.partner = resultKp;
+				pvo.partner = resultVp;
 
-				pvo.partnerId = _model.context.kc.partnerId;
+				pvo.partnerId = _model.context.vc.partnerId;
 				pvo.subPId = _model.context.subpId;
 
-				PartnerInfoUtil.createNotificationArray(resultKp.notificationsConfig, pvo.notifications);
+				PartnerInfoUtil.createNotificationArray(resultVp.notificationsConfig, pvo.notifications);
 
 				_model.partnerData = pvo;
 			}
@@ -52,7 +52,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function fault(info:Object):void {
-			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 				JSGate.expired();
 				return;
 			}

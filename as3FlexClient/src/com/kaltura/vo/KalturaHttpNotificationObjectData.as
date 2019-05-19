@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,27 +25,27 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaHttpNotificationData;
+	import com.vidiun.vo.VidiunHttpNotificationData;
 
 	[Bindable]
-	public dynamic class KalturaHttpNotificationObjectData extends KalturaHttpNotificationData
+	public dynamic class VidiunHttpNotificationObjectData extends VidiunHttpNotificationData
 	{
 		/**
-		* Kaltura API object type
+		* Vidiun API object type
 		**/
 		public var apiObjectType : String = null;
 
 		/**
 		* Data format
-		* @see com.kaltura.types.KalturaResponseType
+		* @see com.vidiun.types.VidiunResponseType
 		**/
 		public var format : int = int.MIN_VALUE;
 
 		/**
 		* Ignore null attributes during serialization
-		* @see com.kaltura.types.kalturaBoolean
+		* @see com.vidiun.types.vidiunBoolean
 		**/
 		public var ignoreNull : Boolean;
 
@@ -83,7 +83,7 @@ package com.kaltura.vo
 			var result:String = '';
 			switch (arrayName) {
 				case 'dataStringReplacements':
-					result = 'KalturaKeyValue';
+					result = 'VidiunKeyValue';
 					break;
 				default:
 					result = super.getElementType(arrayName);

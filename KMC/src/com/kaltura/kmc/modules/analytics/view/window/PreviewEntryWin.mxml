@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="650" height="520"
+<containers:ConfinedTitleWindow xmlns:containers="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="650" height="520"
 				styleName="TitleWindowType2" 
 				showCloseButton="true" close="titlewindow1_closeHandler(event)"
 				layout="vertical" title="{resourceManager.getString('analytics', 'previewEntryWindowTitle')}"
 				creationComplete="titlewindow1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.model.Context;
-			import com.kaltura.utils.KPlayerUtil;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.modules.analytics.model.Context;
+			import com.vidiun.utils.VPlayerUtil;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunMediaEntry;
 			
 			import mx.controls.SWFLoader;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 
-			[Bindable] public static var kdp:SWFLoader;
+			[Bindable] public static var vdp:SWFLoader;
 			
-			//inoreder of loading the kdp you must pass a context
+			//inoreder of loading the vdp you must pass a context
 			[Bindable] public var context:Context; 
 			
 			//the entry id you preview
-			[Bindable] public var entry:KalturaBaseEntry;
+			[Bindable] public var entry:VidiunBaseEntry;
 			
 			//the entry id you preview
 			[Bindable] public var uiconfId:String;
@@ -39,90 +39,90 @@
 			
 			protected function disposeAll() : void
 			{
-				/*if(kdp && kdp.content)
+				/*if(vdp && vdp.content)
 				{
-					if(kdp.content.hasEventListener("kdpReady"))
-						kdp.content.removeEventListener("kdpReady", showKdp);
-					if(kdp.content.hasEventListener("entryReady"))
-						kdp.content.removeEventListener("entryReady", showKdp);
+					if(vdp.content.hasEventListener("vdpReady"))
+						vdp.content.removeEventListener("vdpReady", showVdp);
+					if(vdp.content.hasEventListener("entryReady"))
+						vdp.content.removeEventListener("entryReady", showVdp);
 				
-					if(kdp.content.hasEventListener("mediaReady"))
-						kdp.content.removeEventListener("mediaReady", showKdp);
+					if(vdp.content.hasEventListener("mediaReady"))
+						vdp.content.removeEventListener("mediaReady", showVdp);
 				}*/
 				
 				cleanMedia();
 			}
 			
-			protected function showKdp( event : Event ) : void
+			protected function showVdp( event : Event ) : void
 			{
-				kdpSection.visible = true;
-				//data = kdp.content['evaluate']('{mediaProxy.entry}');
+				vdpSection.visible = true;
+				//data = vdp.content['evaluate']('{mediaProxy.entry}');
 			}
 			
 			/**
-			 * send to the KDP clean media if exist
+			 * send to the VDP clean media if exist
 			 * */
 			protected function cleanMedia() : void
 			{
-				if (kdp && kdp.content)
-					kdp.content["sendNotification"]('cleanMedia');
+				if (vdp && vdp.content)
+					vdp.content["sendNotification"]('cleanMedia');
 			}
 			
 			/**
-			 * add KDP to the stage
+			 * add VDP to the stage
 			 * */
-			private function addKDP():void {
+			private function addVDP():void {
 				
-				//hide until it loads due to KDP bug that it can't center the preloader
+				//hide until it loads due to VDP bug that it can't center the preloader
 				
 				
-				if (!kdp) {
-					kdp = new SWFLoader();
-					kdp.width = 560;
-					kdp.height = 315;
-					kdp.loaderContext = new LoaderContext(false, new ApplicationDomain());
-					kdp.addEventListener(Event.INIT, onKDP3Loaded);
-					var kdpUrl:String = context.protocol + context.rootUrl + "/index.php/kwidget/wid/_" + context.partnerId + "/uiconf_id/" + uiconfId + "/nowrapper/1/";
-					kdp.source = kdpUrl;
-					kdp.scaleContent = false;
-					kdpSection.addChildAt(kdp, 0);
-					kdpSection.visible = false;
+				if (!vdp) {
+					vdp = new SWFLoader();
+					vdp.width = 560;
+					vdp.height = 315;
+					vdp.loaderContext = new LoaderContext(false, new ApplicationDomain());
+					vdp.addEventListener(Event.INIT, onVDP3Loaded);
+					var vdpUrl:String = context.protocol + context.rootUrl + "/index.php/vwidget/wid/_" + context.partnerId + "/uiconf_id/" + uiconfId + "/nowrapper/1/";
+					vdp.source = vdpUrl;
+					vdp.scaleContent = false;
+					vdpSection.addChildAt(vdp, 0);
+					vdpSection.visible = false;
 
 				}
-				else if (!kdpSection.contains(kdp)) {
-					kdpSection.addChildAt(kdp, 0);
-					kdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+				else if (!vdpSection.contains(vdp)) {
+					vdpSection.addChildAt(vdp, 0);
+					vdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
 				}
 				else {
-					kdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+					vdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
 				}
 			}
 			
 			/**
-			 * Kdp loaded
+			 * Vdp loaded
 			 */
-			private function onKDP3Loaded(event:Event):void { 
+			private function onVDP3Loaded(event:Event):void { 
 				
-				if(!kdp.content.hasEventListener("entryReady"))
-					kdp.content.addEventListener("entryReady", showKdp);
+				if(!vdp.content.hasEventListener("entryReady"))
+					vdp.content.addEventListener("entryReady", showVdp);
 				
-				if(!kdp.content.hasEventListener("kdpReady"))
-					kdp.content.addEventListener("kdpReady", showKdp);
+				if(!vdp.content.hasEventListener("vdpReady"))
+					vdp.content.addEventListener("vdpReady", showVdp);
 				
-				if(!kdp.content.hasEventListener("mediaReady"))
-					kdp.content.addEventListener("mediaReady", showKdp); 
+				if(!vdp.content.hasEventListener("mediaReady"))
+					vdp.content.addEventListener("mediaReady", showVdp); 
 				
 				var params:Object = new Object();
 				params.entryId = entry.id;
-				params.ks = context.ks;
+				params.vs = context.vs;
 				params.partnerId = context.partnerId;
 				params.subpId = context.subpId;
 				params.cdnHost = context.cdnHost;
 				params.host = context.hostName;
 				params.allowCookies = true;
 				
-				params = KPlayerUtil.overrideStrings(params);
-				params = KPlayerUtil.overrideElementStrings(params);
+				params = VPlayerUtil.overrideStrings(params);
+				params = VPlayerUtil.overrideElementStrings(params);
 				
 				if (context.debugMode)
 					params.debugMode = "true";
@@ -130,7 +130,7 @@
 				// set flashvars
 				event.target.content["flashvars"] = params;
 				
-				// start the loading sqeunce of the kdp 
+				// start the loading sqeunce of the vdp 
 				event.target.content["init"]();
 			}
 
@@ -138,13 +138,13 @@
 			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
 			{
 				this.mx_internal::closeButton.buttonMode = true;
-				addKDP();
+				addVDP();
 			}
 
 		]]>
 	</mx:Script>
-	<mx:Label text="{resourceManager.getString('analytics','loading')}" visible="{!kdpSection.visible}" includeInLayout="{!kdpSection.visible}"/>
-	<mx:HBox id="kdpSection" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
+	<mx:Label text="{resourceManager.getString('analytics','loading')}" visible="{!vdpSection.visible}" includeInLayout="{!vdpSection.visible}"/>
+	<mx:HBox id="vdpSection" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
 		
 	</mx:HBox>
 	<mx:VBox width="100%">

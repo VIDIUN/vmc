@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.vidiun.vmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
+	import com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode;
 	
 	public class ConversionSettingsEvent extends CairngormEvent
 	{

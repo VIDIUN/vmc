@@ -1,4 +1,4 @@
-package com.kaltura.utils.pager
+package com.vidiun.utils.pager
 {
 
 	import flash.events.Event;

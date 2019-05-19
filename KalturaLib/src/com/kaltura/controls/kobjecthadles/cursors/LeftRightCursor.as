@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users 
+This file is part of the Vidiun Collaborative Media Suite which allows users 
 to do with audio, video, and animation what Wiki platfroms allow them to do with 
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Vidiun Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles.cursors
+package com.vidiun.controls.vobjecthadles.cursors
 {
-	import com.kaltura.controls.kobjecthadles.managers.HandleCursorManager;
+	import com.vidiun.controls.vobjecthadles.managers.HandleCursorManager;
 	
 	import flash.display.Sprite;
 	
@@ -31,7 +31,7 @@ package com.kaltura.controls.kobjecthadles.cursors
 
 	public class LeftRightCursor extends Sprite
 	{
-		[Embed(source="/com/kaltura/controls/kobjecthadles/assets/cursors/light/SizeWE.png")] [Bindable] public var CursorWECls:Class;	
+		[Embed(source="/com/vidiun/controls/vobjecthadles/assets/cursors/light/SizeWE.png")] [Bindable] public var CursorWECls:Class;	
 		
 		private var rottationEffect : Rotate;
 		

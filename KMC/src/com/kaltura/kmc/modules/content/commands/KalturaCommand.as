@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.analytics.GoogleAnalyticsConsts;
+	import com.vidiun.analytics.GoogleAnalyticsTracker;
+	import com.vidiun.edw.business.VedJSGate;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class KalturaCommand implements ICommand, IResponder {
+	public class VidiunCommand implements ICommand, IResponder {
 		protected var _model:CmsModelLocator = CmsModelLocator.getInstance();
 
 
@@ -23,7 +23,7 @@ package com.kaltura.kmc.modules.content.commands {
 		 */
 		public function fault(info:Object):void {
 			_model.decreaseLoadCounter();
-			var er:KalturaError = (info as KalturaEvent).error;
+			var er:VidiunError = (info as VidiunEvent).error;
 			if (!er) return;
 			if (er.errorCode == "CONNECTION_TIMEOUT") {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CLIENT_CONNECTION_TIMEOUT, GoogleAnalyticsConsts.CONTENT);
@@ -31,15 +31,15 @@ package com.kaltura.kmc.modules.content.commands {
 			else if (er.errorCode == "POST_TIMEOUT") {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CLIENT_POST_TIMEOUT, GoogleAnalyticsConsts.CONTENT);
 			}
-			else if (er.errorCode == APIErrorCode.INVALID_KS) {
-				KedJSGate.expired();
+			else if (er.errorCode == APIErrorCode.INVALID_VS) {
+				VedJSGate.expired();
 			}
 			else if (er.errorCode == APIErrorCode.SERVICE_FORBIDDEN) {
 				// added the support of non closable window
 				Alert.show(ResourceManager.getInstance().getString('common','forbiddenError',[er.errorMsg]), 
 					ResourceManager.getInstance().getString('common', 'forbiden_error_title'), Alert.OK, null, logout);
 				//de-activate the HTML tabs
-//				ExternalInterface.call("kmc.utils.activateHeader", false);
+//				ExternalInterface.call("vmc.utils.activateHeader", false);
 			}
 			else {
 				Alert.show(getMessageFromError(er.errorCode, er.errorMsg), ResourceManager.getInstance().getString('cms', 'error'));
@@ -47,7 +47,7 @@ package com.kaltura.kmc.modules.content.commands {
 		}
 		
 		protected function logout(e:Object):void {
-			KedJSGate.expired();
+			VedJSGate.expired();
 		}
 
 
@@ -60,10 +60,10 @@ package com.kaltura.kmc.modules.content.commands {
 		 *
 		 */
 		public function result(data:Object):void {
-			var er:KalturaError = (data as KalturaEvent).error;
-			if (er && er.errorCode == APIErrorCode.INVALID_KS) {
-				// redirect to login, or whatever JS does with invalid KS.
-				KedJSGate.expired();
+			var er:VidiunError = (data as VidiunEvent).error;
+			if (er && er.errorCode == APIErrorCode.INVALID_VS) {
+				// redirect to login, or whatever JS does with invalid VS.
+				VedJSGate.expired();
 				return;
 			}
 			
@@ -81,7 +81,7 @@ package com.kaltura.kmc.modules.content.commands {
 			}
 			// look for error
 			var str:String = '';
-			var er:KalturaError = (resultData as KalturaEvent).error;
+			var er:VidiunError = (resultData as VidiunEvent).error;
 			if (er) {
 				str = getMessageFromError(er.errorCode, er.errorMsg);
 				Alert.show(str, header);
@@ -134,7 +134,7 @@ package com.kaltura.kmc.modules.content.commands {
 		 * @param er	the error to parse
 		 * @return 		possible localised error message
 		 */
-		protected function getErrorText(er:KalturaError):String {
+		protected function getErrorText(er:VidiunError):String {
 			var str:String = ResourceManager.getInstance().getString('cms', er.errorCode);
 			if (!str) {
 				str = er.errorMsg;

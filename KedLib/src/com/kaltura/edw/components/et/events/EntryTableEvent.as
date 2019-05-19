@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.et.events
+package com.vidiun.edw.components.et.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.vidiun.edw.events.VedDataEvent;
 
-	public class EntryTableEvent extends KedDataEvent {
+	public class EntryTableEvent extends VedDataEvent {
 		
 		/**
 		 * the selected entry/ies in the entry table had changed

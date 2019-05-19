@@ -1,24 +1,24 @@
-package com.kaltura.autocomplete.controllers
+package com.vidiun.autocomplete.controllers
 {
 	import com.hillelcoren.components.AutoComplete;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.autocomplete.controllers.base.KACControllerBase;
-	import com.kaltura.autocomplete.itemRenderers.selection.TagsSelectedItem;
-	import com.kaltura.commands.tag.TagSearch;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.types.KalturaTaggedObjectType;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaTag;
-	import com.kaltura.vo.KalturaTagFilter;
-	import com.kaltura.vo.KalturaTagListResponse;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.autocomplete.controllers.base.VACControllerBase;
+	import com.vidiun.autocomplete.itemRenderers.selection.TagsSelectedItem;
+	import com.vidiun.commands.tag.TagSearch;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.types.VidiunTaggedObjectType;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunTag;
+	import com.vidiun.vo.VidiunTagFilter;
+	import com.vidiun.vo.VidiunTagListResponse;
 	
 	import mx.core.ClassFactory;
 	
-	public class KACTagsController extends KACControllerBase
+	public class VACTagsController extends VACControllerBase
 	{
 		private var _objType:String;
 		
-		public function KACTagsController(autoComp:AutoComplete, client:KalturaClient, objType:String)
+		public function VACTagsController(autoComp:AutoComplete, client:VidiunClient, objType:String)
 		{
 			super(autoComp, client);
 //			autoComp.allowEditingSelectedValues = true;
@@ -27,11 +27,11 @@ package com.kaltura.autocomplete.controllers
 			_objType = objType;
 		}
 		
-		override protected function createCallHook():KalturaCall{
-			var filter:KalturaTagFilter = new KalturaTagFilter();
+		override protected function createCallHook():VidiunCall{
+			var filter:VidiunTagFilter = new VidiunTagFilter();
 			filter.tagStartsWith = _autoComp.searchText;
 			filter.objectTypeEqual = _objType;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:VidiunFilterPager = new VidiunFilterPager();
 			
 			// TODO: Check size limit?
 			pager.pageSize = 30;
@@ -42,11 +42,11 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		override protected function fetchElements(data:Object):Array{
-			if ((data.data as KalturaTagListResponse).objects != null) {
-			var tags:Vector.<KalturaTag> = Vector.<KalturaTag>((data.data as KalturaTagListResponse).objects);
+			if ((data.data as VidiunTagListResponse).objects != null) {
+			var tags:Vector.<VidiunTag> = Vector.<VidiunTag>((data.data as VidiunTagListResponse).objects);
 			var tagNames:Array = new Array();
 			
-			for each (var tag:KalturaTag in tags){
+			for each (var tag:VidiunTag in tags){
 				tagNames.push(tag.tag);
 			}
 				

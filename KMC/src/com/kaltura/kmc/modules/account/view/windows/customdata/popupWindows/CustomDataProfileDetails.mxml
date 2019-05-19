@@ -5,8 +5,8 @@ This popup window is used to add or edit an Custom Data Profile.
 Use the 'newProfileState' state for the 'Add New..' action
 
 -->
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:dataGrid="com.kaltura.kmc.view.dataGrid.*"
-				xmlns:customdata="com.kaltura.kmc.modules.account.view.windows.customdata.*" showCloseButton="true"
+<containers:ConfinedTitleWindow xmlns:containers="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:dataGrid="com.vidiun.vmc.view.dataGrid.*"
+				xmlns:customdata="com.vidiun.vmc.modules.account.view.windows.customdata.*" showCloseButton="true"
 				close="{onCloseBtn()}" layout="vertical" creationComplete="{onCreationComplete()}" width="950"
 				height="550" styleName="TitleWindowType2" backgroundColor="#f7f7f7" verticalScrollPolicy="off">
 
@@ -20,12 +20,12 @@ Use the 'newProfileState' state for the 'Add New..' action
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.account.control.events.*;
-			import com.kaltura.types.KalturaMetadataObjectType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaMetadataProfile;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.modules.account.control.events.*;
+			import com.vidiun.types.VidiunMetadataObjectType;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.VidiunMetadataProfile;
+			import com.vidiun.vo.MetadataFieldVO;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -56,8 +56,8 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 *  the metadataProfile to add ot edit
 			 */
 			[Bindable]
-			private var _metadataProfile:KMCMetadataProfileVO;
-			private var _originalProfile:KMCMetadataProfileVO;
+			private var _metadataProfile:VMCMetadataProfileVO;
+			private var _originalProfile:VMCMetadataProfileVO;
 
 			private var _editWatcher:ChangeWatcher;
 
@@ -66,7 +66,7 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 * get the accessControlProfile(acp)
 			 */
 			[Bindable]
-			public function get metadataProfile():KMCMetadataProfileVO {
+			public function get metadataProfile():VMCMetadataProfileVO {
 				return _metadataProfile
 			}
 
@@ -74,12 +74,12 @@ Use the 'newProfileState' state for the 'Add New..' action
 			/**
 			 * set the metadataProfile
 			 */
-			public function set metadataProfile(metadataProfile:KMCMetadataProfileVO):void {
+			public function set metadataProfile(metadataProfile:VMCMetadataProfileVO):void {
 				_metadataProfile = metadataProfile;
 				_editWatcher = BindingUtils.bindSetter(onEditingFinished, _metadataProfile, "isCurrentlyEdited");
 
 				//saves original metadata
-				_originalProfile = new KMCMetadataProfileVO();
+				_originalProfile = new VMCMetadataProfileVO();
 				if (_metadataProfile.xsd && _metadataProfile.metadataFieldVOArray.length) {
 					_originalProfile.xsd = _metadataProfile.xsd.copy();
 					_originalProfile.metadataFieldVOArray = new ArrayCollection();
@@ -96,8 +96,8 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 */
 			private function onCreationComplete():void {
 				this.mx_internal::closeButton.buttonMode = true;
-				objectTypes = [{data: KalturaMetadataObjectType.ENTRY, label: resourceManager.getString('account', 'customSchemasEntryType')},
-					{data: KalturaMetadataObjectType.CATEGORY, label: resourceManager.getString('account', 'customSchemasCategoryType')}];
+				objectTypes = [{data: VidiunMetadataObjectType.ENTRY, label: resourceManager.getString('account', 'customSchemasEntryType')},
+					{data: VidiunMetadataObjectType.CATEGORY, label: resourceManager.getString('account', 'customSchemasCategoryType')}];
 
 				if (metadataProfile) {
 					if (metadataProfile.profile.id && metadataProfile.profile.id != int.MIN_VALUE) {
@@ -108,7 +108,7 @@ Use the 'newProfileState' state for the 'Add New..' action
 					
 					if (!metadataProfile.profile.metadataObjectType) {
 						// this is a new profile
-						metadataProfile.profile.metadataObjectType = KalturaMetadataObjectType.ENTRY;
+						metadataProfile.profile.metadataObjectType = VidiunMetadataObjectType.ENTRY;
 					}
 					objectTypeCB.selectedIndex = getItemIndex(metadataProfile.profile.metadataObjectType, objectTypes);
 				}
@@ -124,13 +124,13 @@ Use the 'newProfileState' state for the 'Add New..' action
 
 
 
-			private function getSchemaObjectTypeLabel(profile:KalturaMetadataProfile):String {
+			private function getSchemaObjectTypeLabel(profile:VidiunMetadataProfile):String {
 				var oType:String = profile.metadataObjectType;
 				var result:String = '';
-				if (oType == KalturaMetadataObjectType.ENTRY) {
+				if (oType == VidiunMetadataObjectType.ENTRY) {
 					result = resourceManager.getString('account', 'customSchemasEntryType');
 				}
-				else if (oType == KalturaMetadataObjectType.CATEGORY) {
+				else if (oType == VidiunMetadataObjectType.CATEGORY) {
 					result = resourceManager.getString('account', 'customSchemasCategoryType');
 				}
 				else {

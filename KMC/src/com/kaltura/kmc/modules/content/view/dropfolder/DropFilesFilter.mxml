@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.kaltura.edw.components.fltr.*"
-				 xmlns:cat="com.kaltura.edw.components.fltr.cat.*" xmlns:filter="com.kaltura.edw.components.filter.*"
+<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.vidiun.edw.components.fltr.*"
+				 xmlns:cat="com.vidiun.edw.components.fltr.cat.*" xmlns:filter="com.vidiun.edw.components.filter.*"
 				 creationComplete="creationCompleteHandler(event)"
-				 xmlns:panels="com.kaltura.edw.components.fltr.panels.*" xmlns:dropfolder="com.kaltura.kmc.modules.content.view.dropfolder.*">
+				 xmlns:panels="com.vidiun.edw.components.fltr.panels.*" xmlns:dropfolder="com.vidiun.vmc.modules.content.view.dropfolder.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.panels.AdditionalFilter;
-			import com.kaltura.kmc.modules.content.view.dropfolder.DropFoldersFilter;
-			import com.kaltura.vo.KalturaDropFolderFileFilter;
+			import com.vidiun.edw.components.fltr.panels.AdditionalFilter;
+			import com.vidiun.vmc.modules.content.view.dropfolder.DropFoldersFilter;
+			import com.vidiun.vo.VidiunDropFolderFileFilter;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 
 
 			protected function creationCompleteHandler(event:FlexEvent):void {
-				if (!_kalturaFilter) {
-					_kalturaFilter = new KalturaDropFolderFileFilter();
+				if (!_vidiunFilter) {
+					_vidiunFilter = new VidiunDropFolderFileFilter();
 				}
 			}
 			
 			
 			/**
-			 * reset kalturaFilter so any values that apply 
+			 * reset vidiunFilter so any values that apply 
 			 * to the accordion components will be set
 			 * */
 			private function setFilterValues():void {

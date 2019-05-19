@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.kmc.modules.account.control.events.ContactEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.vmc.modules.account.control.events.ContactEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.account.control.command {
 			params.comments = e.userComment;
 			params.services = e.services;
 
-//			http://www.kaltura.com/index.php/partnerservices2/contactsalesforce
+//			http://www.vidiun.com/index.php/partnerservices2/contactsalesforce
 			var srv:HTTPService = new HTTPService();
 			srv.url = _model.context.rootUrl + '/index.php/partnerservices2/contactsalesforce';
 			srv.method = "POST";
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.account.control.command {
 			var xml:XML = new XML(event.result);
 			// if the server returned an error as an answer
 			if (xml.error && xml.error.num_0.length() > 0) {
-				if (xml.error.num_0.code.toString() == APIErrorCode.INVALID_KS) {
+				if (xml.error.num_0.code.toString() == APIErrorCode.INVALID_VS) {
 					JSGate.expired();
 					return;
 				}

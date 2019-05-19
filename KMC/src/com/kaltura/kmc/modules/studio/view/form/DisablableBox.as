@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.view.form
+package com.vidiun.vmc.modules.studio.view.form
 {
 	import flash.display.DisplayObject;
 	

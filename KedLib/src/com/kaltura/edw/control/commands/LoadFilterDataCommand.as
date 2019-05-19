@@ -1,44 +1,44 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.commands.baseEntry.BaseEntryCount;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.distributionProfile.DistributionProfileList;
-	import com.kaltura.commands.flavorParams.FlavorParamsList;
-	import com.kaltura.core.KClassFactory;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.ClientUtil;
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.edw.control.DataTabController;
-	import com.kaltura.edw.control.events.LoadEvent;
-	import com.kaltura.edw.control.events.MetadataProfileEvent;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.util.FlavorParamsUtil;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.types.KalturaDistributionProfileStatus;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaDistributionProfileListResponse;
-	import com.kaltura.vo.KalturaDistributionThumbDimensions;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.vo.KalturaFlavorParamsListResponse;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.accessControl.AccessControlList;
+	import com.vidiun.commands.baseEntry.BaseEntryCount;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.commands.distributionProfile.DistributionProfileList;
+	import com.vidiun.commands.flavorParams.FlavorParamsList;
+	import com.vidiun.core.VClassFactory;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.business.ClientUtil;
+	import com.vidiun.edw.business.IDataOwner;
+	import com.vidiun.edw.control.DataTabController;
+	import com.vidiun.edw.control.events.LoadEvent;
+	import com.vidiun.edw.control.events.MetadataProfileEvent;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.util.FlavorParamsUtil;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunAccessControlOrderBy;
+	import com.vidiun.types.VidiunDistributionProfileStatus;
+	import com.vidiun.types.VidiunEntryStatus;
+	import com.vidiun.types.VidiunMediaType;
+	import com.vidiun.vo.AccessControlProfileVO;
+	import com.vidiun.vo.VidiunAccessControl;
+	import com.vidiun.vo.VidiunAccessControlFilter;
+	import com.vidiun.vo.VidiunAccessControlListResponse;
+	import com.vidiun.vo.VidiunBaseRestriction;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunDistributionProfileListResponse;
+	import com.vidiun.vo.VidiunDistributionThumbDimensions;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunFlavorParams;
+	import com.vidiun.vo.VidiunFlavorParamsListResponse;
+	import com.vidiun.vo.VidiunMediaEntryFilter;
 	
 	import flash.xml.XMLDocument;
 	import flash.xml.XMLNode;
@@ -61,7 +61,7 @@ package com.kaltura.edw.control.commands
 	 * @author Atar
 	 * 
 	 */	
-	public class LoadFilterDataCommand extends KedCommand {
+	public class LoadFilterDataCommand extends VedCommand {
 		
 		public static const DEFAULT_PAGE_SIZE:int = 500;
 		
@@ -75,7 +75,7 @@ package com.kaltura.edw.control.commands
 		 */		
 		private var _caller:IDataOwner;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_caller = (event as LoadEvent).caller;
 			_filterModel = (event as LoadEvent).filterModel;
 			
@@ -86,7 +86,7 @@ package com.kaltura.edw.control.commands
 			
 			_model.increaseLoadCounter();
 			
-			var pager:KalturaFilterPager;
+			var pager:VidiunFilterPager;
 			
 			// custom data hack
 			if (_filterModel.enableCustomData) {
@@ -98,27 +98,27 @@ package com.kaltura.edw.control.commands
 			
 			// distribution
 			if (_filterModel.enableDistribution) {
-				pager = new KalturaFilterPager();
+				pager = new VidiunFilterPager();
 				pager.pageSize = DEFAULT_PAGE_SIZE;
 				var listDistributionProfile:DistributionProfileList = new DistributionProfileList(null, pager);
 				multiRequest.addAction(listDistributionProfile);
 			}
 			// flavor params
-			pager = new KalturaFilterPager();
+			pager = new VidiunFilterPager();
 			pager.pageSize = DEFAULT_PAGE_SIZE;
 			var listFlavorParams:FlavorParamsList = new FlavorParamsList(null, pager);
 			multiRequest.addAction(listFlavorParams);
 			// access control
-			var acfilter:KalturaAccessControlFilter = new KalturaAccessControlFilter();
-			acfilter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
-			pager = new KalturaFilterPager();
+			var acfilter:VidiunAccessControlFilter = new VidiunAccessControlFilter();
+			acfilter.orderBy = VidiunAccessControlOrderBy.CREATED_AT_DESC;
+			pager = new VidiunFilterPager();
 			pager.pageSize = 1000;
 			var getListAccessControlProfiles:AccessControlList = new AccessControlList(acfilter, pager);
 			multiRequest.addAction(getListAccessControlProfiles);
 			
 			// listeners
-			multiRequest.addEventListener(KalturaEvent.COMPLETE, result);
-			multiRequest.addEventListener(KalturaEvent.FAILED, fault);
+			multiRequest.addEventListener(VidiunEvent.COMPLETE, result);
+			multiRequest.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(multiRequest);
 		}
@@ -129,16 +129,16 @@ package com.kaltura.edw.control.commands
 				
 				if (_filterModel.enableDistribution) {
 					// distribution
-					handleListDistributionProfileResult(data.data[responseCount] as KalturaDistributionProfileListResponse);
+					handleListDistributionProfileResult(data.data[responseCount] as VidiunDistributionProfileListResponse);
 					responseCount ++;
 				}
 				
 				// flavor params
-				handleFlavorsData(data.data[responseCount] as KalturaFlavorParamsListResponse);
+				handleFlavorsData(data.data[responseCount] as VidiunFlavorParamsListResponse);
 				responseCount ++;
 				
 				// access control
-				handleAccessControls(data.data[responseCount] as KalturaAccessControlListResponse);
+				handleAccessControls(data.data[responseCount] as VidiunAccessControlListResponse);
 				responseCount ++;
 				
 				_filterModel.loadingRequired = false;
@@ -152,22 +152,22 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListDistributionProfilesCommand 
 		 */
-		private function handleListDistributionProfileResult(profilesResult:KalturaDistributionProfileListResponse) : void {
-			var dum:KalturaDistributionThumbDimensions;
+		private function handleListDistributionProfileResult(profilesResult:VidiunDistributionProfileListResponse) : void {
+			var dum:VidiunDistributionThumbDimensions;
 			var profilesArray:Array = new Array();
 			//as3flexClient can't generate these objects since we don't include them in the swf 
 			for each (var profile:Object in profilesResult.objects) {
-				var newProfile:KalturaDistributionProfile;
-				if (profile is KalturaDistributionProfile) {
-					newProfile = profile as KalturaDistributionProfile;
+				var newProfile:VidiunDistributionProfile;
+				if (profile is VidiunDistributionProfile) {
+					newProfile = profile as VidiunDistributionProfile;
 				}
 				else {
-					newProfile = ClientUtil.createClassInstanceFromObject(KalturaDistributionProfile, profile);
+					newProfile = ClientUtil.createClassInstanceFromObject(VidiunDistributionProfile, profile);
 					//fix bug: simpleXmlEncoder not working properly for nested objects
 					if (profile.requiredThumbDimensions is Array)
 						newProfile.requiredThumbDimensions = profile.requiredThumbDimensions;
 				}
-				if (newProfile.status == KalturaDistributionProfileStatus.ENABLED)
+				if (newProfile.status == VidiunDistributionProfileStatus.ENABLED)
 					profilesArray.push(newProfile);
 			}
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
@@ -179,16 +179,16 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListFlavorsParamsCommand 
 		 */
-		private function handleFlavorsData(response:KalturaFlavorParamsListResponse):void {
+		private function handleFlavorsData(response:VidiunFlavorParamsListResponse):void {
 			clearOldFlavorData();
 			var tempFlavorParamsArr:ArrayCollection = new ArrayCollection();
-			// loop on Object and cast to KalturaFlavorParams so we don't crash on unknown types:
-			for each (var kFlavor:Object in response.objects) {
-				if (kFlavor is KalturaFlavorParams) {
-					tempFlavorParamsArr.addItem(kFlavor);
+			// loop on Object and cast to VidiunFlavorParams so we don't crash on unknown types:
+			for each (var vFlavor:Object in response.objects) {
+				if (vFlavor is VidiunFlavorParams) {
+					tempFlavorParamsArr.addItem(vFlavor);
 				}
 				else {
-					tempFlavorParamsArr.addItem(FlavorParamsUtil.makeFlavorParams(kFlavor));
+					tempFlavorParamsArr.addItem(FlavorParamsUtil.makeFlavorParams(vFlavor));
 				}
 			}
 			_filterModel.flavorParams = tempFlavorParamsArr;
@@ -198,20 +198,20 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListAccessControlsCommand 
 		 */
-		private function handleAccessControls(response:KalturaAccessControlListResponse):void {
+		private function handleAccessControls(response:VidiunAccessControlListResponse):void {
 			var tempArrCol:ArrayCollection = new ArrayCollection();
-			for each(var kac:KalturaAccessControl in response.objects)
+			for each(var vac:VidiunAccessControl in response.objects)
 			{
 				var acVo:AccessControlProfileVO = new AccessControlProfileVO();
-				acVo.profile = kac;
-				acVo.id = kac.id;
-				if (kac.restrictions) {
+				acVo.profile = vac;
+				acVo.id = vac.id;
+				if (vac.restrictions) {
 					// remove unknown objects
 					// if any restriction is unknown, we remove it from the list.
-					// this means it is not supported in KMC at the moment
-					for (var i:int = 0; i<kac.restrictions.length; i++) {
-						if (! (kac.restrictions[i] is KalturaBaseRestriction)) {
-							kac.restrictions.splice(i, 1);
+					// this means it is not supported in VMC at the moment
+					for (var i:int = 0; i<vac.restrictions.length; i++) {
+						if (! (vac.restrictions[i] is VidiunBaseRestriction)) {
+							vac.restrictions.splice(i, 1);
 						}
 					}
 				}

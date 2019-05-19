@@ -1,26 +1,26 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaPartner;
+	import com.vidiun.commands.partner.PartnerGetInfo;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vo.VidiunPartner;
 
 	public class GetPartnerInfoCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerInfo.addEventListener(VidiunEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
-			_model.kc.post(getPartnerInfo);	
+			_model.vc.post(getPartnerInfo);	
 		}
 		
 		override protected function result(data:Object):void {
 			super.result(data);
 			if (data.success) {
-				_model.usersModel.loginUsersQuota = (data.data as KalturaPartner).adminLoginUsersQuota;
-				_model.usersModel.adminUserId = (data.data as KalturaPartner).adminUserId;
-				_model.usersModel.crippledUsers = [(data.data as KalturaPartner).adminUserId, _model.usersModel.currentUserInfo.user.id]; 
+				_model.usersModel.loginUsersQuota = (data.data as VidiunPartner).adminLoginUsersQuota;
+				_model.usersModel.adminUserId = (data.data as VidiunPartner).adminUserId;
+				_model.usersModel.crippledUsers = [(data.data as VidiunPartner).adminUserId, _model.usersModel.currentUserInfo.user.id]; 
 			}
 			_model.decreaseLoadCounter();
 		}

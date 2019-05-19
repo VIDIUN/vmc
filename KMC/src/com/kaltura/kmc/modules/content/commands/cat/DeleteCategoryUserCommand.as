@@ -1,29 +1,29 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryGet;
-	import com.kaltura.commands.categoryUser.CategoryUserDelete;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryUser;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.category.CategoryGet;
+	import com.vidiun.commands.categoryUser.CategoryUserDelete;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryUser;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class DeleteCategoryUserCommand extends KalturaCommand {
+	public class DeleteCategoryUserCommand extends VidiunCommand {
 		
 		private var _usrs:Array;
 		private var _eventType:String;
 		
 		override public function execute(event:CairngormEvent):void {
 		
-			// event.data is [KalturaCategoryUser]
+			// event.data is [VidiunCategoryUser]
 			_usrs = event.data;
 			
 			if (!_model.categoriesModel.categoryUserFirstAction) {
@@ -44,16 +44,16 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.increaseLoadCounter();
 			
 			var mr:MultiRequest = new MultiRequest();
-			var cu:KalturaCategoryUser;
+			var cu:VidiunCategoryUser;
 			for (var i:int = 0; i<_usrs.length; i++) {
-				cu = _usrs[i] as KalturaCategoryUser;
+				cu = _usrs[i] as VidiunCategoryUser;
 				mr.addAction(new CategoryUserDelete(cu.categoryId, cu.userId));
 			} 	
 			var getCat:CategoryGet = new CategoryGet(cu.categoryId);
 			mr.addAction(getCat);
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);	   
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);	   
 		}
 		
 		override public function result(data:Object):void {
@@ -62,7 +62,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var cg:CategoryEvent = new CategoryEvent(CategoryEvent.LIST_CATEGORY_USERS);
 				cg.dispatch();
 				// set new numbers of members to the category object
-				var updatedCat:KalturaCategory = data.data[data.data.length-1] as KalturaCategory;
+				var updatedCat:VidiunCategory = data.data[data.data.length-1] as VidiunCategory;
 				_model.categoriesModel.selectedCategory.membersCount = updatedCat.membersCount;
 				_model.categoriesModel.selectedCategory.pendingMembersCount = updatedCat.pendingMembersCount;
 			}

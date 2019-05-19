@@ -1,57 +1,57 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.baseEntry.BaseEntryGet;
-	import com.kaltura.edw.business.EntryUtil;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaClipAttributes;
+package com.vidiun.edw.control.commands {
+	import com.vidiun.commands.baseEntry.BaseEntryGet;
+	import com.vidiun.edw.business.EntryUtil;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.events.VedDataEvent;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunClipAttributes;
 	
 	import flash.events.IEventDispatcher;
 	
 	import mx.events.PropertyChangeEvent;
 
-	public class GetSingleEntryCommand extends KedCommand {
+	public class GetSingleEntryCommand extends VedCommand {
 
 		private var _eventType:String;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var e:KedEntryEvent = event as KedEntryEvent;
+			var e:VedEntryEvent = event as VedEntryEvent;
 			_eventType = e.type;
-			if (_eventType == KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
+			if (_eventType == VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
 				(_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntryReloaded = false;
 			}
 			
 			var getEntry:BaseEntryGet = new BaseEntryGet(e.entryId);
 
-			getEntry.addEventListener(KalturaEvent.COMPLETE, result);
-			getEntry.addEventListener(KalturaEvent.FAILED, fault);
+			getEntry.addEventListener(VidiunEvent.COMPLETE, result);
+			getEntry.addEventListener(VidiunEvent.FAILED, fault);
 
 			_client.post(getEntry);
 		}
 
 
 		override public function result(data:Object):void {
-			var clipAttributes:KalturaClipAttributes; // compile this type into KMC
+			var clipAttributes:VidiunClipAttributes; // compile this type into VMC
 			super.result(data);
 			
-			if (data.data && data.data is KalturaBaseEntry) {
-				var resultEntry:KalturaBaseEntry = data.data as KalturaBaseEntry;
+			if (data.data && data.data is VidiunBaseEntry) {
+				var resultEntry:VidiunBaseEntry = data.data as VidiunBaseEntry;
 				var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
 				var dsp:IEventDispatcher = (_model.getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
-				if (_eventType == KedEntryEvent.GET_REPLACEMENT_ENTRY) {
+				if (_eventType == VedEntryEvent.GET_REPLACEMENT_ENTRY) {
 					edp.selectedReplacementEntry = resultEntry;
 				}
-				else if (_eventType == KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
-					var selectedEntry:KalturaBaseEntry = edp.selectedEntry;
+				else if (_eventType == VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
+					var selectedEntry:VidiunBaseEntry = edp.selectedEntry;
 					EntryUtil.updateChangebleFieldsOnly(resultEntry, selectedEntry);
-					var e:KedDataEvent = new KedDataEvent(KedDataEvent.ENTRY_RELOADED);
+					var e:VedDataEvent = new VedDataEvent(VedDataEvent.ENTRY_RELOADED);
 					e.data = selectedEntry; 
 					dsp.dispatchEvent(e);
 					
@@ -59,7 +59,7 @@ package com.kaltura.edw.control.commands {
 				}
 				else {
 					// let the env.app know the entry is loaded so it can open another drilldown window
-					var ee:KedDataEvent = new KedDataEvent(KedDataEvent.OPEN_ENTRY);
+					var ee:VedDataEvent = new VedDataEvent(VedDataEvent.OPEN_ENTRY);
 					ee.data = resultEntry; 
 					dsp.dispatchEvent(ee);
 				}
@@ -73,8 +73,8 @@ package com.kaltura.edw.control.commands {
 		
 		override public function fault(info:Object):void {
 			//if entry replacement doesn't exist it means that the replacement is ready
-			if (_eventType == KedEntryEvent.GET_REPLACEMENT_ENTRY || _eventType == KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
-				var er:KalturaError = (info as KalturaEvent).error;
+			if (_eventType == VedEntryEvent.GET_REPLACEMENT_ENTRY || _eventType == VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS) {
+				var er:VidiunError = (info as VidiunEvent).error;
 				if (er.errorCode == APIErrorCode.ENTRY_ID_NOT_FOUND) {
 					trace("GetSingleEntryCommand 703");
 					_model.decreaseLoadCounter();

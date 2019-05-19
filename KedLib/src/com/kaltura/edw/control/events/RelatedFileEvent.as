@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunAttachmentAsset;
 	
-	public class RelatedFileEvent extends KMvCEvent
+	public class RelatedFileEvent extends VMvCEvent
 	{
 		public static const LIST_RELATED_FILES:String = "listRelatedFiles";
 		public static const SAVE_ALL_RELATED:String = "saveAllRelated";
 		public static const UPDATE_RELATED_FILE:String = "updateRelatedFile";
 
-		public var attachmentAsset:KalturaAttachmentAsset;
+		public var attachmentAsset:VidiunAttachmentAsset;
 		/**
 		 * array of related files to add 
 		 */		

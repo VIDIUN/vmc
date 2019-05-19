@@ -10,15 +10,15 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.components.filter.CategoriesTree;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.components.filter.CategoriesTree;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import mx.managers.PopUpManager;
 			import mx.utils.StringUtil;
@@ -39,16 +39,16 @@
 
 			private function saveNewCategory(event:Event = null):void {
 				var name:String = StringUtil.trim(newCategoryName.text);
-				var newCategory:KalturaCategory = new KalturaCategory();
+				var newCategory:VidiunCategory = new VidiunCategory();
 				newCategory.name = name;
 				newCategory.parentId = parentCategory.id;
 
 				
-				var e:KedDataEvent = new KedDataEvent(CategoriesTree.OPEN_ADD_CATEGORY);
+				var e:VedDataEvent = new VedDataEvent(CategoriesTree.OPEN_ADD_CATEGORY);
 				e.data = newCategory;
 				dispatchEvent(e);
 				
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_ADD_ADMIN_TAGS,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT,VidiunStatsVmcEventType.CONTENT_ADD_ADMIN_TAGS,
 														  "CategoriesTree>AddNewCategory");
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_ADD_CATEGORY, GoogleAnalyticsConsts.CONTENT);
 				closeWindow();

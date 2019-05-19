@@ -194,7 +194,7 @@ package com.adobe.utils
 		}
 		
 		/**
-		 *	Compares two arrays containing Kaltura objects and returns a boolean indicating whether the arrays
+		 *	Compares two arrays containing Vidiun objects and returns a boolean indicating whether the arrays
 		 * 
 		 * 	@param arr1 The first array that will be compared to the second.
 		 *
@@ -207,7 +207,7 @@ package com.adobe.utils
 		 *	@playerversion Flash 9.0
 		 *	@tiptext
 		 */		
-		public static function kalturaObjectArraysAreEqual(arr1:Array, arr2:Array):Boolean
+		public static function vidiunObjectArraysAreEqual(arr1:Array, arr2:Array):Boolean
 		{
 			if( (arr1 &&  !arr2) || (!arr1 && arr2) )
 			{

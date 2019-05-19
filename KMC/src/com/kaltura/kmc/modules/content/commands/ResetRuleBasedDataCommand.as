@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
@@ -7,7 +7,7 @@ package com.kaltura.kmc.modules.content.commands
 	 * reset rulebased playlist data on rule playlsit window close 
 	 * @author Atar
 	 */	
-	public class ResetRuleBasedDataCommand extends KalturaCommand implements ICommand {
+	public class ResetRuleBasedDataCommand extends VidiunCommand implements ICommand {
 		
 		override public function execute(event:CairngormEvent):void
 		{

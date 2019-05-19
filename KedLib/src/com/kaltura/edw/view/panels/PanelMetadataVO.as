@@ -1,4 +1,4 @@
-package com.kaltura.edw.view.panels
+package com.vidiun.edw.view.panels
 {
 	public class PanelMetadataVO
 	{

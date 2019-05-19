@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="470" height="470" 
-				xmlns:cat="com.kaltura.edw.components.fltr.cat.*"
+<containers:ConfinedTitleWindow xmlns:containers="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="470" height="470" 
+				xmlns:cat="com.vidiun.edw.components.fltr.cat.*"
 				creationComplete="creationCompleteHandler(event)" 
 				styleName="TitleWindowType2" showCloseButton="true" close="clearSelection(event)"
 				title="{resourceManager.getString('drilldown', 'catTree')}">
@@ -12,13 +12,13 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.mx_internal;
@@ -29,7 +29,7 @@
 			public var filterModel:FilterModel;
 			
 			[Bindable]
-			public var kClient:KalturaClient;
+			public var vClient:VidiunClient;
 			
 			[Bindable]
 			/**
@@ -44,14 +44,14 @@
 			
 			/**
 			 * set categories which will appear as selected
-			 * @param value	Array of KalturaCategory objects
+			 * @param value	Array of VidiunCategory objects
 			 * */
 			public function setCategories(value:Array):void {
 				if (catComplete) {
 					catComplete.selectedItems = new ArrayCollection(value);
 					var catids:String = '';
-					for each (var kCat:KalturaCategory in value) {
-						catids += kCat.id + ",";
+					for each (var vCat:VidiunCategory in value) {
+						catids += vCat.id + ",";
 					}
 					catTree.filter = catids;
 				}
@@ -61,7 +61,7 @@
 			}
 			
 			/**
-			 * get list of selected categories (KalturaCategory objects)
+			 * get list of selected categories (VidiunCategory objects)
 			 * */
 			public function getCategories():Array {
 				return catComplete.selectedItems.source;
@@ -85,16 +85,16 @@
 			protected function catTree_valueChangeHandler(event:FilterComponentEvent):void
 			{
 				var fromTree:Array = catTree.getSelectedCategories(); // CategoryVo objects
-				var fromAC:ArrayCollection = catComplete.selectedItems;			// KalturaCategory objects
+				var fromAC:ArrayCollection = catComplete.selectedItems;			// VidiunCategory objects
 				
-				var kCat:KalturaCategory;
+				var vCat:VidiunCategory;
 				if (event.kind == FilterComponentEvent.EVENT_KIND_ADD) {
-					// get unique KalturaCategories
+					// get unique VidiunCategories
 					var found:Boolean;
 					for each (var catvo:CategoryVO in fromTree) {
 						found = false;
-						for each (kCat in fromAC) {
-							if (kCat.id == catvo.id) {
+						for each (vCat in fromAC) {
+							if (vCat.id == catvo.id) {
 								found = true;
 								break;
 							}
@@ -107,8 +107,8 @@
 				else if (event.kind == FilterComponentEvent.EVENT_KIND_REMOVE) {
 					// event.data.value is cat.id
 					for (var i:int = 0; i< fromAC.length; i++) {
-						kCat = fromAC.getItemAt(i) as KalturaCategory;
-						if (kCat.id == event.data.value) {
+						vCat = fromAC.getItemAt(i) as VidiunCategory;
+						if (vCat.id == event.data.value) {
 							// if in autocomplete, remove it.
 							fromAC.removeItemAt(i);
 						} 
@@ -120,14 +120,14 @@
 			protected function catComplete_valueChangeHandler(event:GeneralNonCairngormEvent):void {
 				if (event.data) {
 					// event.data is selected item in autocomplete
-					var cat:KalturaCategory = event.data as KalturaCategory;
+					var cat:VidiunCategory = event.data as VidiunCategory;
 					catTree.addByCatId(cat.id.toString(), true, cat);
 				}
 				else {
 					// reset selected items in tree
 					var catids:String = '';
-					for each (var kCat:KalturaCategory in catComplete.selectedItems) {
-						catids += kCat.id + ",";
+					for each (var vCat:VidiunCategory in catComplete.selectedItems) {
+						catids += vCat.id + ",";
 					}
 					if (catids.length) {
 						catids = catids.substring(0, catids.length-1);
@@ -144,7 +144,7 @@
 
 		]]>
 	</mx:Script>
-	<cat:CategoryAutocomplete id="catComplete" kClient="{kClient}" width="100%" height="60" 
+	<cat:CategoryAutocomplete id="catComplete" vClient="{vClient}" width="100%" height="60" 
 							  visible="{showText}" includeInLayout="{showText}"
 							  valueChange="catComplete_valueChangeHandler(event)"
 							  keepValues="true"/>

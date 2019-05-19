@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.analytics.business
+package com.vidiun.vmc.modules.analytics.business
 {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
 	
 	import mx.events.ListEvent;
 
 	/**
-	 * manages date changes in KalturaReportView's Filter.
+	 * manages date changes in VidiunReportView's Filter.
 	 * supplies the list of values for the date range combo box, a handler function for its change
 	 * and the reverse "date to range" function.
-	 * @see com.kaltura.kmc.modules.analytics.view.Filter
+	 * @see com.vidiun.vmc.modules.analytics.view.Filter
 	 *  
 	 * @author atar.shadmi
 	 * 

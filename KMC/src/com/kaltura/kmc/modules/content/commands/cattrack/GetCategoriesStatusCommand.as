@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.content.commands.cattrack
+package com.vidiun.vmc.modules.content.commands.cattrack
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerListFeatureStatus;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.types.KalturaFeatureStatusType;
-	import com.kaltura.vo.KalturaFeatureStatus;
-	import com.kaltura.vo.KalturaFeatureStatusListResponse;
+	import com.vidiun.commands.partner.PartnerListFeatureStatus;
+	import com.vidiun.edw.business.VedJSGate;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.types.VidiunFeatureStatusType;
+	import com.vidiun.vo.VidiunFeatureStatus;
+	import com.vidiun.vo.VidiunFeatureStatusListResponse;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -19,15 +19,15 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class GetCategoriesStatusCommand extends KalturaCommand {
+	public class GetCategoriesStatusCommand extends VidiunCommand {
 		
 		
 		override public function execute(event:CairngormEvent):void {
 			var mr:PartnerListFeatureStatus = new PartnerListFeatureStatus();
 			mr.useTimeout = false; // if a TO is encountered, it lowers the loadCounter below 0.
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);
 			
 		}
 		
@@ -35,17 +35,17 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 			var isErr:Boolean = checkError(data);
 			if (!isErr) {
 				var dsp:EventDispatcher = new EventDispatcher();
-				var kfslr:KalturaFeatureStatusListResponse = data.data as KalturaFeatureStatusListResponse;
+				var vfslr:VidiunFeatureStatusListResponse = data.data as VidiunFeatureStatusListResponse;
 				var lockFlagFound:Boolean;
 				var updateFlagFound:Boolean;
 				var updateEntsFlagFound:Boolean;
-				for each (var kfs:KalturaFeatureStatus in kfslr.objects) {
-					switch (kfs.type) {
-						case KalturaFeatureStatusType.LOCK_CATEGORY:
+				for each (var vfs:VidiunFeatureStatus in vfslr.objects) {
+					switch (vfs.type) {
+						case VidiunFeatureStatusType.LOCK_CATEGORY:
 							lockFlagFound = true;
 							updateFlagFound = true;
 							break;
-						case KalturaFeatureStatusType.CATEGORY:
+						case VidiunFeatureStatusType.CATEGORY:
 							updateFlagFound = true;
 							break;
 					}
@@ -72,17 +72,17 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 		}
 		
 		override public function fault(info:Object):void {
-			if (!info || !(info is KalturaEvent)) return;
+			if (!info || !(info is VidiunEvent)) return;
 			
-			var er:KalturaError = (info as KalturaEvent).error;
+			var er:VidiunError = (info as VidiunEvent).error;
 			if (!er) return;
 			
 			trace("GetCategoriesStatusCommand.fault:", er.errorCode);
-			if (er.errorCode == APIErrorCode.INVALID_KS) {
-				KedJSGate.expired();
+			if (er.errorCode == APIErrorCode.INVALID_VS) {
+				VedJSGate.expired();
 			}
 			else if (er.errorCode == APIErrorCode.SERVICE_FORBIDDEN) {
-				KedJSGate.expired();
+				VedJSGate.expired();
 			}
 			else if (er.errorMsg) {
 				// only show error messages if they are "real errors" 

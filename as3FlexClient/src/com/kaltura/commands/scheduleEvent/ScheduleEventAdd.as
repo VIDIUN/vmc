@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleEvent
+package com.vidiun.commands.scheduleEvent
 {
-		import com.kaltura.vo.KalturaScheduleEvent;
-	import com.kaltura.delegates.scheduleEvent.ScheduleEventAddDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduleEvent;
+	import com.vidiun.delegates.scheduleEvent.ScheduleEventAddDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* Allows you to add a new KalturaScheduleEvent object
+	* Allows you to add a new VidiunScheduleEvent object
 	**/
-	public class ScheduleEventAdd extends KalturaCall
+	public class ScheduleEventAdd extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param scheduleEvent KalturaScheduleEvent
+		* @param scheduleEvent VidiunScheduleEvent
 		**/
-		public function ScheduleEventAdd( scheduleEvent : KalturaScheduleEvent )
+		public function ScheduleEventAdd( scheduleEvent : VidiunScheduleEvent )
 		{
 			service= 'schedule_scheduleevent';
 			action= 'add';
@@ -49,7 +49,7 @@ package com.kaltura.commands.scheduleEvent
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(scheduleEvent, 'scheduleEvent');
+				keyValArr = vidiunObject2Arrays(scheduleEvent, 'scheduleEvent');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

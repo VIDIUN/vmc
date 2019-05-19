@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- Represents the check box for "Distribute Automatically" column. only one component can appear: check box OR label -->
 <distribution:CBLabelComponent xmlns:mx="http://www.adobe.com/2006/mxml" 
-							 xmlns:components="com.kaltura.kmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.kaltura.edw.view.distribution.*">
+							 xmlns:components="com.vidiun.vmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.vidiun.edw.view.distribution.*">
 	<mx:Metadata>
 		[ResourceBundle("drilldown")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.types.KalturaDistributionProfileActionStatus;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaEntryDistribution;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.types.VidiunDistributionProfileActionStatus;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			import com.vidiun.vo.VidiunEntryDistribution;
 			
 			import mx.binding.utils.BindingUtils;
 			private var _distributionWithProfile:EntryDistributionWithProfile
@@ -18,20 +18,20 @@
 			override public function set data(value:Object):void {
 				_distributionWithProfile = value as EntryDistributionWithProfile;
 
-				switch (_distributionWithProfile.kalturaEntryDistribution.status) {
-					case KalturaEntryDistributionStatus.READY:
-					case KalturaEntryDistributionStatus.ERROR_DELETING:
-					case KalturaEntryDistributionStatus.ERROR_UPDATING:
+				switch (_distributionWithProfile.vidiunEntryDistribution.status) {
+					case VidiunEntryDistributionStatus.READY:
+					case VidiunEntryDistributionStatus.ERROR_DELETING:
+					case VidiunEntryDistributionStatus.ERROR_UPDATING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','distributed');
 						break;
-					case KalturaEntryDistributionStatus.SUBMITTING:
-					case KalturaEntryDistributionStatus.DELETING:
-					case KalturaEntryDistributionStatus.UPDATING:
+					case VidiunEntryDistributionStatus.SUBMITTING:
+					case VidiunEntryDistributionStatus.DELETING:
+					case VidiunEntryDistributionStatus.UPDATING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','inProgress');
 						break;
-					case KalturaEntryDistributionStatus.ERROR_SUBMITTING:
+					case VidiunEntryDistributionStatus.ERROR_SUBMITTING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','distributionError');
 						break;
@@ -49,8 +49,8 @@
 			 * distribute automatically
 			 * */
 			private function setCBEnabled(value:Boolean) : void {
-				if ((_distributionWithProfile.kalturaDistributionProfile.submitEnabled != KalturaDistributionProfileActionStatus.AUTOMATIC) &&
-					(_distributionWithProfile.kalturaEntryDistribution.status != KalturaEntryDistributionStatus.QUEUED))
+				if ((_distributionWithProfile.vidiunDistributionProfile.submitEnabled != VidiunDistributionProfileActionStatus.AUTOMATIC) &&
+					(_distributionWithProfile.vidiunEntryDistribution.status != VidiunEntryDistributionStatus.QUEUED))
 					cbEnabled = value && parentDocument.enableDistribution;
 				else
 					cbEnabled = false;

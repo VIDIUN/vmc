@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!---
-	 KMC Dashboard module
+	 VMC Dashboard module
 	 First phase - Launch link and show basic graphs
 -->
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" 
-				   xmlns:modules="com.kaltura.kmc.modules.*"
-				   preloader="com.kaltura.preloaders.KmcPreloader" 
+<modules:VmcModule xmlns:mx="http://www.adobe.com/2006/mxml" 
+				   xmlns:modules="com.vidiun.vmc.modules.*"
+				   preloader="com.vidiun.preloaders.VmcPreloader" 
 				   backgroundColor="#034F57" layout="vertical"
 				   verticalAlign="top" styleName="mainView"
 				   minHeight="520" minWidth="950" 
 				   verticalGap="0"
-				   xmlns:panels="com.kaltura.kmc.modules.dashboard.panels.*" 
+				   xmlns:panels="com.vidiun.vmc.modules.dashboard.panels.*" 
 				   initialize="onInit()"
 				   >
 
 
 	<mx:Metadata>
-			[ResourceBundle("kdashboard")]
+			[ResourceBundle("vdashboard")]
 			[ResourceBundle("common")]
 		</mx:Metadata>
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.kmc.modules.dashboard.panels.FirstTimeWelcomePanel;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.vmc.modules.dashboard.DashboardManager;
+			import com.vidiun.vmc.modules.dashboard.panels.FirstTimeWelcomePanel;
 			
 			import mx.controls.Alert;
 			import mx.resources.IResourceManager;
 			import mx.resources.ResourceManager;
 			
 			/**
-			 * KMC is responsible to use the value of  
+			 * VMC is responsible to use the value of  
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "dashboard";
@@ -92,7 +92,7 @@
 //					aaa.addChildAt(ft, 0);
 				}
 
-				DashboardManager.instance.kc = _kc;
+				DashboardManager.instance.vc = _vc;
 				var confFile:XML = new XML(_uiconf.confFile);
 				var links:XMLList = confFile.links.link;
 
@@ -105,13 +105,13 @@
 
 				/// set Alert locale for all this application
 				var rm:IResourceManager = ResourceManager.getInstance(); 
-				Alert.yesLabel = rm.getString('kdashboard', 'yes');
-				Alert.noLabel = rm.getString('kdashboard', 'no');
-				Alert.okLabel = rm.getString('kdashboard', 'ok');
-				Alert.cancelLabel = rm.getString('kdashboard', 'cancel');
+				Alert.yesLabel = rm.getString('vdashboard', 'yes');
+				Alert.noLabel = rm.getString('vdashboard', 'no');
+				Alert.okLabel = rm.getString('vdashboard', 'ok');
+				Alert.cancelLabel = rm.getString('vdashboard', 'cancel');
 
-				var ka:KAnalyticsTracker = KAnalyticsTracker.getInstance();
-				ka.init(DashboardManager.instance.kc, "KMC/Dashboard", "2.0", _gaUserId);
+				var va:VAnalyticsTracker = VAnalyticsTracker.getInstance();
+				va.init(DashboardManager.instance.vc, "VMC/Dashboard", "2.0", _gaUserId);
 				
 				if (stage) {
 					initGoogleTracker(null);
@@ -130,7 +130,7 @@
 			 * mode (flashvars: gaDebug=true) the tracker requires the stage.
 			 * */
 			private function initGoogleTracker(event:Event):void {
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/Dashboard");
+				GoogleAnalyticsTracker.getInstance().setBasePath("VMC/Dashboard");
 			}
 			
 			
@@ -162,7 +162,7 @@
 	</modules:states>
 
 	<mx:HBox width="100%" styleName="tabsContainer" height="39" verticalScrollPolicy="off">
-		<mx:Label text="{resourceManager.getString('kdashboard','main_screen_welcome_title',[_userName, _userInfo.role.name, DashboardManager.instance.publisherName])}" 
+		<mx:Label text="{resourceManager.getString('vdashboard','main_screen_welcome_title',[_userName, _userInfo.role.name, DashboardManager.instance.publisherName])}" 
 				  id="welcomeLable" styleName="titleWelcomeLabelStyle" />
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%" styleName="innerView">
@@ -180,4 +180,4 @@
 		
 
 	</mx:HBox>
-</modules:KmcModule>
+</modules:VmcModule>

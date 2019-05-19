@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.studio.business.wizard {
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizFeatures;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizPreviewPlayer;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizStyle;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizTemplate;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizardContent;
-	import com.kaltura.kmc.modules.studio.vo.StyleVo;
-	import com.kaltura.kmc.modules.studio.vo.TemplateVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.AdSourceVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.CompanionAdVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.InPlayerAdVo;
-	import com.kaltura.utils.ObjectUtil;
+package com.vidiun.vmc.modules.studio.business.wizard {
+	import com.vidiun.vmc.modules.studio.view.wizard.ApsWizFeatures;
+	import com.vidiun.vmc.modules.studio.view.wizard.ApsWizPreviewPlayer;
+	import com.vidiun.vmc.modules.studio.view.wizard.ApsWizStyle;
+	import com.vidiun.vmc.modules.studio.view.wizard.ApsWizTemplate;
+	import com.vidiun.vmc.modules.studio.view.wizard.ApsWizardContent;
+	import com.vidiun.vmc.modules.studio.vo.StyleVo;
+	import com.vidiun.vmc.modules.studio.vo.TemplateVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.AdSourceVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.AdvertizingVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.CompanionAdVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.InPlayerAdVo;
+	import com.vidiun.utils.ObjectUtil;
 	
 	import flash.events.EventDispatcher;
 	
@@ -60,13 +60,13 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 		 * Clear the icon/s or the label from the button node in Uiconf, 
 		 * add colors tags and button type
 		 * @param buttonXml		button node to process
-		 * @param kButtonType	the type of the button as the studio sees it
+		 * @param vButtonType	the type of the button as the studio sees it
 		 * @param colorObject	color definitions to apply
 		 * @return processed button node
 		 */
-		protected function clearIconsOrLabels(buttonXml:XML, kButtonType:String, colorObject:StyleVo):XML {
+		protected function clearIconsOrLabels(buttonXml:XML, vButtonType:String, colorObject:StyleVo):XML {
 			// old skin
-			if (kButtonType == "buttonControllerArea") {
+			if (vButtonType == "buttonControllerArea") {
 				// label buttons on the controller
 				delete buttonXml.@Icon;
 				delete buttonXml.@icon;
@@ -81,23 +81,23 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 				delete buttonXml.@selectedDisabledIcon;
 				buttonXml.@buttonType = "labelButton";
 			}
-			else if (kButtonType == "buttonIconControllerArea") {
+			else if (vButtonType == "buttonIconControllerArea") {
 				// icon buttons on the controller
 				delete buttonXml.@label[0];
 				buttonXml.@buttonType = "iconButton";
 			}
 			
 			// new (Falcon) skin
-			else if (kButtonType == "falconButtonIconControllerArea") {
+			else if (vButtonType == "falconButtonIconControllerArea") {
 				// icon buttons on the controller
 				delete buttonXml.@label[0];
 				buttonXml.@buttonType = "normal";
 			}
 			
-			else if (kButtonType == "buttonVideoArea") {
+			else if (vButtonType == "buttonVideoArea") {
 				buttonXml.@buttonType = "onScreenButton";
 			}
-			else if (kButtonType == "falconButtonVideoArea") {
+			else if (vButtonType == "falconButtonVideoArea") {
 				buttonXml.@buttonType = "normal";
 			}
 			
@@ -200,7 +200,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 		 * @return  same player data without the nonactive sub features
 		 */
 		private function deleteNonactiveSubFeatures(player:XML):XML {
-			var activeFeatures:XMLList = _featuresCollection.copy().(attribute("k_value") == "true");
+			var activeFeatures:XMLList = _featuresCollection.copy().(attribute("v_value") == "true");
 			var activeFeatureFormXml:XML;
 			var featureToRemove:XML;
 			var activeFeatureName:String;
@@ -211,7 +211,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 			for each (activeFeatureFormXml in activeFeatures) {
 				activeFeatureName = activeFeatureFormXml.attribute("id")[0].toString();
 				// drill down the feature and find which screens are not active
-				nonActiveFeatures = activeFeatureFormXml.descendants("CheckBox").(attribute("k_value") == "false");
+				nonActiveFeatures = activeFeatureFormXml.descendants("CheckBox").(attribute("v_value") == "false");
 				for each (featureToRemove in nonActiveFeatures) {
 					str = activeFeatureName + featureToRemove.@id.toString();
 					delete(player.descendants().(attribute("id") == str)[0]);
@@ -272,7 +272,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 			fullPlayerCopy = deleteNonactiveFeatures(fullPlayerCopy);
 			fullPlayerCopy = deleteNonactiveSubFeatures(fullPlayerCopy);
 
-			var activeFeatures:XMLList = _featuresCollection.copy().(attribute("k_value") == "true");
+			var activeFeatures:XMLList = _featuresCollection.copy().(attribute("v_value") == "true");
 			var featureXml:XML;
 			var activeFeatureName:String;
 			var attributeToWrite:String;
@@ -280,7 +280,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 
 			var param:XML, element:XML;
 
-			// setting k_param. a general kapram that is defined as changable 
+			// setting v_param. a general vapram that is defined as changable 
 			for each (featureXml in activeFeatures) {
 				// skip radio buttons, they are there for the ui and their relevant valueis taken from their group
 				if (featureXml.localName() == "RadioButton") {
@@ -291,30 +291,30 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 				// first take only the ones that have no "applyTo" and put values on feature element
 
 				// get all parameters
-				var attributesToUpdate:XMLList = featureXml.descendants().(attribute("k_param").toString().length != 0 && attribute("applyTo").toString().length == 0);
+				var attributesToUpdate:XMLList = featureXml.descendants().(attribute("v_param").toString().length != 0 && attribute("applyTo").toString().length == 0);
 				// get the matching elements in the real player XML 
 				var playerElements:XMLList = getElementsWhereIdStartsWith(fullPlayerCopy, activeFeatureName);
 
 				for each (element in playerElements) {
 					for each (param in attributesToUpdate) {
 						// save data to the player :
-						attributeToWrite = param.attribute("k_param").toString();
-						attributeValue = param.attribute("k_value").toString();
+						attributeToWrite = param.attribute("v_param").toString();
+						attributeValue = param.attribute("v_value").toString();
 						element.attribute(attributeToWrite)[0] = attributeValue;
 					}
 				}
 
 				// then take the ones that have "applyTo", for each one get relevant node and apply attributes to the node
 				// get all parameters
-				attributesToUpdate = featureXml.descendants().(attribute("k_param").toString().length != 0 && attribute("applyTo").toString().length > 0);
+				attributesToUpdate = featureXml.descendants().(attribute("v_param").toString().length != 0 && attribute("applyTo").toString().length > 0);
 				// search the matching feature in the real player XML
 				for each (param in attributesToUpdate) {
 					playerElements = fullPlayerCopy.descendants().(attribute("id") == param.@applyTo);
 					// (Atar: I think there should only be one)				
 					for each (element in playerElements) {
 						// save data to the player:
-						attributeToWrite = param.attribute("k_param").toString();
-						attributeValue = param.attribute("k_value").toString();
+						attributeToWrite = param.attribute("v_param").toString();
+						attributeValue = param.attribute("v_value").toString();
 						element.attribute(attributeToWrite)[0] = attributeValue;
 					}
 				}
@@ -325,15 +325,15 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 
 			for each (featureXml in activeFeatures) {
 				activeFeatureName = featureXml.attribute("id")[0].toString();
-				var controllerButtons:XMLList = featureXml.descendants().(attribute("k_param") == "k_buttonType" &&
-					(attribute("k_value") == "buttonIconControllerArea" || attribute("k_value") == "buttonControllerArea"
-						|| attribute("k_value") == "falconButtonIconControllerArea"));
+				var controllerButtons:XMLList = featureXml.descendants().(attribute("v_param") == "v_buttonType" &&
+					(attribute("v_value") == "buttonIconControllerArea" || attribute("v_value") == "buttonControllerArea"
+						|| attribute("v_value") == "falconButtonIconControllerArea"));
 				// controller buttons
 				if (controllerButtons.length() > 0) {
 					var featureNameToLookFor:String = featureXml.@id.toString() + "ControllerScreen"
 					contButton = (fullPlayerCopy.descendants().(attribute("id") == featureNameToLookFor)[0]);
 					if (contButton)
-						clearIconsOrLabels(contButton, controllerButtons.@k_value, style);
+						clearIconsOrLabels(contButton, controllerButtons.@v_value, style);
 				}
 				//screen buttons
 				var onScreenButtonsList:XMLList = featureXml.descendants().((attribute("id") == "StartScreen") 
@@ -341,12 +341,12 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 														|| (attribute("id") == "PauseScreen") 
 														|| (attribute("id") == "PlayScreen"));
 				for each (var onscreenXML:XML in onScreenButtonsList) {
-					if (onscreenXML.@k_value.toString() == "true") {
+					if (onscreenXML.@v_value.toString() == "true") {
 						contButton = (fullPlayerCopy.descendants().(attribute("id") == (featureXml.@id.toString() + onscreenXML.@id.toString()))[0]);
 						// add buttonType attribute on the checkboxes, with default value for old template (buttonVideoArea)
 						// and for new template (falconButtonVideoArea)
 						if (contButton) {
-							if (onscreenXML.@k_buttonType == "falconButtonVideoArea") {
+							if (onscreenXML.@v_buttonType == "falconButtonVideoArea") {
 								clearIconsOrLabels(contButton, "falconButtonVideoArea", style);
 							}
 							else {
@@ -369,8 +369,8 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 			if (gigyaFeature) {
 				var gigyaLayer:XML = fullPlayerCopy.descendants().(attribute("id").toString() == 'gigya')[0];
 				//set the uiconfId only if there is a value
-				if (gigyaFeature.descendants().(attribute("id").toString() == 'uiconfId')[0].@k_value.toString())
-					gigyaLayer.@uiconfId = gigyaFeature.descendants().(attribute("id").toString() == 'uiconfId')[0].@k_value.toString();
+				if (gigyaFeature.descendants().(attribute("id").toString() == 'uiconfId')[0].@v_value.toString())
+					gigyaLayer.@uiconfId = gigyaFeature.descendants().(attribute("id").toString() == 'uiconfId')[0].@v_value.toString();
 			}
 
 			if (style) {
@@ -383,7 +383,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 
 
 			// delete all "selected" attributes from the player
-			// (k_param = selcted)
+			// (v_param = selcted)
 			delete fullPlayerCopy.descendants().@selected
 			//switching the theme to the current theme
 			delete fullPlayerCopy..theme[0];
@@ -444,7 +444,7 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 			// delete previous uiVars elements
 			var uiVarsList:XMLList = fullPlayerCopy.children().child("uiVars");
 			var listLength:uint = uiVarsList.length();
-			for (var k:uint = 0; k < listLength; k++) {
+			for (var v:uint = 0; v < listLength; v++) {
 				delete uiVarsList[0];
 			}
 
@@ -883,19 +883,19 @@ package com.kaltura.kmc.modules.studio.business.wizard {
 				dataFeaturesXml.appendChild(xml);
 			}
 
-			var dataFeatures:XMLList = dataFeaturesXml.descendants().(attribute("k_param").toString().length != 0);
+			var dataFeatures:XMLList = dataFeaturesXml.descendants().(attribute("v_param").toString().length != 0);
 			for each (var dataFeature:XML in dataFeatures) {
 				var fullName:String = dataFeature.@id;
 				if (!fullName)
 					continue;
-				var k_value:String = dataFeature.@k_value;
+				var v_value:String = dataFeature.@v_value;
 				while (dataFeature = dataFeature.parent()) {
 					if (dataFeature.@id[0])
 						fullName = dataFeature.@id + "." + fullName;
 				}
 				var node:XML = <feature/>;
-				node.@k_fullName = fullName;
-				node.@k_value = k_value;
+				node.@v_fullName = fullName;
+				node.@v_value = v_value;
 				featuresXml.appendChild(node);
 			}
 			return featuresXml;

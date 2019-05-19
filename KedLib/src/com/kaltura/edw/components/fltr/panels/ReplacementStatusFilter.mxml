@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaEntryModerationStatus;
-			import com.kaltura.types.KalturaEntryReplacementStatus;
-			import com.kaltura.types.KalturaNullableBoolean;
+			import com.vidiun.types.VidiunEntryModerationStatus;
+			import com.vidiun.types.VidiunEntryReplacementStatus;
+			import com.vidiun.types.VidiunNullableBoolean;
 			
 			import mx.events.FlexEvent;
 			
 			
 			override public function set filter(value:Object):void {
-				if (!value || value == KalturaEntryReplacementStatus.NONE) {
+				if (!value || value == VidiunEntryReplacementStatus.NONE) {
 					//no moderation 
 					all.selected = true;
 					processing.selected = false;
@@ -24,11 +24,11 @@
 					var mods:Array = value.split(',');
 					for each (var mod:String in mods) {
 						switch (mod) {
-							case KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY:
-							case KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
+							case VidiunEntryReplacementStatus.APPROVED_BUT_NOT_READY:
+							case VidiunEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
 								processing.selected = true;
 								break;
-							case KalturaEntryReplacementStatus.READY_BUT_NOT_APPROVED:
+							case VidiunEntryReplacementStatus.READY_BUT_NOT_APPROVED:
 								readyForReview.selected = true;
 								break;
 						}
@@ -40,10 +40,10 @@
 			override public function get filter():Object {
 				var str:String = '';
 				if (processing.selected)
-					str += KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED + "," + 
-						KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY + ",";
+					str += VidiunEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED + "," + 
+						VidiunEntryReplacementStatus.APPROVED_BUT_NOT_READY + ",";
 				if (readyForReview.selected)
-					str += KalturaEntryReplacementStatus.READY_BUT_NOT_APPROVED + ",";
+					str += VidiunEntryReplacementStatus.READY_BUT_NOT_APPROVED + ",";
 				
 				if (str) {
 					// remove last ","

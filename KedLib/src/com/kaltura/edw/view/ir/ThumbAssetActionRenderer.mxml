@@ -3,9 +3,9 @@
 		 verticalGap="0">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.constants.ThumbnailsActionType;
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
-			import com.kaltura.types.KalturaFlavorAssetStatus;
+			import com.vidiun.edw.constants.ThumbnailsActionType;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.types.VidiunFlavorAssetStatus;
 			private var _thumbAsset:ThumbnailWithDimensions;
 			[Bindable]
 			private var _enableActions:Boolean;
@@ -24,11 +24,11 @@
 					else
 						_isDefault = false;
 					
-					if (_thumbAsset.thumbAsset.status == KalturaFlavorAssetStatus.READY) {
+					if (_thumbAsset.thumbAsset.status == VidiunFlavorAssetStatus.READY) {
 						_enableActions = true;
 						return;
 					}
-					if (_thumbAsset.thumbAsset.status == KalturaFlavorAssetStatus.ERROR) {
+					if (_thumbAsset.thumbAsset.status == VidiunFlavorAssetStatus.ERROR) {
 						_enableDelete = true;
 						_enableActions = false;
 						return;

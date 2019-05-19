@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,28 +25,28 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.batchcontrol
+package com.vidiun.commands.batchcontrol
 {
-		import com.kaltura.vo.KalturaScheduler;
-	import com.kaltura.delegates.batchcontrol.BatchcontrolConfigLoadedDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduler;
+	import com.vidiun.delegates.batchcontrol.BatchcontrolConfigLoadedDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* batch configLoaded action saves the configuration as loaded by a remote scheduler
 	**/
-	public class BatchcontrolConfigLoaded extends KalturaCall
+	public class BatchcontrolConfigLoaded extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param scheduler KalturaScheduler
+		* @param scheduler VidiunScheduler
 		* @param configParam String
 		* @param configValue String
 		* @param configParamPart String
 		* @param workerConfigId int
 		* @param workerName String
 		**/
-		public function BatchcontrolConfigLoaded( scheduler : KalturaScheduler,configParam : String,configValue : String,configParamPart : String = null,workerConfigId : int=int.MIN_VALUE,workerName : String = null )
+		public function BatchcontrolConfigLoaded( scheduler : VidiunScheduler,configParam : String,configValue : String,configParamPart : String = null,workerConfigId : int=int.MIN_VALUE,workerName : String = null )
 		{
 			service= 'batchcontrol';
 			action= 'configLoaded';
@@ -54,7 +54,7 @@ package com.kaltura.commands.batchcontrol
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(scheduler, 'scheduler');
+				keyValArr = vidiunObject2Arrays(scheduler, 'scheduler');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('configParam');

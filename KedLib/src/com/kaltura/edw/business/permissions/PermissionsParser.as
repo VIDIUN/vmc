@@ -1,5 +1,5 @@
-package com.kaltura.edw.business.permissions {
-	import com.kaltura.edw.vo.PermissionVo;
+package com.vidiun.edw.business.permissions {
+	import com.vidiun.edw.vo.PermissionVo;
 	
 	/**
 	 * This parser receives an XML and knows to build instructions.

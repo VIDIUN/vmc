@@ -42,7 +42,7 @@ formBuilder:FormBuilderBase
       <w>210</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>_KMCMetadataProfileVO_
+    <panel_attributes>_VMCMetadataProfileVO_
 --
 represents a profile 
 of metadata custom fields
@@ -66,7 +66,7 @@ entry metadata
 --
 metadataDataObject:MetadataDataObject
 finalViewMxml:XML
-metadata:KalturaMetadata
+metadata:VidiunMetadata
 
 
 </panel_attributes>
@@ -100,7 +100,7 @@ changed in the form
 --
 __
 --
-metadataProfile:KMCMetadataProfileVO
+metadataProfile:VMCMetadataProfileVO
 metadataInfo:CustomMetadataDataVO
 
 </panel_attributes>
@@ -136,7 +136,7 @@ metadataInfo:CustomMetadataDataVO
       <w>210</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>_KalturaMetadata_
+    <panel_attributes>_VidiunMetadata_
 --
 entry metadata
 </panel_attributes>
@@ -309,7 +309,7 @@ init:List Metadata Profiles
       <h>60</h>
     </coordinates>
     <panel_attributes>ListMetadataProfileCommand:
-create KMCMetadataProfileVO 
+create VMCMetadataProfileVO 
 and FormBuilders
 bg=white</panel_attributes>
     <additional_attributes/>

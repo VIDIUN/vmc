@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.admin.model
+package com.vidiun.vmc.modules.admin.model
 {
-	import com.kaltura.types.KalturaPermissionStatus;
-	import com.kaltura.types.KalturaPermissionType;
-	import com.kaltura.types.KalturaUserRoleOrderBy;
-	import com.kaltura.types.KalturaUserRoleStatus;
-	import com.kaltura.vo.KalturaPermissionFilter;
-	import com.kaltura.vo.KalturaUserRole;
-	import com.kaltura.vo.KalturaUserRoleFilter;
+	import com.vidiun.types.VidiunPermissionStatus;
+	import com.vidiun.types.VidiunPermissionType;
+	import com.vidiun.types.VidiunUserRoleOrderBy;
+	import com.vidiun.types.VidiunUserRoleStatus;
+	import com.vidiun.vo.VidiunPermissionFilter;
+	import com.vidiun.vo.VidiunUserRole;
+	import com.vidiun.vo.VidiunUserRoleFilter;
 	
 	import mx.collections.ArrayCollection;
 
@@ -15,24 +15,24 @@ package com.kaltura.kmc.modules.admin.model
 		
 		public function RolesModel(){
 			// get only active roles (not deleted)
-			rolesFilter = new KalturaUserRoleFilter();
-			rolesFilter.statusEqual = KalturaUserRoleStatus.ACTIVE;
-			rolesFilter.orderBy = KalturaUserRoleOrderBy.ID_ASC;
-			rolesFilter.tagsMultiLikeOr = 'kmc';
+			rolesFilter = new VidiunUserRoleFilter();
+			rolesFilter.statusEqual = VidiunUserRoleStatus.ACTIVE;
+			rolesFilter.orderBy = VidiunUserRoleOrderBy.ID_ASC;
+			rolesFilter.tagsMultiLikeOr = 'vmc';
 			// only get speacial, non-deleted features
-			permissionsFilter = new KalturaPermissionFilter();
-			permissionsFilter.typeIn = KalturaPermissionType.SPECIAL_FEATURE + ',' + KalturaPermissionType.PLUGIN;
-			permissionsFilter.statusEqual = KalturaPermissionStatus.ACTIVE;
+			permissionsFilter = new VidiunPermissionFilter();
+			permissionsFilter.typeIn = VidiunPermissionType.SPECIAL_FEATURE + ',' + VidiunPermissionType.PLUGIN;
+			permissionsFilter.statusEqual = VidiunPermissionStatus.ACTIVE;
 		}
 		
 		/**
 		 * the active role entry.
 		 * */
-		public var selectedRole:KalturaUserRole;
+		public var selectedRole:VidiunUserRole;
 		
-		[ArrayElementType("KalturaUserRole")]
+		[ArrayElementType("VidiunUserRole")]
 		/**
-		 * list of all roles (KalturaRole objects) 
+		 * list of all roles (VidiunRole objects) 
 		 */
 		public var roles:ArrayCollection;
 		
@@ -44,13 +44,13 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the filter used for listing roles. 
 		 */		
-		public var rolesFilter:KalturaUserRoleFilter;
+		public var rolesFilter:VidiunUserRoleFilter;
 		
 		/**
 		 * the filter used for listing partner permissions
 		 * (only get speacial features). 
 		 */		
-		public var permissionsFilter:KalturaPermissionFilter;
+		public var permissionsFilter:VidiunPermissionFilter;
 		
 		
 		/**
@@ -65,7 +65,7 @@ package com.kaltura.kmc.modules.admin.model
 		 * drilldown window for it. since the only way to trigger ui actions
 		 * is via binding, we'll use this propoerty.    
 		 */		
-		public var newRole:KalturaUserRole;
+		public var newRole:VidiunUserRole;
 		
 		
 		/**
@@ -74,7 +74,7 @@ package com.kaltura.kmc.modules.admin.model
 		public var partnerPermissionsUiconf:XML;
 		
 		/**
-		 * a list of permissions ids from the KalturaPartner data (features, plugins)
+		 * a list of permissions ids from the VidiunPartner data (features, plugins)
 		 */
 		public var partnerPermissions:String;
 	}

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.create
+package com.vidiun.vmc.modules.create
 {
-	import com.kaltura.KalturaClient;
+	import com.vidiun.VidiunClient;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

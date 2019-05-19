@@ -1,24 +1,24 @@
-package com.kaltura.managers {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.flavorAsset.FlavorAssetAdd;
-	import com.kaltura.commands.flavorAsset.FlavorAssetSetContent;
-	import com.kaltura.commands.media.MediaUpdateContent;
-	import com.kaltura.commands.uploadToken.UploadTokenAdd;
-	import com.kaltura.commands.uploadToken.UploadTokenDelete;
-	import com.kaltura.commands.uploadToken.UploadTokenUpload;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.FileUploadEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.utils.KStringUtil;
-	import com.kaltura.vo.FileUploadVO;
-	import com.kaltura.vo.KalturaAssetParamsResourceContainer;
-	import com.kaltura.vo.KalturaAssetsParamsResourceContainers;
-	import com.kaltura.vo.KalturaFlavorAsset;
-	import com.kaltura.vo.KalturaResource;
-	import com.kaltura.vo.KalturaUploadToken;
-	import com.kaltura.vo.KalturaUploadedFileTokenResource;
+package com.vidiun.managers {
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.flavorAsset.FlavorAssetAdd;
+	import com.vidiun.commands.flavorAsset.FlavorAssetSetContent;
+	import com.vidiun.commands.media.MediaUpdateContent;
+	import com.vidiun.commands.uploadToken.UploadTokenAdd;
+	import com.vidiun.commands.uploadToken.UploadTokenDelete;
+	import com.vidiun.commands.uploadToken.UploadTokenUpload;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.FileUploadEvent;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.types.VidiunMediaType;
+	import com.vidiun.utils.VStringUtil;
+	import com.vidiun.vo.FileUploadVO;
+	import com.vidiun.vo.VidiunAssetParamsResourceContainer;
+	import com.vidiun.vo.VidiunAssetsParamsResourceContainers;
+	import com.vidiun.vo.VidiunFlavorAsset;
+	import com.vidiun.vo.VidiunResource;
+	import com.vidiun.vo.VidiunUploadToken;
+	import com.vidiun.vo.VidiunUploadedFileTokenResource;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -30,7 +30,7 @@ package com.kaltura.managers {
 	import mx.resources.ResourceManager;
 
 	/**
-	 * This class will handle all file uploads for the current KMC session, and the 
+	 * This class will handle all file uploads for the current VMC session, and the 
 	 * association of uploaded files with relevant entries / flavors.
 	 * 
 	 * file statuses:
@@ -85,9 +85,9 @@ package com.kaltura.managers {
 		public var filesCollection:ArrayCollection;
 
 		/**
-		 * @copy #kc 
+		 * @copy #vc 
 		 */
-		private var _kc:KalturaClient;
+		private var _vc:VidiunClient;
 
 		
 		/**
@@ -156,24 +156,24 @@ package com.kaltura.managers {
 			*/
 			_preprocessedFiles.push(file);
 			// create upload token
-			var ut:KalturaUploadToken = new KalturaUploadToken();
+			var ut:VidiunUploadToken = new VidiunUploadToken();
 			ut.fileName = file.name;
 			ut.fileSize = file.fileSize;
 			var uta:UploadTokenAdd = new UploadTokenAdd(ut);
 			// add listeners for complete / failed
 			// pass events via fuv so we can retrieve a relevant vo after the call returns.
 			if (isNew) {
-				file.addEventListener(KalturaEvent.COMPLETE, addFlavorAsset/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, addFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.COMPLETE, addFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.FAILED, addFlavorAsset/*, false, 0, true*/);
 			}
 			else {
-				file.addEventListener(KalturaEvent.COMPLETE, updateFlavorAsset/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, updateFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.COMPLETE, updateFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.FAILED, updateFlavorAsset/*, false, 0, true*/);
 			}
 			
-			uta.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-			uta.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
-			_kc.post(uta);
+			uta.addEventListener(VidiunEvent.COMPLETE, file.bubbleEvent);
+			uta.addEventListener(VidiunEvent.FAILED, file.bubbleEvent);
+			_vc.post(uta);
 		}
 		
 		
@@ -191,13 +191,13 @@ package com.kaltura.managers {
 			*/
 			var mr:MultiRequest = new MultiRequest();
 			var uta:UploadTokenAdd;
-			var ut:KalturaUploadToken;
+			var ut:VidiunUploadToken;
 			var vo:FileUploadVO;
 			for (var i:int = 0; i<filesData.length; i++) {
 				vo = filesData[i];
 				_preprocessedFiles.push(vo);
 				// create upload token
-				ut = new KalturaUploadToken();
+				ut = new VidiunUploadToken();
 				ut.fileName = vo.name;
 				ut.fileSize = vo.fileSize;
 				uta = new UploadTokenAdd(ut);
@@ -205,12 +205,12 @@ package com.kaltura.managers {
 			}
 			// add listeners for complete / failed
 			// pass events via fuv so we can retrieve a relevant vo after the call returns.
-			vo.addEventListener(KalturaEvent.COMPLETE, addContent/*, false, 0, true*/);
-			vo.addEventListener(KalturaEvent.FAILED, addContent/*, false, 0, true*/);
+			vo.addEventListener(VidiunEvent.COMPLETE, addContent/*, false, 0, true*/);
+			vo.addEventListener(VidiunEvent.FAILED, addContent/*, false, 0, true*/);
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, vo.bubbleEvent);
-			mr.addEventListener(KalturaEvent.FAILED, vo.bubbleEvent);
-			_kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, vo.bubbleEvent);
+			mr.addEventListener(VidiunEvent.FAILED, vo.bubbleEvent);
+			_vc.post(mr);
 		}
 		
 		
@@ -234,32 +234,32 @@ package com.kaltura.managers {
 		 * add the received tokens to the specified media entry
 		 * @param e
 		 */		
-		protected function addContent(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, addContent);
-			e.target.removeEventListener(KalturaEvent.FAILED, addContent);
+		protected function addContent(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, addContent);
+			e.target.removeEventListener(VidiunEvent.FAILED, addContent);
 			var er:FileUploadEvent;
-			if (e.type == KalturaEvent.COMPLETE) {
+			if (e.type == VidiunEvent.COMPLETE) {
 				// e.target is a good vo. e.data is the multirequest response
 				// add the uploadTokens to the VOs
-				var ut:KalturaUploadToken;
+				var ut:VidiunUploadToken;
 				var file:FileUploadVO;
 				for each (var o:Object in e.data) {
-					if (o is KalturaUploadToken) {
-						ut = o as KalturaUploadToken;
+					if (o is VidiunUploadToken) {
+						ut = o as VidiunUploadToken;
 						file = getVoByFileName(ut.fileName, true);
 						file.uploadToken = ut.id;
 						if (!file.uploadToken) {
 							trace('no upload token id');
 						}
 					}
-					else if (o is KalturaError) {
+					else if (o is VidiunError) {
 						// dispatch error event with relevant data
 						er = new FileUploadEvent(FileUploadEvent.UPLOAD_ERROR, e.target.entryId);
-						er.error = "Error #209: " + (o as KalturaError).errorMsg;
+						er.error = "Error #209: " + (o as VidiunError).errorMsg;
 						if (debugMode) {
 							trace("UploadTokenAdd failed: ");
-							KStringUtil.traceObject(e.target);
-							KStringUtil.traceObject(e.error.requestArgs);
+							VStringUtil.traceObject(e.target);
+							VStringUtil.traceObject(e.error.requestArgs);
 						}
 						dispatchEvent(er);
 						return;
@@ -271,18 +271,18 @@ package com.kaltura.managers {
 				
 				
 				// the actual resource we send is a list of the containers for the resources we want to replace.                
-				var mediaResource:KalturaResource = new KalturaAssetsParamsResourceContainers();
+				var mediaResource:VidiunResource = new VidiunAssetsParamsResourceContainers();
 				mediaResource.resources = new Array();
 				
 				for each (file in _preprocessedFiles) {
 					if (file.entryId == entryid) {
 						// the resource of the flavor we want to replace
-						var subSubResource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+						var subSubResource:VidiunUploadedFileTokenResource = new VidiunUploadedFileTokenResource();
 						subSubResource.token = file.uploadToken;	// the token used to upload the file
 						if (!subSubResource.token) {
 							throw new Error("Token cannot be null");
 						}
-						if (file.entryType == KalturaMediaType.IMAGE) {
+						if (file.entryType == VidiunMediaType.IMAGE) {
 							/* image entries have a single resource and it should 
 							 * not be sent in a container.
 							 * only one asset might fit this entry, so after finding the 
@@ -291,7 +291,7 @@ package com.kaltura.managers {
 							break;
 						}
 						// container for the resource we want to replace
-						var subResource:KalturaAssetParamsResourceContainer = new KalturaAssetParamsResourceContainer();
+						var subResource:VidiunAssetParamsResourceContainer = new VidiunAssetParamsResourceContainer();
 						subResource.resource = subSubResource;
 						subResource.assetParamsId = file.flavorParamsId;
 						
@@ -304,17 +304,17 @@ package com.kaltura.managers {
 				var mac:MediaUpdateContent = new MediaUpdateContent(entryid, mediaResource, parseInt(file.conversionProfile));
 				
 				// listeners
-				mac.addEventListener(KalturaEvent.COMPLETE, startUploadMulti);
-				mac.addEventListener(KalturaEvent.FAILED, startUploadMulti);
-				_kc.post(mac);
+				mac.addEventListener(VidiunEvent.COMPLETE, startUploadMulti);
+				mac.addEventListener(VidiunEvent.FAILED, startUploadMulti);
+				_vc.post(mac);
 			}
 			else {
 				// dispatch error event with relevant data
 				er = new FileUploadEvent(FileUploadEvent.UPLOAD_ERROR, e.target.entryId);
 				if (debugMode) {
 					trace("UploadTokenAdd failed: ");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				er.error = "Error #201: " + e.error.errorMsg;
 				dispatchEvent(er);
@@ -326,10 +326,10 @@ package com.kaltura.managers {
 		 * handle errors if any, or start uploading files. 
 		 * @param e
 		 */
-		protected function startUploadMulti(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, startUploadMulti);
-			e.target.removeEventListener(KalturaEvent.FAILED, startUploadMulti);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function startUploadMulti(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, startUploadMulti);
+			e.target.removeEventListener(VidiunEvent.FAILED, startUploadMulti);
+			if (e.type == VidiunEvent.COMPLETE) {
 				// pass files to files list
 				var entryid:String = e.data.id; // e.data is the updated entry
 				var fuv:FileUploadVO;
@@ -358,8 +358,8 @@ package com.kaltura.managers {
 				er.error = 'Error 202: ' + e.error.errorMsg;
 				if (debugMode) {
 					trace("MediaUpdateContent failed, multi_uploads");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -370,10 +370,10 @@ package com.kaltura.managers {
 		 * handle errors if any, or adds the file to upload queue. 
 		 * @param e
 		 */
-		protected function startUploadSingle(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, startUploadSingle);
-			e.target.removeEventListener(KalturaEvent.FAILED, startUploadSingle);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function startUploadSingle(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, startUploadSingle);
+			e.target.removeEventListener(VidiunEvent.FAILED, startUploadSingle);
+			if (e.type == VidiunEvent.COMPLETE) {
 				// pass files to files list (upload queue)
 				var fuv:FileUploadVO;
 				for (var i:int =_preprocessedFiles.length-1; i>=0; i--) {
@@ -395,8 +395,8 @@ package com.kaltura.managers {
 				er.error = 'Error #203: ' + e.error.errorMsg;
 				if (debugMode) {
 					trace("FlavorAssetSetContent failed:");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -453,11 +453,11 @@ package com.kaltura.managers {
 				utu.queued = false;
 				utu.useTimeout = false;
 				// add listeners with weak references because if upload fails, we can't clean them manually
-				utu.addEventListener(KalturaEvent.COMPLETE, wrapUpUpload, false, 0, true);
-				utu.addEventListener(KalturaEvent.FAILED, wrapUpUpload, false, 0, true);
+				utu.addEventListener(VidiunEvent.COMPLETE, wrapUpUpload, false, 0, true);
+				utu.addEventListener(VidiunEvent.FAILED, wrapUpUpload, false, 0, true);
 				vo.file.addEventListener(IOErrorEvent.IO_ERROR, fileFailed );
 				vo.file.addEventListener(SecurityErrorEvent.SECURITY_ERROR, fileFailed);
-				_kc.post(utu);
+				_vc.post(utu);
 				dispatchEvent(new FileUploadEvent(FileUploadEvent.UPLOAD_STARTED, vo.id));
 			}
 		}
@@ -466,11 +466,11 @@ package com.kaltura.managers {
 		/**
 		 * dispatch complete event and remove the file from the list
 		 */
-		protected function wrapUpUpload(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, wrapUpUpload);
-			e.target.removeEventListener(KalturaEvent.FAILED, wrapUpUpload);
+		protected function wrapUpUpload(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, wrapUpUpload);
+			e.target.removeEventListener(VidiunEvent.FAILED, wrapUpUpload);
 			var file:FileUploadVO;
-			if (e.type == KalturaEvent.COMPLETE) {
+			if (e.type == VidiunEvent.COMPLETE) {
 				file = getUploadByUploadToken(e.data.id);
 				file.status = FileUploadVO.STATUS_COMPLETE;
 				// dispatch "fileUploadComplete" event with relevant unique identifier
@@ -488,8 +488,8 @@ package com.kaltura.managers {
 				er.error = "Error #204: " + e.error.errorMsg;
 				if (debugMode) {
 					trace("UploadTokenUpload failed:");
-					KStringUtil.traceObject(file);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(file);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -505,27 +505,27 @@ package com.kaltura.managers {
 		 * update a single flavor asset, without creating replacement entry 
 		 * @param file
 		 */
-		protected function updateFlavorAsset(e:KalturaEvent = null):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, updateFlavorAsset);
-			e.target.removeEventListener(KalturaEvent.FAILED, updateFlavorAsset);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function updateFlavorAsset(e:VidiunEvent = null):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, updateFlavorAsset);
+			e.target.removeEventListener(VidiunEvent.FAILED, updateFlavorAsset);
+			if (e.type == VidiunEvent.COMPLETE) {
 				var file:FileUploadVO = e.target as FileUploadVO;
-				if (e && e.data is KalturaUploadToken) {
+				if (e && e.data is VidiunUploadToken) {
 					file.uploadToken = e.data.id;
 				}
-				var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+				var resource:VidiunUploadedFileTokenResource = new VidiunUploadedFileTokenResource();
 				// the token we used to upload the file
 				resource.token = file.uploadToken;	
 				var fau:FlavorAssetSetContent = new FlavorAssetSetContent(file.flavorAssetId, resource);
 				
 				// add listeners for complete / failed
 				// pass events via fuv so we can retrieve a relevant vo after the call returns.
-				file.addEventListener(KalturaEvent.COMPLETE, startUploadSingle/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, startUploadSingle/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.COMPLETE, startUploadSingle/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.FAILED, startUploadSingle/*, false, 0, true*/);
 				
-				fau.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				fau.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
-				_kc.post(fau);
+				fau.addEventListener(VidiunEvent.COMPLETE, file.bubbleEvent);
+				fau.addEventListener(VidiunEvent.FAILED, file.bubbleEvent);
+				_vc.post(fau);
 			}
 			else {
 				// dispatch error event with relevant data
@@ -533,8 +533,8 @@ package com.kaltura.managers {
 				er.error = 'Error #205: ' + e.error.errorMsg;
 				if (debugMode) {
 					trace("UploadTokenAdd failed:");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -544,31 +544,31 @@ package com.kaltura.managers {
 		/**
 		 * add a single flavor asset to a no-media entry 
 		 */		
-		protected function addFlavorAsset(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, addFlavorAsset);
-			e.target.removeEventListener(KalturaEvent.FAILED, addFlavorAsset);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function addFlavorAsset(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, addFlavorAsset);
+			e.target.removeEventListener(VidiunEvent.FAILED, addFlavorAsset);
+			if (e.type == VidiunEvent.COMPLETE) {
 				var file:FileUploadVO = e.target as FileUploadVO;
-				file.uploadToken = (e.data as KalturaUploadToken).id;
-				var flavorAsset:KalturaFlavorAsset = new KalturaFlavorAsset();
+				file.uploadToken = (e.data as VidiunUploadToken).id;
+				var flavorAsset:VidiunFlavorAsset = new VidiunFlavorAsset();
 				// pass in the flavorParamsId of the flavor we want this to be;
 				flavorAsset.flavorParamsId = file.flavorParamsId;
 				flavorAsset.setUpdatedFieldsOnly(true);
 				flavorAsset.setInsertedFields(true);
-				var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+				var resource:VidiunUploadedFileTokenResource = new VidiunUploadedFileTokenResource();
 				// the token we used to upload the file
 				resource.token = file.uploadToken;	
 				
 				// add listeners for complete / failed
 				// pass events via fuv so we can retrieve a relevant vo after the call returns.
-				file.addEventListener(KalturaEvent.COMPLETE, saveAssetParamsId/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, saveAssetParamsId/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.COMPLETE, saveAssetParamsId/*, false, 0, true*/);
+				file.addEventListener(VidiunEvent.FAILED, saveAssetParamsId/*, false, 0, true*/);
 				
 				var faa:FlavorAssetAdd = new FlavorAssetAdd(file.entryId, flavorAsset);
-				faa.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				faa.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+				faa.addEventListener(VidiunEvent.COMPLETE, file.bubbleEvent);
+				faa.addEventListener(VidiunEvent.FAILED, file.bubbleEvent);
 				// when this call returns, we need to save the assetParamsId to the VO.
-				_kc.post(faa);
+				_vc.post(faa);
 			} 
 			else {
 				// dispatch error event with relevant data
@@ -576,8 +576,8 @@ package com.kaltura.managers {
 				er.error = 'Error #206: ' + e.error.errorMsg;
 				if (debugMode) {
 					trace("UploadTokenAdd failed:");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -588,11 +588,11 @@ package com.kaltura.managers {
 		/**
 		 * saves the result's assetparams id to the target vo 
 		 */
-		protected function saveAssetParamsId(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, saveAssetParamsId);
-			e.target.removeEventListener(KalturaEvent.FAILED, saveAssetParamsId);
-			if (e.type == KalturaEvent.COMPLETE) {
-				(e.target as FileUploadVO).flavorAssetId = (e.data as KalturaFlavorAsset).id;
+		protected function saveAssetParamsId(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, saveAssetParamsId);
+			e.target.removeEventListener(VidiunEvent.FAILED, saveAssetParamsId);
+			if (e.type == VidiunEvent.COMPLETE) {
+				(e.target as FileUploadVO).flavorAssetId = (e.data as VidiunFlavorAsset).id;
 				updateFlavorAsset(e);
 			}
 			else {
@@ -601,8 +601,8 @@ package com.kaltura.managers {
 				er.error = 'Error #207: ' + e.error.errorMsg;
 				if (debugMode) {
 					trace("FlavorAssetAdd failed:");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -628,7 +628,7 @@ package com.kaltura.managers {
 			er.error = ResourceManager.getInstance().getString('cms', 'uploadFailedMessage') + ", " + file.name;
 			if (debugMode) {
 				trace("actual upload failed: ", e.type);
-				KStringUtil.traceObject(e);
+				VStringUtil.traceObject(e);
 			}
 			dispatchEvent(er);
 		}
@@ -652,13 +652,13 @@ package com.kaltura.managers {
 			else {
 				// call uploadToken.delete with relevant upload token.
 				var utd:UploadTokenDelete = new UploadTokenDelete(file.uploadToken);
-				file.addEventListener(KalturaEvent.COMPLETE, handleDeleteResult);
-				file.addEventListener(KalturaEvent.FAILED, handleDeleteResult);
+				file.addEventListener(VidiunEvent.COMPLETE, handleDeleteResult);
+				file.addEventListener(VidiunEvent.FAILED, handleDeleteResult);
 				
-				utd.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				utd.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+				utd.addEventListener(VidiunEvent.COMPLETE, file.bubbleEvent);
+				utd.addEventListener(VidiunEvent.FAILED, file.bubbleEvent);
 				
-				_kc.post(utd);
+				_vc.post(utd);
 			}
 			// Dispatch "fileUploadCanceled" event.
 			dispatchEvent(new FileUploadEvent(FileUploadEvent.UPLOAD_CANCELED, uploadid));
@@ -676,17 +676,17 @@ package com.kaltura.managers {
 		/**
 		 * remove delete listeners, handle error. 
 		 */
-		protected function handleDeleteResult(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, handleDeleteResult);
-			e.target.removeEventListener(KalturaEvent.FAILED, handleDeleteResult);
-			if (e.type == KalturaEvent.FAILED) {
+		protected function handleDeleteResult(e:VidiunEvent):void {
+			e.target.removeEventListener(VidiunEvent.COMPLETE, handleDeleteResult);
+			e.target.removeEventListener(VidiunEvent.FAILED, handleDeleteResult);
+			if (e.type == VidiunEvent.FAILED) {
 				// dispatch error event with relevant data
 				var er:FileUploadEvent = new FileUploadEvent(FileUploadEvent.UPLOAD_ERROR, e.target.id);
 				er.error = "Error #208: " + e.error.errorMsg;
 				if (debugMode) {
 					trace("UploadTokenDelete failed:");
-					KStringUtil.traceObject(e.target);
-					KStringUtil.traceObject(e.error.requestArgs);
+					VStringUtil.traceObject(e.target);
+					VStringUtil.traceObject(e.error.requestArgs);
 				}
 				dispatchEvent(er);
 			}
@@ -827,16 +827,16 @@ package com.kaltura.managers {
 		/**
 		 * client for API requests
 		 */
-		public function get kc():KalturaClient {
-			return _kc;
+		public function get vc():VidiunClient {
+			return _vc;
 		}
 
 
 		/**
 		 * @private
 		 */
-		public function set kc(value:KalturaClient):void {
-			_kc = value;
+		public function set vc(value:VidiunClient):void {
+			_vc = value;
 		}
 
 

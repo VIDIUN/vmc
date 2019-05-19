@@ -1,17 +1,17 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.categories.*;
-	import com.kaltura.edw.control.events.CategoriesTreeEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.categories.*;
+	import com.vidiun.edw.control.events.CategoriesTreeEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 
 	/**
 	 * controller for categories tree
 	 * @internal
-	 * (not to be confused with KMC content's categories screen) 
+	 * (not to be confused with VMC content's categories screen) 
 	 * @author Atar
 	 * 
 	 */	
-	public class CategoriesTreeController extends KMvCController {
+	public class CategoriesTreeController extends VMvCController {
 		
 		public function CategoriesTreeController() {
 			initializeCommands();

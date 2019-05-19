@@ -1,37 +1,37 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.media.MediaListFlags;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaModerationFlag;
-	import com.kaltura.vo.KalturaModerationFlagListResponse;
+	import com.vidiun.commands.media.MediaListFlags;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunModerationFlag;
+	import com.vidiun.vo.VidiunModerationFlagListResponse;
 	
 	import mx.rpc.IResponder;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
+	import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
 
-	public class ListModerationCommand extends KalturaCommand implements ICommand, IResponder
+	public class ListModerationCommand extends VidiunCommand implements ICommand, IResponder
 	{
-		private var _currentEntry : KalturaBaseEntry;
+		private var _currentEntry : VidiunBaseEntry;
 		override public function execute(event:CairngormEvent):void
 		{
-			var e : KMCEntryEvent = event as KMCEntryEvent;
+			var e : VMCEntryEvent = event as VMCEntryEvent;
 			_currentEntry = e.entryVo;
-			var pg:KalturaFilterPager = new KalturaFilterPager();
+			var pg:VidiunFilterPager = new VidiunFilterPager();
 			pg.pageSize = 500;
 			pg.pageIndex = 0;
 			var mlf:MediaListFlags= new MediaListFlags(_currentEntry.id,pg);
-		 	mlf.addEventListener(KalturaEvent.COMPLETE, result);
-			mlf.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mlf);
+		 	mlf.addEventListener(VidiunEvent.COMPLETE, result);
+			mlf.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mlf);
 		}
 		
 		override public function result(data:Object):void
 		{
-			var kmflr:KalturaModerationFlagListResponse;
-			var kmf:KalturaModerationFlag;
+			var vmflr:VidiunModerationFlagListResponse;
+			var vmf:VidiunModerationFlag;
 			_model.moderationModel.moderationsArray.source = data.data.objects as Array;
 		}
 	}

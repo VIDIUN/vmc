@@ -1,26 +1,26 @@
-package com.kaltura.kmc.modules.content.commands.bulk {
+package com.vidiun.vmc.modules.content.commands.bulk {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.bulk.BulkList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.vo.KalturaBulkUploadFilter;
-	import com.kaltura.vo.KalturaBulkUploadListResponse;
-	import com.kaltura.vo.KalturaBulkUploadResult;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.bulk.BulkList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vo.VidiunBulkUploadFilter;
+	import com.vidiun.vo.VidiunBulkUploadListResponse;
+	import com.vidiun.vo.VidiunBulkUploadResult;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
-	public class ListBulkUploadCommand extends KalturaCommand {
+	public class ListBulkUploadCommand extends VidiunCommand {
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			
-			var f:KalturaBulkUploadFilter;
-			var p:KalturaFilterPager;
+			var f:VidiunBulkUploadFilter;
+			var p:VidiunFilterPager;
 			
 			if (event.data) {
 				// use given and save
-				_model.bulkUploadModel.lastFilterUsed = f = event.data[0] as KalturaBulkUploadFilter;
-				_model.bulkUploadModel.lastPagerUsed = p = event.data[1] as KalturaFilterPager;
+				_model.bulkUploadModel.lastFilterUsed = f = event.data[0] as VidiunBulkUploadFilter;
+				_model.bulkUploadModel.lastPagerUsed = p = event.data[1] as VidiunFilterPager;
 			}
 			else {
 				// use saved
@@ -30,19 +30,19 @@ package com.kaltura.kmc.modules.content.commands.bulk {
 			
 			
 			var listBulks:BulkList = new BulkList(f, p);
-			listBulks.addEventListener(KalturaEvent.COMPLETE, result);
-			listBulks.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(listBulks);
+			listBulks.addEventListener(VidiunEvent.COMPLETE, result);
+			listBulks.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(listBulks);
 
 		}
 
 
 		override public function result(data:Object):void {
 			super.result(data);
-			var kbr:KalturaBulkUploadResult;
+			var vbr:VidiunBulkUploadResult;
 			_model.bulkUploadModel.bulkUploadTotalCount = data.data.totalCount;
 
-			_model.bulkUploadModel.bulkUploads = new ArrayCollection((data.data as KalturaBulkUploadListResponse).objects);
+			_model.bulkUploadModel.bulkUploads = new ArrayCollection((data.data as VidiunBulkUploadListResponse).objects);
 			_model.decreaseLoadCounter();
 		}
 

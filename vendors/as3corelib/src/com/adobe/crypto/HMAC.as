@@ -55,12 +55,12 @@ package com.adobe.crypto {
 		public static function hash( secret:String, message:String, algorithm:Object = null ):String
 		{
 			var text:ByteArray = new ByteArray();
-			var k_secret:ByteArray = new ByteArray();
+			var v_secret:ByteArray = new ByteArray();
 			
 			text.writeUTFBytes(message);
-			k_secret.writeUTFBytes(secret);
+			v_secret.writeUTFBytes(secret);
 			
-			return hashBytes(k_secret, text, algorithm);
+			return hashBytes(v_secret, text, algorithm);
 		}
 		
 		/**

@@ -5,7 +5,7 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaLiveStreamBitrate;
+			import com.vidiun.vo.VidiunLiveStreamBitrate;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.UIComponent;
@@ -38,7 +38,7 @@
 			
 			/**
 			 * build the bitrates array.
-			 * @return array of <code>KalturaLiveStreamBitrate</code>
+			 * @return array of <code>VidiunLiveStreamBitrate</code>
 			 * 		(possibly empty), or null if failed validation
 			 * */
 			public function getBitrates():Array {
@@ -51,21 +51,21 @@
 					cb = this["bitrate" + i] as CheckBox;
 					if (cb && cb.selected) {
 						// found a selected bitrate checkbox
-						var klsbr:KalturaLiveStreamBitrate = new KalturaLiveStreamBitrate();
+						var vlsbr:VidiunLiveStreamBitrate = new VidiunLiveStreamBitrate();
 						//get bitrate
 						combo = (this["bitrateCombo" + i] as ComboBox);
-						klsbr.bitrate = int(combo.value);
+						vlsbr.bitrate = int(combo.value);
 						//get width & height
 						ns = (this["bitrate" + i + "Width"] as NumericStepper);
-						klsbr.width = ns.value;
+						vlsbr.width = ns.value;
 						ns = (this["bitrate" + i + "Height"] as NumericStepper);
-						klsbr.height = ns.value;
+						vlsbr.height = ns.value;
 						//validate 
-						if (!klsbr.width || !klsbr.height) {
+						if (!vlsbr.width || !vlsbr.height) {
 							return null;
 						}
 						else
-							arr.push(klsbr);
+							arr.push(vlsbr);
 					}
 				}
 				return arr;

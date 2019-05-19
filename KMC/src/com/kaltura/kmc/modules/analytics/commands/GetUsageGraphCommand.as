@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.analytics.commands
+package com.vidiun.vmc.modules.analytics.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.vo.AccountUsageVO;
-	import com.kaltura.commands.partner.PartnerGetUsage;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaPartnerUsage;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.vo.AccountUsageVO;
+	import com.vidiun.commands.partner.PartnerGetUsage;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vo.VidiunPartnerUsage;
 	
 	import mx.rpc.IResponder;
 	
@@ -16,12 +16,12 @@ package com.kaltura.kmc.modules.analytics.commands
 		
 		public function execute(event:CairngormEvent):void
 		{
-			new KalturaPartnerUsage();
+			new VidiunPartnerUsage();
 			var params:Object = event.data;
 			var getPartnerUsage:PartnerGetUsage = new PartnerGetUsage(params.year, params.month, params.resolution);
-			getPartnerUsage.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerUsage.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(getPartnerUsage);	
+			getPartnerUsage.addEventListener(VidiunEvent.COMPLETE, result);
+			getPartnerUsage.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(getPartnerUsage);	
 		}
 		
 		public function result(data:Object):void

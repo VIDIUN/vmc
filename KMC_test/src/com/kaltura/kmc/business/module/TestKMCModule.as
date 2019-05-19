@@ -1,13 +1,13 @@
-package com.kaltura.kmc.business.module
+package com.vidiun.vmc.business.module
 {
-	import com.kaltura.kmc.modules.KmcModule;
-	import com.kaltura.kmc.utils.XMLUtils;
+	import com.vidiun.vmc.modules.VmcModule;
+	import com.vidiun.vmc.utils.XMLUtils;
 	
 	import flexunit.framework.Assert;
 	
 	import org.flexunit.asserts.assertEquals;
 	
-	public class TestKMCModule extends KmcModule
+	public class TestVMCModule extends VmcModule
 	{		
 //		[Before]
 //		public function setUp():void

@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.admin.control.commands {
+package com.vidiun.vmc.modules.admin.control.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.kmc.modules.admin.model.AdminModelLocator;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.vmc.modules.admin.model.AdminModelLocator;
 	
 	import flash.external.ExternalInterface;
 	
@@ -18,8 +18,8 @@ package com.kaltura.kmc.modules.admin.control.commands {
 		 * default implementation for service fault response
 		 */
 		protected function fault(info:Object):void {
-			// invalid KS
-			if (info && info.error && info.error.errorCode == APIErrorCode.INVALID_KS) {
+			// invalid VS
+			if (info && info.error && info.error.errorCode == APIErrorCode.INVALID_VS) {
 				JSGate.expired();
 			}
 			// forbidden service
@@ -29,7 +29,7 @@ package com.kaltura.kmc.modules.admin.control.commands {
 				Alert.show(ResourceManager.getInstance().getString('admin','forbidden_error'), 
 					ResourceManager.getInstance().getString('admin', 'forbidden_error_title'), Alert.OK, null, logout);
 				//de-activate the HTML tabs
-//				ExternalInterface.call("kmc.utils.activateHeader", false);
+//				ExternalInterface.call("vmc.utils.activateHeader", false);
 			}
 			// other errors
 			else if (info && info.error && info.error.errorMsg) {

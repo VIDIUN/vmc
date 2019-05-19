@@ -1,6 +1,6 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
-	import com.kaltura.controls.SM_TimeEntry;
+	import com.vidiun.controls.SM_TimeEntry;
 	
 	import mx.controls.Alert;
 	import mx.controls.DateField;

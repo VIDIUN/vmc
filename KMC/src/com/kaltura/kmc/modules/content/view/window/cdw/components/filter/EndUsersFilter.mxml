@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-				 xmlns:fltr="com.kaltura.edw.components.fltr.*"
+				 xmlns:fltr="com.vidiun.edw.components.fltr.*"
 				 creationComplete="basefilter1_creationCompleteHandler(event)" 
 				 horizontalScrollPolicy="off"
-				 xmlns:filter="com.kaltura.kmc.modules.content.view.window.cdw.components.filter.*">
+				 xmlns:filter="com.vidiun.vmc.modules.content.view.window.cdw.components.filter.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCategoryUserPermissionLevel;
-			import com.kaltura.vo.KalturaCategoryUserFilter;
+			import com.vidiun.types.VidiunCategoryUserPermissionLevel;
+			import com.vidiun.vo.VidiunCategoryUserFilter;
 
 			import mx.events.FlexEvent;
 
 			/**
 			 * create a filter with all basic attributes
 			 * */
-			public static function generateBaseFilter():KalturaCategoryUserFilter {
-				var kalturaFilter:KalturaCategoryUserFilter = new KalturaCategoryUserFilter();
-				kalturaFilter.permissionLevelIn = PermissionLevelFilter.getEmptyFilterString();
-				return kalturaFilter;
+			public static function generateBaseFilter():VidiunCategoryUserFilter {
+				var vidiunFilter:VidiunCategoryUserFilter = new VidiunCategoryUserFilter();
+				vidiunFilter.permissionLevelIn = PermissionLevelFilter.getEmptyFilterString();
+				return vidiunFilter;
 			}
 
 
 			private function basefilter1_creationCompleteHandler(event:FlexEvent):void {
-				if (!_kalturaFilter) {
-					_kalturaFilter = EndUsersFilter.generateBaseFilter();
+				if (!_vidiunFilter) {
+					_vidiunFilter = EndUsersFilter.generateBaseFilter();
 				}
 			}
 
 			/**
-			 * reset kalturaFilter so any values that apply
+			 * reset vidiunFilter so any values that apply
 			 * to the accordion components will be set
 			 * */
 			private function setFilterValues():void {

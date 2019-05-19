@@ -3,10 +3,10 @@
 	 on rule based playlists, this is the window that allows adding a new rule.
 	 opened from <code>RulePlaylistWindow</code>
 -->
-<HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="com.kaltura.containers.*"
-				 xmlns:window="com.kaltura.kmc.modules.content.view.window.*" 
+<HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="com.vidiun.containers.*"
+				 xmlns:window="com.vidiun.vmc.modules.content.view.window.*" 
 				 showCloseButton="true" close="onClose()" help="{onHelp()}" 
-				 implements="com.kaltura.edw.business.IDataOwner"
+				 implements="com.vidiun.edw.business.IDataOwner"
 				 creationComplete="loadFilterData()" height="540" width="780" >
 	<mx:Metadata>
 		[Event (name="removeMe", type="flash.events.Event")]
@@ -14,15 +14,15 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.NewFilterEvent;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+			import com.vidiun.edw.business.IDataOwner;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.LoadEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.NewFilterEvent;
+			import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 
 
 			/**
@@ -33,7 +33,7 @@
 			/**
 			 * in case of editing an existing filter (rule), this is it.
 			 * */
-			public var filterForSingleRule:KalturaMediaEntryFilterForPlaylist;
+			public var filterForSingleRule:VidiunMediaEntryFilterForPlaylist;
 
 			[Bindable]
 			/**
@@ -52,7 +52,7 @@
 			 * dispatch a help event with relevant section data.
 			 * */
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_edit_rule'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_edit_rule'));
 			}
 
 			/**
@@ -64,7 +64,7 @@
 
 			private function loadFilterData():void {
 				var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, this, filterData);
-				KedController.getInstance().dispatch(fe);
+				VedController.getInstance().dispatch(fe);
 			}
 
 			private function initWindow():void {
@@ -72,9 +72,9 @@
 					singleRule.ruleToEdit = filterForSingleRule;
 				}
 				else {
-					singleRule.ruleToEdit = new KalturaMediaEntryFilterForPlaylist();
+					singleRule.ruleToEdit = new VidiunMediaEntryFilterForPlaylist();
 				}
-				//async call to the kaltura server to run the rule filter 
+				//async call to the vidiun server to run the rule filter 
 				singleRule.runRule();
 				PermissionManager.getInstance().applyAllAttributes(this, "addRuleWin");
 			}
@@ -93,8 +93,8 @@
 			 * apply this filter and close the popup
 			 */
 			private function save():void {
-				var kalturaPlaylistFilter:KalturaMediaEntryFilterForPlaylist = (singleRule.ruleFilter);
-				dispatchEvent(new NewFilterEvent(NewFilterEvent.NEW_PLAYLIST_FILTER, kalturaPlaylistFilter));
+				var vidiunPlaylistFilter:VidiunMediaEntryFilterForPlaylist = (singleRule.ruleFilter);
+				dispatchEvent(new NewFilterEvent(NewFilterEvent.NEW_PLAYLIST_FILTER, vidiunPlaylistFilter));
 				onClose();
 			}
 		]]>

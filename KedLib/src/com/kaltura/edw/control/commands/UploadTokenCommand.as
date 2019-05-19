@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.commands.uploadToken.UploadTokenAdd;
-	import com.kaltura.commands.uploadToken.UploadTokenUpload;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.edw.control.events.UploadTokenEvent;
-	import com.kaltura.edw.vo.AssetVO;
-	import com.kaltura.vo.KalturaUploadToken;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.commands.uploadToken.UploadTokenAdd;
+	import com.vidiun.commands.uploadToken.UploadTokenUpload;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.edw.control.events.UploadTokenEvent;
+	import com.vidiun.edw.vo.AssetVO;
+	import com.vidiun.vo.VidiunUploadToken;
 	
 	import flash.net.FileReference;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.vidiun.edw.control.commands.VedCommand;
 
 	/**
 	 * This class will start an upload using uploadToken service. will save the token
@@ -17,33 +17,33 @@ package com.kaltura.edw.control.commands
 	 * @author Michal
 	 * 
 	 */	
-	public class UploadTokenCommand extends KedCommand
+	public class UploadTokenCommand extends VedCommand
 	{
 		private var _fr:FileReference;
 		private var _asset:AssetVO;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			_fr = (event as UploadTokenEvent).fileReference
 			_asset = (event as UploadTokenEvent).assetVo;
 			
-			var uploadToken:KalturaUploadToken = new KalturaUploadToken();
+			var uploadToken:VidiunUploadToken = new VidiunUploadToken();
 			var uploadTokenAdd:UploadTokenAdd = new UploadTokenAdd(uploadToken);
 			
-			uploadTokenAdd.addEventListener(KalturaEvent.COMPLETE, uploadTokenAddHandler);
-			uploadTokenAdd.addEventListener(KalturaEvent.FAILED, fault);
+			uploadTokenAdd.addEventListener(VidiunEvent.COMPLETE, uploadTokenAddHandler);
+			uploadTokenAdd.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(uploadTokenAdd);
 		}
 		
-		private function uploadTokenAddHandler(event:KalturaEvent):void {
-			var result:KalturaUploadToken = event.data as KalturaUploadToken;
+		private function uploadTokenAddHandler(event:VidiunEvent):void {
+			var result:VidiunUploadToken = event.data as VidiunUploadToken;
 			if (result) {
 				_asset.uploadTokenId = result.id;
 				//_caption.downloadUrl = null;
 				var uploadTokenUpload:UploadTokenUpload = new UploadTokenUpload(result.id, _fr);
 				uploadTokenUpload.queued = false;
 				uploadTokenUpload.useTimeout = false;
-				uploadTokenUpload.addEventListener(KalturaEvent.FAILED, fault);
+				uploadTokenUpload.addEventListener(VidiunEvent.FAILED, fault);
 				
 				_client.post(uploadTokenUpload);
 			}

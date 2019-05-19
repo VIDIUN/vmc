@@ -1,47 +1,47 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.commands.ICommand;
-	import com.kaltura.kmvc.control.KMvCController;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.kmvc.model.KMvCModel;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.edw.business.VedJSGate;
+	import com.vidiun.edw.model.datapacks.ContextDataPack;
+	import com.vidiun.edw.model.types.APIErrorCode;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.commands.ICommand;
+	import com.vidiun.vmvc.control.VMvCController;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vmvc.model.VMvCModel;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class KedCommand implements ICommand, IResponder {
+	public class VedCommand implements ICommand, IResponder {
 		/**
 		 * allows saving a reference to the controller on which the event who
 		 * triggered the command was dispatched, to allow dispatching future events.
 		 * saving the reference is the developer's responsibility
 		 * */
-		protected var _dispatcher:KMvCController;
+		protected var _dispatcher:VMvCController;
 		
 		/**
 		 * application data model
 		 * */
-		protected var _model:KMvCModel = KMvCModel.getInstance();
+		protected var _model:VMvCModel = VMvCModel.getInstance();
 		
 		/**
-		 * KalturaClient for making server calls
+		 * VidiunClient for making server calls
 		 */		
-		protected var _client:KalturaClient = (_model.getDataPack(ContextDataPack) as ContextDataPack).kc;
+		protected var _client:VidiunClient = (_model.getDataPack(ContextDataPack) as ContextDataPack).vc;
 		
 		/**
 		 * @inheritDocs
 		 */
 		public function fault(info:Object):void {
 			_model.decreaseLoadCounter();
-			var er:KalturaError = (info as KalturaEvent).error;
+			var er:VidiunError = (info as VidiunEvent).error;
 			if (!er) return;
-			if (er.errorCode == APIErrorCode.INVALID_KS) {
-				KedJSGate.expired();
+			if (er.errorCode == APIErrorCode.INVALID_VS) {
+				VedJSGate.expired();
 			}
 			else if (er.errorCode == APIErrorCode.SERVICE_FORBIDDEN) {
 				// added the support of non closable window
@@ -54,7 +54,7 @@ package com.kaltura.edw.control.commands
 		}
 		
 		protected function logout(e:Object):void {
-			KedJSGate.expired();
+			VedJSGate.expired();
 		}
 		
 		
@@ -67,26 +67,26 @@ package com.kaltura.edw.control.commands
 		 *
 		 */
 		public function result(data:Object):void {
-			var er:KalturaError = (data as KalturaEvent).error;
-			if (er && er.errorCode == APIErrorCode.INVALID_KS) {
-				// redirect to login, or whatever JS does with invalid KS.
-				KedJSGate.expired();
+			var er:VidiunError = (data as VidiunEvent).error;
+			if (er && er.errorCode == APIErrorCode.INVALID_VS) {
+				// redirect to login, or whatever JS does with invalid VS.
+				VedJSGate.expired();
 			}
 		}
 		
 		/**
 		 * display any errors that are encountered in the result
-		 * @param data KalturaEvent
+		 * @param data VidiunEvent
 		 * @return true if errors are found
 		 * 
 		 */		
 		protected function checkErrors(data:Object):Boolean {
 			var isError:Boolean;
 			var str:String;
-			if (data.data is KalturaError) {
-				str = ResourceManager.getInstance().getString('drilldown', (data.data as KalturaError).errorCode);
+			if (data.data is VidiunError) {
+				str = ResourceManager.getInstance().getString('drilldown', (data.data as VidiunError).errorCode);
 				if (!str) {
-					str = (data.data as KalturaError).errorMsg;
+					str = (data.data as VidiunError).errorMsg;
 				} 
 				Alert.show(str, ResourceManager.getInstance().getString('drilldown', 'error'));
 			}
@@ -114,7 +114,7 @@ package com.kaltura.edw.control.commands
 		 * @param er	the error to parse
 		 * @return 		possible localised error message
 		 */
-		protected function getErrorText(er:KalturaError):String {
+		protected function getErrorText(er:VidiunError):String {
 			var str:String = ResourceManager.getInstance().getString('drilldown', er.errorCode);
 			if (!str) {
 				str = er.errorMsg;
@@ -125,7 +125,7 @@ package com.kaltura.edw.control.commands
 		/**
 		 * @inheritDocs
 		 */
-		public function execute(event:KMvCEvent):void {
+		public function execute(event:VMvCEvent):void {
 			throw new Error("execute() must be implemented");
 		}
 	}

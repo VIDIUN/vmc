@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaCoordinate;
+	import com.vidiun.vo.VidiunCoordinate;
 
-	import com.kaltura.vo.KalturaCoordinate;
+	import com.vidiun.vo.VidiunCoordinate;
 
-	import com.kaltura.vo.KalturaEntryLiveStats;
+	import com.vidiun.vo.VidiunEntryLiveStats;
 
 	[Bindable]
-	public dynamic class KalturaGeoTimeLiveStats extends KalturaEntryLiveStats
+	public dynamic class VidiunGeoTimeLiveStats extends VidiunEntryLiveStats
 	{
 		/**
 		**/
-		public var city : KalturaCoordinate;
+		public var city : VidiunCoordinate;
 
 		/**
 		**/
-		public var country : KalturaCoordinate;
+		public var country : VidiunCoordinate;
 
 		override public function getUpdateableParamKeys():Array
 		{

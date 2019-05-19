@@ -2,9 +2,9 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCategoryUserStatus;
-			import com.kaltura.types.KalturaUpdateMethodType;
-			import com.kaltura.vo.KalturaCategoryUser;
+			import com.vidiun.types.VidiunCategoryUserStatus;
+			import com.vidiun.types.VidiunUpdateMethodType;
+			import com.vidiun.vo.VidiunCategoryUser;
 			
 			import mx.events.ListEvent;
 			
@@ -18,28 +18,28 @@
 				
 				// build actions list:
 				var actions:Array = [];
-				var kcu:KalturaCategoryUser = value as KalturaCategoryUser;
+				var vcu:VidiunCategoryUser = value as VidiunCategoryUser;
 				
 				// approve / archive / activate
-				/* if (kcu.status == KalturaCategoryUserStatus.PENDING) {
+				/* if (vcu.status == VidiunCategoryUserStatus.PENDING) {
 					actions.push({label:resourceManager.getString('cms', 'utaApprove'), data:CatUsrTableActions.APPROVE});
 				}
-				else */ if (kcu.status == KalturaCategoryUserStatus.ACTIVE) {
+				else */ if (vcu.status == VidiunCategoryUserStatus.ACTIVE) {
 					actions.push({label:resourceManager.getString('cms', 'utaDeactivate'), data:CatUsrTableActions.DEACTIVATE});
 				}
-				else if (kcu.status == KalturaCategoryUserStatus.NOT_ACTIVE) {
+				else if (vcu.status == VidiunCategoryUserStatus.NOT_ACTIVE) {
 					actions.push({label:resourceManager.getString('cms', 'utaActivate'), data:CatUsrTableActions.ACTIVATE});
 				}
 				
-				if (kcu.status != KalturaCategoryUserStatus.NOT_ACTIVE) {
+				if (vcu.status != VidiunCategoryUserStatus.NOT_ACTIVE) {
 					// permission level
 					actions.push({label:resourceManager.getString('cms', 'utaPermLvl'), data:CatUsrTableActions.EDIT_PERMISSION_LEVEL});
 					
 					// update method
-					if (kcu.updateMethod == KalturaUpdateMethodType.MANUAL) {
+					if (vcu.updateMethod == VidiunUpdateMethodType.MANUAL) {
 						actions.push({label:resourceManager.getString('cms', 'utaMethodAuto'), data:CatUsrTableActions.SET_AUTO_UPDATE});
 					}
-					else if (kcu.updateMethod == KalturaUpdateMethodType.AUTOMATIC) {
+					else if (vcu.updateMethod == VidiunUpdateMethodType.AUTOMATIC) {
 						actions.push({label:resourceManager.getString('cms', 'utaMethodManual'), data:CatUsrTableActions.SET_MANUAL_UPDATE});
 					}
 				}

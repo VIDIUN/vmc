@@ -1,6 +1,6 @@
-package com.kaltura.autocomplete.itemRenderers
+package com.vidiun.autocomplete.itemRenderers
 {
-	import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
+	import com.vidiun.autocomplete.itemRenderers.selection.UserSelectedItem;
 	
 	public class UserFilterSelectedItem extends UserSelectedItem
 	{

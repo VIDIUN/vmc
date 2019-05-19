@@ -3,12 +3,12 @@
 		 verticalAlign="middle" implements="mx.controls.listClasses.IDropInListItemRenderer">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.et.EntryTable;
-			import com.kaltura.edw.components.et.business.EntryTableActions;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaSourceType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.components.et.EntryTable;
+			import com.vidiun.edw.components.et.business.EntryTableActions;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunSourceType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			import mx.controls.listClasses.BaseListData;
 			import mx.controls.listClasses.IDropInListItemRenderer;
@@ -47,7 +47,7 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				
-				if (value is KalturaBaseEntry) {
+				if (value is VidiunBaseEntry) {
 					var a:Array;
 					if ((_listData.owner as EntryTable).showModerationActions) {
 						a = moderationActions.concat();
@@ -55,16 +55,16 @@
 					else {
 						// work on dummy array so binding to CB will be triggered
 						a = allActions.concat();
-						if ((value as KalturaBaseEntry).status != KalturaEntryStatus.READY) {
+						if ((value as VidiunBaseEntry).status != VidiunEntryStatus.READY) {
 							// remove "embed"
 							a.splice(0, 1);
-							if (value is KalturaLiveStreamEntry) {
+							if (value is VidiunLiveStreamEntry) {
 								// remove "edit"
 								a.splice(1, 1);
 							}
 						}
-						if (value is KalturaLiveStreamEntry && 
-							(value as KalturaLiveStreamEntry).sourceType ==  KalturaSourceType.LIVE_STREAM) {
+						if (value is VidiunLiveStreamEntry && 
+							(value as VidiunLiveStreamEntry).sourceType ==  VidiunSourceType.LIVE_STREAM) {
 							// add live dashboard
 							a.push(EntryTableActions.LIVE_DASHBOARD);
 						}

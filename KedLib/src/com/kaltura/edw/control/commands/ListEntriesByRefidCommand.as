@@ -1,26 +1,26 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.baseEntry.BaseEntryList;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaBaseEntryListResponse;
+	import com.vidiun.commands.baseEntry.BaseEntryList;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntryFilter;
+	import com.vidiun.vo.VidiunBaseEntryListResponse;
 
-	public class ListEntriesByRefidCommand extends KedCommand {
+	public class ListEntriesByRefidCommand extends VedCommand {
 		
 		/**
 		 * @inheritDoc
 		 */		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
-			var f:KalturaBaseEntryFilter = new KalturaBaseEntryFilter();
-			f.referenceIdEqual = (event as KedEntryEvent).entryVo.referenceId;
+			var f:VidiunBaseEntryFilter = new VidiunBaseEntryFilter();
+			f.referenceIdEqual = (event as VedEntryEvent).entryVo.referenceId;
 			var getMediaList:BaseEntryList = new BaseEntryList(f);
-			getMediaList.addEventListener(KalturaEvent.COMPLETE, result);
-			getMediaList.addEventListener(KalturaEvent.FAILED, fault);
+			getMediaList.addEventListener(VidiunEvent.COMPLETE, result);
+			getMediaList.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(getMediaList);	  
 		}
 		
@@ -30,7 +30,7 @@ package com.kaltura.edw.control.commands
 		override public function result(data:Object):void
 		{
 			super.result(data);
-			var recievedData:KalturaBaseEntryListResponse = KalturaBaseEntryListResponse(data.data);
+			var recievedData:VidiunBaseEntryListResponse = VidiunBaseEntryListResponse(data.data);
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
 			edp.entriesWSameRefidAsSelected = recievedData.objects;
 			_model.decreaseLoadCounter();

@@ -1,5 +1,5 @@
-package com.kaltura.edw.components.fltr.indicators {
-	import com.kaltura.containers.BoundedFlowBox;
+package com.vidiun.edw.components.fltr.indicators {
+	import com.vidiun.containers.BoundedFlowBox;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -14,7 +14,7 @@ package com.kaltura.edw.components.fltr.indicators {
 	import mx.events.CollectionEventKind;
 
 		
-	[Event(name="boxClicked", type="com.kaltura.edw.components.fltr.indicators.IndicatorsEvent")]
+	[Event(name="boxClicked", type="com.vidiun.edw.components.fltr.indicators.IndicatorsEvent")]
 	
 	public class Indicators extends BoundedFlowBox {
 
@@ -154,7 +154,7 @@ package com.kaltura.edw.components.fltr.indicators {
 	}
 }
 
-import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
+import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
 import mx.controls.Button;
 
 class Indicator {

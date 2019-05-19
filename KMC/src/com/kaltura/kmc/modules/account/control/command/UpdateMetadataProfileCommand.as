@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {	
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.base.types.XSDConstants;
-	import com.kaltura.commands.metadataProfile.MetadataProfileUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.business.CustomDataStringUtil;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KalturaMetadataProfile;
+	import com.vidiun.base.types.XSDConstants;
+	import com.vidiun.commands.metadataProfile.MetadataProfileUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.business.CustomDataStringUtil;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.utils.parsers.MetadataProfileParser;
+	import com.vidiun.vo.VidiunMetadataProfile;
 	
 	import flash.profiler.profile;
 	
@@ -51,10 +51,10 @@ package com.kaltura.kmc.modules.account.control.command
 			}
 			
 			var updateMetadataProfle:MetadataProfileUpdate = new MetadataProfileUpdate(_model.selectedMetadataProfile.profile.id, _model.selectedMetadataProfile.profile, xsd.toString());
-			updateMetadataProfle.addEventListener(KalturaEvent.COMPLETE, result);
-			updateMetadataProfle.addEventListener(KalturaEvent.FAILED, fault);
+			updateMetadataProfle.addEventListener(VidiunEvent.COMPLETE, result);
+			updateMetadataProfle.addEventListener(VidiunEvent.FAILED, fault);
 
-			_model.context.kc.post(updateMetadataProfle); 
+			_model.context.vc.post(updateMetadataProfle); 
 		}
 		
 		/**
@@ -65,7 +65,7 @@ package com.kaltura.kmc.modules.account.control.command
 		public function result(data:Object):void
 		{
 			_model.loadingFlag = false;
-			var recievedProfile:KalturaMetadataProfile = KalturaMetadataProfile(data.data);
+			var recievedProfile:VidiunMetadataProfile = VidiunMetadataProfile(data.data);
 			_model.selectedMetadataProfile.isCurrentlyEdited = false;
 			if (recievedProfile) {
 				_model.selectedMetadataProfile.profile = recievedProfile;
@@ -85,7 +85,7 @@ package com.kaltura.kmc.modules.account.control.command
 		 */		
 		public function fault(info:Object):void
 		{
-			if(info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1 )
+			if(info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1 )
 			{
 				JSGate.expired();
 				return;

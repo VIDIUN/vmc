@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.model.types
+package com.vidiun.vmc.modules.content.model.types
 {
-	import com.kaltura.types.KalturaBatchJobStatus;
+	import com.vidiun.types.VidiunBatchJobStatus;
 	
 	import mx.resources.ResourceManager;
 	
@@ -11,17 +11,17 @@ package com.kaltura.kmc.modules.content.model.types
 		{
 			switch(bulkType)
 			{
-				case KalturaBatchJobStatus.PENDING: return ResourceManager.getInstance().getString( 'cms' , 'verifyingFile' ); break;
-				case KalturaBatchJobStatus.QUEUED: return   ResourceManager.getInstance().getString( 'cms' , 'verifyingQforI' ); break;
-				case KalturaBatchJobStatus.PROCESSING: return ResourceManager.getInstance().getString( 'cms' , 'processing' ); break;
-				case KalturaBatchJobStatus.FINISHED: return ResourceManager.getInstance().getString( 'cms' , 'finished' ); break; 
-				case KalturaBatchJobStatus.ABORTED: return ResourceManager.getInstance().getString( 'cms' , 'aborted' ); break; 
-				case KalturaBatchJobStatus.FAILED: return ResourceManager.getInstance().getString( 'cms' , 'failed' ); break; 
-				case KalturaBatchJobStatus.ALMOST_DONE: return ResourceManager.getInstance().getString( 'cms' , 'almostDone' ); break; 
-				case KalturaBatchJobStatus.FATAL: return ResourceManager.getInstance().getString( 'cms' , 'fatal' ); break; 
-				case KalturaBatchJobStatus.RETRY: return ResourceManager.getInstance().getString( 'cms' , 'retry' ); break; 
-				case KalturaBatchJobStatus.DONT_PROCESS: return ResourceManager.getInstance().getString( 'cms' , 'dontProcess' ); break; 
-				case KalturaBatchJobStatus.FINISHED_PARTIALLY: return ResourceManager.getInstance().getString( 'cms' , 'finishedWErr' ); break; 
+				case VidiunBatchJobStatus.PENDING: return ResourceManager.getInstance().getString( 'cms' , 'verifyingFile' ); break;
+				case VidiunBatchJobStatus.QUEUED: return   ResourceManager.getInstance().getString( 'cms' , 'verifyingQforI' ); break;
+				case VidiunBatchJobStatus.PROCESSING: return ResourceManager.getInstance().getString( 'cms' , 'processing' ); break;
+				case VidiunBatchJobStatus.FINISHED: return ResourceManager.getInstance().getString( 'cms' , 'finished' ); break; 
+				case VidiunBatchJobStatus.ABORTED: return ResourceManager.getInstance().getString( 'cms' , 'aborted' ); break; 
+				case VidiunBatchJobStatus.FAILED: return ResourceManager.getInstance().getString( 'cms' , 'failed' ); break; 
+				case VidiunBatchJobStatus.ALMOST_DONE: return ResourceManager.getInstance().getString( 'cms' , 'almostDone' ); break; 
+				case VidiunBatchJobStatus.FATAL: return ResourceManager.getInstance().getString( 'cms' , 'fatal' ); break; 
+				case VidiunBatchJobStatus.RETRY: return ResourceManager.getInstance().getString( 'cms' , 'retry' ); break; 
+				case VidiunBatchJobStatus.DONT_PROCESS: return ResourceManager.getInstance().getString( 'cms' , 'dontProcess' ); break; 
+				case VidiunBatchJobStatus.FINISHED_PARTIALLY: return ResourceManager.getInstance().getString( 'cms' , 'finishedWErr' ); break; 
 			}
 			return "";
 		}

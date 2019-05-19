@@ -1,4 +1,4 @@
-package com.kaltura.base.types
+package com.vidiun.base.types
 {
 	public class MetadataCustomFieldTypes
 	{

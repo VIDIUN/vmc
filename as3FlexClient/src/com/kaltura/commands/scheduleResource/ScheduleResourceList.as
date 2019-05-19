@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleResource
+package com.vidiun.commands.scheduleResource
 {
-		import com.kaltura.vo.KalturaScheduleResourceFilter;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.scheduleResource.ScheduleResourceListDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduleResourceFilter;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.scheduleResource.ScheduleResourceListDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* List KalturaScheduleResource objects
+	* List VidiunScheduleResource objects
 	**/
-	public class ScheduleResourceList extends KalturaCall
+	public class ScheduleResourceList extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param filter KalturaScheduleResourceFilter
-		* @param pager KalturaFilterPager
+		* @param filter VidiunScheduleResourceFilter
+		* @param pager VidiunFilterPager
 		**/
-		public function ScheduleResourceList( filter : KalturaScheduleResourceFilter=null,pager : KalturaFilterPager=null )
+		public function ScheduleResourceList( filter : VidiunScheduleResourceFilter=null,pager : VidiunFilterPager=null )
 		{
 			service= 'schedule_scheduleresource';
 			action= 'list';
@@ -52,12 +52,12 @@ package com.kaltura.commands.scheduleResource
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

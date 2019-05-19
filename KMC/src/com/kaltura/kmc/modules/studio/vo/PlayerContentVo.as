@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.vidiun.vmc.modules.studio.vo
 {
 	
 	/**
-	 * media KDP should display in appstudio  
+	 * media VDP should display in appstudio  
 	 * @author Atar
 	 */	
 	public dynamic class PlayerContentVo {
@@ -15,22 +15,22 @@ package com.kaltura.kmc.modules.studio.vo
 		/**
 		 * name of playlist for single playlist player 
 		 */		
-		public var kpl0Name:String;
+		public var vpl0Name:String;
 		
 		/**
 		 * url of playlist for single playlist player 
 		 */
-		public var kpl0Url:String;
+		public var vpl0Url:String;
 		
 		/**
 		 * name of 2nd playlist for multi playlist player 
 		 */
-		public var kpl1Name:String;
+		public var vpl1Name:String;
 		
 		/**
 		 * url of 2nd playlist for multi playlist player 
 		 */
-		public var kpl1Url:String;
+		public var vpl1Url:String;
 		
 	}
 }

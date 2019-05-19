@@ -1,4 +1,4 @@
-package com.kaltura.kmvc.model
+package com.vidiun.vmvc.model
 {
 	public interface IDataPackRepository
 	{

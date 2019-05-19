@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 xmlns:view="com.kaltura.kmc.modules.analytics.view.*" xmlns:dtn="com.kaltura.kmc.modules.analytics.view.dtn.*">
+		 xmlns:view="com.vidiun.vmc.modules.analytics.view.*" xmlns:dtn="com.vidiun.vmc.modules.analytics.view.dtn.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.kmc.modules.analytics.view.dtn.DTNItem;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.vmc.modules.analytics.view.dtn.DTNItem;
 			import mx.events.FlexEvent;
 			import mx.binding.utils.BindingUtils;
 			import flexlib.scheduling.scheduleClasses.schedule_internal;
-			import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-			import com.kaltura.types.KalturaReportType;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
+			import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+			import com.vidiun.types.VidiunReportType;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.events.VmcHelpEvent;
 			
 			
 			[Bindable]
@@ -72,7 +72,7 @@
 					
 					default:
 						// the new screen is not in Content's scope, need to hide panel
-						(views.selectedChild as KalturaReportView).onHide();
+						(views.selectedChild as VidiunReportView).onHide();
 				}
 				if (gaEvent) {
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + gaEvent, GoogleAnalyticsConsts.ANALYTICS);
@@ -81,8 +81,8 @@
 			
 			
 			public function help():void {
-				var anchor:String = (views.selectedChild as KalturaReportView).helpUrl;
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				var anchor:String = (views.selectedChild as VidiunReportView).helpUrl;
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 			
 			
@@ -153,7 +153,7 @@
 			 enabled="{!_model.loadingFlag}" change="onDtnChange()"/>
 	
 	<mx:ViewStack id="views" width="100%" height="{this.height - 15}" styleName="contentViewStack" >
-		<view:KalturaReportView id="platforms" width="100%" height="100%" 
+		<view:VidiunReportView id="platforms" width="100%" height="100%" 
 								screenType="{ScreenTypes.PLATFORM}" filterVo="{_model.filterMasks.platforms}" tableOrderBy="count_plays" 
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}" 
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
@@ -164,9 +164,9 @@
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.platforms}"
 								dimCbDp="{_model.reportDimension.platform}"
 								drillDown="{onDrillDown(ScreenTypes.PLATFORM_DRILL_DOWN)}"
-								helpUrl="{'section_analytics_platform'}" reportType="{KalturaReportType.PLATFORMS}"
+								helpUrl="{'section_analytics_platform'}" reportType="{VidiunReportType.PLATFORMS}"
 								label="{resourceManager.getString('analytics', 'platforms')}" styleName="pageStyle"/>
-		<view:KalturaReportView id="opsys" width="100%" height="100%" 
+		<view:VidiunReportView id="opsys" width="100%" height="100%" 
 								screenType="{ScreenTypes.OS}" filterVo="{_model.filterMasks.opsys}" tableOrderBy="count_plays"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}" 
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}" 
@@ -177,10 +177,10 @@
 								tableHeaders="{_model.tableHeaders.opsys}" dateRanger="{_model.shortTermDatesRanger}"
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.opsys}"
 								dimCbDp="{_model.reportDimension.opsys}"
-								reportType="{KalturaReportType.OPERATING_SYSTEM}"
+								reportType="{VidiunReportType.OPERATING_SYSTEM}"
 								helpUrl="{'section_analytics_os'}"
 								label="{resourceManager.getString('analytics', 'opsyss')}" styleName="pageStyle"/>
-		<view:KalturaReportView id="browsers" width="100%" height="100%" 
+		<view:VidiunReportView id="browsers" width="100%" height="100%" 
 								screenType="{ScreenTypes.BROWSER}" filterVo="{_model.filterMasks.browsers}" tableOrderBy="count_plays"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}" 
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
@@ -191,10 +191,10 @@
 								tableHeaders="{_model.tableHeaders.browsers}" dateRanger="{_model.shortTermDatesRanger}"
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.browsers}"
 								dimCbDp="{_model.reportDimension.browsers}"
-								reportType="{KalturaReportType.BROWSERS}" 
+								reportType="{VidiunReportType.BROWSERS}" 
 								helpUrl="{'section_analytics_browsers'}"
 								label="{resourceManager.getString('analytics', 'browsers')}" styleName="pageStyle" />
-		<view:KalturaReportView id="platformDrilldown" width="100%" height="100%" 
+		<view:VidiunReportView id="platformDrilldown" width="100%" height="100%" 
 								screenType="{ScreenTypes.PLATFORM_DRILL_DOWN}" filterVo="{_model.filterMasks.platforms}" tableOrderBy="count_plays"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}" 
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
@@ -205,7 +205,7 @@
 								tableHeaders="{_model.tableHeaders.platformDrilldown}" dateRanger="{_model.shortTermDatesRanger}"
 								tableNonSortableHeaders="{_model.tableNonSortableHeaders.platformDrilldown}"
 								dimCbDp="{_model.reportDimension.platformDrilldown}"
-								reportType="{KalturaReportType.PLATFORMS}" isDrillDown="true"
+								reportType="{VidiunReportType.PLATFORMS}" isDrillDown="true"
 								backScreenType="{ScreenTypes.PLATFORM}"
 								helpUrl="{'section_analytics_platform_drilldown'}"
 								label="{resourceManager.getString('analytics', 'platforms')}" styleName="pageStyle" />

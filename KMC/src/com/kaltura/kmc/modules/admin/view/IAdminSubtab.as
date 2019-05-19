@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.admin.view
+package com.vidiun.vmc.modules.admin.view
 {
 	public interface IAdminSubtab {
 		

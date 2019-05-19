@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.kaltura.types.KalturaEntryAttendeeOrderBy"/>
-    <classEntry path="com.kaltura.types.KalturaEntryAttendeeStatus"/>
-    <classEntry path="com.kaltura.types.KalturaMediaServerOrderBy"/>
-    <classEntry path="com.kaltura.vo.KalturaEntryAttendeeBaseFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaEntryAttendeeFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaFileSyncImportJobData"/>
-    <classEntry path="com.kaltura.vo.KalturaMediaServerFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaWidevineFlavorParamsOutputFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaYahooSyndicationFeedBaseFilter"/>
+    <classEntry path="com.vidiun.types.VidiunEntryAttendeeOrderBy"/>
+    <classEntry path="com.vidiun.types.VidiunEntryAttendeeStatus"/>
+    <classEntry path="com.vidiun.types.VidiunMediaServerOrderBy"/>
+    <classEntry path="com.vidiun.vo.VidiunEntryAttendeeBaseFilter"/>
+    <classEntry path="com.vidiun.vo.VidiunEntryAttendeeFilter"/>
+    <classEntry path="com.vidiun.vo.VidiunFileSyncImportJobData"/>
+    <classEntry path="com.vidiun.vo.VidiunMediaServerFilter"/>
+    <classEntry path="com.vidiun.vo.VidiunWidevineFlavorParamsOutputFilter"/>
+    <classEntry path="com.vidiun.vo.VidiunYahooSyndicationFeedBaseFilter"/>
     <classEntry path="ru.inspirit.net.MultipartURLLoader"/>
     <classEntry path="ru.inspirit.net.events.MultipartURLLoaderEvent"/>
   </includeClasses>

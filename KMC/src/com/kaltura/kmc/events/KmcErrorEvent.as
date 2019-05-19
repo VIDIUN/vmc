@@ -1,22 +1,22 @@
-package com.kaltura.kmc.events
+package com.vidiun.vmc.events
 {
 	import flash.events.Event;
 	
 	/**
-	 * The ErrorEvent class represents errors that KMCModules encounter 
-	 * and need to inform the main KMC application. 
+	 * The ErrorEvent class represents errors that VMCModules encounter 
+	 * and need to inform the main VMC application. 
 	 * @author Atar
 	 */	
-	public class KmcErrorEvent extends Event {
+	public class VmcErrorEvent extends Event {
 		
 		
-		public static const ERROR:String = "kmcError";
+		public static const ERROR:String = "vmcError";
 		
 		
 		private var _error:String;
 		
 		
-		public function KmcErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
+		public function VmcErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
 			super(type, bubbles, cancelable);
 			_error = text;
 		}

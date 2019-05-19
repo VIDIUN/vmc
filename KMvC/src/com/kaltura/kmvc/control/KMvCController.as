@@ -30,11 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 @ignore
 */
 
-package com.kaltura.kmvc.control
+package com.vidiun.vmvc.control
 {   
-   import com.kaltura.kmvc.KMvCError;
-   import com.kaltura.kmvc.KMvCMessageCodes;
-   import com.kaltura.kmvc.commands.ICommand;
+   import com.vidiun.vmvc.VMvCError;
+   import com.vidiun.vmvc.VMvCMessageCodes;
+   import com.vidiun.vmvc.commands.ICommand;
    
    import flash.events.EventDispatcher;
    import flash.utils.Dictionary;
@@ -43,7 +43,7 @@ package com.kaltura.kmvc.control
    /**
     * A base class for an application specific front controller.
     */
-   public class KMvCController extends EventDispatcher
+   public class VMvCController extends EventDispatcher
    {
      /**
       * Dictionary of event name to command class mappings
@@ -74,7 +74,7 @@ package com.kaltura.kmvc.control
       public function addCommand( commandName : String, commandRef : Class, useWeakReference : Boolean = true ) : void
       {
          if( commands[ commandName ] != null )
-            throw new KMvCError( KMvCMessageCodes.COMMAND_ALREADY_REGISTERED, commandName );
+            throw new VMvCError( VMvCMessageCodes.COMMAND_ALREADY_REGISTERED, commandName );
          
          commands[ commandName ] = commandRef;
          addEventListener( commandName, executeCommand, false, 0, useWeakReference );
@@ -91,7 +91,7 @@ package com.kaltura.kmvc.control
       public function removeCommand( commandName : String ) : void
       {
          if( commands[ commandName ] === null)
-            throw new KMvCError( KMvCMessageCodes.COMMAND_NOT_REGISTERED, commandName);  
+            throw new VMvCError( VMvCMessageCodes.COMMAND_NOT_REGISTERED, commandName);  
          
          removeEventListener( commandName, executeCommand );
          commands[ commandName ] = null;
@@ -99,7 +99,7 @@ package com.kaltura.kmvc.control
       }
 	  
 
-	  public function dispatch(event:KMvCEvent):Boolean {
+	  public function dispatch(event:VMvCEvent):Boolean {
 		  event.dispatcher = this;
 		  return dispatchEvent(event);
 	  } 
@@ -107,7 +107,7 @@ package com.kaltura.kmvc.control
      /**
       * Executes the command
       */  
-      protected function executeCommand( event : KMvCEvent ) : void
+      protected function executeCommand( event : VMvCEvent ) : void
       {
          var commandToInitialise : Class = getCommand( event.type );
          var commandToExecute : ICommand = new commandToInitialise();
@@ -123,7 +123,7 @@ package com.kaltura.kmvc.control
          var command : Class = commands[ commandName ];
          
          if ( command == null )
-            throw new KMvCError( KMvCMessageCodes.COMMAND_NOT_FOUND, commandName );
+            throw new VMvCError( VMvCMessageCodes.COMMAND_NOT_FOUND, commandName );
             
          return command;
       }      

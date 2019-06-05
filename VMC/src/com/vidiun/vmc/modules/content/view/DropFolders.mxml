@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---
+"Drop Folders" section of content viewstack. Displays all files in drop folders.
+-->
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel"
+		 xmlns:controls="com.vidiun.controls.*"
+		 creationComplete="creationCompleteHandler(event)"
+		 width="100%" height="100%" xmlns:filter2="com.vidiun.edw.components.filter.*" xmlns:fltr="com.vidiun.edw.components.fltr.*" xmlns:indicators="com.vidiun.edw.components.fltr.indicators.*" xmlns:dropfolder="com.vidiun.vmc.modules.content.view.dropfolder.*">
+	<mx:Metadata>
+		[ResourceBundle("dropfolders")]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.control.DataTabController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.ModelEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.types.DropFolderListType;
+			import com.vidiun.vmc.modules.content.events.VMCDropFolderEvent;
+			import com.vidiun.vmc.modules.content.model.DropFolderModel;
+			import com.vidiun.vmc.modules.content.utils.DropFolderTableStringUtil;
+			import com.vidiun.vmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunDropFolderFileStatus;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunDropFolder;
+			import com.vidiun.vo.VidiunDropFolderFile;
+			import com.vidiun.vo.VidiunDropFolderFileFilter;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.CollectionEvent;
+			import mx.events.FlexEvent;
+			
+			
+			[Bindable]
+			public var dropFolderModel:DropFolderModel;
+	
+			/**
+			 * @inheritDoc
+			 * */
+			public function init(vbef:VidiunBaseEntryFilter = null):void {
+				refreshList(null);
+			}
+			
+			/**
+			 * refresh page data
+			 * */
+			private function refreshList(event:Event):void {
+				// only get files from the folders that return in the folders list
+				var listFoldersEvent:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.LIST_FOLDERS_AND_FILES, null, DropFolderListType.ADD_NEW|DropFolderListType.MATCH_OR_KEEP|DropFolderListType.MATCH_OR_NEW|DropFolderListType.XML_FOLDER);
+				if (event) {
+					listFoldersEvent.data = dropFolderModel.filter;
+				}
+				listFoldersEvent.dispatch();
+			}
+			
+			private function newSearchFromFilter():void {
+				paging.selectedPage = 1;
+				loadDropFolderFiles();
+			}
+			
+			/**
+			 * Create suitable string to display in the "Folder Name" column
+			 * */
+			private function folderNameFunc(item:Object, column:DataGridColumn): String {
+				var curFile:VidiunDropFolderFile = item as VidiunDropFolderFile;
+				
+				for each (var folder:VidiunDropFolder in dropFolderModel.dropFolders) {
+					if (curFile.dropFolderId == folder.id) {
+						return folder.name;
+					}
+				}
+				
+				return '';
+			}
+			
+			
+			
+			/**
+			 * user selects to delete files
+			 * */
+			private function deleteFiles():void {
+				if (!dg.selectedItem) {
+					Alert.show(resourceManager.getString('dropfolders', 'selectDropFolderFiles'), resourceManager.getString('dropfolders', 'selectDropFolderFilesTitle'));
+					return;
+				}
+				
+				var delStr:String = '';
+				var fileName:String;
+				for each (var item:Object in dg.selectedItems) {
+					if ((item as VidiunDropFolderFile).name) {
+						fileName = (item as VidiunDropFolderFile).name;
+					}
+					else {
+						fileName = (item as VidiunDropFolderFile).fileName;
+					}
+					delStr += '\n' + fileName;
+				}
+				
+				Alert.show(resourceManager.getString('dropfolders', 'deleteDropFoldersFilesQ') + delStr, resourceManager.getString('dropfolders', 'deleteDropFolderFileTitle'), Alert.YES | Alert.NO, null, deleteResponseFunc);
+			}
+			
+			private function deleteResponseFunc(event:CloseEvent):void {
+				if (event.detail == Alert.YES) {
+					var deleteArray:Array = new Array;
+					for each (var item:Object in dg.selectedItems) {
+						deleteArray.push(item);
+					}
+					
+					var deleteEvent:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.DELETE_FILES);
+					deleteEvent.data = deleteArray;
+					deleteEvent.dispatch();
+				}
+			}
+
+			/**
+			 * selects all items in the page
+			 * */
+			private function selectAllTable():void {
+				dg.selectedItems = (dg.dataProvider as ArrayCollection).source;
+			}
+			
+			/**
+			 * deselect all items
+			 * */
+			private function deSelectAllTable():void {
+				dg.selectedItems = new Array();
+			}		
+			
+			/**
+			 * paging
+			 * */
+		 	private function gotoPage():void {
+				// update filter here
+				loadDropFolderFiles();
+			}
+			
+			private function loadDropFolderFiles():void {
+				if (paging) {	
+					if (paging.pageSize == 10) {
+						dg.rowCount = 10;
+						topContainer.height = (dg.rowHeight * 10) + dg.headerHeight + 10 + paging.height + bottomActionBox.height;
+					}
+					else {
+						topContainer.percentHeight = 100;
+						dg.rowCount = -1;
+					}
+					
+					dropFolderModel.pager = paging.vidiunFilterPager;
+				}
+				
+				if (filter) {
+					var dfFilter:VidiunDropFolderFileFilter = filter.vidiunFilter as VidiunDropFolderFileFilter;
+					if (dfFilter.dropFolderIdEqual == int.MIN_VALUE && !dfFilter.dropFolderIdIn) {
+						dfFilter.dropFolderIdIn = getEnabledFolderIds();
+					}
+					if (!dfFilter.statusIn && dfFilter.statusEqual == int.MIN_VALUE) {
+						dfFilter.statusIn = VidiunDropFolderFileStatus.DOWNLOADING + "," +
+							VidiunDropFolderFileStatus.ERROR_DELETING + "," + 
+							VidiunDropFolderFileStatus.ERROR_DOWNLOADING + "," + 
+							VidiunDropFolderFileStatus.ERROR_HANDLING + "," + 
+							VidiunDropFolderFileStatus.HANDLED + "," + 
+							VidiunDropFolderFileStatus.NO_MATCH + "," + 
+							VidiunDropFolderFileStatus.PENDING + "," + 
+							VidiunDropFolderFileStatus.PROCESSING + "," + 
+							VidiunDropFolderFileStatus.PARSED + "," + 
+							VidiunDropFolderFileStatus.UPLOADING + "," + 
+							VidiunDropFolderFileStatus.DETECTED + "," + 
+							VidiunDropFolderFileStatus.WAITING;
+					}
+					dropFolderModel.filter = dfFilter;
+				}
+
+				var listFiles:VMCDropFolderEvent = new VMCDropFolderEvent(VMCDropFolderEvent.LIST_ALL_FILES);
+				listFiles.dispatch();
+			} 
+			
+			
+			/**
+			 * get the ids of the folders that show in the filter, 
+			 * whilch are supposed to be tha partner's enabled folders
+			 * */
+			private function getEnabledFolderIds():String {
+				var str:String = '';
+				for each (var vdf:VidiunDropFolder in dropFolderModel.dropFolders) {
+					str += vdf.id + ",";
+				}
+				return str;
+			}
+			
+			private function setSortIndicator(event:CollectionEvent = null):void {
+				var ar:Array = dg.columns;
+				var i:int;
+				for (i = 0; i<dg.columnCount; i++) {
+					if (ar[i].dataField == "createdAt") {
+						break;
+					}
+				}
+				dg.mx_internal::sortIndex = i;
+				dg.mx_internal::sortDirection = 'DESC';
+			}
+			
+			private function onPagerCreationComplete(event:Event):void {
+				dropFolderModel.pager = paging.vidiunFilterPager;
+				paging.selectedPage = 1;
+				paging.pageSize = paging.rowInPageCb.value as int;
+			}
+			
+
+			protected function creationCompleteHandler(event:FlexEvent):void {
+				PermissionManager.getInstance().applyAllAttributes(this, this.id);
+				dg.addEventListener(CollectionEvent.COLLECTION_CHANGE, setSortIndicator);
+				dg.addEventListener(EntryIdRenderer.ID_CLICKED, openEntryDetails);
+			}
+			
+
+			private function openEntryDetails(event:Event):void {
+				var entryId:String = (event.target.data as VidiunDropFolderFile).entryId;
+				// create the new model 
+				var cg:VMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
+				DataTabController.getInstance().dispatch(cg);
+				cg = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, entryId);
+				DataTabController.getInstance().dispatch(cg);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" verticalAlign="middle">
+		<mx:Label id="pageLabel" text="{resourceManager.getString('cms', 'dropFoldersTitle')}" styleName="filterTitleHeader" 
+				  width="{filter.width}"/>
+		<fltr:FreeTextSearch id="searchBox" styleName="searchHBox" width="{filter.width}" height="{pageLabel.height}"
+							 attribute="fileNameLike" defaultText="{resourceManager.getString('dropfolders', 'searchFiles')}" />
+		<indicators:Indicators id="indicators" width="100%" height="60"
+							   dataProvider="{filter.indicators}"
+							   boxClicked="filter.removeFilter(event.data)"/>
+		<mx:VBox styleName="noPadding">
+			<mx:LinkButton label="{resourceManager.getString('cms','refresh')}" click="refreshList(event)" styleName="recycleIcon"/>
+			<mx:Label text="{resourceManager.getString('filter', 'indicatorsLabel', [indicators.numExceeded])}" 
+					  visible="{indicators.numExceeded > 0}" styleName="indicatorsLabel"/>
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:HDividedBox id="topContainer" width="100%" height="100%" verticalScrollPolicy="off" >
+		<dropfolder:DropFilesFilter id="filter" height="100%" width="245"
+							  freeTextSearch="{searchBox}"
+							  vidiunFilter="{dropFolderModel.filter}"
+							  dropFolders="{dropFolderModel.dropFolders}"
+							  filterChanged="{newSearchFromFilter()}" />
+
+		<mx:VBox id="tableContainer" width="100%" height="100%" verticalScrollPolicy="off" styleName="entriesTablePagerAndButtonsVbox">
+			<mx:DataGrid id="dg" dataProvider="{dropFolderModel.files}" rowCount="10" rowHeight="36" 
+						 width="100%" height="100%" allowMultipleSelection="true" >
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileNameTitle')}" dataField="fileName"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFolderNameTitle')}" dataField="fileName" 
+									   labelFunction="{folderNameFunc}"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileCreatedAtTitle')}" 
+									   labelFunction="{DropFolderTableStringUtil.dateCreatedLabelFunc}" 
+									   dataTipFunction="{DropFolderTableStringUtil.getDatesInfo}" showDataTips="true"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileSizeTitle')}" dataField="fileSize" 
+									   labelFunction="{DropFolderTableStringUtil.fileSizeLabelFunc}"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileEntryTitle')}" dataField="entryId"
+									   itemRenderer="com.vidiun.vmc.modules.content.view.itemrenderers.dropfolders.EntryIdRenderer"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileStatusTitle')}" dataField="status" 
+									   labelFunction="{DropFolderTableStringUtil.statusLabelFunc}" 
+									   dataTipFunction="{DropFolderTableStringUtil.getStatusInfo}" showDataTips="true"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString('dropfolders','dropFileErrTitle')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{DropFolderTableStringUtil.getErrorDescription(data)}" paddingLeft="7">
+									<mx:Script>
+										<![CDATA[
+											import com.vidiun.vmc.modules.content.utils.DropFolderTableStringUtil;
+										]]>
+									</mx:Script>
+								</mx:Label>
+
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+				</mx:columns>
+			</mx:DataGrid>
+			
+			<controls:Paging id="paging" width="100%" styleName="paging" rowsInPageChange="gotoPage()"
+							 totalCount="{dropFolderModel.filesTotalCount}"
+							 nextPage="gotoPage()" prvPage="gotoPage()" getPageNum="gotoPage()" visible="true"
+							 showRowsInPage="true" creationComplete="onPagerCreationComplete(event)"/>
+			
+			<mx:HBox id='bottomActionBox' width="100%" styleName="DataGridActions" height="30">
+				<mx:HBox height="100%" verticalAlign="middle" left="5" horizontalGap="0">
+					<mx:Label text="{resourceManager.getString('cms', 'selectionTitle')}"/>
+					<mx:LinkButton id="selectAll" label="{resourceManager.getString('cms', 'selectAllOption')}"
+								   click="selectAllTable()" buttonMode="true" paddingLeft="-2" paddingRight="0"/>
+					<mx:LinkButton id="deselectAll" label="{resourceManager.getString('cms', 'deselectAllOption')}"
+								   click="deSelectAllTable()" buttonMode="true" paddingLeft="-2" paddingRight="0"/>
+				</mx:HBox>
+				<mx:HBox horizontalAlign="center" width="100%">
+					<mx:Button id='deleteFilesBtn' label="{resourceManager.getString('cms','delete')}"
+							   useHandCursor="true" buttonMode="true" click="{deleteFiles()}"/>
+				</mx:HBox>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:HDividedBox>
+</mx:VBox>

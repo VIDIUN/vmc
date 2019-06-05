@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalAlign="middle"
+		 xmlns:view="com.vidiun.vmc.modules.studio.view.*"
+		 horizontalAlign="center" disabledOverlayAlpha="0"
+		 creationComplete="onCreationComplete()"
+		 addedToStage="addedToStageHandler(event)">
+	
+	<mx:Metadata>
+		[Event(name="errorLoading", type="flash.events.Event")] 
+		[Event(name="finishLoading", type="flash.events.Event")] 
+		[Event(name="autoPreviewChanged", type="flash.events.Event")] 
+		[Event(name="firstTimeLoad", type="flash.events.Event")] 
+		[Event(name="openPreview", type="flash.events.Event")] 
+		[Event(name="closePreview", type="flash.events.Event")] 
+		[Event(name="alertUser", type="flash.events.ErrorEvent")] 
+		[Event(name="detailsChanged", type="flash.events.Event")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.events.VdpEventTypes;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.modules.studio.view.ApsWizard;
+			import com.vidiun.vmc.modules.studio.vo.PlayerContentVo;
+			import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
+			import com.vidiun.vmc.vo.Context;
+			import com.vidiun.utils.VPlayerUtil;
+			
+			import modules.Studio;
+			
+			import mx.controls.Button;
+			import mx.events.NumericStepperEvent;
+			import mx.resources.ResourceManager;
+
+			public static const PREVIEW_PLAYER_READY:String = "previewPlayerReady";
+			public static const FIRST_TIME_LOAD:String = "firstTimeLoad";
+			public static const FINISH_LOADING:String = "finishLoading";
+			public static const ERROR_LOADING:String = "errorLoading";
+			public static const AUTO_PREVIEW_CHANGED:String = "autoPreviewChanged";
+			public static const CLOSE_PREVIEW:String = "closePreview";
+			public static const OPEN_PREVIEW:String = "openPreview";
+			public static const REFRESH_VDP:String = "refreshVdp";
+
+			/**
+			 * application context (partner data etc)
+			 * */
+			public var context:Context;
+			
+			/**
+			 * media VDP should display in appstudio
+			 * */
+			public var content:PlayerContentVo;
+			
+			/**
+			 * player config
+			 * */
+			public var playerUiConfVo:PlayerUiConfVo;
+			
+//			/**
+//			 * the url from which to load VDP
+//			 * */
+//			public var swfUrl:String;
+
+			private const _tolorance169:Number = 0.1;
+			private const _tolorance34:Number = 0.1;
+			
+			[Bindable]
+			private var _playerHeight:Number;
+			[Bindable]
+			private var _playerWidth:Number;
+			[Bindable]
+			private var _playerRatio:Number;
+			
+			/**
+			 * locally save autopreview preferences
+			 * */
+			private var _mySo:SharedObject;
+
+			/**
+			 * only disaptch <code>ApsWizPreviewPlayer.FIRST_TIME_LOAD</code> once
+			 * */
+			private var _firstTime:Boolean;
+
+			/**
+			 * player XML data passed to VDP for preview 
+			 * */
+			private var _tempUiConf:XML;
+
+			private var _vdpFirstTimeLoad:Boolean = true;
+
+			/**
+			 * unload the VDP
+			 * */
+			public function unLoadVdp():void {
+				removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleVDPError);
+				if (vdp3Loader.content) {
+					vdp3Loader.content.removeEventListener(VdpEventTypes.SKIN_LOAD_FAILED, handleVDPError);
+					vdp3Loader.content.removeEventListener(VdpEventTypes.VDP_EMPTY, onVDPReady);
+					vdp3Loader.content.removeEventListener(VdpEventTypes.VDP_READY, onVDPReady);
+					vdp3Loader.content.removeEventListener(VdpEventTypes.MEDIA_READY, onVDPMediaReady);
+				}
+//				if(vdp3Loader.loaderInfo.hasOwnProperty("uncaughtErrorEvents")){
+//					IEventDispatcher(vdp3Loader.loaderInfo["uncaughtErrorEvents"]).removeEventListener("uncaughtError", handleVDPError);
+//				}
+				vdp3Loader.unloadAndStop();
+			}
+
+
+			/**
+			 * init the loading proccess of the VDP
+			 * @param vdpUrl	url from where to load VDP
+			 * @param xmlToPreview	player config
+			 * */
+			public function loadVdp(vdpUrl:String, xmlToPreview:XML = null):void {
+				if (xmlToPreview) {
+					_tempUiConf = xmlToPreview
+				}
+				else {
+					_tempUiConf = null;
+				}
+				var url:String = vdpUrl;
+				if (Studio.flashvars.vdpurl) {
+					url = Studio.flashvars.vdpurl;
+				}
+				// this is for debugging a local VDP swf
+				if (Studio.flashvars.hasOwnProperty("debugmode") 
+					&& (Studio.flashvars.debugmode == '1' || Studio.flashvars.debugmode == 'true')) {
+					url = Studio.flashvars.protocol ? Studio.flashvars.protocol : "http://";  
+					url += Studio.flashvars.host + vdpUrl;
+				}
+				if (vdp3Loader.content != null) {
+					unLoadVdp();
+				}
+				vdp3Loader.scaleContent = false;
+				vdp3Loader.trustContent = true;
+				vdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */); // DON'T use security domain here, it gets VDP confused when loading plugins via CDN.
+				// if we don't set size here wierd things happen.
+				vdp3Loader.width = vdpWidth.value;
+				vdp3Loader.height = vdpHeight.value;
+				vdp3Loader.visible = false;
+				vdp3Loader.load(url);
+			}
+
+			
+			/**
+			 * change the dimensions of preview VDP 
+			 * */
+			private function changePlayerSize():void {
+				if (vdp3Loader.content) {
+					vdp3Loader.content.width = vdpWidth.value;
+					vdp3Loader.content.height = vdpHeight.value;
+					var objProxy:Object = vdp3Loader.content["evaluate"]("{this}");
+					if (objProxy.hasOwnProperty("video")) {
+						_playerWidth = objProxy.video.width;
+						_playerHeight = objProxy.video.height;
+						_playerRatio = objProxy.video.width / objProxy.video.height;
+					}
+				}
+			}
+
+ 
+			/**
+			 * make this panel eligible for garbage collection
+			 * */
+			public function dispose():void {
+				unLoadVdp();
+				if (stage) {
+					stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard);
+				}
+			}
+
+
+			/**
+			 * make all buttons same size by content of the widest one
+			 * */
+			private function onCreationComplete():void {
+				enabled = false;
+				var autopreview:Boolean = true;
+				// get the sharedObject if available and set it 
+				_mySo = SharedObject.getLocal("content");
+				if (_mySo.data) {
+					if (_mySo.data.autoPreview == false) {
+						autopreview = false;
+					}
+					else {
+						autopreview = true;
+					}
+				}
+				autoPreview.selected = autopreview;
+				autoPreviewChanged();
+				trace("use alt+ctrl+p to trace current uiconf");
+			}
+
+
+			private function toggolePreview():void {
+				if (openClosePreview.styleName == "openPreview") {
+					openClosePreview.styleName = "closePreview";
+					dispatchEvent(new Event(ApsWizPreviewPlayer.CLOSE_PREVIEW));
+				}
+				else {
+					openClosePreview.styleName = "openPreview";
+					dispatchEvent(new Event(ApsWizPreviewPlayer.OPEN_PREVIEW));
+				}
+			}
+
+
+			/**
+			 * Preview player loaded and ready
+			 */
+			private function onVDP3Loaded(event:Event):void {
+				if (!_firstTime) {
+					dispatchEvent(new Event(ApsWizPreviewPlayer.FIRST_TIME_LOAD));
+					_firstTime = true;
+				}
+				var params:Object = new Object();
+				params.autoPlay = "false";
+				params.loop = "false";
+				params.autoRewind = "false";
+				params.sourceType = "entryId";
+//				params.debugMode = "true";
+
+				//check if this ui already has a playlist in it and show defaults if no playlist 
+				if (!_tempUiConf.uiVars.children().(attribute("key") == "playlistAPI.vpl0Name").length()) {
+					params["playlistAPI.vpl0Name"] = content.vpl0Name;
+					params["playlistAPI.vpl0Url"] = content.vpl0Url;
+					params["playlistAPI.vpl1Name"] = content.vpl1Name;
+					params["playlistAPI.vpl1Url"] = content.vpl1Url;
+					params["playlistAPI.autoInsert"] = "true";
+				}
+				
+				if (!playerUiConfVo.isSinglePlaylist && !playerUiConfVo.isMultiPlaylistTemplate) {
+					// only load entry if not a playlist player
+					params.entryId = content.entryId;
+				}
+
+				params.cdnHost = params.cdnUrl = (Studio.flashvars.cdnhost) ? Studio.flashvars.cdnhost : Studio.flashvars.host;
+				params.host = Studio.flashvars.host;
+				params.partnerId = context.partner_id;
+				params.widgetId = "_" + context.partner_id;
+				params.subpId = context.subp_id;
+				params.uiConfId = playerUiConfVo.playerId;
+				params.allowCookies = true;
+
+				params.vs = context.vs;
+
+				if (_tempUiConf) {
+					params.kml = "inject";
+				}
+				
+				params = VPlayerUtil.overrideStrings(params);
+				
+				vdp3Loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleVDPError);
+				vdp3Loader.loaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleVDPError);
+				vdp3Loader.content.addEventListener(Event.RESIZE, stopPropagation);
+				vdp3Loader.content.addEventListener(VdpEventTypes.SKIN_LOAD_FAILED, handleVDPError);
+				vdp3Loader.content.addEventListener(VdpEventTypes.VDP_EMPTY, onVDPReady);
+				vdp3Loader.content.addEventListener(VdpEventTypes.VDP_READY, onVDPReady);
+				vdp3Loader.content.addEventListener(VdpEventTypes.MEDIA_READY, onVDPMediaReady);
+				// set VDP flashvars
+				vdp3Loader.content["flashvars"] = params; 
+
+				//start the loading sqeunce of the vdp
+				if (!_tempUiConf)
+					vdp3Loader.content["init"](); 
+				else
+					vdp3Loader.content["init"](_tempUiConf); 
+
+				enabled = true;
+
+				if (_vdpFirstTimeLoad)
+					dispatchEvent(new Event(PREVIEW_PLAYER_READY));
+			}
+
+			private function stopPropagation(e:Event):void {
+				e.stopImmediatePropagation();
+			}
+			
+			/**
+			 * handles VDP errors 
+			 * */
+			private function handleVDPError(e:Event):void {
+				// enable the appstudio
+				dispatchEvent(new Event(ERROR_LOADING));
+				// we have no VDP, so we don't autopreview.
+				autoPreview.selected = false;
+				autoPreview.enabled = false;
+			}
+			
+
+			private function onVDPMediaReady(event:Event):void {
+				vdp3Loader.visible = true;
+			}
+			
+			private function onVDPReady(event:Event):void {
+				changePlayerSize();
+				dispatchEvent(new Event(FINISH_LOADING));
+			}
+
+
+			/**
+			 * unloads and reloads the preview VDP
+			 * */
+			private function reloadPlayer():void {
+				_vdpFirstTimeLoad = false;
+				unLoadVdp();
+				dispatchEvent(new Event(ApsWizPreviewPlayer.REFRESH_VDP));
+			}
+
+
+			/**
+			 * Calculate if the offset of the ration is too large. if so, return a red color code,
+			 * if not return a green color code
+			 */
+			private function calcIfOkRatio(ratio:Number, idealRatio:Number, ratioOffset:Number):Number {
+				var offset:Number = Math.abs(idealRatio - ratio);
+				if (offset <= ratioOffset)
+					return 0x008000;
+				return 0xCC0000;
+			}
+
+
+			private function onAutoPreviewChanged():void {
+				_mySo.data.autoPreview = true;
+				_mySo.flush();
+				autoPreviewChanged();
+
+			}
+
+
+			private function autoPreviewChanged():void {
+				dispatchEvent(new Event(AUTO_PREVIEW_CHANGED));
+			}
+
+
+			/**
+			 * {playerWidth, playerHeight}
+			 * */
+			public function get previewPlayerData():Object {
+				return {playerWidth: vdpWidth.value, playerHeight: vdpHeight.value};
+			}
+
+
+			/**
+			 * @private
+			 * */
+			public function set previewPlayerData(value:Object):void {
+				vdpHeight.value = value.playerHeight;
+				vdpWidth.value = value.playerWidth;
+			}
+
+			private function addedToStageHandler(event:Event):void {
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard, false, 0, true);
+			}
+			
+			/**
+			 * if alt+ctrl+p, trace the current uiconf
+			 * */
+			private function handleKeyboard(e:KeyboardEvent):void {
+				if (e.altKey && e.ctrlKey && e.keyCode == 80) {
+//					JSGate.alerti(_tempUiConf);
+					trace(_tempUiConf);
+				}
+			}
+
+
+			private function sizeChangeHandler(event:NumericStepperEvent):void {
+				dispatchEvent(new Event("detailsChanged"));
+			}
+
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" verticalAlign="middle">
+		<mx:Button id="openClosePreview" styleName="closePreview" click="toggolePreview()" buttonMode="true"/>
+		<mx:Label text="{resourceManager.getString('aps','preview')}" styleName="pageTitle"/>
+		<mx:Spacer width="100%"/>
+	</mx:HBox>
+
+	<mx:VBox id="controls" disabledOverlayAlpha="0">
+		<mx:HBox id="resizeContainer">
+			<mx:Label text="{resourceManager.getString('aps','playerSize')}"/>
+			<mx:NumericStepper id="vdpWidth" width="60" value="500" maximum="2300" minimum="100"
+							   change="sizeChangeHandler(event)"/>
+			<mx:Label text="x" textAlign="center"/>
+			<mx:NumericStepper id="vdpHeight" width="60" value="500" maximum="2300" minimum="30"
+							   change="sizeChangeHandler(event)"/>
+			<mx:Spacer width="10"/>
+			<mx:Button id="refreshVdp3" buttonMode="true" label="{resourceManager.getString('aps','preview')}"
+					   click="reloadPlayer()"/>
+			<mx:Spacer width="10"/>
+			<mx:CheckBox id="autoPreview" 
+						 label="{resourceManager.getString('aps','autoPreview')}" 
+						 change="{onAutoPreviewChanged()}"/>
+		</mx:HBox>
+		<mx:VBox>
+			<mx:Label 
+					  text="{resourceManager.getString('aps','videoScreenSize')}: {int(_playerWidth)} x {int(_playerHeight)}"/>
+		</mx:VBox>
+		<mx:VBox width="100%">
+			<mx:HBox>
+				<mx:Text text="{resourceManager.getString('aps','videoRatio')}:" selectable="false"/>
+				<mx:VBox>
+					<mx:Label text="16 : {(int(16/_playerRatio*100))/100}"
+							  color="{calcIfOkRatio(16/_playerRatio,9,_tolorance169)}"/>
+					<mx:Label text=" 4 : {(int(4/_playerRatio*100))/100}"
+							  color="{calcIfOkRatio(4/_playerRatio,3,_tolorance34)}"/>
+				</mx:VBox>
+				<mx:Text text="{resourceManager.getString('aps','videoRecomendation')}" height="100%" selectable="false"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+	<mx:SWFLoader id="vdp3Loader" width="400" height="400" complete="{onVDP3Loaded(event)}"/>
+</mx:VBox>

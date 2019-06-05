@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+		Dimentions ComboBox
+
+
+-->												
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml"  change="onChange(event)" buttonMode="true" useHandCursor="true"
+	dataProvider="{[{data: 'count_plays', label: resourceManager.getString('vdashboard', 'count_plays')}, 
+					{data: 'count_loads' ,label: resourceManager.getString('vdashboard', 'count_loads')}, 
+					{data: 'sum_time_viewed' ,label: resourceManager.getString('vdashboard', 'sum_time_viewed')}, 
+					{data: 'avg_time_viewed' ,label: resourceManager.getString('vdashboard', 'avg_time_viewed')}]}">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.vmc.modules.dashboard.DashboardManager;
+			
+			/**
+			 *  when combobox selected item changed
+			 * 
+			 */
+			private function onChange(event:Event=null):void
+			{
+				DashboardManager.instance.updateSelectedDim(this.selectedItem.data as String);
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+</mx:ComboBox>

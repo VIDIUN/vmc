@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*"
+							xmlns:containers="com.vidiun.containers.*" xmlns:cat="com.vidiun.edw.components.fltr.cat.*" 
+							layout="vertical" width="400" height="400"
+							showCloseButton="true" close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
+							title="{_windowTitle}" 
+							creationComplete="creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACCategoryController;
+			import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vo.VidiunCategory;
+			
+			import mx.core.mx_internal;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			
+			import org.hamcrest.collection.array;
+
+			[Bindable]
+			private var _windowTitle:String;
+
+			[Bindable]
+			private var _descriptionTxt:String;
+
+			[Bindable]
+			public var filterModel:FilterModel;
+
+			/**
+			 * client for autocomplete calls
+			 * */
+			public var vClient:VidiunClient;
+
+
+			[Bindable]
+			/**
+			 * container variable for affected categories list
+			 * */
+			private var _categories:Array;
+
+			/**
+			 * list of categories to move
+			 * VidiunCategory objects
+			 * */
+			public function setCategories(value:Array):void {
+				_categories = value;
+				if (value.length == 1) {
+					_windowTitle = resourceManager.getString('cms', 'moveSingleCategoryTitle');
+					_descriptionTxt = resourceManager.getString('cms', 'moveSingleCategoryText');
+				}
+				else {
+					_windowTitle = resourceManager.getString('cms', 'moveMultiCategoriesTitle');
+					_descriptionTxt = resourceManager.getString('cms', 'moveMultiCategoriesText');
+				}
+			}
+
+
+			private function creationCompleteHandler(event:FlexEvent):void {
+				new VACCategoryController(catComplete, vClient);
+			}
+
+
+			/**
+			 * retrieve a list of affected categories
+			 * */
+			public function getCategories():Array {
+				return _categories;
+			}
+
+			
+			/**
+			 * get new parent category
+			 * */
+			public function getParent():VidiunCategory {
+				var vCat:VidiunCategory;
+				if (none.selected) {
+					// return the "root"
+					vCat = new VidiunCategory();
+					vCat.id = 0;
+				}
+				else if (catComplete.selectedItem) {
+					vCat = catComplete.selectedItem as VidiunCategory;
+				}
+				else {
+					vCat = (catTree.getSelectedCategories()[0] as CategoryVO).category;
+				}
+		
+				return vCat;
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void {
+				dispatchEvent(new Event("apply"));
+				mx_internal::closeButton.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			}
+
+
+			private function helpHandler(event:Event):void {
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, "section_cat_move", true));
+			}
+
+
+			protected function catTree_valueChangeHandler(event:FilterComponentEvent):void {
+				if (catTree.getSelectedCategories().length > 0) {
+					none.selected = false;
+					catComplete.selectedItems = null;
+				}
+			}
+
+
+			protected function none_clickHandler(event:MouseEvent):void {
+				catTree.clearSelection();
+				catComplete.selectedItems = null;
+			}
+
+
+			/**
+			 * autocomplete change handler
+			 * <br/>
+			 * unselect none button, clear selection in catTree
+			 * */
+			private function catComplete_changeHandler(event:Event):void {
+				if (catComplete.selectedItem) {
+					// value entered
+					catTree.clearSelection();
+					none.selected = false;
+				}
+				else {
+					// value removed
+					none.selected = true;
+				}
+			}
+
+
+			private function closeHandler(event:CloseEvent):void {
+				catTree.clearSelection();
+			}
+
+
+			private function catComplete_searchChangeHandler(event:Event):void
+			{
+				// handle cases when there was a value selected in AC, then user 
+				// started typing (thus deselecting previously selected value)
+				if (!none.selected && !catTree.getSelectedCategories().length && !catComplete.selectedItem) {
+					none.selected = true;
+				}
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:Text text="{_descriptionTxt}" width="100%"/>
+	<mx:HBox width="100%" >
+		<mx:RadioButton id="none" label="{resourceManager.getString('cms', 'noParentLbl')}" selected="true" click="none_clickHandler(event)"/>
+		<mx:Spacer width="30%" />
+		<components:AutoComplete id="catComplete" width="70%" labelField="name" disabledItems="{new ArrayCollection(_categories)}"
+								 prompt="{resourceManager.getString('drilldown', 'searchCats')}" 
+								 selectedItemStyleName="selectionBox" change="catComplete_changeHandler(event)" 
+								 searchChange="catComplete_searchChangeHandler(event)"
+								 selectionItemRendererClassFactory="{new ClassFactory(CategorySelectedItem)}"/>
+	</mx:HBox>
+	<mx:HRule width="100%" />
+	<cat:CatTree id="catTree" styleName="categoriesTree" width="100%" height="100%" 
+				 selectionMode="{CatTreeSelectionMode.SINGLE_SELECT}"
+				 chunkedData="{filterModel.chunkedCategoriesLoad}"
+				 categories="{filterModel.categoriesMapGeneral}"
+				 dataProvider="{filterModel.categoriesGeneral}" 
+				 disabledCategories="{_categories}"
+				 valueChange="catTree_valueChangeHandler(event)"/>
+	<mx:ControlBar>
+		<mx:Button label="{resourceManager.getString('cms', 'apply')}" click="button1_clickHandler(event)" />
+	</mx:ControlBar>
+</containers:HelpTitleWindow>

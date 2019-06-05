@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--- represents a distributor for selectDistributors window -->
+<distribution:CBLabelComponent xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:components="com.vidiun.vmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.vidiun.edw.view.distribution.*">
+	<mx:Script>
+		<![CDATA[
+			import com.hurlant.util.der.Integer;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.types.VidiunDistributionProfileActionStatus;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.core.mx_internal;
+			
+			public var initState:Boolean;
+			private var _distributionWithProfile:EntryDistributionWithProfile;
+			
+			override public function set data(value:Object):void {
+				_distributionWithProfile= value as EntryDistributionWithProfile;
+				super.labelText = _distributionWithProfile.vidiunDistributionProfile.name;
+					
+				switch (_distributionWithProfile.vidiunEntryDistribution.status) {
+					case VidiunEntryDistributionStatus.QUEUED:
+					case VidiunEntryDistributionStatus.PENDING:	
+					case VidiunEntryDistributionStatus.ERROR_SUBMITTING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution;
+						break;
+					case VidiunEntryDistributionStatus.READY:
+					case VidiunEntryDistributionStatus.ERROR_UPDATING:
+					case VidiunEntryDistributionStatus.ERROR_DELETING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution && (_distributionWithProfile.vidiunDistributionProfile.deleteEnabled != VidiunDistributionProfileActionStatus.DISABLED);
+						break;
+					case VidiunEntryDistributionStatus.DELETING:
+					case VidiunEntryDistributionStatus.UPDATING:
+					case VidiunEntryDistributionStatus.SUBMITTING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = false;
+						break;
+					case VidiunEntryDistributionStatus.REMOVED:
+					case int.MIN_VALUE:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableAddDistribution;
+						break;
+				}
+				
+				BindingUtils.bindProperty(this, 'cbSelected', _distributionWithProfile, 'distributorSelected');
+			
+			}
+			
+			
+			override protected function onCbClick():void {
+				super.onCbClick();
+				_distributionWithProfile.distributorSelected = cbSelected;
+			}
+		
+		
+		]]>
+	</mx:Script>
+</distribution:CBLabelComponent>

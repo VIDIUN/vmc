@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingTop="0" paddingBottom="0">
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.types.VidiunDurationType;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+			/**
+			 * concat a string representing a short summary of the playlist filter
+			 * (used by advanced mode item renderer)
+			 * @param vmefpl	in advanced mode, item renderer's data
+			 */
+			private function renderSummary(data:Object):String {
+				var vmefpl:VidiunMediaEntryFilterForPlaylist = data as VidiunMediaEntryFilterForPlaylist;
+				var summary:String = "";
+				// tags
+				if (vmefpl.tagsNameMultiLikeOr)
+					summary += resourceManager.getString('cms', 'tags') + vmefpl.tagsNameMultiLikeOr + ", ";
+				
+				var tempString:String = "";
+				// handle types
+				if (vmefpl.mediaTypeIn) {
+					if (vmefpl.mediaTypeIn.indexOf("1") > -1)
+						tempString += resourceManager.getString('filter', 'video') + ", ";
+					if (vmefpl.mediaTypeIn.indexOf("6") > -1)
+						tempString += resourceManager.getString('filter', 'videoMix') + ", ";
+					if (vmefpl.mediaTypeIn.indexOf("5") > -1)
+						tempString += resourceManager.getString('filter', 'audio') + ", ";
+					if (vmefpl.mediaTypeIn.indexOf("2") > -1)
+						tempString += resourceManager.getString('filter', 'image') + ", ";
+					tempString.slice(0, tempString.length - 2);
+					summary += resourceManager.getString('filter', 'mediaTypeTooltip') + tempString + ", ";
+				}
+				
+				// categories:
+				if (vmefpl.categoriesIdsMatchOr) {
+					summary += resourceManager.getString('cms', 'categoriesLabel') + ", ";
+				}
+				
+				// dates:
+				if (vmefpl.createdAtGreaterThanOrEqual != int.MIN_VALUE || vmefpl.createdAtLessThanOrEqual != int.MIN_VALUE) {
+					summary += resourceManager.getString('filter', 'createdBetweenTooltip') + ", ";
+				}
+				
+				// duration:
+				tempString = '';
+				if (vmefpl.durationTypeMatchOr) {
+					if (vmefpl.durationTypeMatchOr.indexOf(VidiunDurationType.SHORT) > -1)
+						tempString += resourceManager.getString('filter', 'shortduration') + ", ";
+					if (vmefpl.durationTypeMatchOr.indexOf(VidiunDurationType.MEDIUM) > -1)
+						tempString += resourceManager.getString('filter', 'mediumduration') + ", ";
+					if (vmefpl.durationTypeMatchOr.indexOf(VidiunDurationType.LONG) > -1)
+						tempString += resourceManager.getString('filter', 'longduration') + ", ";
+					tempString.slice(0, tempString.length - 2);
+					summary += resourceManager.getString('filter', 'durationToolTip') + tempString + ", ";
+				}
+				
+				
+				return summary;
+			}
+		]]>
+	</mx:Script>
+	<mx:Text height="100%" text="{renderSummary(data)}" />
+</mx:HBox>

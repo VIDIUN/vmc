@@ -1,0 +1,26 @@
+<SimpleEditor>
+
+	<ContributionWizard>
+		<UIConfigId>@@VcwForVseUIConfID@@</UIConfigId>
+	</ContributionWizard>
+	<Welcome>/content/uiconf/vidiun/generic/vse_2.3.2/vidiun_welcome.swf</Welcome>
+
+	<DefaultTransition>None</DefaultTransition>
+	<enableCW>true</enableCW>
+	
+	<VPaint>
+		<target>/flash/vpaint/v1.0.4/Painter.swf</target>
+		<shapes>/flash/vpaint/v1.0.1/shapes</shapes>
+		<fonts>/flash/vpaint/v1.0.1/fonts</fonts>
+		<config>/flash/vpaint/v1.0.1/vpaint_config.xml</config>
+	</VPaint>
+
+	<UIConfigList>
+    	<UIConfig>
+			<target>simpleeditor.swf</target>
+		    <cssUrl>/content/uiconf/vidiun/generic/vse_2.3.2/styles_vse_light.swf</cssUrl>
+		    <localeUrl>/content/uiconf/vidiun/generic/vse_2.3.1/en_us_SimpleEditor.swf</localeUrl>
+		</UIConfig>
+	</UIConfigList>
+
+</SimpleEditor>

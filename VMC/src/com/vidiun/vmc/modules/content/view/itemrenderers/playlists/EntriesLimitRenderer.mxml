@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+			/**
+			 * return the limit property
+			 */
+			public function renderLimit(data:Object):String {
+				var vmefpl:VidiunMediaEntryFilterForPlaylist = data as VidiunMediaEntryFilterForPlaylist;
+				return vmefpl.limit.toString();
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="{renderLimit(data)}" selectable="false"/>
+</mx:HBox>

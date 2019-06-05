@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduledTaskProfile
+package com.vidiun.commands.scheduledTaskProfile
 {
-		import com.kaltura.vo.KalturaScheduledTaskProfileFilter;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.scheduledTaskProfile.ScheduledTaskProfileListDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunScheduledTaskProfileFilter;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.scheduledTaskProfile.ScheduledTaskProfileListDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* List scheduled task profiles
 	**/
-	public class ScheduledTaskProfileList extends KalturaCall
+	public class ScheduledTaskProfileList extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param filter KalturaScheduledTaskProfileFilter
-		* @param pager KalturaFilterPager
+		* @param filter VidiunScheduledTaskProfileFilter
+		* @param pager VidiunFilterPager
 		**/
-		public function ScheduledTaskProfileList( filter : KalturaScheduledTaskProfileFilter=null,pager : KalturaFilterPager=null )
+		public function ScheduledTaskProfileList( filter : VidiunScheduledTaskProfileFilter=null,pager : VidiunFilterPager=null )
 		{
 			service= 'scheduledtask_scheduledtaskprofile';
 			action= 'list';
@@ -52,12 +52,12 @@ package com.kaltura.commands.scheduledTaskProfile
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

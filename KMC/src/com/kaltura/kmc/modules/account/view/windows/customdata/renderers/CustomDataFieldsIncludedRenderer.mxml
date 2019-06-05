@@ -3,11 +3,11 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.MetadataFieldVO;
 			
 			override public function set data(value:Object):void {
-				var profile:KMCMetadataProfileVO = value as KMCMetadataProfileVO;
+				var profile:VMCMetadataProfileVO = value as VMCMetadataProfileVO;
 				var fieldsIncludedString:String = '';
 				for each (var field:MetadataFieldVO in profile.metadataFieldVOArray) {
 					fieldsIncludedString += field.defaultLabel + ',';

@@ -1,8 +1,8 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	import mx.utils.ArrayUtil;
 
-	public class KArrayUtil
+	public class VArrayUtil
 	{
 		public static function subtract(subtracted:Array, subtrahend:Array):Array
 		{

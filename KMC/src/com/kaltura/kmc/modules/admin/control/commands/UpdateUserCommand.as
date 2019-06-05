@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.user.UserUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.UserEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.commands.user.UserUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.UserEvent;
+	import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+	import com.vidiun.vo.VidiunUser;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -13,7 +13,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 	public class UpdateUserCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			var user:KalturaUser = (event as UserEvent).user;
+			var user:VidiunUser = (event as UserEvent).user;
 			user.setUpdatedFieldsOnly(true);
 			var userId:String = _model.usersModel.selectedUser.id;
 			if (!userId) {
@@ -21,10 +21,10 @@ package com.kaltura.kmc.modules.admin.control.commands
 				userId = user.id;
 			}
 			var uu:UserUpdate = new UserUpdate(userId, user);
-			uu.addEventListener(KalturaEvent.COMPLETE, result);
-			uu.addEventListener(KalturaEvent.FAILED, fault);
+			uu.addEventListener(VidiunEvent.COMPLETE, result);
+			uu.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
-			_model.kc.post(uu);
+			_model.vc.post(uu);
 		}
 		
 		override protected function result(data:Object):void {

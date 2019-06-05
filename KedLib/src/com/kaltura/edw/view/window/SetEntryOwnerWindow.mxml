@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- change entry owner window -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							height="170" width="400" layout="vertical" showCloseButton="true" showHelpButton="true"
 							help="helpHandler(event)"
 							title="{resourceManager.getString('drilldown', 'changeOwnerTitle')}"
@@ -15,16 +15,16 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.UsersEvent;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.vo.KalturaUser;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACUsersController;
+			import com.vidiun.autocomplete.itemRenderers.selection.UserSelectedItem;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.UsersEvent;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.model.datapacks.EntryDataPack;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.vo.VidiunUser;
 
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -39,13 +39,13 @@
 			/**
 			 * client for autocomplete API calls
 			 * */
-			public var kClient:KalturaClient
+			public var vClient:VidiunClient
 
 			private var _userWatcher:ChangeWatcher;
 
 
 			private function creationCompleteHandler(event:FlexEvent):void {
-				new KACUsersController(usersComplete, kClient);
+				new VACUsersController(usersComplete, vClient);
 				if (_selectedUser) {
 					selectedUser = _selectedUser;
 				}
@@ -55,18 +55,18 @@
 			/**
 			 * container for selected user if not creationComplete yet
 			 * */
-			private var _selectedUser:KalturaUser
+			private var _selectedUser:VidiunUser
 
 
 			/**
 			 * retreive the currently selected user
 			 * */
-			public function get selectedUser():KalturaUser {
-				return usersComplete.selectedItem as KalturaUser;
+			public function get selectedUser():VidiunUser {
+				return usersComplete.selectedItem as VidiunUser;
 			}
 
 
-			public function set selectedUser(value:KalturaUser):void {
+			public function set selectedUser(value:VidiunUser):void {
 				if (usersComplete) {
 					usersComplete.selectedItems = new ArrayCollection([value]);
 				}
@@ -78,9 +78,9 @@
 
 			public function setUserById(userid:String):void {
 				_userWatcher = BindingUtils.bindProperty(this, "selecteduser", entryData, "selectedEntryOwner");
-				var kEvent:UsersEvent = new UsersEvent(UsersEvent.GET_ENTRY_OWNER);
-				kEvent.data = userid;
-				KedController.getInstance().dispatch(kEvent);
+				var vEvent:UsersEvent = new UsersEvent(UsersEvent.GET_ENTRY_OWNER);
+				vEvent.data = userid;
+				VedController.getInstance().dispatch(vEvent);
 			}
 
 

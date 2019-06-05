@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,14 +25,14 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.uploadToken
+package com.vidiun.commands.uploadToken
 {
 		import flash.net.FileReference;
-		import com.kaltura.net.KalturaFileCall;
-	import com.kaltura.delegates.uploadToken.UploadTokenUploadDelegate;
+		import com.vidiun.net.VidiunFileCall;
+	import com.vidiun.delegates.uploadToken.UploadTokenUploadDelegate;
 
 	/**
-	* Upload a file using the upload token id, returns an error on failure (an exception will be thrown when using one of the Kaltura clients)
+	* Upload a file using the upload token id, returns an error on failure (an exception will be thrown when using one of the Vidiun clients)
 	* Chunks can be uploaded in parallel and they will be appended according to their resumeAt position.
 	* A parallel upload session should have three stages:
 	* 1. A single upload with resume=false and finalChunk=false
@@ -42,7 +42,7 @@ package com.kaltura.commands.uploadToken
 	* with resume=true, finalChunk=true and the expected resumeAt position. In case an UPLOAD_TOKEN_CANNOT_MATCH_EXPECTED_SIZE exception
 	* has been returned (indicating not all of the chunks were appended yet) the final request can be retried.
 	**/
-	public class UploadTokenUpload extends KalturaFileCall
+	public class UploadTokenUpload extends VidiunFileCall
 	{
 		public var fileData:Object;
 

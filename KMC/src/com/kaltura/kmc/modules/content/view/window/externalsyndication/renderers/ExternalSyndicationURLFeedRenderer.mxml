@@ -3,10 +3,10 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
 		]]>
 	</mx:Script>
-	<mx:TextInput htmlText="{(data as ExternalSyndicationVO).kSyndicationFeed.feedUrl}" toolTip="{(data as ExternalSyndicationVO).kSyndicationFeed.feedUrl}"  
+	<mx:TextInput htmlText="{(data as ExternalSyndicationVO).vSyndicationFeed.feedUrl}" toolTip="{(data as ExternalSyndicationVO).vSyndicationFeed.feedUrl}"  
 		    	  editable="false" width="100%" height="100%" paddingLeft="4"/>
 </mx:HBox>
 

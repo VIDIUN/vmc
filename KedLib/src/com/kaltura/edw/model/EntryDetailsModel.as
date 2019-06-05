@@ -1,10 +1,10 @@
-package com.kaltura.edw.model
+package com.vidiun.edw.model
 {
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.vidiun.edw.vo.CustomMetadataDataVO;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
 	import mx.collections.ArrayCollection;
-	import com.kaltura.edw.vo.DistributionInfo;
+	import com.vidiun.edw.vo.DistributionInfo;
 
 	[Bindable]
 	/**

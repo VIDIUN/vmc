@@ -3,10 +3,10 @@
 		 verticalScrollPolicy="off" verticalAlign="middle">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.kmc.modules.create.vo.UploadFile;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.vo.FileUploadVO;
+			import com.vidiun.events.FileUploadEvent;
+			import com.vidiun.vmc.modules.create.vo.UploadFile;
+			import com.vidiun.managers.FileUploadManager;
+			import com.vidiun.vo.FileUploadVO;
 
 
 			override public function set data(value:Object):void {

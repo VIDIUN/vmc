@@ -1,16 +1,16 @@
-package com.kaltura.autocomplete.controllers
+package com.vidiun.autocomplete.controllers
 {
 	import com.hillelcoren.components.AutoComplete;
 	import com.hillelcoren.utils.StringUtils;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.autocomplete.controllers.base.KACControllerBase;
-	import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.autocomplete.controllers.base.VACControllerBase;
+	import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
 	
 	import flash.events.Event;
 	import flash.utils.setTimeout;
@@ -19,9 +19,9 @@ package com.kaltura.autocomplete.controllers
 	import mx.core.ClassFactory;
 	import mx.utils.ArrayUtil;
 
-	public class KACCategoryController extends KACControllerBase
+	public class VACCategoryController extends VACControllerBase
 	{
-		public function KACCategoryController(autoComp:AutoComplete, client:KalturaClient)
+		public function VACCategoryController(autoComp:AutoComplete, client:VidiunClient)
 		{
 			super(autoComp, client);
 			autoComp.dropDownLabelFunction = categoryLabelFunction;
@@ -30,8 +30,8 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		private function categoryComparison(itemA:Object, itemB:Object):Boolean{
-			var categoryA:KalturaCategory = itemA as KalturaCategory;
-			var categoryB:KalturaCategory = itemB as KalturaCategory;
+			var categoryA:VidiunCategory = itemA as VidiunCategory;
+			var categoryB:VidiunCategory = itemB as VidiunCategory;
 			
 			if (categoryA == null || categoryB == null){
 				trace ("categoryComparison --> Trying to compare non-category object");
@@ -41,8 +41,8 @@ package com.kaltura.autocomplete.controllers
 			return categoryA.id == categoryB.id;
 		}
 		
-		override protected function createCallHook():KalturaCall{
-			var filter:KalturaCategoryFilter = new KalturaCategoryFilter();
+		override protected function createCallHook():VidiunCall{
+			var filter:VidiunCategoryFilter = new VidiunCategoryFilter();
 			filter.nameOrReferenceIdStartsWith = _autoComp.searchText;
 			var listCategories:CategoryList = new CategoryList(filter);
 			
@@ -50,7 +50,7 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		override protected function fetchElements(data:Object):Array{
-			var ret:Array = (data.data as KalturaCategoryListResponse).objects;
+			var ret:Array = (data.data as VidiunCategoryListResponse).objects;
 			if (ret != null){
 				ret.sortOn("fullName", Array.CASEINSENSITIVE);
 			}
@@ -58,7 +58,7 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		private function categoryLabelFunction(item:Object):String{
-			var category:KalturaCategory = item as KalturaCategory;
+			var category:VidiunCategory = item as VidiunCategory;
 			
 			var labelText:String = category.fullName;
 			if (category.referenceId != null && category.referenceId != ""){
@@ -73,18 +73,18 @@ package com.kaltura.autocomplete.controllers
 			var returnStr:String = StringUtils.highlightMatch( labelText, searchStr );
 			
 			var isDisabled:Boolean = false;
-			var currCat:KalturaCategory = item as KalturaCategory;
-			var kc:KalturaCategory;
-			for each (kc in _autoComp.disabledItems.source){
-				if (kc.id == currCat.id){
+			var currCat:VidiunCategory = item as VidiunCategory;
+			var vc:VidiunCategory;
+			for each (vc in _autoComp.disabledItems.source){
+				if (vc.id == currCat.id){
 					isDisabled = true;
 					break;
 				}
 			}
 			
 			var isSelected:Boolean = false;
-			for each (kc in _autoComp.selectedItems.source){
-				if (kc.id == currCat.id){
+			for each (vc in _autoComp.selectedItems.source){
+				if (vc.id == currCat.id){
 					isSelected = true;
 					break;
 				}

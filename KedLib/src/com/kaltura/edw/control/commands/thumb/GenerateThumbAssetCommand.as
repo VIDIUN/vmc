@@ -1,34 +1,34 @@
-package com.kaltura.edw.control.commands.thumb
+package com.vidiun.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetGenerate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.GenerateThumbAssetEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbAsset;
-	import com.kaltura.vo.KalturaThumbParams;
+	import com.vidiun.commands.thumbAsset.ThumbAssetGenerate;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.GenerateThumbAssetEvent;
+	import com.vidiun.edw.control.events.ThumbnailAssetEvent;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.vo.ThumbnailWithDimensions;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunThumbAsset;
+	import com.vidiun.vo.VidiunThumbParams;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.ResourceManager;
 	
-	public class GenerateThumbAssetCommand extends KedCommand
+	public class GenerateThumbAssetCommand extends VedCommand
 	{
 		private var _thumbsArray:Array;
 		
 		private var _ddp:DistributionDataPack;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			var generateThumbEvent:GenerateThumbAssetEvent = event as GenerateThumbAssetEvent;
 			var generateThumbAsset:ThumbAssetGenerate = new ThumbAssetGenerate((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id, generateThumbEvent.thumbParams, generateThumbEvent.thumbSourceId);
-			generateThumbAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			generateThumbAsset.addEventListener(KalturaEvent.FAILED, fault);
+			generateThumbAsset.addEventListener(VidiunEvent.COMPLETE, result);
+			generateThumbAsset.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(generateThumbAsset);
 		}
@@ -37,7 +37,7 @@ package com.kaltura.edw.control.commands.thumb
 			_model.decreaseLoadCounter();
 			super.result(data);
 			_ddp = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
-			var newThumb:KalturaThumbAsset =  data.data as KalturaThumbAsset;
+			var newThumb:VidiunThumbAsset =  data.data as VidiunThumbAsset;
 			_thumbsArray = _ddp.distributionInfo.thumbnailDimensions;
 			var curUsedProfiles:Array = new Array();
 			var thumbExist:Boolean = false;

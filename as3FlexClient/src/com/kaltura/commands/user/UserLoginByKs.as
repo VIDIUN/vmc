@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.user
+package com.vidiun.commands.user
 {
-	import com.kaltura.delegates.user.UserLoginByKsDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.vidiun.delegates.user.UserLoginByVsDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* Loges a user to the destination account as long the ks user id exists in the desc acount and the loginData id match for both accounts
+	* Loges a user to the destination account as long the vs user id exists in the desc acount and the loginData id match for both accounts
 	**/
-	public class UserLoginByKs extends KalturaCall
+	public class UserLoginByVs extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param requestedPartnerId int
 		**/
-		public function UserLoginByKs( requestedPartnerId : int )
+		public function UserLoginByVs( requestedPartnerId : int )
 		{
 			service= 'user';
-			action= 'loginByKs';
+			action= 'loginByVs';
 
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
@@ -56,7 +56,7 @@ package com.kaltura.commands.user
 		override public function execute() : void
 		{
 			setRequestArgument('filterFields', filterFields);
-			delegate = new UserLoginByKsDelegate( this , config );
+			delegate = new UserLoginByVsDelegate( this , config );
 		}
 	}
 }

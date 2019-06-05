@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.eSearch
+package com.vidiun.commands.eSearch
 {
-		import com.kaltura.vo.KalturaESearchParams;
-		import com.kaltura.vo.KalturaPager;
-	import com.kaltura.delegates.eSearch.ESearchSearchCategoryDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunESearchParams;
+		import com.vidiun.vo.VidiunPager;
+	import com.vidiun.delegates.eSearch.ESearchSearchCategoryDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class ESearchSearchCategory extends KalturaCall
+	public class ESearchSearchCategory extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param searchParams KalturaESearchParams
-		* @param pager KalturaPager
+		* @param searchParams VidiunESearchParams
+		* @param pager VidiunPager
 		**/
-		public function ESearchSearchCategory( searchParams : KalturaESearchParams,pager : KalturaPager=null )
+		public function ESearchSearchCategory( searchParams : VidiunESearchParams,pager : VidiunPager=null )
 		{
 			service= 'elasticsearch_esearch';
 			action= 'searchCategory';
@@ -50,11 +50,11 @@ package com.kaltura.commands.eSearch
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(searchParams, 'searchParams');
+				keyValArr = vidiunObject2Arrays(searchParams, 'searchParams');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

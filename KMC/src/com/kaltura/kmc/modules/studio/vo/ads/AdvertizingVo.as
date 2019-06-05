@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo.ads {
+package com.vidiun.vmc.modules.studio.vo.ads {
 	import mx.collections.ArrayCollection;
 
 	/**
@@ -60,7 +60,7 @@ package com.kaltura.kmc.modules.studio.vo.ads {
 		public var companions:Array/*CompanionAdVo*/;
 		
 		/**
-		 * kdp elements over which ads may be placed
+		 * vdp elements over which ads may be placed
 		 * (Object {elementid,relativeTo,position})
 		 */
 		public var flashCompanionLocations:ArrayCollection/*Object*/;
@@ -72,7 +72,7 @@ package com.kaltura.kmc.modules.studio.vo.ads {
 		public var bumperEnabled:Boolean;
 		
 		/**
-		 * the Kaltura entry to play as bumper 
+		 * the Vidiun entry to play as bumper 
 		 */
 		public var bumperEntry:String;
 		

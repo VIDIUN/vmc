@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaDurationType;
+			import com.vidiun.types.VidiunDurationType;
 			
 			import mx.events.FlexEvent;
 
@@ -22,13 +22,13 @@
 				}
 				else {
 					if (shortBtn.selected) {
-						durationString += KalturaDurationType.SHORT + ",";
+						durationString += VidiunDurationType.SHORT + ",";
 					}
 					if (mediumBtn.selected) {
-						durationString += KalturaDurationType.MEDIUM + ",";
+						durationString += VidiunDurationType.MEDIUM + ",";
 					}
 					if (longBtn.selected) {
-						durationString += KalturaDurationType.LONG + ",";
+						durationString += VidiunDurationType.LONG + ",";
 					}
 					//remove last , 
 					durationString = durationString.slice(0, durationString.length - 1);
@@ -51,15 +51,15 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaDurationType.SHORT:
+							case VidiunDurationType.SHORT:
 								shortBtn.selected = true;
 								break;
 							
-							case KalturaDurationType.MEDIUM:
+							case VidiunDurationType.MEDIUM:
 								mediumBtn.selected = true;
 								break;
 							
-							case KalturaDurationType.LONG:
+							case VidiunDurationType.LONG:
 								longBtn.selected = true;
 								break;
 						}

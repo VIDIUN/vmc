@@ -1,4 +1,4 @@
-package com.kaltura.events
+package com.vidiun.events
 {
 	import flash.events.Event;
 

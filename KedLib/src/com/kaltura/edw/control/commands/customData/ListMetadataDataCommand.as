@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.customData {
-	import com.kaltura.commands.metadata.MetadataList;
-	import com.kaltura.edw.business.EntryFormBuilder;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.MetadataDataEvent;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMetadata;
-	import com.kaltura.vo.KalturaMetadataFilter;
-	import com.kaltura.vo.KalturaMetadataListResponse;
+package com.vidiun.edw.control.commands.customData {
+	import com.vidiun.commands.metadata.MetadataList;
+	import com.vidiun.edw.business.EntryFormBuilder;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.MetadataDataEvent;
+	import com.vidiun.edw.model.FilterModel;
+	import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.vo.CustomMetadataDataVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunMetadata;
+	import com.vidiun.vo.VidiunMetadataFilter;
+	import com.vidiun.vo.VidiunMetadataListResponse;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,7 +23,7 @@ package com.kaltura.edw.control.commands.customData {
 	 * @author Michal
 	 *
 	 */
-	public class ListMetadataDataCommand extends KedCommand {
+	public class ListMetadataDataCommand extends VedCommand {
 
 		private var _filterModel:FilterModel;
 
@@ -34,18 +34,18 @@ package com.kaltura.edw.control.commands.customData {
 		 * @param event the event that triggered this command
 		 *
 		 */
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_filterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			
 			if (event.type == MetadataDataEvent.RESET) {
 				var metadataEmptyData:Array = new Array;
-				var kMetadata:KalturaMetadata;
-				var prof:KMCMetadataProfileVO;
+				var vMetadata:VidiunMetadata;
+				var prof:VMCMetadataProfileVO;
 				for (var i:int = 0; i < _filterModel.metadataProfiles.length; i++) {
-					prof = _filterModel.metadataProfiles[i] as KMCMetadataProfileVO;
-					kMetadata = new KalturaMetadata();
-					kMetadata.metadataProfileId = prof.profile.id;
-					metadataEmptyData.push(kMetadata);
+					prof = _filterModel.metadataProfiles[i] as VMCMetadataProfileVO;
+					vMetadata = new VidiunMetadata();
+					vMetadata.metadataProfileId = prof.profile.id;
+					metadataEmptyData.push(vMetadata);
 				}
 				setDataToModel(metadataEmptyData);
 			}
@@ -55,12 +55,12 @@ package com.kaltura.edw.control.commands.customData {
 				if (!_filterModel.metadataProfiles || !edp.selectedEntry.id)
 					return;
 
-				var filter:KalturaMetadataFilter = new KalturaMetadataFilter();
+				var filter:VidiunMetadataFilter = new VidiunMetadataFilter();
 				filter.objectIdEqual = edp.selectedEntry.id;
 
 				var listMetadataData:MetadataList = new MetadataList(filter);
-				listMetadataData.addEventListener(KalturaEvent.COMPLETE, result);
-				listMetadataData.addEventListener(KalturaEvent.FAILED, fault);
+				listMetadataData.addEventListener(VidiunEvent.COMPLETE, result);
+				listMetadataData.addEventListener(VidiunEvent.FAILED, fault);
 
 				_client.post(listMetadataData);
 			}
@@ -74,7 +74,7 @@ package com.kaltura.edw.control.commands.customData {
 		 */
 		override public function result(data:Object):void {
 			super.result(data);
-			var metadataResponse:KalturaMetadataListResponse = data.data as KalturaMetadataListResponse;
+			var metadataResponse:VidiunMetadataListResponse = data.data as VidiunMetadataListResponse;
 			setDataToModel(metadataResponse.objects);
 		}
 
@@ -96,9 +96,9 @@ package com.kaltura.edw.control.commands.customData {
 				var formBuilder:EntryFormBuilder = _filterModel.formBuilders[i] as EntryFormBuilder;
 				formBuilder.metadataInfo = entryMetadata;
 
-				// add the KalturaMetadata of this profile to the EntryMetadataDataVO
-				var profileId:int = (_filterModel.metadataProfiles[i] as KMCMetadataProfileVO).profile.id;
-				for each (var metadata:KalturaMetadata in metadataArray) {
+				// add the VidiunMetadata of this profile to the EntryMetadataDataVO
+				var profileId:int = (_filterModel.metadataProfiles[i] as VMCMetadataProfileVO).profile.id;
+				for each (var metadata:VidiunMetadata in metadataArray) {
 					if (metadata.metadataProfileId == profileId) {
 						entryMetadata.metadata = metadata;
 						break;

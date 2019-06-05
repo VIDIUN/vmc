@@ -1,5 +1,5 @@
-package com.kaltura.containers.utilityClasses {
-	import com.kaltura.containers.BoundedFlowBox;
+package com.vidiun.containers.utilityClasses {
+	import com.vidiun.containers.BoundedFlowBox;
 	
 	import flash.display.DisplayObject;
 	

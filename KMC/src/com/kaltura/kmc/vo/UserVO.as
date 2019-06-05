@@ -1,7 +1,7 @@
-package com.kaltura.kmc.vo
+package com.vidiun.vmc.vo
 {
-	import com.kaltura.vo.KalturaUser;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.vidiun.vo.VidiunUser;
+	import com.vidiun.vo.VidiunUserRole;
 
 	[Bindable]
 	/**
@@ -13,11 +13,11 @@ package com.kaltura.kmc.vo
 		/**
 		 * user details 
 		 */
-		public var user:KalturaUser;
+		public var user:VidiunUser;
 		
 		/**
 		 * the role associated with <code>user</code> 
 		 */		
-		public var role:KalturaUserRole;
+		public var role:VidiunUserRole;
 	}
 }

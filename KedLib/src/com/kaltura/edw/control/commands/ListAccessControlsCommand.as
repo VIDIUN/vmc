@@ -1,32 +1,32 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
-	import com.kaltura.vo.KalturaFilterPager;
+package com.vidiun.edw.control.commands {
+	import com.vidiun.commands.accessControl.AccessControlList;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunAccessControlOrderBy;
+	import com.vidiun.vo.AccessControlProfileVO;
+	import com.vidiun.vo.VidiunAccessControl;
+	import com.vidiun.vo.VidiunAccessControlFilter;
+	import com.vidiun.vo.VidiunAccessControlListResponse;
+	import com.vidiun.vo.VidiunBaseRestriction;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 
-	public class ListAccessControlsCommand extends KedCommand {
+	public class ListAccessControlsCommand extends VedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var filter:KalturaAccessControlFilter = new KalturaAccessControlFilter();
-			filter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var filter:VidiunAccessControlFilter = new VidiunAccessControlFilter();
+			filter.orderBy = VidiunAccessControlOrderBy.CREATED_AT_DESC;
+			var pager:VidiunFilterPager = new VidiunFilterPager();
 			pager.pageSize = 1000;
 			var listAcp:AccessControlList = new AccessControlList(filter, pager);
-			listAcp.addEventListener(KalturaEvent.COMPLETE, result);
-			listAcp.addEventListener(KalturaEvent.FAILED, fault);
+			listAcp.addEventListener(VidiunEvent.COMPLETE, result);
+			listAcp.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(listAcp);
 		}
 
@@ -34,19 +34,19 @@ package com.kaltura.edw.control.commands {
 		override public function result(data:Object):void {
 			super.result(data);
 			if (data.success) {
-				var response:KalturaAccessControlListResponse = data.data as KalturaAccessControlListResponse;
+				var response:VidiunAccessControlListResponse = data.data as VidiunAccessControlListResponse;
 				var tempArrCol:ArrayCollection = new ArrayCollection();
-				for each (var kac:KalturaAccessControl in response.objects) {
+				for each (var vac:VidiunAccessControl in response.objects) {
 					var acVo:AccessControlProfileVO = new AccessControlProfileVO();
-					acVo.profile = kac;
-					acVo.id = kac.id;
-					if (kac.restrictions ) {
+					acVo.profile = vac;
+					acVo.id = vac.id;
+					if (vac.restrictions ) {
 						// remove unknown objects
 						// if any restriction is unknown, we remove it from the list.
-						// this means it is not supported in KMC at the moment
-						for (var i:int = 0; i<kac.restrictions.length; i++) {
-							if (! (kac.restrictions[i] is KalturaBaseRestriction)) {
-								kac.restrictions.splice(i, 1);
+						// this means it is not supported in VMC at the moment
+						for (var i:int = 0; i<vac.restrictions.length; i++) {
+							if (! (vac.restrictions[i] is VidiunBaseRestriction)) {
+								vac.restrictions.splice(i, 1);
 							}
 						}
 					}

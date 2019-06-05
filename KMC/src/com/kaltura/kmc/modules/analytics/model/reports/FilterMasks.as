@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.analytics.model.reports
+package com.vidiun.vmc.modules.analytics.model.reports
 {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.DatesOnlyMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.DrillDownMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.PlatformMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.TopLevelMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.UnitsDatesMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.UnitsDatesUsersMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.UserEngDrillDownMask;
-	import com.kaltura.kmc.modules.analytics.vo.filterMasks.UserEngMask;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.DatesOnlyMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.DrillDownMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.PlatformMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.TopLevelMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.UnitsDatesMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.UnitsDatesUsersMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.UserEngDrillDownMask;
+	import com.vidiun.vmc.modules.analytics.vo.filterMasks.UserEngMask;
 
 	[Bindable]
 	/**
 	 * mapping of filter masks to reports.
-	 * @see com.kaltura.kmc.modules.analytics.vo.filterMasks.BaseMask
+	 * @see com.vidiun.vmc.modules.analytics.vo.filterMasks.BaseMask
 	 * @author atar.shadmi
 	 * 
 	 */

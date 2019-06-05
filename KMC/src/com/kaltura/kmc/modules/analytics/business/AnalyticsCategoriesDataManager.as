@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.analytics.business
+package com.vidiun.vmc.modules.analytics.business
 {
-	import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.vo.CategoryVO;
+	import com.vidiun.edw.components.fltr.cat.data.ICategoriesDataManger;
+	import com.vidiun.edw.control.CategoriesTreeController;
+	import com.vidiun.edw.vo.CategoryVO;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

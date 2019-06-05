@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCategoryUserStatus;
+			import com.vidiun.types.VidiunCategoryUserStatus;
 			
 			import mx.events.FlexEvent;
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -22,13 +22,13 @@
 				}
 				else {
 					if (activeBtn.selected) {
-						levelString += KalturaCategoryUserStatus.ACTIVE + ",";
+						levelString += VidiunCategoryUserStatus.ACTIVE + ",";
 					}
 //					if (pendBtn.selected) {
-//						levelString += KalturaCategoryUserStatus.PENDING + ",";
+//						levelString += VidiunCategoryUserStatus.PENDING + ",";
 //					}
 					if (archBtn.selected) {
-						levelString += KalturaCategoryUserStatus.NOT_ACTIVE + ",";
+						levelString += VidiunCategoryUserStatus.NOT_ACTIVE + ",";
 					}
 					//remove last , 
 					levelString = levelString.slice(0, levelString.length - 1);
@@ -51,15 +51,15 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaCategoryUserStatus.ACTIVE:
+							case VidiunCategoryUserStatus.ACTIVE:
 								activeBtn.selected = true;
 								break;
 							
-//							case KalturaCategoryUserStatus.PENDING:
+//							case VidiunCategoryUserStatus.PENDING:
 //								pendBtn.selected = true;
 //								break;
 							
-							case KalturaCategoryUserStatus.NOT_ACTIVE:
+							case VidiunCategoryUserStatus.NOT_ACTIVE:
 								archBtn.selected = true;
 								break;
 						}

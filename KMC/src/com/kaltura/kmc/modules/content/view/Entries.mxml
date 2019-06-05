@@ -3,50 +3,50 @@
 	 "Manage" part of the content viewstack.
 	 lists all entries, allows filtering, preview and drill-down to entry details.
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.kaltura.controls.*"
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel,com.kaltura.edw.business.IDataOwner"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.vidiun.controls.*"
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel,com.vidiun.edw.business.IDataOwner"
 		 creationComplete="creationCompleteHandler(event)" 
-		 xmlns:view="com.kaltura.kmc.modules.content.view.*"
-		 xmlns:business="com.kaltura.kmc.modules.content.business.*"
-		 xmlns:et="com.kaltura.edw.components.et.*" 
-		 xmlns:fltr="com.kaltura.edw.components.fltr.*" 
-		 xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" 
-		 xmlns:bulkactions="com.kaltura.kmc.modules.content.view.controls.bulkactions.*">
+		 xmlns:view="com.vidiun.vmc.modules.content.view.*"
+		 xmlns:business="com.vidiun.vmc.modules.content.business.*"
+		 xmlns:et="com.vidiun.edw.components.et.*" 
+		 xmlns:fltr="com.vidiun.edw.components.fltr.*" 
+		 xmlns:indicators="com.vidiun.edw.components.fltr.indicators.*" 
+		 xmlns:bulkactions="com.vidiun.vmc.modules.content.view.controls.bulkactions.*">
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.edw.vo.ListableVo;
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-			import com.kaltura.kmc.modules.content.events.PartnerEvent;
-			import com.kaltura.kmc.modules.content.events.SelectionEvent;
-			import com.kaltura.kmc.modules.content.events.SetListableEvent;
-			import com.kaltura.kmc.modules.content.events.SetPlaylistTypeEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaMediaEntryOrderBy;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.et.EntryTableColumns;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.LoadEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.DistributionDataPack;
+			import com.vidiun.edw.model.datapacks.EntryDataPack;
+			import com.vidiun.edw.model.types.WindowsStates;
+			import com.vidiun.edw.vo.ListableVo;
+			import com.vidiun.events.FileUploadEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.events.EntriesEvent;
+			import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+			import com.vidiun.vmc.modules.content.events.PartnerEvent;
+			import com.vidiun.vmc.modules.content.events.SelectionEvent;
+			import com.vidiun.vmc.modules.content.events.SetListableEvent;
+			import com.vidiun.vmc.modules.content.events.SetPlaylistTypeEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.managers.FileUploadManager;
+			import com.vidiun.types.VidiunMediaEntryOrderBy;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunMediaEntryFilter;
 			
 			import flash.utils.clearTimeout;
 			import flash.utils.setTimeout;
@@ -72,7 +72,7 @@
 			/**
 			 * data ordering
 			 * */
-			private var _orderBy:String = KalturaMediaEntryOrderBy.CREATED_AT_DESC;
+			private var _orderBy:String = VidiunMediaEntryOrderBy.CREATED_AT_DESC;
 
 			[Bindable]
 			/**
@@ -84,7 +84,7 @@
 			/**
 			 * entries-related data
 			 * */
-			public var entryDetailsModel:KMvCModel;
+			public var entryDetailsModel:VMvCModel;
 
 			/**
 			 * current window state
@@ -101,12 +101,12 @@
 			 * initialize the panel.
 			 * @param initFilter	filter for initial entry loading.
 			 * */
-			public function init(initFilter:KalturaBaseEntryFilter = null):void {
+			public function init(initFilter:VidiunBaseEntryFilter = null):void {
 				paging.selectedPage = 1;
 				paging.pageSize = paging.rowInPageCb.value as int;
 				
-				if (initFilter && initFilter is KalturaMediaEntryFilter) {
-					filter.kalturaFilter = initFilter as KalturaMediaEntryFilter;
+				if (initFilter && initFilter is VidiunMediaEntryFilter) {
+					filter.vidiunFilter = initFilter as VidiunMediaEntryFilter;
 				}
 				
 				//When one click on switch tab and get back if the accordion filter is not the first child 
@@ -118,7 +118,7 @@
 				
 				// load all the data the filter needs
 				var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, this, filterModel);
-				KedController.getInstance().dispatch(fe);
+				VedController.getInstance().dispatch(fe);
 
 				// get partner info
 				var getPartnerInfoEvent:PartnerEvent = new PartnerEvent(PartnerEvent.GET_PARTNER_INFO);
@@ -145,14 +145,14 @@
 			private function loadEntriesNow():void {
 				clearTimeout(_loadEntriesInterval);
 				_loadEntriesInterval = 0; // reset, so next call will trigger again
-				_listableVo = new ListableVo(filter.kalturaFilter, paging, null);
+				_listableVo = new ListableVo(filter.vidiunFilter, paging, null);
 				// set the order-by to the filter
 				if (_orderBy) {
 					_listableVo.filterVo.orderBy = _orderBy;
 				}
 				var cgEvent:CairngormEvent = new SetListableEvent(SetListableEvent.SET_NEW_LIST_TO_MODEL, _listableVo);
 				cgEvent.dispatch();
-				cgEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES, _listableVo);
+				cgEvent = new VMCSearchEvent(VMCSearchEvent.DO_SEARCH_ENTRIES, _listableVo);
 				cgEvent.dispatch();				
 			}
 
@@ -187,8 +187,8 @@
 					Alert.show(resourceManager.getString('cms', 'pleaseSelectEntriesFirst'));
 					return;
 				}
-				var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, null);
-				KedController.getInstance().dispatch(kEvent);
+				var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, null);
+				VedController.getInstance().dispatch(vEvent);
 
 				// add the selected items to the model 
 				var cgEvent:CairngormEvent = new EntriesEvent(EntriesEvent.SET_SELECTED_ENTRIES,
@@ -240,7 +240,7 @@
 
 			private function changeRows():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>Show Rows");
 				loadEntries();
 			}
@@ -248,7 +248,7 @@
 
 			private function nxtPage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.NEXT_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>NextPage/Page" + paging.selectedPage);
 				loadEntries();
 			}
@@ -256,7 +256,7 @@
 
 			private function prvPage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PREV_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>PrevPage/Page" + paging.selectedPage);
 				loadEntries();
 			}
@@ -264,7 +264,7 @@
 
 			private function gotoPageNum():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE_NUM, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>GoToPage/Page" + paging.selectedPage);
 				loadEntries();
 			}
@@ -284,8 +284,8 @@
 				if ((windowState == WindowsStates.REPLACEMENT_ENTRY_DETAILS_WINDOW) || (windowState == WindowsStates.ENTRY_DETAILS_WINDOW_NEW_ENTRY) || (windowState == WindowsStates.ENTRY_DETAILS_WINDOW_CLOSED_ONE) || (windowState == WindowsStates.ENTRY_DETAILS_WINDOW)) {
 					//refresh the open entry
 					var edp:EntryDataPack = entryDetailsModel.getDataPack(EntryDataPack) as EntryDataPack;
-					var getSelectedEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, edp.selectedEntry.id);
-					KedController.getInstance().dispatch(getSelectedEntry);
+					var getSelectedEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, edp.selectedEntry.id);
+					VedController.getInstance().dispatch(getSelectedEntry);
 				}
 				else
 					// this is why we get a million baseEntry.list calls when uploading multiple files!!!

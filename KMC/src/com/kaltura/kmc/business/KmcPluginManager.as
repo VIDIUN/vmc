@@ -1,7 +1,7 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.kmc.events.KmcErrorEvent;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.vmc.events.VmcErrorEvent;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -16,15 +16,15 @@ package com.kaltura.kmc.business
 	import mx.modules.ModuleLoader;
 	import mx.resources.ResourceManager;
 
-	public class KmcPluginManager extends EventDispatcher {
+	public class VmcPluginManager extends EventDispatcher {
 		
 		/**
-		 * KMC uiconf, holds data regarding modules and plugins 
+		 * VMC uiconf, holds data regarding modules and plugins 
 		 */
 		private var _uiconf:XML;
 		
 		/**
-		 * associative array of plugins (FlexModules) that KMC loaded, 
+		 * associative array of plugins (FlexModules) that VMC loaded, 
 		 * listed by their ids
 		 * */
 		private var _plugins:Object;
@@ -37,7 +37,7 @@ package com.kaltura.kmc.business
 		/**
 		 * client for API calls 
 		 */
-		private var _client:KalturaClient;
+		private var _client:VidiunClient;
 		
 		/**
 		 * application flashvars object 
@@ -50,7 +50,7 @@ package com.kaltura.kmc.business
 		 */		
 		private var _eventHandlers:Object;
 		
-		public function KmcPluginManager(approot:DisplayObjectContainer, client:KalturaClient, flashvars:Object, eventHandlers:Object)
+		public function VmcPluginManager(approot:DisplayObjectContainer, client:VidiunClient, flashvars:Object, eventHandlers:Object)
 		{
 			_approot = approot;
 			_client = client;
@@ -116,7 +116,7 @@ package com.kaltura.kmc.business
 			for (var i:uint = 0 ; i< atts.length() ; i++) {
 				att = (atts[i] as XML).localName().toString();
 				if (att != "path" && att != "dependencies") {
-					// the above are required by KMC, not by the plugin
+					// the above are required by VMC, not by the plugin
 					plugin[att] = atts[i].toString();
 				}
 			}
@@ -133,9 +133,9 @@ package com.kaltura.kmc.business
 			if (plugin is IPopupMenu) {
 				(plugin as IPopupMenu).setRoot(_approot);
 			}
-			if (plugin is IKmcPlugin) {
-				(plugin as IKmcPlugin).client = _client;
-				(plugin as IKmcPlugin).flashvars = _flashvars;
+			if (plugin is IVmcPlugin) {
+				(plugin as IVmcPlugin).client = _client;
+				(plugin as IVmcPlugin).flashvars = _flashvars;
 			}
 			_plugins[plugin.id] = plugin;
 			
@@ -153,15 +153,15 @@ package com.kaltura.kmc.business
 		
 		
 		/**
-		 * dispatch a KMCErrorEvent
+		 * dispatch a VMCErrorEvent
 		 * @param e
 		 */
 		private function onPluginLoadError (e:ModuleEvent):void {
-			dispatchEvent(new KmcErrorEvent(KmcErrorEvent.ERROR, e.errorText));
+			dispatchEvent(new VmcErrorEvent(VmcErrorEvent.ERROR, e.errorText));
 		}
 		
 		/**
-		 * load required KMC plugins 
+		 * load required VMC plugins 
 		 * */
 		public function loadPlugins(uiconf:XML):void {
 			_uiconf = uiconf;
@@ -186,7 +186,7 @@ package com.kaltura.kmc.business
 			try {
 				return _plugins[pluginId][methodName].apply(_plugins[pluginId], args);
 			} catch (e:Error) {
-				dispatchEvent(new KmcErrorEvent(KmcErrorEvent.ERROR, ResourceManager.getInstance().getString('kmc', 'method_dont_exist', [pluginId, methodName])));
+				dispatchEvent(new VmcErrorEvent(VmcErrorEvent.ERROR, ResourceManager.getInstance().getString('vmc', 'method_dont_exist', [pluginId, methodName])));
 			}
 		}
 		

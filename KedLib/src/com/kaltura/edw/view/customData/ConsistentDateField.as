@@ -1,8 +1,8 @@
-package com.kaltura.edw.view.customData
+package com.vidiun.edw.view.customData
 {
 	import mx.events.CalendarLayoutChangeEvent;
 	
-	public class ConsistentDateField extends KDateField
+	public class ConsistentDateField extends VDateField
 	{
 		private var _nonChangedDate:Date;
 		

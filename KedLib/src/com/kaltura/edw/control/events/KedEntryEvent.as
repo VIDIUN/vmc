@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
-	public class KedEntryEvent extends KMvCEvent {
+	public class VedEntryEvent extends VMvCEvent {
 		
 		// ======================================================
 		// Event Names
@@ -13,7 +13,7 @@ package com.kaltura.edw.control.events
 		 * triggers a baseEntry.update with the given baseEntry, with no side effects.
 		 * event.data {entry:_undoToEntry, closeAfterSave:_closeAfterSave, nextEntryPending:_nextEntryPending}
 		 * */
-		public static const UPDATE_SINGLE_ENTRY:String = "ked_update_single_entry";
+		public static const UPDATE_SINGLE_ENTRY:String = "ved_update_single_entry";
 		
 		public static const DELETE_ENTRY : String = "content_delete_entry";
 		
@@ -89,7 +89,7 @@ package com.kaltura.edw.control.events
 		// Private Members
 		// ======================================================
 		
-		private var _entryVo : KalturaBaseEntry;
+		private var _entryVo : VidiunBaseEntry;
 		private var _entryId : String;
 		private var _entryIndex: int;
 		private var _reloadEntry:Boolean;
@@ -97,7 +97,7 @@ package com.kaltura.edw.control.events
 		// ======================================================
 		// Constructor
 		// ======================================================
-		public function KedEntryEvent(type:String, entryVo:KalturaBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function VedEntryEvent(type:String, entryVo:VidiunBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_entryVo = entryVo;
@@ -110,7 +110,7 @@ package com.kaltura.edw.control.events
 		// Getters
 		// ======================================================
 		
-		public function get entryVo():KalturaBaseEntry
+		public function get entryVo():VidiunBaseEntry
 		{
 			return _entryVo;
 		}

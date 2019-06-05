@@ -2,17 +2,17 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.playlist.PlaylistEntries;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+			import com.vidiun.edw.components.playlist.PlaylistEntries;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 			/**
 			 * return the filter type property
 			 */
 			private function renderFilterType(data:Object):String {
-				var kmefpl:KalturaMediaEntryFilterForPlaylist = data as KalturaMediaEntryFilterForPlaylist;
+				var vmefpl:VidiunMediaEntryFilterForPlaylist = data as VidiunMediaEntryFilterForPlaylist;
 				var result:String = '';
 				
 				for (var i:uint = 0; i < PlaylistEntries.ORDER_BY_ARR.length; i++) {
-					if (PlaylistEntries.ORDER_BY_ARR[i].value == kmefpl.orderBy)
+					if (PlaylistEntries.ORDER_BY_ARR[i].value == vmefpl.orderBy)
 						result = PlaylistEntries.ORDER_BY_ARR[i].label;
 				}
 				return result;

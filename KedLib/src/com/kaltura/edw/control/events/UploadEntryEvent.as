@@ -1,11 +1,11 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	import flash.net.FileReference;
 	
 
-	public class UploadEntryEvent extends KMvCEvent
+	public class UploadEntryEvent extends VMvCEvent
 	{
 		public static const UPLOAD_THUMBNAIL : String = "content_uploadThumbnail";
 		

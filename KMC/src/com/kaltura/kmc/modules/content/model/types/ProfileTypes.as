@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.model.types
+package com.vidiun.vmc.modules.content.model.types
 {
 	public class ProfileTypes
 	{

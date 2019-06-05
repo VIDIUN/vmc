@@ -2,7 +2,7 @@
 <!---
 	 graphic interface for changing player attributes such as player name, video ratio, autoplay.
 -->
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.kaltura.validators.*" paddingBottom="0"
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.vidiun.validators.*" paddingBottom="0"
 		 paddingLeft="0" paddingRight="0" paddingTop="0" height="100%" width="100%">
 	<mx:Metadata>
 		[Event(name="alertUser", type="flash.events.ErrorEvent")] 
@@ -11,8 +11,8 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.view.ApsWizard;
-			import com.kaltura.kmc.modules.studio.vo.TemplateVo;
+			import com.vidiun.vmc.modules.studio.view.ApsWizard;
+			import com.vidiun.vmc.modules.studio.vo.TemplateVo;
 			
 			import mx.events.NumericStepperEvent;
 			import mx.events.ValidationResultEvent;

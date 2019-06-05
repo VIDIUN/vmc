@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.model
+package com.vidiun.vmc.modules.content.model
 {
-	import com.kaltura.vo.KalturaDropFolder;
-	import com.kaltura.vo.KalturaDropFolderFileFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.vo.VidiunDropFolder;
+	import com.vidiun.vo.VidiunDropFolderFileFilter;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -12,7 +12,7 @@ package com.kaltura.kmc.modules.content.model
 //		/**
 //		 * currently selected drop folder 
 //		 */		
-//		public var selectedDropFolder:KalturaDropFolder;	
+//		public var selectedDropFolder:VidiunDropFolder;	
 		
 		/**
 		 * list of DropFolders 
@@ -28,12 +28,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * drop folders files filter
 		 * */
-		public var filter:KalturaDropFolderFileFilter;
+		public var filter:VidiunDropFolderFileFilter;
 
 		/**
 		 * drop folders files pager
 		 * */
-		public var pager:KalturaFilterPager;
+		public var pager:VidiunFilterPager;
 		
 		/**
 		 * total amount of drop folder files

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.events {
+package com.vidiun.vmc.modules.content.events {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	
 	import mx.collections.ArrayCollection;
@@ -39,19 +39,19 @@ package com.kaltura.kmc.modules.content.events {
 		
 		/**
 		 * add the given categories to the selected entries
-		 * event.data is categories to add (KalturaCategory objects)
+		 * event.data is categories to add (VidiunCategory objects)
 		 */
 		public static const ADD_CATEGORIES_ENTRIES:String = "content_addCategoriesEntries";
 		
 		/**
 		 * add the given categories to on the fly entries
-		 * event.data is category to add (KalturaCategory objects)
+		 * event.data is category to add (VidiunCategory objects)
 		 */
 		public static const ADD_ON_THE_FLY_CATEGORY:String = "content_addOnTheFlyCategory";
 		
 		/**
 		 * remove the given categories from the selected entries
-		 * event.data is categories to remove (KalturaCategory objects)
+		 * event.data is categories to remove (VidiunCategory objects)
 		 */
 		public static const REMOVE_CATEGORIES_ENTRIES:String = "content_removeCategoriesEntries";
 		
@@ -73,7 +73,7 @@ package com.kaltura.kmc.modules.content.events {
 		
 		/**
 		 * entries relevant for this event.
-		 * each entry is <code>KalturaBaseEntry</code>
+		 * each entry is <code>VidiunBaseEntry</code>
 		 */
 		private var _entries:ArrayCollection;
 

@@ -2,8 +2,8 @@
 <!---
 	add new livestream window
 -->
-<HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.kaltura.validators.*"
-				 xmlns="com.kaltura.containers.*" layout="vertical" creationComplete="creationCompleteHandler(event)"
+<HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:validators="com.vidiun.validators.*"
+				 xmlns="com.vidiun.containers.*" layout="vertical" creationComplete="creationCompleteHandler(event)"
 				 help="{onHelp()}" styleName="TitleWindowType2" width="500" height="420" showCloseButton="true"
 				 close="removeMe()">
 	<mx:Metadata>
@@ -12,16 +12,16 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-			import com.kaltura.edw.vo.LocalizedVo;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.AddStreamEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.kmc.modules.content.vo.StreamVo;
-			import com.kaltura.types.KalturaRecordStatus;
-			import com.kaltura.vo.KalturaConversionProfile;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.model.datapacks.PermissionsDataPack;
+			import com.vidiun.edw.vo.LocalizedVo;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.AddStreamEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+			import com.vidiun.vmc.modules.content.vo.StreamVo;
+			import com.vidiun.types.VidiunRecordStatus;
+			import com.vidiun.vo.VidiunConversionProfile;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -48,7 +48,7 @@
 			
 			[Bindable]
 			/**
-			 * list of KalturaConversionProfiles where type = KalturaConversionProfileType.LIVE_STREAM
+			 * list of VidiunConversionProfiles where type = VidiunConversionProfileType.LIVE_STREAM
 			 * */
 			public var liveProfiles:ArrayCollection;
 			
@@ -59,7 +59,7 @@
 			
 			[Bindable]
 			/**
-			 * for kaltura live stream - select recording by default
+			 * for vidiun live stream - select recording by default
 			 * */
 			private var _recordByDefault:Boolean = true;
 			
@@ -85,21 +85,21 @@
 				title = resourceManager.getString('live', 'liveStreamTitle');
 				PermissionManager.getInstance().applyAllAttributes(this, "createLiveStream");
 				
-				// now we can say if akamai/kaltura streams are available
+				// now we can say if akamai/vidiun streams are available
 				var pdp:PermissionsDataPack = _model.entryDetailsModel.getDataPack(PermissionsDataPack) as PermissionsDataPack;
 				_streamTypes = [];
 				
-				if (pdp.enableKalturaLive) {
-					_streamTypes.push(new LocalizedVo(StreamVo.STREAM_TYPE_KALTURA, 'kalturaStream', 'live'));
+				if (pdp.enableVidiunLive) {
+					_streamTypes.push(new LocalizedVo(StreamVo.STREAM_TYPE_VIDIUN, 'vidiunStream', 'live'));
 					if (!liveProfiles) {
 						var lp:AddStreamEvent = new AddStreamEvent(AddStreamEvent.LIST_LIVE_PROFILES, null);
 						lp.dispatch();
 					}
 				}
 				
-				if (pdp.enableKalturaMulticast) {
-					_streamTypes.push(new LocalizedVo(StreamVo.STREAM_TYPE_MULTICAST, 'kalturaMulticast', 'live'));
-					// live profiles load is handled by Kaltura live, which is a prerequisite for multicast
+				if (pdp.enableVidiunMulticast) {
+					_streamTypes.push(new LocalizedVo(StreamVo.STREAM_TYPE_MULTICAST, 'vidiunMulticast', 'live'));
+					// live profiles load is handled by Vidiun live, which is a prerequisite for multicast
 				}
 				
 				if (pdp.enableAkamaiLive) {
@@ -110,12 +110,12 @@
 				streamType.selectedIndex = 0; // select the first item in the list
 				streamType.dispatchEvent(new ListEvent(Event.CHANGE));
 				
-				streamTypeWrap.includeInLayout = streamTypeWrap.visible = pdp.enableAkamaiLive || pdp.enableKalturaLive;
+				streamTypeWrap.includeInLayout = streamTypeWrap.visible = pdp.enableAkamaiLive || pdp.enableVidiunLive;
 				
-				_recordByDefault = pdp.enableKalturaRecording;
+				_recordByDefault = pdp.enableVidiunRecording;
 				//build the dataprovider items list :
-				recordingOptions.addItem(new LocalizedVo(String(KalturaRecordStatus.PER_SESSION), 'rec_slice', 'live'));
-				recordingOptions.addItem(new LocalizedVo(String(KalturaRecordStatus.APPENDED), 'rec_append', 'live'));
+				recordingOptions.addItem(new LocalizedVo(String(VidiunRecordStatus.PER_SESSION), 'rec_slice', 'live'));
+				recordingOptions.addItem(new LocalizedVo(String(VidiunRecordStatus.APPENDED), 'rec_append', 'live'));
 				
 			}
 
@@ -129,12 +129,12 @@
 					case StreamVo.STREAM_TYPE_MANUAL:
 						anchor = 'section_add_live_stream_man';
 						break;
-					case StreamVo.STREAM_TYPE_KALTURA:
+					case StreamVo.STREAM_TYPE_VIDIUN:
 					case StreamVo.STREAM_TYPE_MULTICAST:
-						anchor = 'section_add_live_stream_kal';
+						anchor = 'section_add_live_stream_vid';
 						break;
 				}
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 
 
@@ -157,7 +157,7 @@
 						_isManualStream = true;
 						forms.selectedIndex = 2;
 						break;
-					case StreamVo.STREAM_TYPE_KALTURA:
+					case StreamVo.STREAM_TYPE_VIDIUN:
 					case StreamVo.STREAM_TYPE_MULTICAST:
 						_isManualStream = false;
 						forms.selectedIndex = 0;
@@ -212,20 +212,20 @@
 						}
 					}
 				}
-				else if (streamVo.streamType == StreamVo.STREAM_TYPE_KALTURA || streamVo.streamType == StreamVo.STREAM_TYPE_MULTICAST) {
-					// kaltura
-					var conversionProfileId:int = getLiveProfileId(liveProfileKaltura);
+				else if (streamVo.streamType == StreamVo.STREAM_TYPE_VIDIUN || streamVo.streamType == StreamVo.STREAM_TYPE_MULTICAST) {
+					// vidiun
+					var conversionProfileId:int = getLiveProfileId(liveProfileVidiun);
 					
 					if (conversionProfileId != 0) {
-						if (streamVo.streamType == StreamVo.STREAM_TYPE_KALTURA) {
-							streamVo.dvrEnabled = useDvrKaltura.selected;
+						if (streamVo.streamType == StreamVo.STREAM_TYPE_VIDIUN) {
+							streamVo.dvrEnabled = useDvrVidiun.selected;
 						}
 						else {
 							// multicast doesn't support dvr
 							streamVo.dvrEnabled = false;
 						}
 						streamVo.autoStartStreaming = autoStartStreaming.selected;
-						streamVo.recordingEnabled = useRecKaltura.selected;
+						streamVo.recordingEnabled = useRecVidiun.selected;
 						streamVo.recordingType = recordingType.selectedItem.value;
 						streamVo.conversionProfileId = conversionProfileId;
 					} 
@@ -272,10 +272,10 @@
 			{
 				var ret:int = 0;
 				if (combo.selectedItem) {
-					ret = (combo.selectedItem as KalturaConversionProfile).id;
+					ret = (combo.selectedItem as VidiunConversionProfile).id;
 				}
 				else if (liveProfiles && liveProfiles.length > 0) {
-					ret = (liveProfiles[0] as KalturaConversionProfile).id;
+					ret = (liveProfiles[0] as VidiunConversionProfile).id;
 				}
 				
 				return ret;
@@ -305,25 +305,25 @@
 	</mx:HBox>
 	<mx:Spacer height="10" />
 	<mx:ViewStack id="forms" width="100%" height="100%">
-		<!-- form for kaltura and multicast -->
+		<!-- form for vidiun and multicast -->
 		<mx:VBox styleName="noPadding" width="100%" height="100%">
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString('live', 'liveProfile')}" width="{labelWidth}" styleName="boldLabel" />
-				<mx:ComboBox id="liveProfileKaltura" dataProvider="{liveProfiles}" width="290" labelField="name" />
+				<mx:ComboBox id="liveProfileVidiun" dataProvider="{liveProfiles}" width="290" labelField="name" />
 			</mx:HBox>
-			<mx:HBox width="100%" visible="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_KALTURA}"
-					 includeInLayout="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_KALTURA}">
-				<mx:CheckBox id="useDvrKaltura" selected="false"/>
-				<mx:Text text="{resourceManager.getString('live', 'enableDvrKaltura')}" width="100%" />
+			<mx:HBox width="100%" visible="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_VIDIUN}"
+					 includeInLayout="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_VIDIUN}">
+				<mx:CheckBox id="useDvrVidiun" selected="false"/>
+				<mx:Text text="{resourceManager.getString('live', 'enableDvrVidiun')}" width="100%" />
 			</mx:HBox>
 			<mx:HBox width="100%" >
-				<mx:CheckBox id="useRecKaltura" selected="{_recordByDefault}" />
+				<mx:CheckBox id="useRecVidiun" selected="{_recordByDefault}" />
 				<mx:Text text="{resourceManager.getString('live', 'enableRecording')}" width="100%" />
-				<mx:ComboBox id="recordingType" enabled="{useRecKaltura.selected}" 
+				<mx:ComboBox id="recordingType" enabled="{useRecVidiun.selected}" 
 							 dataProvider="{recordingOptions}" width="290" />
 			</mx:HBox>
-			<mx:HBox width="100%" visible="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_KALTURA}"
-					 includeInLayout="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_KALTURA}">
+			<mx:HBox width="100%" visible="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_VIDIUN}"
+					 includeInLayout="{streamType.selectedItem.value == StreamVo.STREAM_TYPE_VIDIUN}">
 				<mx:CheckBox id="autoStartStreaming" selected="true"/>
 				<mx:Text text="{resourceManager.getString('live', 'autoStartStreaming')}" width="100%" />
 			</mx:HBox>

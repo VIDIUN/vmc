@@ -2,27 +2,27 @@
 <renderers:AccessControlRendererBase xmlns:mx="http://www.adobe.com/2006/mxml"
 			 creationComplete="onCreationComplete(event)" width="100%"
 			 horizontalScrollPolicy="off" styleName="tableCellBoxRendererStyle" paddingLeft="4"
-			 xmlns:renderers="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.*">
+			 xmlns:renderers="com.vidiun.vmc.modules.account.view.windows.accesscontrol.renderers.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaSiteRestrictionType;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaSiteRestriction;
+			import com.vidiun.types.VidiunSiteRestrictionType;
+			import com.vidiun.vo.AccessControlProfileVO;
+			import com.vidiun.vo.VidiunBaseRestriction;
+			import com.vidiun.vo.VidiunSiteRestriction;
 
 
 			private function onCreationComplete(event:Event = null):void {
 				var acProfile:AccessControlProfileVO = this.data as AccessControlProfileVO;
 				if (acProfile != null) {
 					var foundRestriction:Boolean = false;
-					for each (var restriction:KalturaBaseRestriction in acProfile.profile.restrictions) {
-						if (restriction is KalturaSiteRestriction) {
+					for each (var restriction:VidiunBaseRestriction in acProfile.profile.restrictions) {
+						if (restriction is VidiunSiteRestriction) {
 							foundRestriction = true;
-							siteLabel.text = (restriction as KalturaSiteRestriction).siteRestrictionType == KalturaSiteRestrictionType.ALLOW_SITE_LIST 
+							siteLabel.text = (restriction as VidiunSiteRestriction).siteRestrictionType == VidiunSiteRestrictionType.ALLOW_SITE_LIST 
 								? resourceManager.getString('account', 'ALLOW_SITES') + ":  " 
 								: resourceManager.getString('account', 'RESTRICT_SITES') + ":  ";
 
-							siteLabel.text += (restriction as KalturaSiteRestriction).siteList;
+							siteLabel.text += (restriction as VidiunSiteRestriction).siteList;
 							siteLabel.toolTip = siteLabel.text;
 							break;
 						}

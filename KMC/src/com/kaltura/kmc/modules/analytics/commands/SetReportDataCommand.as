@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.analytics.commands
+package com.vidiun.vmc.modules.analytics.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.control.ReportDataEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.vmc.modules.analytics.control.ReportDataEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.analytics.commands
 			
 			var reportData:ReportData = _model.reportDataMap[rdEvt.screenType] as ReportData;
 			if (reportData.pager == null){
-				reportData.pager = new KalturaFilterPager();
+				reportData.pager = new VidiunFilterPager();
 			}
 			
 			// set all the reportData parameters form the current report view:

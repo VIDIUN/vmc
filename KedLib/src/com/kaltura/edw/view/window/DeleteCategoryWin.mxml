@@ -8,14 +8,14 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.components.filter.CategoriesTree;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.components.filter.CategoriesTree;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 			
 			import mx.managers.PopUpManager;
 			
@@ -33,7 +33,7 @@
 			private function deleteCategory(event:Event=null):void
 			{
 				
-				var e:KedDataEvent = new KedDataEvent(CategoriesTree.OPEN_DELETE_CATEGORY);
+				var e:VedDataEvent = new VedDataEvent(CategoriesTree.OPEN_DELETE_CATEGORY);
 				e.data = selectedCategory.id;
 				dispatchEvent(e);
 				
@@ -41,7 +41,7 @@
 //	 			deleteCategoriesEvent.data = [selectedCategory.id];
 //	 			deleteCategoriesEvent.dispatch();
 	 			
-	 			KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_REMOVE_ADMIN_TAGS, "CategoriesTree>RemoveCategory");
+	 			VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT,VidiunStatsVmcEventType.CONTENT_REMOVE_ADMIN_TAGS, "CategoriesTree>RemoveCategory");
 	 			GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_DELETE_CATEGORY, GoogleAnalyticsConsts.CONTENT);
 				closeWindow();
 			}

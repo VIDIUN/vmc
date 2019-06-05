@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
 				 title="{resourceManager.getString('account','addNewConvProfileTitle')}" 
-				 xmlns:conversion="com.kaltura.kmc.modules.account.view.windows.conversion.*"
+				 xmlns:conversion="com.vidiun.vmc.modules.account.view.windows.conversion.*"
 				 close="closeWindow(event)" showCloseButton="true" creationComplete="onCreationComplete(event)"
-				 help="{help()}" styleName="TitleWindowType2" xmlns:validators="com.kaltura.validators.*" xmlns:controls="com.kaltura.controls.*" xmlns:text="com.kaltura.controls.text.*">
+				 help="{help()}" styleName="TitleWindowType2" xmlns:validators="com.vidiun.validators.*" xmlns:controls="com.vidiun.controls.*" xmlns:text="com.vidiun.controls.text.*">
 	<states>
 		<mx:State name="{EDIT_STATE}">
 			<mx:SetProperty name="title" value="{resourceManager.getString('account','editConvProfileTitle')}"/>
@@ -13,19 +13,19 @@
 	</states>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.account.control.events.EntryEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
-			import com.kaltura.kmc.modules.account.utils.ListConversionProfilesUtil;
-			import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaStorageProfile;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.vidiun.vmc.modules.account.control.events.EntryEvent;
+			import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+			import com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode;
+			import com.vidiun.vmc.modules.account.utils.ListConversionProfilesUtil;
+			import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
+			import com.vidiun.types.VidiunConversionProfileType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunStorageProfile;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -43,7 +43,7 @@
 			[Bindable]
 			/**
 			 * window mode 
-			 * @see com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode
+			 * @see com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode
 			 * */
 			public var mode:String = ConversionProfileWindowMode.MODE_MEDIA;
 
@@ -85,7 +85,7 @@
 
 
 			private function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_transcoding_profile_edit'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_transcoding_profile_edit'));
 			}
 			
 
@@ -117,10 +117,10 @@
 					conversionProfile = new ConversionProfileVO();
 					// set profile type
 					if (mode == ConversionProfileWindowMode.MODE_LIVE) {
-						conversionProfile.profile.type = KalturaConversionProfileType.LIVE_STREAM;
+						conversionProfile.profile.type = VidiunConversionProfileType.LIVE_STREAM;
 					}
 					else {
-						conversionProfile.profile.type = KalturaConversionProfileType.MEDIA;
+						conversionProfile.profile.type = VidiunConversionProfileType.MEDIA;
 					}
 					conversionProfile.flavors = new Array();
 					PermissionManager.getInstance().applyAllAttributes(this, "conversionProfileDrilldown_add");
@@ -164,7 +164,7 @@
 				if (value) {
 					var bFound:Boolean = false;
 					
-					for each (var sp:KalturaStorageProfile in _model.storageProfiles) {
+					for each (var sp:VidiunStorageProfile in _model.storageProfiles) {
 						if (sp.id == _conversionProfile.profile.storageProfileId) {
 							cbRemoteProfile.selectedItem = sp;
 							bFound = true;
@@ -202,17 +202,17 @@
 			 * @param value the entry that is set as default for the profile
 			 * @param forceSave	if true, save even if no value
 			 * */
-			private function save(value:KalturaBaseEntry, forceSave:Boolean = false):void {
+			private function save(value:VidiunBaseEntry, forceSave:Boolean = false):void {
 				if (!(value || forceSave)) return; // initial binding
 				_conversionProfile.profile.name = conversionNameTextInput.text;
 				_conversionProfile.profile.description = conversionDescTextArea.text;
-				_conversionProfile.profile.defaultEntryId = txtDefaultEntryId.text != '' ? txtDefaultEntryId.text : KalturaClient.NULL_STRING;
+				_conversionProfile.profile.defaultEntryId = txtDefaultEntryId.text != '' ? txtDefaultEntryId.text : VidiunClient.NULL_STRING;
 				if (cbRemoteProfile.selectedItem) {
 					_conversionProfile.profile.storageProfileId = cbRemoteProfile.selectedItem.id;
 				}
 				else {
 					// make sure we send a value, and that it means "none".
-					_conversionProfile.profile.storageProfileId = KalturaClient.NULL_INT;
+					_conversionProfile.profile.storageProfileId = VidiunClient.NULL_INT;
 				}
 				
 				var updateProfileEvent:ConversionSettingsEvent;
@@ -226,8 +226,8 @@
 				updateProfileEvent.nextEvent = new ConversionSettingsEvent(ConversionSettingsEvent.getListEventByMode(mode));
 				updateProfileEvent.dispatch();
 				
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "addCode.resetConvProfList"}, true));
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.resetLiveConversionProfilesList", forceLoad: "false"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "addCode.resetConvProfList"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.resetLiveConversionProfilesList", forceLoad: "false"}, true));
 				
 				closeWindow();
 			}

@@ -1,9 +1,9 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.vmvc.model.IDataPack;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunUser;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -40,7 +40,7 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * Current Viewed Entry
 		 */
-		public var selectedEntry:KalturaBaseEntry;
+		public var selectedEntry:VidiunBaseEntry;
 		
 		/**
 		 * index of Current Viewed Entry
@@ -50,7 +50,7 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * replacement entry of the selected entry 
 		 */		
-		public var selectedReplacementEntry:KalturaBaseEntry;
+		public var selectedReplacementEntry:VidiunBaseEntry;
 		
 		
 		/**
@@ -64,10 +64,10 @@ package com.kaltura.edw.model.datapacks
 		public var selectedEntryReloaded:Boolean;
 		
 		/**
-		 * if selected entry is a kaltura livestream entry, is it currently boradcasting HDS?
+		 * if selected entry is a vidiun livestream entry, is it currently boradcasting HDS?
 		 * (use Nullable so we can set "no value" and binding will fire)
 		 */
-		public var selectedLiveEntryIsLive:int = KalturaNullableBoolean.NULL_VALUE;
+		public var selectedLiveEntryIsLive:int = VidiunNullableBoolean.NULL_VALUE;
 		
 		/**
 		 * when saving an entry we list all entries that have the same 
@@ -87,22 +87,22 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * the owner of the selected entry
 		 */		
-		public var selectedEntryOwner:KalturaUser;
+		public var selectedEntryOwner:VidiunUser;
 		
 		/**
 		 * the creator of the selected entry
 		 */		
-		public var selectedEntryCreator:KalturaUser;
+		public var selectedEntryCreator:VidiunUser;
 		
 		/**
 		 * the editors of the selected entry
-		 * [KalturaUser]
+		 * [VidiunUser]
 		 */		
 		public var entryEditors:Array;
 		
 		/**
 		 * the publishers of the selected entry
-		 * [KalturaUser]
+		 * [VidiunUser]
 		 */		
 		public var entryPublishers:Array;
 	}

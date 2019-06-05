@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.admin.view.renderers
+package com.vidiun.vmc.modules.admin.view.renderers
 {
-	import com.kaltura.vo.KalturaUserRole;
+	import com.vidiun.vo.VidiunUserRole;
 	
 	import mx.containers.HBox;
 	
@@ -19,7 +19,7 @@ package com.kaltura.kmc.modules.admin.view.renderers
 		{
 			if(data)
 			{
-				var tagsArray:Array = (data as KalturaUserRole).tags.split(',');
+				var tagsArray:Array = (data as VidiunUserRole).tags.split(',');
 				for each (var tag:String in tagsArray) {
 					if (tag==TAG_ADMIN) {
 						this.setStyle("backgroundColor", "#FFFDEF");

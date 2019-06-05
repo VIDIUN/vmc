@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.commands.playlist.PlaylistUpdate;
-	import com.kaltura.edw.business.EntryUtil;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.baseEntry.BaseEntryUpdate;
+	import com.vidiun.commands.playlist.PlaylistUpdate;
+	import com.vidiun.edw.business.EntryUtil;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+	import com.vidiun.vmc.modules.content.events.WindowEvent;
+	import com.vidiun.types.VidiunEntryStatus;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunMixEntry;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.content.commands {
 	/**
 	 * This class is the Cairngorm command for updating multiple entries, or playlist.
 	 * */
-	public class UpdateEntriesCommand extends KalturaCommand {
+	public class UpdateEntriesCommand extends VidiunCommand {
 
 		/**
 		 * the updated entries.
@@ -51,26 +51,26 @@ package com.kaltura.kmc.modules.content.commands {
 				_model.increaseLoadCounter();
 				var mr:MultiRequest = new MultiRequest();
 				for (var i:uint = 0; i < e.entries.length; i++) {
-					var keepId:String = (e.entries[i] as KalturaBaseEntry).id;
+					var keepId:String = (e.entries[i] as VidiunBaseEntry).id;
 
 					// only send conversionProfileId if the entry is in no_content status
-					if (e.entries[i].status != KalturaEntryStatus.NO_CONTENT) {
+					if (e.entries[i].status != VidiunEntryStatus.NO_CONTENT) {
 						e.entries[i].conversionProfileId = int.MIN_VALUE;
 					}
 					
 					//handle playlist items
-					if (e.entries[i] is KalturaPlaylist) {
+					if (e.entries[i] is VidiunPlaylist) {
 						_isPlaylist = true;
-						var plE:KalturaPlaylist = e.entries[i] as KalturaPlaylist;
+						var plE:VidiunPlaylist = e.entries[i] as VidiunPlaylist;
 						plE.setUpdatedFieldsOnly(true);
 						var updatePlEntry:PlaylistUpdate = new PlaylistUpdate(keepId, plE);
 						mr.addAction(updatePlEntry);
 					}
 					else {
-						var be:KalturaBaseEntry = e.entries[i] as KalturaBaseEntry;
+						var be:VidiunBaseEntry = e.entries[i] as VidiunBaseEntry;
 						be.setUpdatedFieldsOnly(true);
-						if (be is KalturaMixEntry)
-							(be as KalturaMixEntry).dataContent = null;
+						if (be is VidiunMixEntry)
+							(be as VidiunMixEntry).dataContent = null;
 						// don't send categories - we use categoryEntry service to update them in EntryData panel
 						be.categories = null;
 						be.categoriesIds = null;
@@ -80,9 +80,9 @@ package com.kaltura.kmc.modules.content.commands {
 					}
 				}
 
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(mr);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(mr);
 				
 			}
 		}
@@ -104,18 +104,18 @@ package com.kaltura.kmc.modules.content.commands {
 				var mr:MultiRequest;
 				for (var groupIndex:int = 0; groupIndex < numOfGroups; groupIndex++) {
 					mr = new MultiRequest();
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(VidiunEvent.COMPLETE, result);
+					mr.addEventListener(VidiunEvent.FAILED, fault);
 					mr.queued = false;
 
 					groupSize = (groupIndex < (numOfGroups - 1)) ? 50 : lastGroupSize;
 					for (var entryIndexInGroup:int = 0; entryIndexInGroup < groupSize; entryIndexInGroup++) {
 						var index:int = ((groupIndex * 50) + entryIndexInGroup);
-						var keepId:String = (_entries[index] as KalturaBaseEntry).id;
-						var be:KalturaBaseEntry = _entries[index] as KalturaBaseEntry;
+						var keepId:String = (_entries[index] as VidiunBaseEntry).id;
+						var be:VidiunBaseEntry = _entries[index] as VidiunBaseEntry;
 						be.setUpdatedFieldsOnly(true);
 						// only send conversionProfileId if the entry is in no_content status
-						if (be.status != KalturaEntryStatus.NO_CONTENT) {
+						if (be.status != VidiunEntryStatus.NO_CONTENT) {
 							be.conversionProfileId = int.MIN_VALUE;
 						}
 						// don't send categories - we use categoryEntry service to update them in EntryData panel
@@ -126,7 +126,7 @@ package com.kaltura.kmc.modules.content.commands {
 						mr.addAction(updateEntry);
 					}
 					_model.increaseLoadCounter();
-					_model.context.kc.post(mr);
+					_model.context.vc.post(mr);
 				}
 			}
 			else {
@@ -142,17 +142,17 @@ package com.kaltura.kmc.modules.content.commands {
 		 * */
 		override public function result(data:Object):void {
 			super.result(data);
-			var searchEvent:KMCSearchEvent;
+			var searchEvent:VMCSearchEvent;
 			if (!checkError(data)) {
 				if (_isPlaylist) {
 					// refresh playlists list
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
+					searchEvent = new VMCSearchEvent(VMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
 					searchEvent.dispatch();
 					var cgEvent:WindowEvent = new WindowEvent(WindowEvent.CLOSE);
 					cgEvent.dispatch();
 				}
 				else {
-					for each (var entry:KalturaBaseEntry in data.data) {
+					for each (var entry:VidiunBaseEntry in data.data) {
 						EntryUtil.updateSelectedEntryInList(entry, _model.listableVo.arrayCollection); 
 					}
 				}
@@ -160,11 +160,11 @@ package com.kaltura.kmc.modules.content.commands {
 			else {
 				// reload data to reset changes that weren't made
 				if (_isPlaylist) {
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
+					searchEvent = new VMCSearchEvent(VMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
 					searchEvent.dispatch();
 				}
 				else {
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES, _model.listableVo);
+					searchEvent = new VMCSearchEvent(VMCSearchEvent.DO_SEARCH_ENTRIES, _model.listableVo);
 					searchEvent.dispatch();
 				}
 			}

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							layout="vertical" width="450" height="190"
 							showCloseButton="true" showHelpButton="true" help="helpHandler(event)"
 							title="{resourceManager.getString('cms', 'catContPolTitle')}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.types.KalturaAppearInListType;
-			import com.kaltura.types.KalturaContributionPolicyType;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.types.VidiunAppearInListType;
+			import com.vidiun.types.VidiunContributionPolicyType;
 			
 			
 			
@@ -28,7 +28,7 @@
 			
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cats_cont", true));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, "section_cats_cont", true));
 			}
 			
 		]]>
@@ -38,9 +38,9 @@
 	
 	<mx:RadioButtonGroup id="myGroup" change="myGroup_changeHandler(event)"/>
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catContPolPublic')}" 
-					value="{KalturaContributionPolicyType.ALL}" groupName="myGroup" />
+					value="{VidiunContributionPolicyType.ALL}" groupName="myGroup" />
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catContPolPrivate')}" 
-					value="{KalturaContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION}" groupName="myGroup" />
+					value="{VidiunContributionPolicyType.MEMBERS_WITH_CONTRIBUTION_PERMISSION}" groupName="myGroup" />
 	
 	
 	<mx:ControlBar>

@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.account.control.events.MetadataProfileEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.modules.account.control.events.MetadataProfileEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
 
 	public class UpdateSelectedMetadataProfileCommand implements ICommand
 	{

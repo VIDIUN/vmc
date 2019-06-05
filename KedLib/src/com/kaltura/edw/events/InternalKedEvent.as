@@ -1,10 +1,10 @@
-package com.kaltura.edw.events
+package com.vidiun.edw.events
 {
 	/**
-	 * events for internal KED communication, 
+	 * events for internal VED communication, 
 	 * between the different panels and the main app etc. 
 	 */
-	public class InternalKedEvent extends KedDataEvent {
+	public class InternalVedEvent extends VedDataEvent {
 		
 		/**
 		 * dispatched when a panel had finished saving its data.
@@ -15,7 +15,7 @@ package com.kaltura.edw.events
 		
 		
 		
-		public function InternalKedEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function InternalVedEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.content.events
 		
 		/**
 		 * update subcategories order for the current selected category (category drilldown)
-		 * event.data is array of KalturaCategories to update 
+		 * event.data is array of VidiunCategories to update 
 		 */
 		public static const UPDATE_SUB_CATEGORIES : String = "content_updateSubCategories";
 		
@@ -56,19 +56,19 @@ package com.kaltura.kmc.modules.content.events
 		
 		/**
 		 * set the listing of the currently selected categories
-		 * event.data is new listing value (KalturaAppearInListType)
+		 * event.data is new listing value (VidiunAppearInListType)
 		 */
 		public static const SET_CATEGORIES_LISTING : String = "content_setCategoriesListing";
 		
 		/**
 		 * set the contribution policy of the currently selected categories
-		 * event.data is new contributnio policy value (KalturaContributionPolicyType)
+		 * event.data is new contributnio policy value (VidiunContributionPolicyType)
 		 */
 		public static const SET_CATEGORIES_CONTRIBUTION : String = "content_setCategoriesContribution";
 		
 		/**
 		 * set the access of the currently selected categories
-		 * event.data is new access value (KalturaPrivacyType)
+		 * event.data is new access value (VidiunPrivacyType)
 		 */
 		public static const SET_CATEGORIES_ACCESS : String = "content_setCategoriesAccess";
 		
@@ -88,7 +88,7 @@ package com.kaltura.kmc.modules.content.events
 		
 		/**
 		 * save the given categories to the server
-		 * event.data is [KalturaCategories]
+		 * event.data is [VidiunCategories]
 		 */
 		public static const UPDATE_CATEGORIES : String = "content_updateCategories";
 		
@@ -111,7 +111,7 @@ package com.kaltura.kmc.modules.content.events
 		public static const UPDATE_CATEGORY_METADATA_DATA : String = "content_updateCategoryMetadataData";
 		
 		/**
-		 * Retrieve the parent kaltura category object of the selected category.
+		 * Retrieve the parent vidiun category object of the selected category.
 		 */
 		public static const GET_PARENT_CATEGORY : String = "content_getParentCategory";
 
@@ -126,8 +126,8 @@ package com.kaltura.kmc.modules.content.events
 		public static const CLEAR_PARENT_CATEGORY : String = "content_clearParentCategory";
 		
 		/**
-		 * get the KalturaUser that is set as owner for selected category
-		 * event.data is KalturaCategory
+		 * get the VidiunUser that is set as owner for selected category
+		 * event.data is VidiunCategory
 		 */
 		public static const GET_CATEGORY_OWNER : String = "content_getCategoryOwner";
 		
@@ -154,7 +154,7 @@ package com.kaltura.kmc.modules.content.events
 		
 		/**
 		 * get a list of categories with the same reference id as the given
-		 * event.data is KalturaCategory
+		 * event.data is VidiunCategory
 		 * */
 		public static const LIST_CATEGORIES_BY_REFID:String = "content_list_categories_by_refid"; 
 		

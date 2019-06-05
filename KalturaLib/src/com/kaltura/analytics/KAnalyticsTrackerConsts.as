@@ -1,22 +1,22 @@
-package com.kaltura.analytics
+package com.vidiun.analytics
 {
 //	import com.adobe.crypto.MD5;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.stats.StatsKmcCollect;
-	import com.kaltura.vo.KalturaStatsKmcEvent;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.stats.StatsVmcCollect;
+	import com.vidiun.vo.VidiunStatsVmcEvent;
 	
 	import flash.net.URLRequestMethod;
 	
-	public class KAnalyticsTrackerConsts
+	public class VAnalyticsTrackerConsts
 	{
 		// modules
-		public static const ANALYTICS : String = "KMC_ANDROMEDA/Reports and Analytics"; 
-		public static const CONTENT : String = "KMC_ANDROMEDA/Content"; 
-		public static const STUDIO : String = "KMC_ANDROMEDA/Studio"; 
-		public static const ACCOUNT : String = "KMC_ANDROMEDA/Account"; 
-		public static const DASHBOARD : String = "KMC_ANDROMEDA/Dashboard"; 
+		public static const ANALYTICS : String = "VMC_ANDROMEDA/Reports and Analytics"; 
+		public static const CONTENT : String = "VMC_ANDROMEDA/Content"; 
+		public static const STUDIO : String = "VMC_ANDROMEDA/Studio"; 
+		public static const ACCOUNT : String = "VMC_ANDROMEDA/Account"; 
+		public static const DASHBOARD : String = "VMC_ANDROMEDA/Dashboard"; 
 		
-		public function KAnalyticsTrackerConsts()
+		public function VAnalyticsTrackerConsts()
 		{
 		}
 		

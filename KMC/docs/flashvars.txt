@@ -1,17 +1,17 @@
-The following flashvars are used by KMC:
+The following flashvars are used by VMC:
 ========================================
 
 partnerId : id of current partner
 
 protocol :  if not passed, defaults to http://
 
-host : server against which to run ("www.kaltura.com")
+host : server against which to run ("www.vidiun.com")
 
 srvurl : base path to services url, normally "api_v3/index.php"
 
-ks : session key
+vs : session key
 
-kmc_uiconf : kmc modules definitions
+vmc_uiconf : vmc modules definitions
 
 permission_uiconf : permissions ui definitions
 
@@ -39,13 +39,13 @@ gadebug : pass "true" to make google analytics run in debug mode
 
 # studio:
 =========
-uid : user id, passed to preview KDP (also in dashboard)
+uid : user id, passed to preview VDP (also in dashboard)
 
-subpid : subpartner id, passed to preview KDP
+subpid : subpartner id, passed to preview VDP
 
 templatesXmlUrl : url of local templates file
 
-kdpurl : for loading local KDP
+vdpurl : for loading local VDP
 
 
 
@@ -65,7 +65,7 @@ maxNumCategories : max number of categories an entry may be associated with
 ============
 uid : user id to be used with google analytics (also in studio)
 
-firstLogin : pass "true" to simulate the situation of a user's first login to KMC
+firstLogin : pass "true" to simulate the situation of a user's first login to VMC
 
 
 

@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**

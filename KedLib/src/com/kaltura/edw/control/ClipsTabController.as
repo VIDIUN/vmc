@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.clips.*;
-	import com.kaltura.edw.control.events.ClipEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.clips.*;
+	import com.vidiun.edw.control.events.ClipEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class ClipsTabController extends KMvCController {
+	public class ClipsTabController extends VMvCController {
 		
 		public function ClipsTabController()
 		{

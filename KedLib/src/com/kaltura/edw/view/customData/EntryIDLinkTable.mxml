@@ -6,22 +6,22 @@
 				 includeInLayout="{_entriesArray.length > 0}" selectable="false" sortableColumns="false">
 		<mx:Script>
 			<![CDATA[
-				import com.kaltura.commands.MultiRequest;
-				import com.kaltura.commands.baseEntry.BaseEntryGet;
-				import com.kaltura.edw.business.IDataOwner;
-				import com.kaltura.edw.components.playlist.ManualPlaylistWindow;
-				import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-				import com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode;
-				import com.kaltura.edw.control.DataTabController;
-				import com.kaltura.edw.control.events.LoadEvent;
-				import com.kaltura.edw.control.events.SearchEvent;
-				import com.kaltura.edw.model.FilterModel;
-				import com.kaltura.edw.model.MetadataDataObject;
-				import com.kaltura.edw.model.datapacks.ContextDataPack;
-				import com.kaltura.edw.vo.ListableVo;
-				import com.kaltura.events.KalturaEvent;
-				import com.kaltura.vo.BaseFlexVo;
-				import com.kaltura.vo.KalturaBaseEntry;
+				import com.vidiun.commands.MultiRequest;
+				import com.vidiun.commands.baseEntry.BaseEntryGet;
+				import com.vidiun.edw.business.IDataOwner;
+				import com.vidiun.edw.components.playlist.ManualPlaylistWindow;
+				import com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent;
+				import com.vidiun.edw.components.playlist.types.ManualPlaylistWindowMode;
+				import com.vidiun.edw.control.DataTabController;
+				import com.vidiun.edw.control.events.LoadEvent;
+				import com.vidiun.edw.control.events.SearchEvent;
+				import com.vidiun.edw.model.FilterModel;
+				import com.vidiun.edw.model.MetadataDataObject;
+				import com.vidiun.edw.model.datapacks.ContextDataPack;
+				import com.vidiun.edw.vo.ListableVo;
+				import com.vidiun.events.VidiunEvent;
+				import com.vidiun.vo.BaseFlexVo;
+				import com.vidiun.vo.VidiunBaseEntry;
 				
 				import mx.collections.ArrayCollection;
 				import mx.controls.Alert;
@@ -78,9 +78,9 @@
 							var getEntry:BaseEntryGet = new BaseEntryGet(entryId);
 							multiRequest.addAction(getEntry);
 						}
-						multiRequest.addEventListener(KalturaEvent.COMPLETE, listEntriesResult);
-						multiRequest.addEventListener(KalturaEvent.FAILED, listEntriesFault);
-						context.kc.post(multiRequest);
+						multiRequest.addEventListener(VidiunEvent.COMPLETE, listEntriesResult);
+						multiRequest.addEventListener(VidiunEvent.FAILED, listEntriesFault);
+						context.vc.post(multiRequest);
 					}
 				}
 				
@@ -97,12 +97,12 @@
 				/**
 				 * handles the result of the entries list request
 				 * */
-				private function listEntriesResult(event:KalturaEvent):void {
+				private function listEntriesResult(event:VidiunEvent):void {
 					_entriesArray = new ArrayCollection();
 					var resArray:Array = event.data as Array;
 					var errorsEntries:String = '';
 					for (var i:int = 0; i<resArray.length; i++) {
-						if (resArray[i] is KalturaBaseEntry)
+						if (resArray[i] is VidiunBaseEntry)
 							_entriesArray.addItem(resArray[i]);
 						else
 							errorsEntries += _idArray[i] +", ";
@@ -126,7 +126,7 @@
 				 * */
 				private function editExistingList():void {
 					var manualPlaylist:ManualPlaylistWindow = new ManualPlaylistWindow();
-					manualPlaylist.editedItem = /* (KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack). */editedItem;
+					manualPlaylist.editedItem = /* (VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack). */editedItem;
 					manualPlaylist.filterData = filterModel;
 					manualPlaylist.showLinks = false;
 					manualPlaylist.distributionProfilesArray = distributionProfilesArr;
@@ -212,13 +212,13 @@
 							<!-- Must be in a container ( Bug in naked linkbutton in datagrid ) -->
 							<mx:Script>
 								<![CDATA[
-									import com.kaltura.types.KalturaEntryStatus;
-									import com.kaltura.types.KalturaMediaType;
+									import com.vidiun.types.VidiunEntryStatus;
+									import com.vidiun.types.VidiunMediaType;
 									
 									
 									private function getDrillDownEnabled(type:int):Boolean {
-										if (type == KalturaMediaType.LIVE_STREAM_FLASH) {
-											return data.status == KalturaEntryStatus.READY;
+										if (type == VidiunMediaType.LIVE_STREAM_FLASH) {
+											return data.status == VidiunEntryStatus.READY;
 										}
 										else
 											return true;

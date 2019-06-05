@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.model.reports
+package com.vidiun.vmc.modules.analytics.model.reports
 {
 	[Bindable]
 	public class ReportDimension

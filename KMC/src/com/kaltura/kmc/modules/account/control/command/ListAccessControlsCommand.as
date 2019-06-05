@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
+	import com.vidiun.commands.accessControl.AccessControlList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vo.AccessControlProfileVO;
+	import com.vidiun.vo.VidiunAccessControl;
+	import com.vidiun.vo.VidiunAccessControlListResponse;
+	import com.vidiun.vo.VidiunBaseRestriction;
 
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -22,9 +22,9 @@ package com.kaltura.kmc.modules.account.control.command {
 		public function execute(event:CairngormEvent):void {
 			if (_model.filterPager) {
 				var getListAccessControlProfiles:AccessControlList = new AccessControlList(_model.acpFilter, _model.filterPager);
-				getListAccessControlProfiles.addEventListener(KalturaEvent.COMPLETE, result);
-				getListAccessControlProfiles.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(getListAccessControlProfiles);
+				getListAccessControlProfiles.addEventListener(VidiunEvent.COMPLETE, result);
+				getListAccessControlProfiles.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(getListAccessControlProfiles);
 			}
 		}
 
@@ -34,21 +34,21 @@ package com.kaltura.kmc.modules.account.control.command {
 
 			if (data.success) {
 				var tempArr:ArrayCollection = new ArrayCollection();
-				var response:KalturaAccessControlListResponse = data.data as KalturaAccessControlListResponse;
+				var response:VidiunAccessControlListResponse = data.data as VidiunAccessControlListResponse;
 				_model.accessControlProfilesTotalCount = response.totalCount;
 				_model.accessControls = new ArrayCollection();
-				for each (var kac:KalturaAccessControl in response.objects) {
+				for each (var vac:VidiunAccessControl in response.objects) {
 					var acVo:AccessControlProfileVO = new AccessControlProfileVO();
-					acVo.profile = kac;
-					acVo.id = kac.id;
-					if (kac.restrictions) {
+					acVo.profile = vac;
+					acVo.id = vac.id;
+					if (vac.restrictions) {
 						// remove unknown objects
 						// if any restriction is unknown, we remove it from the list.
-						// this means access control profiles with unknown restrictions CANNOT be edited in KMC,
+						// this means access control profiles with unknown restrictions CANNOT be edited in VMC,
 						// as editing hem will delete the unknown restriction.
-						for (var i:int = 0; i < kac.restrictions.length; i++) {
-							if (!(kac.restrictions[i] is KalturaBaseRestriction)) {
-								kac.restrictions.splice(i, 1);
+						for (var i:int = 0; i < vac.restrictions.length; i++) {
+							if (!(vac.restrictions[i] is VidiunBaseRestriction)) {
+								vac.restrictions.splice(i, 1);
 							}
 						}
 					}
@@ -70,7 +70,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function fault(info:Object):void {
-			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+			if (info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 				JSGate.expired();
 				return;
 			}

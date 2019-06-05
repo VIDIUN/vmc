@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 	
 	import flash.events.Event;
 
@@ -9,15 +9,15 @@ package com.kaltura.kmc.modules.content.events
 		static public const NEW_PLAYLIST_FILTER:String = "content_newPlaylistFilter";
 		static public const EMPTY_PLAYLIST_FILTER:String = "content_emptyPlaylistFilter";
 		
-		private var _ruleVo:KalturaMediaEntryFilterForPlaylist;
+		private var _ruleVo:VidiunMediaEntryFilterForPlaylist;
 		
-		public function NewFilterEvent(type:String,playlistFilterVo:KalturaMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function NewFilterEvent(type:String,playlistFilterVo:VidiunMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_ruleVo = playlistFilterVo;
 		}
 		
-		public function get ruleVo():KalturaMediaEntryFilterForPlaylist
+		public function get ruleVo():VidiunMediaEntryFilterForPlaylist
 		{
 			return _ruleVo;
 		}

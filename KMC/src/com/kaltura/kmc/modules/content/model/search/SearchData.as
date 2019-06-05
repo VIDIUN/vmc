@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.model.search
+package com.vidiun.vmc.modules.content.model.search
 {
 	
 	[Bindable]

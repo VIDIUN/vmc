@@ -1,6 +1,6 @@
-package  com.kaltura.kmc.modules.content.business
+package  com.vidiun.vmc.modules.content.business
 {
-	import com.kaltura.kmc.modules.content.view.window.ProgressWin;
+	import com.vidiun.vmc.modules.content.view.window.ProgressWin;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.DataEvent;

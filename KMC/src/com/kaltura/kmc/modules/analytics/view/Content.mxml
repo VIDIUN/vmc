@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:content="com.kaltura.kmc.modules.analytics.view.content.*"
-		 xmlns:drilldown="com.kaltura.kmc.modules.analytics.view.content.drilldown.*"
-		 xmlns:dtn="com.kaltura.kmc.modules.analytics.view.dtn.*"
-		 xmlns:view="com.kaltura.kmc.modules.analytics.view.*"
+		 xmlns:content="com.vidiun.vmc.modules.analytics.view.content.*"
+		 xmlns:drilldown="com.vidiun.vmc.modules.analytics.view.content.drilldown.*"
+		 xmlns:dtn="com.vidiun.vmc.modules.analytics.view.dtn.*"
+		 xmlns:view="com.vidiun.vmc.modules.analytics.view.*"
 		 creationComplete="{_ready = true}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-			import com.kaltura.kmc.modules.analytics.model.types.ContributionTypes;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-			import com.kaltura.kmc.modules.analytics.view.dtn.DTNItem;
-			import com.kaltura.types.KalturaReportType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+			import com.vidiun.vmc.modules.analytics.model.types.ContributionTypes;
+			import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+			import com.vidiun.vmc.modules.analytics.view.dtn.DTNItem;
+			import com.vidiun.types.VidiunReportType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -108,7 +108,7 @@
 						break;
 					default:
 						// the new screen is not in Content's scope, need to hide panel
-						(contentViewStack.selectedChild as KalturaReportView).onHide();
+						(contentViewStack.selectedChild as VidiunReportView).onHide();
 				}
 				if (gaEvent) {
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + gaEvent, GoogleAnalyticsConsts.ANALYTICS);
@@ -259,8 +259,8 @@
 
 
 			public function help():void {
-				var anchor:String = (contentViewStack.selectedChild as KalturaReportView).helpUrl;
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				var anchor:String = (contentViewStack.selectedChild as VidiunReportView).helpUrl;
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 		]]>
 	</mx:Script>
@@ -274,13 +274,13 @@
 				  width="100%"
 				  height="{this.height - 15}"
 				  styleName="contentViewStack">
-		<view:KalturaReportView id="topContet" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="topContet" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','topContent')}"
-								reportType="{KalturaReportType.TOP_CONTENT}"
+								reportType="{VidiunReportType.TOP_CONTENT}"
 								screenType="{ScreenTypes.TOP_CONTENT}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.topContent}"
 								showUsersFilter="false" showApplicationsFilter="false"
 								aggregatedHeaders="{_model.aggregateHeaders.topContent}"
@@ -290,13 +290,13 @@
 								helpUrl="{'section_analytics_top_content'}"
 								drillDown="{onDrillDown(ScreenTypes.VIDEO_DRILL_DOWN_DEFAULT)}"
 								/>
-		<view:KalturaReportView id="contentDropOff" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="contentDropOff" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentDropOff')}"
-								reportType="{KalturaReportType.CONTENT_DROPOFF}"
+								reportType="{VidiunReportType.CONTENT_DROPOFF}"
 								screenType="{ScreenTypes.CONTENT_DROPOFF}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentDropoff}"
 								showUsersFilter="false" showApplicationsFilter="false"
 								showColumnChart="true" showLineChart="false" 
@@ -306,13 +306,13 @@
 								dateRanger="{_model.shortTermDatesRanger}" showDimension="false"
 								helpUrl="{'section_analytics_content_dropoff'}"
 								/>
-		<view:KalturaReportView id="contentInteractions" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="contentInteractions" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentInteractions')}"
-								reportType="{KalturaReportType.CONTENT_INTERACTIONS}"
+								reportType="{VidiunReportType.CONTENT_INTERACTIONS}"
 								screenType="{ScreenTypes.CONTENT_INTERACTIONS}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentInteraction}"
 								showUsersFilter="false" showApplicationsFilter="false"
 								aggregatedHeaders="{_model.aggregateHeaders.contentInteraction}"
@@ -321,13 +321,13 @@
 								dateRanger="{_model.shortTermDatesRanger}" dimCbDp="{_model.reportDimension.contentInteraction}"
 								helpUrl="{'section_analytics_content_interactions'}"
 								/>
-		<view:KalturaReportView id="contentContributions" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="contentContributions" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentContributions')}"
-								reportType="{KalturaReportType.CONTENT_CONTRIBUTIONS}"
+								reportType="{VidiunReportType.CONTENT_CONTRIBUTIONS}"
 								screenType="{ScreenTypes.CONTENT_CONTRIBUTIONS}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadTable="{_model.loadingTableFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentContributions}"
 								showUsersFilter="false" showApplicationsFilter="false" dateOnlyFlag="{true}"
 								aggregatedHeaders="{_model.aggregateHeaders.contentContributions}"
@@ -337,18 +337,18 @@
 								helpUrl="{'section_analytics_content_contribution'}"
 								drillDown="{onDrillDown(ScreenTypes.CONTENT_CONTRIBUTIONS_DRILL_DOWN)}"
 								/>
-		<view:KalturaReportView id="videoDrillDownDefault" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="videoDrillDownDefault" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','topContent')}"
-								reportType="{_model.entitlementEnabled ? KalturaReportType.USER_TOP_CONTENT : KalturaReportType.TOP_CONTENT}"
+								reportType="{_model.entitlementEnabled ? VidiunReportType.USER_TOP_CONTENT : VidiunReportType.TOP_CONTENT}"
 								screenType="{ScreenTypes.VIDEO_DRILL_DOWN_DEFAULT}" isDrillDown="{true}" 
 								backScreenType="{ScreenTypes.TOP_CONTENT}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadEntry="{_model.loadingEntryFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.topContentPerUser}"
 								showUsersFilter="{_model.entitlementEnabled}" showApplicationsFilter="{_model.entitlementEnabled}"
 								dateOnlyFlag="{true}" showDrillDownNav="{true}" playbackContextFlag="{_model.entitlementEnabled}"
-								showKDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}" 
+								showVDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}" 
 								messageTip="{_model.entitlementEnabled ? resourceManager.getString('analytics', 'sinceUserReports') : ''}"
 								aggregatedHeaders="{_model.entitlementEnabled ? _model.aggregateHeaders.topContentPerUser : _model.aggregateHeaders.topContent}"
 								tableHeaders="{_model.tableHeaders.topContentPerUser}"
@@ -356,18 +356,18 @@
 								dateRanger="{_model.shortTermDatesRanger}" dimCbDp="{_model.reportDimension.topContent}"
 								helpUrl="{'section_analytics_video_drilldown'}"
 								/>
-		<view:KalturaReportView id="videoDrillDownDropoff" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="videoDrillDownDropoff" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentDropOff')}"
-								reportType="{_model.entitlementEnabled ? KalturaReportType.USER_CONTENT_DROPOFF : KalturaReportType.CONTENT_DROPOFF}"
+								reportType="{_model.entitlementEnabled ? VidiunReportType.USER_CONTENT_DROPOFF : VidiunReportType.CONTENT_DROPOFF}"
 								screenType="{ScreenTypes.VIDEO_DRILL_DOWN_DROP_OFF}" isDrillDown="{true}" 
 								backScreenType="{ScreenTypes.CONTENT_DROPOFF}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadEntry="{_model.loadingEntryFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentDropoffPerUser}"
 								showUsersFilter="{_model.entitlementEnabled}" showApplicationsFilter="{_model.entitlementEnabled}" 
 								dateOnlyFlag="{true}" showDrillDownNav="{true}" playbackContextFlag="{_model.entitlementEnabled}"
-								showKDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}"
+								showVDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}"
 								showColumnChart="true" showLineChart="false" 
 								messageTip="{_model.entitlementEnabled ? resourceManager.getString('analytics', 'sinceUserReports') : ''}"
 								aggregatedHeaders="{_model.entitlementEnabled ? _model.aggregateHeaders.contentDropoffPerUser : _model.aggregateHeaders.contentDropoff }"
@@ -376,18 +376,18 @@
 								dateRanger="{_model.shortTermDatesRanger}" showDimension="false"
 								helpUrl="{'section_analytics_video_drilldown_dropoff'}"
 								/>
-		<view:KalturaReportView id="videoDrillDownInteractions" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="videoDrillDownInteractions" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentInteractions')}"
-								reportType="{_model.entitlementEnabled ? KalturaReportType.USER_CONTENT_INTERACTIONS : KalturaReportType.CONTENT_INTERACTIONS}"
+								reportType="{_model.entitlementEnabled ? VidiunReportType.USER_CONTENT_INTERACTIONS : VidiunReportType.CONTENT_INTERACTIONS}"
 								screenType="{ScreenTypes.VIDEO_DRILL_DOWN_INTERACTIONS}" isDrillDown="{true}" 
 								backScreenType="{ScreenTypes.CONTENT_INTERACTIONS}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadEntry="{_model.loadingEntryFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentInteractionPerUser}"
 								showUsersFilter="{_model.entitlementEnabled}" showApplicationsFilter="{_model.entitlementEnabled}"
 								dateOnlyFlag="{true}" showDrillDownNav="{true}" playbackContextFlag="{_model.entitlementEnabled}"
-								showKDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}"
+								showVDP="{!_model.entitlementEnabled}" showTable="{_model.entitlementEnabled}"
 								messageTip="{_model.entitlementEnabled ? resourceManager.getString('analytics', 'sinceUserReports') : ''}"
 								aggregatedHeaders="{_model.entitlementEnabled ? _model.aggregateHeaders.contentInteractionPerUser : _model.aggregateHeaders.contentInteraction}"
 								tableHeaders="{_model.tableHeaders.contentInteractionPerUser}"
@@ -395,14 +395,14 @@
 								dateRanger="{_model.shortTermDatesRanger}" dimCbDp="{_model.reportDimension.contentInteraction}"
 								helpUrl="{'section_analytics_video_drilldown_interactions'}"
 								/>
-		<view:KalturaReportView id="contentContributionsDrillDown" styleName="pageStyle" width="100%" height="100%"
+		<view:VidiunReportView id="contentContributionsDrillDown" styleName="pageStyle" width="100%" height="100%"
 								label="{resourceManager.getString('analytics','contentContributions')}"
-								reportType="{KalturaReportType.CONTENT_CONTRIBUTIONS}" isDrillDown="{true}"
+								reportType="{VidiunReportType.CONTENT_CONTRIBUTIONS}" isDrillDown="{true}"
 								backScreenType="{ScreenTypes.CONTENT_CONTRIBUTIONS}"
 								screenType="{ScreenTypes.CONTENT_CONTRIBUTIONS_DRILL_DOWN}"
 								loadChart="{_model.loadingChartFlag}" loadTotal="{_model.loadingTotalFlag}"
 								loadEntry="{_model.loadingEntryFlag}" isLoading="{_model.loadingFlag}"
-								kdpParams="{_model.context}" reportData="{_model.selectedReportData}"
+								vdpParams="{_model.context}" reportData="{_model.selectedReportData}"
 								filterVo="{_model.filterMasks.contentContributions}"
 								showUsersFilter="false" showApplicationsFilter="false"
 								dateOnlyFlag="{true}" showTable="false"

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="mainACPvBox"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel" 
-		 xmlns:controls="com.kaltura.controls.*" 
+		 implements="com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel" 
+		 xmlns:controls="com.vidiun.controls.*" 
 		 creationComplete="creationCompleteHandler(event)" width="100%" height="100%"
-		 xmlns:ac="com.kaltura.kmc.modules.account.view.windows.accesscontrol.*">
+		 xmlns:ac="com.vidiun.vmc.modules.account.view.windows.accesscontrol.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
-			import com.kaltura.kmc.events.KmcEvent;
-			import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.vo.AccessControlProfileVO;
+			import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
+			import com.vidiun.vmc.events.VmcEvent;
+			import com.vidiun.vmc.modules.account.control.events.AccessControlEvent;
+			import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+			import com.vidiun.vo.AccessControlProfileVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
@@ -73,7 +73,7 @@
 			/**
 			 * save updated profile
 			 * */
-			private function saveUpdatedProfileFunc(event:KmcEvent):void {
+			private function saveUpdatedProfileFunc(event:VmcEvent):void {
 				var updateProfile:AccessControlEvent = new AccessControlEvent(AccessControlEvent.ACCOUNT_UPDATE_ACCESS_CONTROL_PROFILE);
 				updateProfile.data = event.data as AccessControlProfileVO;
 				updateProfile.dispatch();
@@ -101,7 +101,7 @@
 
 
 			private function onPagerCreationComplete(event:Event):void {
-				AccountModelLocator.getInstance().filterPager = paging.kalturaFilterPager;
+				AccountModelLocator.getInstance().filterPager = paging.vidiunFilterPager;
 				paging.selectedPage = 1;
 				paging.pageSize = paging.rowInPageCb.value as int;
 				loadAccessControlsList();

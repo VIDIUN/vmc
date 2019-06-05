@@ -1,6 +1,6 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.vo.KalturaCaptionAsset;
+	import com.vidiun.vo.VidiunCaptionAsset;
 
 	[Bindable]
 	/**
@@ -29,19 +29,19 @@ package com.kaltura.edw.vo
 		public static var editable:Boolean = true;
 		
 		/**
-		 * status to be displayed for this caption in KMC
+		 * status to be displayed for this caption in VMC
 		 * */
-		public var kmcStatus:String;
+		public var vmcStatus:String;
 		
 		/**
 		 * is this caption set as default caption (before save).
 		 * */
-		public var isKmcDefault:Boolean;
+		public var isVmcDefault:Boolean;
 		
 		/**
 		 * The Caption asset 
 		 */		
-		public var caption:KalturaCaptionAsset;
+		public var caption:VidiunCaptionAsset;
 		
 		
 		/**

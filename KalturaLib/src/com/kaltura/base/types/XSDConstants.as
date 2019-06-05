@@ -1,4 +1,4 @@
-package com.kaltura.base.types
+package com.vidiun.base.types
 {
 	/**
 	 * This class represents all constants related to the building of an XSD file 

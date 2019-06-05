@@ -1,8 +1,8 @@
-package com.kaltura.edw.model.util
+package com.vidiun.edw.model.util
 {
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.core.KClassFactory;
+	import com.vidiun.vo.VidiunFlavorParams;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.core.VClassFactory;
 	import flash.xml.XMLDocument;
 	import mx.rpc.xml.SimpleXMLEncoder;
 	import flash.xml.XMLNode;
@@ -10,18 +10,18 @@ package com.kaltura.edw.model.util
 	public class FlavorParamsUtil
 	{
 		/**
-		 * validate the given object is KalturaFlavorParams.
-		 * Otherwise, create new KFP and populate attributes with given object values.
+		 * validate the given object is VidiunFlavorParams.
+		 * Otherwise, create new VFP and populate attributes with given object values.
 		 * @param object
 		 * @return 
 		 */
-		public static function makeFlavorParams(object:Object):KalturaFlavorParams {
-			var result:KalturaFlavorParams;
-			if (object is KalturaFlavorParams) {
-				result = object as KalturaFlavorParams;
+		public static function makeFlavorParams(object:Object):VidiunFlavorParams {
+			var result:VidiunFlavorParams;
+			if (object is VidiunFlavorParams) {
+				result = object as VidiunFlavorParams;
 			}
 			else {
-				result = new KClassFactory(KalturaFlavorParams).newInstanceFromXML( XMLList(objectToXML(object)));
+				result = new VClassFactory(VidiunFlavorParams).newInstanceFromXML( XMLList(objectToXML(object)));
 				result.originalObjectType = object.objectType; 
 			}
 			return result;

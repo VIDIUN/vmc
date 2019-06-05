@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class ProfileEvent extends KMvCEvent
+	public class ProfileEvent extends VMvCEvent
 	{
 		/**
 		 * create new conversion profile

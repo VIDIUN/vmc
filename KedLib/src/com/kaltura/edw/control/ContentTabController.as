@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.mix.GetAllEntriesCommand;
-	import com.kaltura.edw.control.commands.mix.GetEntryRoughcutsCommand;
-	import com.kaltura.edw.control.commands.mix.ResetContentPartsCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.mix.GetAllEntriesCommand;
+	import com.vidiun.edw.control.commands.mix.GetEntryRoughcutsCommand;
+	import com.vidiun.edw.control.commands.mix.ResetContentPartsCommand;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class ContentTabController extends KMvCController {
+	public class ContentTabController extends VMvCController {
 		
 		public function ContentTabController()
 		{
@@ -14,9 +14,9 @@ package com.kaltura.edw.control
 		}
 		
 		public function initializeCommands():void {
-			addCommand(KedEntryEvent.GET_ENTRY_ROUGHCUTS, GetEntryRoughcutsCommand);
-			addCommand(KedEntryEvent.GET_ALL_ENTRIES, GetAllEntriesCommand);
-			addCommand(KedEntryEvent.RESET_PARTS, ResetContentPartsCommand);
+			addCommand(VedEntryEvent.GET_ENTRY_ROUGHCUTS, GetEntryRoughcutsCommand);
+			addCommand(VedEntryEvent.GET_ALL_ENTRIES, GetAllEntriesCommand);
+			addCommand(VedEntryEvent.RESET_PARTS, ResetContentPartsCommand);
 		}
 	}
 }

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.eventNotificationTemplate
+package com.vidiun.commands.eventNotificationTemplate
 {
-		import com.kaltura.vo.KalturaPushNotificationParams;
-	import com.kaltura.delegates.eventNotificationTemplate.EventNotificationTemplateRegisterDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunPushNotificationParams;
+	import com.vidiun.delegates.eventNotificationTemplate.EventNotificationTemplateRegisterDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Register to a queue from which event messages will be provided according to given template. Queue will be created if not already exists
 	**/
-	public class EventNotificationTemplateRegister extends KalturaCall
+	public class EventNotificationTemplateRegister extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param notificationTemplateSystemName String
-		* @param pushNotificationParams KalturaPushNotificationParams
+		* @param pushNotificationParams VidiunPushNotificationParams
 		**/
-		public function EventNotificationTemplateRegister( notificationTemplateSystemName : String,pushNotificationParams : KalturaPushNotificationParams )
+		public function EventNotificationTemplateRegister( notificationTemplateSystemName : String,pushNotificationParams : VidiunPushNotificationParams )
 		{
 			service= 'eventnotification_eventnotificationtemplate';
 			action= 'register';
@@ -52,7 +52,7 @@ package com.kaltura.commands.eventNotificationTemplate
 			var keyValArr : Array = new Array();
 			keyArr.push('notificationTemplateSystemName');
 			valueArr.push(notificationTemplateSystemName);
-				keyValArr = kalturaObject2Arrays(pushNotificationParams, 'pushNotificationParams');
+				keyValArr = vidiunObject2Arrays(pushNotificationParams, 'pushNotificationParams');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

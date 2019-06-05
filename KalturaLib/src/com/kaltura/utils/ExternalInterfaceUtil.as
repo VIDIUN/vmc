@@ -1,6 +1,6 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
-	import com.kaltura.utils.externalInterface.JsBlock;
+	import com.vidiun.utils.externalInterface.JsBlock;
 
 	import flash.external.ExternalInterface;
 
@@ -67,7 +67,7 @@ package com.kaltura.utils
 		 * @param jsBlock			the jsBlock to build and run.
 		 * @param parameters		array of values to pass to the function parameters, order of parameters is mandatory.
 		 * @return 					the object returned from the external inteface function.
-		 * @see com.kaltura.utils.externalInterface.JsBlock
+		 * @see com.vidiun.utils.externalInterface.JsBlock
 		 */
 		static public function runJsBlock (jsBlock:JsBlock, parameters:* = null):Object
 		{

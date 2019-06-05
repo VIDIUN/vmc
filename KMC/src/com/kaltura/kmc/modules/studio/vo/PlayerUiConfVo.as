@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.studio.vo {
-	import com.kaltura.kmc.modules.studio.vo.ads.AdSourceVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.CompanionAdVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.InPlayerAdVo;
-	import com.kaltura.kmc.utils.XMLUtils;
+package com.vidiun.vmc.modules.studio.vo {
+	import com.vidiun.vmc.modules.studio.vo.ads.AdSourceVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.AdvertizingVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.CompanionAdVo;
+	import com.vidiun.vmc.modules.studio.vo.ads.InPlayerAdVo;
+	import com.vidiun.vmc.utils.XMLUtils;
 	
 	import mx.collections.ArrayCollection;
 
@@ -21,7 +21,7 @@ package com.kaltura.kmc.modules.studio.vo {
 
 
 		/**
-		 * player uiconf (the bit that actually goes to KDP)
+		 * player uiconf (the bit that actually goes to VDP)
 		 * */
 		private var _fullplayer:XML;
 

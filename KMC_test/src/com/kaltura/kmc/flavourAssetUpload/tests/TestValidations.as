@@ -1,8 +1,8 @@
-package com.kaltura.kmc.flavourAssetUpload.tests
+package com.vidiun.vmc.flavourAssetUpload.tests
 {
-	import com.kaltura.edw.view.window.flavors.AddFlavorAssetsWindow;
-	import com.kaltura.edw.vo.UploadFileVo;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.edw.view.window.flavors.AddFlavorAssetsWindow;
+	import com.vidiun.edw.vo.UploadFileVo;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
 	
 	import flexunit.framework.Assert;
 	

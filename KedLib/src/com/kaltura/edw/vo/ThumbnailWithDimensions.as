@@ -1,8 +1,8 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunThumbAsset;
 	
 	import flash.events.EventDispatcher;
 	
@@ -38,7 +38,7 @@ package com.kaltura.edw.vo
 		/**
 		 * represents the thumbnail asset
 		 * */
-		public var thumbAsset:KalturaThumbAsset;
+		public var thumbAsset:VidiunThumbAsset;
 		
 		/**
 		 * thumb url
@@ -54,7 +54,7 @@ package com.kaltura.edw.vo
 		 * and dimensionsHeight params will be ignored
 		 * 
 		 */		
-		public function ThumbnailWithDimensions(dimensionsWidth:int, dimensionsHeight:int, thumbnailAsset:KalturaThumbAsset = null)
+		public function ThumbnailWithDimensions(dimensionsWidth:int, dimensionsHeight:int, thumbnailAsset:VidiunThumbAsset = null)
 		{
 			if (thumbnailAsset) {
 				thumbAsset = thumbnailAsset;
@@ -68,8 +68,8 @@ package com.kaltura.edw.vo
 			usedDistributionProfilesArray = new Array();
 		}
 		
-		public function buildThumbUrl(client:KalturaClient):String {
-			var result:String = client.protocol + client.domain + ThumbnailWithDimensions.serveURL + "/ks/" + client.ks + "/thumbAssetId/" + thumbAsset.id ;
+		public function buildThumbUrl(client:VidiunClient):String {
+			var result:String = client.protocol + client.domain + ThumbnailWithDimensions.serveURL + "/vs/" + client.vs + "/thumbAssetId/" + thumbAsset.id ;
 			if (thumbAsset.version > 1) {
 				result += "/version/" + thumbAsset.version;
 			}
@@ -92,7 +92,7 @@ package com.kaltura.edw.vo
 				}
 			}
 			var profileNameArray:Array = new Array();
-			for each (var profile:KalturaDistributionProfile in usedDistributionProfilesArray) {
+			for each (var profile:VidiunDistributionProfile in usedDistributionProfilesArray) {
 				profileNameArray.push(profile.name);
 			}
 			var distributionsList:String = profileNameArray.join(concatElement);

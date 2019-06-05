@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.playlist.PlaylistExecute;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.commands.playlist.PlaylistExecute;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
+	import com.vidiun.vo.VidiunPlaylist;
 
-	public class GetPlaylistCommand extends KalturaCommand {
-		private var _currentPlaylist:KalturaPlaylist;
+	public class GetPlaylistCommand extends VidiunCommand {
+		private var _currentPlaylist:VidiunPlaylist;
 
 
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			var e:KMCEntryEvent = event as KMCEntryEvent;
-			_currentPlaylist = e.entryVo as KalturaPlaylist;
+			var e:VMCEntryEvent = event as VMCEntryEvent;
+			_currentPlaylist = e.entryVo as VidiunPlaylist;
 			var playlistGet:PlaylistExecute = new PlaylistExecute(_currentPlaylist.id);
-			playlistGet.addEventListener(KalturaEvent.COMPLETE, result);
-			playlistGet.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(playlistGet);
+			playlistGet.addEventListener(VidiunEvent.COMPLETE, result);
+			playlistGet.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(playlistGet);
 		}
 
 

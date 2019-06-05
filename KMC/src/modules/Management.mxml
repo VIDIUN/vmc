@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*" 
-				   xmlns:control="com.kaltura.kmc.modules.admin.control.*"
-				   xmlns:view="com.kaltura.kmc.modules.admin.view.*" 
-				   xmlns:model="com.kaltura.kmc.modules.admin.model.*" styleName="adminModuleMain" 
+<modules:VmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.vidiun.vmc.modules.*" 
+				   xmlns:control="com.vidiun.vmc.modules.admin.control.*"
+				   xmlns:view="com.vidiun.vmc.modules.admin.view.*" 
+				   xmlns:model="com.vidiun.vmc.modules.admin.model.*" styleName="adminModuleMain" 
 				   layout="vertical" minHeight="520" minWidth="950" 
 				   creationComplete="creationCompleteHandler(event)" >
 	<mx:Metadata>
@@ -11,21 +11,21 @@
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.admin.control.events.GeneralEvent;
-			import com.kaltura.kmc.modules.admin.control.events.ListItemsEvent;
-			import com.kaltura.kmc.modules.admin.control.events.PartnerEvent;
-			import com.kaltura.kmc.modules.admin.model.AdminModelLocator;
-			import com.kaltura.kmc.modules.admin.view.IAdminSubtab;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.admin.control.events.GeneralEvent;
+			import com.vidiun.vmc.modules.admin.control.events.ListItemsEvent;
+			import com.vidiun.vmc.modules.admin.control.events.PartnerEvent;
+			import com.vidiun.vmc.modules.admin.model.AdminModelLocator;
+			import com.vidiun.vmc.modules.admin.view.IAdminSubtab;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
 
 			/**
-			 * KMC is responsible to use the value of
+			 * VMC is responsible to use the value of
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "admin";
@@ -150,7 +150,7 @@
 			 * initialize administration model
 			 * */
 			private function initModel():void {
-				_model.kc = _kc;
+				_model.vc = _vc;
 				var uiConf:XML = XML(_uiconf.confFile)
 				_model.usersModel.usersUpgradeLink = uiConf.upgradeUsersPage.text().toString();
 				_model.usersModel.currentUserInfo = _userInfo;
@@ -198,7 +198,7 @@
 				else
 					anchor='section_admin_roles';
 				
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, anchor));
 			}
 
 		]]>
@@ -221,4 +221,4 @@
 					width="100%" model="{_model.rolesModel}" isLoading="{_model.isLoading}" />
 	</mx:ViewStack>
 
-</modules:KmcModule>
+</modules:VmcModule>

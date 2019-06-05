@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.userRole.UserRoleUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.vidiun.commands.userRole.UserRoleUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+	import com.vidiun.vo.VidiunUserRole;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -18,13 +18,13 @@ package com.kaltura.kmc.modules.admin.control.commands
 	public class UpdateRoleCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			var role:KalturaUserRole = (event as RoleEvent).role;
+			var role:VidiunUserRole = (event as RoleEvent).role;
 			role.setUpdatedFieldsOnly(true);
 			var uu:UserRoleUpdate = new UserRoleUpdate(role.id, role);
-			uu.addEventListener(KalturaEvent.COMPLETE, result);
-			uu.addEventListener(KalturaEvent.FAILED, fault);
+			uu.addEventListener(VidiunEvent.COMPLETE, result);
+			uu.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
-			_model.kc.post(uu);
+			_model.vc.post(uu);
 		}
 		
 		

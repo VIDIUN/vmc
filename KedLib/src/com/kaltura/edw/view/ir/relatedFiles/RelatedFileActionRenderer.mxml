@@ -4,11 +4,11 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.constants.RelatedFileActionType;
-			import com.kaltura.edw.vo.RelatedFileVO;
-			import com.kaltura.types.KalturaFlavorAssetStatus;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.constants.RelatedFileActionType;
+			import com.vidiun.edw.vo.RelatedFileVO;
+			import com.vidiun.types.VidiunFlavorAssetStatus;
 			
 			import mx.controls.Alert;
 			
@@ -29,20 +29,20 @@
 				_relatedVo = data as RelatedFileVO;
 				//if the file is already saved on server
 				if (_relatedVo.file.id) {
-					if (_relatedVo.file.status != KalturaFlavorAssetStatus.READY) {
+					if (_relatedVo.file.status != VidiunFlavorAssetStatus.READY) {
 						_isError = true;
 						_actionsAvailable = false;
 						switch (_relatedVo.file.status) {
-							case KalturaFlavorAssetStatus.DELETED:
+							case VidiunFlavorAssetStatus.DELETED:
 								_errorString = resourceManager.getString('drilldown','deleteStatus');
 								break;
-							case KalturaFlavorAssetStatus.QUEUED:
+							case VidiunFlavorAssetStatus.QUEUED:
 								_errorString = resourceManager.getString('drilldown','inqueueStatus');
 								break;
-							case KalturaFlavorAssetStatus.IMPORTING:
+							case VidiunFlavorAssetStatus.IMPORTING:
 								_errorString = resourceManager.getString('drilldown','importStatus');
 								break;
-							case KalturaFlavorAssetStatus.ERROR:
+							case VidiunFlavorAssetStatus.ERROR:
 								_errorString = resourceManager.getString('drilldown','errorStatus');
 						}
 					}

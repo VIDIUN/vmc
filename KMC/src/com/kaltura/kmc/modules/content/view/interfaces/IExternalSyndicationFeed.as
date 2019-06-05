@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.content.view.interfaces
+package com.vidiun.vmc.modules.content.view.interfaces
 {
-	import com.kaltura.vo.KalturaBaseSyndicationFeed;
+	import com.vidiun.vo.VidiunBaseSyndicationFeed;
 	
 	/**
 	 * This interface declares the methods necessary for an external syndication feed. 
 	 */	
 	public interface IExternalSyndicationFeed
 	{
-		function get syndication():KalturaBaseSyndicationFeed
-		function set syndication(syndication:KalturaBaseSyndicationFeed):void
+		function get syndication():VidiunBaseSyndicationFeed
+		function set syndication(syndication:VidiunBaseSyndicationFeed):void
 		
 		function validate():Boolean
 	}

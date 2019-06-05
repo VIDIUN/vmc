@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.vidiun.vmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaUserFilter;
+	import com.vidiun.vo.VidiunUserFilter;
 	
 	public class UserEvent extends CairngormEvent {
 		

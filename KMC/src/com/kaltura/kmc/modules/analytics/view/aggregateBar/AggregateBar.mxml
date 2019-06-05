@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="blueBox1"
-		 xmlns:aggregateBar="com.kaltura.kmc.modules.analytics.view.aggregateBar.*">
+		 xmlns:aggregateBar="com.vidiun.vmc.modules.analytics.view.aggregateBar.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.LocalizedVo;
+			import com.vidiun.edw.vo.LocalizedVo;
 			import mx.collections.ArrayCollection;
 			
 			

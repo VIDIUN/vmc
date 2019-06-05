@@ -8,7 +8,7 @@
 -->
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 							title="{rm.getString('windows', 'addRemoveTitle')}" close="closeWindow(event)" height="350"
-							xmlns:containers="com.kaltura.containers.*" showCloseButton="true" width="450"
+							xmlns:containers="com.vidiun.containers.*" showCloseButton="true" width="450"
 							showHelpButton="false" defaultButton="{saveBtn}">
 	<containers:states>
 		<mx:State name="{RESTRICT_STATE}">
@@ -20,9 +20,9 @@
 			import mx.resources.IResourceManager;
 			import mx.resources.ResourceManager;
 			import mx.resources.ResourceBundle;
-			import com.kaltura.utils.KArrayUtil;
+			import com.vidiun.utils.VArrayUtil;
 			import mx.collections.ArrayCollection;
-			import com.kaltura.utils.KCountriesUtil;
+			import com.vidiun.utils.VCountriesUtil;
 			import mx.managers.PopUpManager;
 
 			public static const RESTRICT_STATE:String = "restrict state";
@@ -70,9 +70,9 @@
 			 *
 			 */
 			private function removeElementsFromAllCountriesList():void {
-				var allCountriesArr:ArrayCollection = KCountriesUtil.instance.getAllCountriesForModificationUse();
+				var allCountriesArr:ArrayCollection = VCountriesUtil.instance.getAllCountriesForModificationUse();
 				for each (var country:Object in selectedData) {
-					var obj:Object = allCountriesArr.getItemAt(KCountriesUtil.instance.getLocationInCollection(country.code));
+					var obj:Object = allCountriesArr.getItemAt(VCountriesUtil.instance.getLocationInCollection(country.code));
 					obj.code = '';
 				}
 
@@ -118,7 +118,7 @@
 
 				var selectedItems:Array = fromList.selectedItems;
 				var allItems:Array = (fromList.dataProvider as ArrayCollection).source;
-				fromList.dataProvider = new ArrayCollection(KArrayUtil.subtract(allItems, selectedItems));
+				fromList.dataProvider = new ArrayCollection(VArrayUtil.subtract(allItems, selectedItems));
 				var oldSelectedItems:Array = (toList.dataProvider as ArrayCollection).source;
 				toList.dataProvider = new ArrayCollection(oldSelectedItems.concat(selectedItems).sortOn('name'));
 			}
@@ -128,7 +128,7 @@
 		<mx:VBox height="100%" width="100%">
 			<mx:Label text="{rm.getString('windows', 'allCountriesLabel')}"/>
 			<mx:List height="100%" dataProvider="{_allCountriesData}" styleName="accessControlCountriesList"
-					 itemRenderer="com.kaltura.renderers.CountryListItemRenderer" width="100%"
+					 itemRenderer="com.vidiun.renderers.CountryListItemRenderer" width="100%"
 					 allowMultipleSelection="true" id="allCountriesList">
 			</mx:List>
 		</mx:VBox>
@@ -142,7 +142,7 @@
 			<mx:Label text="{rm.getString('windows', 'countriesToAllowLabel')}" id="label1"/>
 			<mx:List height="100%" width="100%" allowMultipleSelection="true" id="selectedCountriesList"
 					 dataProvider="{new ArrayCollection(selectedData.toArray())}" styleName="accessControlCountriesList"
-					 itemRenderer="com.kaltura.renderers.CountryListItemRenderer">
+					 itemRenderer="com.vidiun.renderers.CountryListItemRenderer">
 			</mx:List>
 		</mx:VBox>
 	</mx:HBox>

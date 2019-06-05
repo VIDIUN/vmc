@@ -1,7 +1,7 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	import flash.events.IEventDispatcher;
 	
@@ -68,9 +68,9 @@ package com.kaltura.edw.model.datapacks
 		public var openPlayerFunc:String;
 		
 		/**
-		 * id of the uiconf used for kClip in drilldown ads tab
+		 * id of the uiconf used for vClip in drilldown ads tab
 		 */
-		public var kClipAdsUiconf:String;
+		public var vClipAdsUiconf:String;
 		
 		public var permissions:int = -1;
 		public var groupId:String;
@@ -80,7 +80,7 @@ package com.kaltura.edw.model.datapacks
 		 * The PS3 - new flex client API
 		 * 
 		 */
-		public var kc:KalturaClient;
+		public var vc:VidiunClient;
 		
 		
 		/**
@@ -89,14 +89,14 @@ package com.kaltura.edw.model.datapacks
 		public var protocol:String;
 		
 		/**
-		* protocol (like http://) and then  domain (like www.kaltura.com)
+		* protocol (like http://) and then  domain (like www.vidiun.com)
 		* e.g: swf that came from http://www.yourdomain.com/dir/file.swf will have "http://www.yourdomain.com/" as its root url
 		*/
 		public var rootUrl : String;
 		
 		/**
-		 * host from which to load media, for entry drilldown KDP.
-		 * protocol (like http://) and then  domain (like www.kaltura.com)
+		 * host from which to load media, for entry drilldown VDP.
+		 * protocol (like http://) and then  domain (like www.vidiun.com)
 		 */
 		public var cdnHost : String;
 		
@@ -107,7 +107,7 @@ package com.kaltura.edw.model.datapacks
 		public var sourceUrl:String;
 
 		/**
-		 *The hosting server name, e.g. "kaltura.com"
+		 *The hosting server name, e.g. "vidiun.com"
 		 */
 		public var hostName:String;
 
@@ -134,9 +134,9 @@ package com.kaltura.edw.model.datapacks
 		public function get defaultUrlVars() :Object
 		{
 			return {uid: userId,
-					partner_id: kc.partnerId,
+					partner_id: vc.partnerId,
 					subp_id: subpId,
-					ks: kc.ks};
+					vs: vc.vs};
 		}
 	}
 }

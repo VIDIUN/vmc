@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,28 +25,28 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.metadataBatch
+package com.vidiun.commands.metadataBatch
 {
-		import com.kaltura.vo.KalturaExclusiveLockKey;
-		import com.kaltura.vo.KalturaBatchJobFilter;
-	import com.kaltura.delegates.metadataBatch.MetadataBatchGetExclusiveTransformMetadataJobsDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunExclusiveLockKey;
+		import com.vidiun.vo.VidiunBatchJobFilter;
+	import com.vidiun.delegates.metadataBatch.MetadataBatchGetExclusiveTransformMetadataJobsDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* batch getExclusiveTransformMetadataJob action allows to get a BatchJob of type METADATA_TRANSFORM
 	**/
-	public class MetadataBatchGetExclusiveTransformMetadataJobs extends KalturaCall
+	public class MetadataBatchGetExclusiveTransformMetadataJobs extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param lockKey KalturaExclusiveLockKey
+		* @param lockKey VidiunExclusiveLockKey
 		* @param maxExecutionTime int
 		* @param numberOfJobs int
-		* @param filter KalturaBatchJobFilter
+		* @param filter VidiunBatchJobFilter
 		* @param maxJobToPull int
 		**/
-		public function MetadataBatchGetExclusiveTransformMetadataJobs( lockKey : KalturaExclusiveLockKey,maxExecutionTime : int,numberOfJobs : int,filter : KalturaBatchJobFilter=null,maxJobToPull : int=int.MIN_VALUE )
+		public function MetadataBatchGetExclusiveTransformMetadataJobs( lockKey : VidiunExclusiveLockKey,maxExecutionTime : int,numberOfJobs : int,filter : VidiunBatchJobFilter=null,maxJobToPull : int=int.MIN_VALUE )
 		{
 			service= 'metadata_metadatabatch';
 			action= 'getExclusiveTransformMetadataJobs';
@@ -54,7 +54,7 @@ package com.kaltura.commands.metadataBatch
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(lockKey, 'lockKey');
+				keyValArr = vidiunObject2Arrays(lockKey, 'lockKey');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('maxExecutionTime');
@@ -62,7 +62,7 @@ package com.kaltura.commands.metadataBatch
 			keyArr.push('numberOfJobs');
 			valueArr.push(numberOfJobs);
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

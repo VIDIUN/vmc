@@ -42,22 +42,22 @@ var requiredRevision = ${version_revision};
 // -->
 </script>
 <script type="text/javascript" src="lib/js/jquery.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="lib/css/kmc4.css">
+<link rel="stylesheet" type="text/css" media="screen" href="lib/css/vmc4.css">
 </head>
 
 <body scroll="no">
 	
-	<div id="kmcHeader">
+	<div id="vmcHeader">
 		<div id="logo"></div>
 		<ul id="hTabs"><li id="loading"><span>Loading...</span></li></ul>
-		<div id="user">KMC User Name</div>
+		<div id="user">VMC User Name</div>
 		<div style="width: auto; display: block; visibility: hidden;" id="user_links">
 			<span id="closeMenu">x&nbsp;</span> &nbsp;&nbsp;<span>Ran Yefet&nbsp;&nbsp; ( <a id="Logout" href="#logout">Logout</a> )&nbsp;&nbsp;  </span>
-			<span> | &nbsp; <a id="Quickstart Guide" href="http://local.trunk/content/docs/pdf/KMC3_Quick_Start_Guide.pdf" target="_blank">Quickstart Guide</a> &nbsp; | &nbsp;
-				<a id="Support" href="http://local.trunk/index.php/kmc/support?type=b326b5062b2f0e69046810717534cb09&amp;pid=109&amp;email=test@kaltura.com" target="_blank">Support</a>
+			<span> | &nbsp; <a id="Quickstart Guide" href="http://local.trunk/content/docs/pdf/VMC3_Quick_Start_Guide.pdf" target="_blank">Quickstart Guide</a> &nbsp; | &nbsp;
+				<a id="Support" href="http://local.trunk/index.php/vmc/support?type=b326b5062b2f0e69046810717534cb09&amp;pid=109&amp;email=test@vidiun.com" target="_blank">Support</a>
 			</span>
 		</div>
-	</div><!-- kmcHeader -->
+	</div><!-- vmcHeader -->
 	
 	<script language="JavaScript" type="text/javascript">
 	
@@ -105,8 +105,8 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			"allowScriptAccess","always",
 			"type", "application/x-shockwave-flash",
 			"flashvars", 
-						// kmc configuration 
-						"&kmc_uiconf=8776652" + 
+						// vmc configuration 
+						"&vmc_uiconf=8776652" + 
 						
 						//permission uiconf id:
 						"&permission_uiconf=8776642" + 
@@ -121,13 +121,13 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 						 "&subp_id=32101100"+
 	
 						// user id:
-						 "&uid=KMCUser"+
+						 "&uid=VMCUser"+
 	
-						// kaltura session key:
-						 "&ks="+					 						 
+						// vidiun session key:
+						 "&vs="+					 						 
 						
 						// work with this server
-						 "&host=www.kaltura.com"+
+						 "&host=www.vidiun.com"+
 	 
 						// services url:
 					 	 "&srvurl=api_v3/index.php" +
@@ -135,7 +135,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 						// debugMode for modules
 					     "&debugMode=true" +
 	
-						 // google tracker id (kaltura dev account): 
+						 // google tracker id (vidiun dev account): 
                          "&urchinNumber=UA-15857288-1"
 			,
 			"pluginspage", "http://www.adobe.com/go/getflashplayer"
@@ -164,6 +164,6 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			</embed>
 		</object>
 	</noscript>
-	<script type="text/javascript" src="lib/js/kmc.js"></script>
+	<script type="text/javascript" src="lib/js/vmc.js"></script>
 </body>
 </html>

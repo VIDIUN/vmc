@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,10 +25,10 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.jobs
+package com.vidiun.commands.jobs
 {
-	import com.kaltura.delegates.jobs.JobsGetProvisionProvideStatusDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.vidiun.delegates.jobs.JobsGetProvisionProvideStatusDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* // --------------------------------- ImportJob functions 	--------------------------------- //
@@ -41,7 +41,7 @@ package com.kaltura.commands.jobs
 	* 
 	* /batch getProvisionProvideStatusAction returns the status of ProvisionProvide task
 	**/
-	public class JobsGetProvisionProvideStatus extends KalturaCall
+	public class JobsGetProvisionProvideStatus extends VidiunCall
 	{
 		public var filterFields : String;
 		

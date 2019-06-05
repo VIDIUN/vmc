@@ -4,20 +4,20 @@
 	 used as part of <Code>ExternalSyndicationPopUpWindow</code>
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
-		 xmlns:validators="com.kaltura.validators.*"
-		 implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed"
+		 xmlns:validators="com.vidiun.validators.*"
+		 implements="com.vidiun.vmc.modules.content.view.interfaces.IExternalSyndicationFeed"
 		 creationComplete="vbox1_creationCompleteHandler(event)"
 		 label="{resourceManager.getString('cms', 'iTunes')}" paddingRight="10">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.vo.PartnerVO;
-			import com.kaltura.types.KalturaITunesSyndicationFeedAdultValues;
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.utils.KLanguageUtil;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaITunesSyndicationFeed;
+			import com.vidiun.vmc.modules.content.vo.PartnerVO;
+			import com.vidiun.types.VidiunITunesSyndicationFeedAdultValues;
+			import com.vidiun.types.VidiunSyndicationFeedType;
+			import com.vidiun.utils.VLanguageUtil;
+			import com.vidiun.vo.VidiunBaseSyndicationFeed;
+			import com.vidiun.vo.VidiunFlavorParams;
+			import com.vidiun.vo.VidiunITunesSyndicationFeed;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -42,7 +42,7 @@
 			 * */
 			public var flavorParams:ArrayCollection;
 
-			private var _feed:KalturaBaseSyndicationFeed;
+			private var _feed:VidiunBaseSyndicationFeed;
 
 
 
@@ -63,7 +63,7 @@
 
 
 			private function setLanguge(langCode:String):void {
-				feedLabguageComboBox.selectedIndex = (KLanguageUtil.instance.getLanguageByCode(langCode) as
+				feedLabguageComboBox.selectedIndex = (VLanguageUtil.instance.getLanguageByCode(langCode) as
 					Object).index;
 			}
 
@@ -149,7 +149,7 @@
 			private function setFeedFlavorAndSettings():void {
 				// flavor param
 				var fpId:int = _feed.flavorParamId;
-				for each (var fp:KalturaFlavorParams in flavorsComboBox.dataProvider) {
+				for each (var fp:VidiunFlavorParams in flavorsComboBox.dataProvider) {
 					if (fpId == fp.id) {
 						flavorsComboBox.selectedItem = fp;
 						break;
@@ -169,7 +169,7 @@
 
 
 			private function getFlavorParamID():int {
-				return (flavorsComboBox.selectedItem as KalturaFlavorParams).id;
+				return (flavorsComboBox.selectedItem as VidiunFlavorParams).id;
 			}
 
 
@@ -178,7 +178,7 @@
 			 * */
 			private function getFlavorsForItunes(value:ArrayCollection):void {
 				var tempArr:ArrayCollection = new ArrayCollection();
-				for each (var flavor:KalturaFlavorParams in value) {
+				for each (var flavor:VidiunFlavorParams in value) {
 					if ((flavor.format == "m4a") || (flavor.format == "mp3") || (flavor.format == "mov") ||
 						(flavor.format == "mp4") || (flavor.format == "m4v")) {
 						tempArr.addItem(flavor);
@@ -189,10 +189,10 @@
 			}
 
 
-			public function get syndication():KalturaBaseSyndicationFeed {
-				var iTunesFeed:KalturaITunesSyndicationFeed = (_feed !=
-					null) ? (_feed as KalturaITunesSyndicationFeed) : new KalturaITunesSyndicationFeed();
-				//iTunesFeed.type = KalturaSyndicationFeedType.ITUNES;
+			public function get syndication():VidiunBaseSyndicationFeed {
+				var iTunesFeed:VidiunITunesSyndicationFeed = (_feed !=
+					null) ? (_feed as VidiunITunesSyndicationFeed) : new VidiunITunesSyndicationFeed();
+				//iTunesFeed.type = VidiunSyndicationFeedType.ITUNES;
 				iTunesFeed.landingPage = StringUtil.trim(landingPageInputText.text);
 				iTunesFeed.flavorParamId = getFlavorParamID();
 				iTunesFeed.addToDefaultConversionProfile = defaultCPCheckBox.selected;
@@ -210,8 +210,8 @@
 			}
 
 
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
-				_feed = syndication as KalturaITunesSyndicationFeed;
+			public function set syndication(syndication:VidiunBaseSyndicationFeed):void {
+				_feed = syndication as VidiunITunesSyndicationFeed;
 
 				setFeedFlavorAndSettings();
 				setFeedLandingPage();
@@ -392,8 +392,8 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString('cms', 'languageLabel')}" width="{LABEL_WIDTH}" styleName="feedParamLabel"/>
 		<mx:VBox width="100%">
-			<mx:ComboBox id='feedLabguageComboBox' editable="false" dataProvider="{KLanguageUtil.instance.languagesArr}"
-						 selectedIndex="{(KLanguageUtil.instance.getLanguageByCode('en') as Object).index}"/>
+			<mx:ComboBox id='feedLabguageComboBox' editable="false" dataProvider="{VLanguageUtil.instance.languagesArr}"
+						 selectedIndex="{(VLanguageUtil.instance.getLanguageByCode('en') as Object).index}"/>
 			<mx:Text width="100%" text="{resourceManager.getString('cms', 'languageDescriptionLabel')}" enabled="false"/>
 		</mx:VBox>
 	</mx:HBox>
@@ -402,9 +402,9 @@
 		<mx:Label text="{resourceManager.getString('cms', 'adultContentLabel')}" width="{LABEL_WIDTH}" styleName="feedParamLabel"/>
 		<mx:VBox width="100%">
 			<mx:ComboBox id='adultcontentComboBox' editable="false" creationComplete="setAdultcontentDefault()"
-						 dataProvider="{[{code:KalturaITunesSyndicationFeedAdultValues.YES, label:resourceManager.getString('cms', 'adult_option_yes')}, 
-							    {code:KalturaITunesSyndicationFeedAdultValues.NO, label:resourceManager.getString('cms', 'adult_option_no')}, 
-							    {code:KalturaITunesSyndicationFeedAdultValues.CLEAN, label:resourceManager.getString('cms', 'adult_option_clean')}]}"/>
+						 dataProvider="{[{code:VidiunITunesSyndicationFeedAdultValues.YES, label:resourceManager.getString('cms', 'adult_option_yes')}, 
+							    {code:VidiunITunesSyndicationFeedAdultValues.NO, label:resourceManager.getString('cms', 'adult_option_no')}, 
+							    {code:VidiunITunesSyndicationFeedAdultValues.CLEAN, label:resourceManager.getString('cms', 'adult_option_clean')}]}"/>
 			<mx:Text width="100%" text="{resourceManager.getString('cms', 'adultContentDescriptionLabel')}"
 					 enabled="false"/>
 		</mx:VBox>

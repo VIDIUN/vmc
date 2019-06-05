@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -12,7 +12,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * clips derived from the current entry, 
-		 * <code>KalturaBaseEntry</code> objects
+		 * <code>VidiunBaseEntry</code> objects
 		 */		
 		public var clips:Array;
 	}

@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.storageProfile.StorageProfileList;
-	import com.kaltura.edw.business.ClientUtil;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.types.KalturaStorageProfileStatus;
-	import com.kaltura.vo.KalturaFilter;
-	import com.kaltura.vo.KalturaStorageProfile;
-	import com.kaltura.vo.KalturaStorageProfileFilter;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.storageProfile.StorageProfileList;
+	import com.vidiun.edw.business.ClientUtil;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.types.VidiunStorageProfileStatus;
+	import com.vidiun.vo.VidiunFilter;
+	import com.vidiun.vo.VidiunStorageProfile;
+	import com.vidiun.vo.VidiunStorageProfileFilter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -24,26 +24,26 @@ package com.kaltura.kmc.modules.account.control.command
 		
 		public function execute(event:CairngormEvent):void {
 			_model.loadingFlag = true;
-			var f:KalturaStorageProfileFilter = new KalturaStorageProfileFilter();
-			f.statusIn = KalturaStorageProfileStatus.AUTOMATIC + "," + KalturaStorageProfileStatus.MANUAL;
+			var f:VidiunStorageProfileFilter = new VidiunStorageProfileFilter();
+			f.statusIn = VidiunStorageProfileStatus.AUTOMATIC + "," + VidiunStorageProfileStatus.MANUAL;
 			var list:StorageProfileList = new StorageProfileList(f);
-			list.addEventListener(KalturaEvent.COMPLETE, result);
-			list.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(list);
+			list.addEventListener(VidiunEvent.COMPLETE, result);
+			list.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(list);
 		}
 		
 		public function result(event:Object):void {
 			_model.loadingFlag = false;
 			var temp:Array = new Array();
 			// add the "none" object
-			var rs:KalturaStorageProfile = new KalturaStorageProfile();
-			rs.id = KalturaClient.NULL_INT; // same as "delete value" of the client
+			var rs:VidiunStorageProfile = new VidiunStorageProfile();
+			rs.id = VidiunClient.NULL_INT; // same as "delete value" of the client
 			rs.name = ResourceManager.getInstance().getString('account', 'n_a');
 			temp.push(rs);
 			// add the rest of the storages
 			for each (var o:Object in event.data.objects) {
-				if (!(o is KalturaStorageProfile)) {
-					o = ClientUtil.createClassInstanceFromObject(KalturaStorageProfile, o);
+				if (!(o is VidiunStorageProfile)) {
+					o = ClientUtil.createClassInstanceFromObject(VidiunStorageProfile, o);
 				}
 				temp.push(o);
 			} 
@@ -54,7 +54,7 @@ package com.kaltura.kmc.modules.account.control.command
 		public function fault(event:Object):void {
 			_model.loadingFlag = false;
 			if(event && event.error && event.error.errorMsg) {
-				if(event.error.errorMsg.toString().indexOf("Invalid KS") > -1 ) {
+				if(event.error.errorMsg.toString().indexOf("Invalid VS") > -1 ) {
 					JSGate.expired();
 				} else {
 					Alert.show(event && event.error && event.error.errorMsg);

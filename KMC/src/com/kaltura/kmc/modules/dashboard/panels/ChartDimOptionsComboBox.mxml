@@ -5,14 +5,14 @@
 
 -->												
 <mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml"  change="onChange(event)" buttonMode="true" useHandCursor="true"
-	dataProvider="{[{data: 'count_plays', label: resourceManager.getString('kdashboard', 'count_plays')}, 
-					{data: 'count_loads' ,label: resourceManager.getString('kdashboard', 'count_loads')}, 
-					{data: 'sum_time_viewed' ,label: resourceManager.getString('kdashboard', 'sum_time_viewed')}, 
-					{data: 'avg_time_viewed' ,label: resourceManager.getString('kdashboard', 'avg_time_viewed')}]}">
+	dataProvider="{[{data: 'count_plays', label: resourceManager.getString('vdashboard', 'count_plays')}, 
+					{data: 'count_loads' ,label: resourceManager.getString('vdashboard', 'count_loads')}, 
+					{data: 'sum_time_viewed' ,label: resourceManager.getString('vdashboard', 'sum_time_viewed')}, 
+					{data: 'avg_time_viewed' ,label: resourceManager.getString('vdashboard', 'avg_time_viewed')}]}">
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
+			import com.vidiun.vmc.modules.dashboard.DashboardManager;
 			
 			/**
 			 *  when combobox selected item changed

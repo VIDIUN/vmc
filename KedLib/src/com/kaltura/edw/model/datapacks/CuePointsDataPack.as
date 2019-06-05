@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -11,7 +11,7 @@ package com.kaltura.edw.model.datapacks
 		public var shared:Boolean = false;
 		
 		/**
-		 * Will be used to make the KClip reload cue points upon bulk upload
+		 * Will be used to make the VClip reload cue points upon bulk upload
 		 * */
 		public var reloadCuePoints:Boolean;
 		

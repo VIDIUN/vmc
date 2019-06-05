@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.thumb
+package com.vidiun.edw.control.commands.thumb
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.thumbAsset.ThumbAssetGetByEntryId;
-	import com.kaltura.commands.thumbAsset.ThumbAssetSetAsDefault;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.thumbAsset.ThumbAssetGetByEntryId;
+	import com.vidiun.commands.thumbAsset.ThumbAssetSetAsDefault;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.ThumbnailAssetEvent;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.vo.ThumbnailWithDimensions;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunThumbAsset;
 
-	public class SetAsDefaultThumbnailAsset extends KedCommand
+	public class SetAsDefaultThumbnailAsset extends VedCommand
 	{
 		private var _defaultThumb:ThumbnailWithDimensions;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_defaultThumb = (event as ThumbnailAssetEvent).thumbnailAsset;
@@ -26,8 +26,8 @@ package com.kaltura.edw.control.commands.thumb
 			var listThumbs:ThumbAssetGetByEntryId = new ThumbAssetGetByEntryId((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id);
 			multiRequest.addAction(listThumbs);
 			
-			multiRequest.addEventListener(KalturaEvent.COMPLETE, result);
-			multiRequest.addEventListener(KalturaEvent.FAILED, fault);
+			multiRequest.addEventListener(VidiunEvent.COMPLETE, result);
+			multiRequest.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(multiRequest);
 		}
@@ -47,7 +47,7 @@ package com.kaltura.edw.control.commands.thumb
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var currentThumbsArray:Array = ddp.distributionInfo.thumbnailDimensions;
 			for (var i:int=0; i<thumbsArray.length; i++) {
-				var thumbAsset:KalturaThumbAsset = thumbsArray[i] as KalturaThumbAsset;
+				var thumbAsset:VidiunThumbAsset = thumbsArray[i] as VidiunThumbAsset;
 				for (var j:int=0; j<currentThumbsArray.length; j++) {
 					var thumbWithDimensions:ThumbnailWithDimensions = currentThumbsArray[j] as ThumbnailWithDimensions;
 					if (thumbWithDimensions.thumbAsset && (thumbWithDimensions.thumbAsset.id == thumbAsset.id)) {

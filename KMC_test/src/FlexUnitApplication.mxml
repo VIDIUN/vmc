@@ -5,19 +5,19 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="955" minHeight="600" xmlns:flexui="flexunit.flexui.*" creationComplete="onCreationComplete()">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.filter.TestFilterUtil;
+			import com.vidiun.vmc.filter.TestFilterUtil;
 			
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
-				testsToRun.push(com.kaltura.kmc.filter.TestFilterUtil);
+				testsToRun.push(com.vidiun.vmc.filter.TestFilterUtil);
 				return testsToRun;
 			}
 			
 			
 			private function onCreationComplete():void
 			{
-				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "KMC_test");
+				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "VMC_test");
 			}
 			
 		]]>

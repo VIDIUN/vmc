@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.commands.dropFolder
+package com.vidiun.edw.control.commands.dropFolder
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.DropFolderDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.DropFolderDataPack;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
-	public class ResetDropFoldersAndFiles extends KedCommand {
+	public class ResetDropFoldersAndFiles extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			var dropFolderData:DropFolderDataPack = _model.getDataPack(DropFolderDataPack) as DropFolderDataPack;
 			dropFolderData.dropFolderFiles = null;
 			dropFolderData.dropFolders = null;

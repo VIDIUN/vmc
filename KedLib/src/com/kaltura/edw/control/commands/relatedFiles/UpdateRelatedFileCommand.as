@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.relatedFiles
+package com.vidiun.edw.control.commands.relatedFiles
 {
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.RelatedFileEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.vidiun.commands.attachmentAsset.AttachmentAssetUpdate;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.RelatedFileEvent;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunAttachmentAsset;
 	
-	public class UpdateRelatedFileCommand extends KedCommand
+	public class UpdateRelatedFileCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var file:KalturaAttachmentAsset = (event as RelatedFileEvent).attachmentAsset;
+			var file:VidiunAttachmentAsset = (event as RelatedFileEvent).attachmentAsset;
 			file.setUpdatedFieldsOnly(true);
 			
 			var updateAsset:AttachmentAssetUpdate = new AttachmentAssetUpdate(file.id, file);
-			updateAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			updateAsset.addEventListener(KalturaEvent.FAILED, fault);
+			updateAsset.addEventListener(VidiunEvent.COMPLETE, result);
+			updateAsset.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(updateAsset);
 		}

@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.userRole.UserRoleAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
+	import com.vidiun.commands.userRole.UserRoleAdd;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.vmc.modules.admin.model.DrilldownMode;
 
 	public class AddRoleCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			var ua:UserRoleAdd = new UserRoleAdd((event as RoleEvent).role);
-			ua.addEventListener(KalturaEvent.COMPLETE, result);
-			ua.addEventListener(KalturaEvent.FAILED, fault);
+			ua.addEventListener(VidiunEvent.COMPLETE, result);
+			ua.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
-			_model.kc.post(ua);
+			_model.vc.post(ua);
 		}
 		
 		override protected function result(data:Object):void {

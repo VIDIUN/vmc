@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.account.model {
+package com.vidiun.vmc.modules.account.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
-	import com.kaltura.kmc.modules.account.vo.AdminVO;
-	import com.kaltura.kmc.modules.account.vo.PackagesVO;
-	import com.kaltura.kmc.modules.account.vo.PartnerVO;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.types.KalturaConversionProfileOrderBy;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaStorageProfile;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode;
+	import com.vidiun.vmc.modules.account.vo.AdminVO;
+	import com.vidiun.vmc.modules.account.vo.PackagesVO;
+	import com.vidiun.vmc.modules.account.vo.PartnerVO;
+	import com.vidiun.types.VidiunAccessControlOrderBy;
+	import com.vidiun.types.VidiunConversionProfileOrderBy;
+	import com.vidiun.types.VidiunConversionProfileType;
+	import com.vidiun.vo.FlavorVO;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunAccessControlFilter;
+	import com.vidiun.vo.VidiunBaseEntry;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunConversionProfileFilter;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunStorageProfile;
+	import com.vidiun.vo.VidiunUser;
 	
 	import flash.events.EventDispatcher;
 	
@@ -38,7 +38,7 @@ package com.kaltura.kmc.modules.account.model {
 		* account info
 		**************************************************** */
 		
-		[ArrayElementType("KalturaUser")]
+		[ArrayElementType("VidiunUser")]
 		/**
 		 * a list of users with administrator role of the current partner
 		 */		
@@ -50,7 +50,7 @@ package com.kaltura.kmc.modules.account.model {
 		 * integration
 		 **************************************************** */
 		
-		[ArrayElementType("KalturaCategory")]
+		[ArrayElementType("VidiunCategory")]
 		/**
 		 * list of categorys with a defined privacy context 
 		 */		
@@ -62,8 +62,8 @@ package com.kaltura.kmc.modules.account.model {
 		 * metadata
 		 **************************************************** */
 		public var metadataProfilesArray:ArrayCollection = new ArrayCollection();
-		public var selectedMetadataProfile:KMCMetadataProfileVO;
-		public var metadataFilterPager:KalturaFilterPager;
+		public var selectedMetadataProfile:VMCMetadataProfileVO;
+		public var metadataFilterPager:VidiunFilterPager;
 		public var metadataProfilesTotalCount:int = 10;
 
 		
@@ -72,16 +72,16 @@ package com.kaltura.kmc.modules.account.model {
 		 **************************************************** */
 		public var accessControls:ArrayCollection = new ArrayCollection();
 		public var accessControlProfilesTotalCount:int = 10;
-		public var filterPager:KalturaFilterPager;
-		public var acpFilter:KalturaAccessControlFilter;
+		public var filterPager:VidiunFilterPager;
+		public var acpFilter:VidiunAccessControlFilter;
 
 		/* ****************************************************
 		 * conversion
 		 **************************************************** */
-		[ArrayElementType("KalturaStorageProfile")]
+		[ArrayElementType("VidiunStorageProfile")]
 		/**
 		 * a list of remote storages configured for the partner.
-		 * <code>KalturaStorageProfile</code> objects 
+		 * <code>VidiunStorageProfile</code> objects 
 		 */
 		public var storageProfiles:ArrayCollection;
 		
@@ -89,7 +89,7 @@ package com.kaltura.kmc.modules.account.model {
 		 * the default entry for the current conversion profile
 		 * (only loaded during save for validation) 
 		 */
-		public var defaultEntry:KalturaBaseEntry;
+		public var defaultEntry:VidiunBaseEntry;
 		
 		/**
 		 * list of thumbnail flavors 
@@ -123,14 +123,14 @@ package com.kaltura.kmc.modules.account.model {
 		public var mediaCPAPs:Array;
 		
 		/**
-		 * default filter for media conversion profiles in KMC 
+		 * default filter for media conversion profiles in VMC 
 		 * */
-		public var mediaCPFilter:KalturaConversionProfileFilter;
+		public var mediaCPFilter:VidiunConversionProfileFilter;
 		
 		/**
-		 * default pager for conversion profiles in KMC
+		 * default pager for conversion profiles in VMC
 		 * */
-		public var mediaCPPager:KalturaFilterPager;
+		public var mediaCPPager:VidiunFilterPager;
 		
 		
 		// live conversion profiles
@@ -160,14 +160,14 @@ package com.kaltura.kmc.modules.account.model {
 		public var liveFlavorsData:ArrayCollection = new ArrayCollection();
 		
 		/**
-		 * default filter for live conversion profiles in KMC 
+		 * default filter for live conversion profiles in VMC 
 		 * */
-		public var liveCPFilter:KalturaConversionProfileFilter;
+		public var liveCPFilter:VidiunConversionProfileFilter;
 		
 		/**
-		 * default pager for live conversion profiles in KMC
+		 * default pager for live conversion profiles in VMC
 		 * */
-		public var liveCPPager:KalturaFilterPager;
+		public var liveCPPager:VidiunFilterPager;
 		
 		
 		/* ****************************************************
@@ -212,16 +212,16 @@ package com.kaltura.kmc.modules.account.model {
 
 		public function AccountModelLocator(enforcer:Enforcer) {
 			context = new Context();
-			acpFilter = new KalturaAccessControlFilter();
-			acpFilter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
+			acpFilter = new VidiunAccessControlFilter();
+			acpFilter.orderBy = VidiunAccessControlOrderBy.CREATED_AT_DESC;
 
-			mediaCPFilter = new KalturaConversionProfileFilter();
-			mediaCPFilter.orderBy = KalturaConversionProfileOrderBy.CREATED_AT_DESC;
-			mediaCPFilter.typeEqual = KalturaConversionProfileType.MEDIA;
+			mediaCPFilter = new VidiunConversionProfileFilter();
+			mediaCPFilter.orderBy = VidiunConversionProfileOrderBy.CREATED_AT_DESC;
+			mediaCPFilter.typeEqual = VidiunConversionProfileType.MEDIA;
 
-			liveCPFilter = new KalturaConversionProfileFilter();
-			liveCPFilter.orderBy = KalturaConversionProfileOrderBy.CREATED_AT_DESC;
-			liveCPFilter.typeEqual = KalturaConversionProfileType.LIVE_STREAM;
+			liveCPFilter = new VidiunConversionProfileFilter();
+			liveCPFilter.orderBy = VidiunConversionProfileOrderBy.CREATED_AT_DESC;
+			liveCPFilter.typeEqual = VidiunConversionProfileType.LIVE_STREAM;
 				
 		}
 		

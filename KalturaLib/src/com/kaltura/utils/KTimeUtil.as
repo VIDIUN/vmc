@@ -1,8 +1,8 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	import mx.formatters.DateFormatter;
 	
-	public class KTimeUtil
+	public class VTimeUtil
 	{
 		public static const DAY_TIME_FORMAT : String = "JJ:NN:SS" 
 		public static const HOUR_TIME_FORMAT : String = "NN:SS";

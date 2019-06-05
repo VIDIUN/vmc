@@ -2,7 +2,7 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.utils.KTimeUtil;
+			import com.vidiun.utils.VTimeUtil;
 			
 			private const _lblWidth : Number = 80;
 			
@@ -35,7 +35,7 @@
 	</mx:HBox>
 	<mx:HBox width="100%" visible="{data!=null}">
 		<mx:Label text="{resourceManager.getString('analytics','duration')}:" width="{_lblWidth}" styleName="boldLabel"/>
-		<mx:Text text="{ KTimeUtil.formatTime2( Number(data.duration) ) }" />
+		<mx:Text text="{ VTimeUtil.formatTime2( Number(data.duration) ) }" />
 	</mx:HBox>
 	<mx:HBox width="100%" visible="{data!=null}">
 		<mx:Label text="{resourceManager.getString('analytics','createdAt')}:" width="{_lblWidth}" styleName="boldLabel"/>

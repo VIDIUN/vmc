@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:MultiAttributeFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
-						 implements="com.kaltura.edw.components.fltr.IMultiAttributeFilterComponent"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
+						 implements="com.vidiun.edw.components.fltr.IMultiAttributeFilterComponent"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.BaseFilter;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.vo.KalturaPlayableEntryFilter;
+			import com.vidiun.edw.components.fltr.BaseFilter;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.vo.VidiunPlayableEntryFilter;
 			
 			import mx.controls.Alert;
 			import mx.controls.Button;
@@ -23,9 +23,9 @@
 			private var _selectedStartDate:int;
 			private var _selectedEndDate:int;
 			
-			override public function set kfilters(value:Array):void {
+			override public function set vfilters(value:Array):void {
 				// update vo:
-				super.kfilters = value;
+				super.vfilters = value;
 				
 				// update ui:
 				var now:Number = new Date().time / 1000;
@@ -59,7 +59,7 @@
 				}
 			}
 			
-			override public function get kfilters():Array {
+			override public function get vfilters():Array {
 				var result:Array = [];
 				for (var i:int = 0; i<_attributes.length; i++) {
 					if (_vo[_attributes[i]]) {

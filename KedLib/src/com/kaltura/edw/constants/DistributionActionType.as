@@ -1,4 +1,4 @@
-package com.kaltura.edw.constants
+package com.vidiun.edw.constants
 {
 	public class DistributionActionType
 	{

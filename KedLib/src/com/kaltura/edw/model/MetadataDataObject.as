@@ -1,4 +1,4 @@
-package com.kaltura.edw.model
+package com.vidiun.edw.model
 {
 	import mx.collections.ArrayCollection;
 

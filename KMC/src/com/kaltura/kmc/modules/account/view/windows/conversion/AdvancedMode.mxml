@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- conversion profiles listing -->
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 xmlns:conversion="com.kaltura.kmc.modules.account.view.windows.conversion.*"
-		 xmlns:controls="com.kaltura.controls.*" creationComplete="creationCompleteHandler(event)">
+		 xmlns:conversion="com.vidiun.vmc.modules.account.view.windows.conversion.*"
+		 xmlns:controls="com.vidiun.controls.*" creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
 		[Event(name="changeState", type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.account.events.TranscodingEvent;
-			import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
-			import com.kaltura.kmc.modules.account.view.Transcoding;
-			import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.vidiun.vmc.modules.account.events.TranscodingEvent;
+			import com.vidiun.vmc.modules.account.model.types.ConversionProfileWindowMode;
+			import com.vidiun.vmc.modules.account.view.Transcoding;
+			import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
@@ -30,11 +30,11 @@
 			 * */
 			public var mode:String;
 		
-			[ArrayElementType("com.kaltura.kmc.modules.account.vo.ConversionProfileVO")]
+			[ArrayElementType("com.vidiun.vmc.modules.account.vo.ConversionProfileVO")]
 			[Bindable]
 			public var conversionData:ArrayCollection;
 			
-			[ArrayElementType("com.kaltura.vo.FlavorVO")]
+			[ArrayElementType("com.vidiun.vo.FlavorVO")]
 			[Bindable]
 			public var flavorsSet:ArrayCollection;
 			
@@ -51,8 +51,8 @@
 				deleteProfiles.nextEvent = new ConversionSettingsEvent(ConversionSettingsEvent.getListEventByMode(mode));
 				deleteProfiles.dispatch();
 				
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "addCode.resetConvProfList"}, true));
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.resetLiveConversionProfilesList", forceLoad: "false"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "addCode.resetConvProfList"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmcFunction: "content.resetLiveConversionProfilesList", forceLoad: "false"}, true));
 			}
 			
 			

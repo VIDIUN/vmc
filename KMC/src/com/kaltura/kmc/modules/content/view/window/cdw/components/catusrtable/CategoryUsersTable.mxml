@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*" 
+<table:SelectionTable xmlns:table="com.vidiun.controls.table.*" 
 					  xmlns:mx="http://www.adobe.com/2006/mxml" sortableColumns="false"
 					  creationComplete="datagrid1_creationCompleteHandler(event)" >
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-			import com.kaltura.kmc.modules.content.view.window.cdw.users.SetPermissionLevelWin;
-			import com.kaltura.types.KalturaCategoryUserPermissionLevel;
-			import com.kaltura.types.KalturaCategoryUserStatus;
-			import com.kaltura.types.KalturaUpdateMethodType;
+			import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+			import com.vidiun.vmc.modules.content.view.window.cdw.users.SetPermissionLevelWin;
+			import com.vidiun.types.VidiunCategoryUserPermissionLevel;
+			import com.vidiun.types.VidiunCategoryUserStatus;
+			import com.vidiun.types.VidiunUpdateMethodType;
 			
 			import mx.events.FlexEvent;
 			import mx.formatters.DateFormatter;
@@ -30,16 +30,16 @@
 			 * */
 			private function getPermissionLevel(item:Object, column:DataGridColumn):String {
 				switch (item.permissionLevel) {
-					case KalturaCategoryUserPermissionLevel.CONTRIBUTOR:
+					case VidiunCategoryUserPermissionLevel.CONTRIBUTOR:
 						return ResourceManager.getInstance().getString('cms', 'permLvlContributor');
 						break;
-					case KalturaCategoryUserPermissionLevel.MANAGER:
+					case VidiunCategoryUserPermissionLevel.MANAGER:
 						return ResourceManager.getInstance().getString('cms', 'permLvlManager');
 						break;
-					case KalturaCategoryUserPermissionLevel.MEMBER:
+					case VidiunCategoryUserPermissionLevel.MEMBER:
 						return ResourceManager.getInstance().getString('cms', 'permLvlMember');
 						break;
-					case KalturaCategoryUserPermissionLevel.MODERATOR:
+					case VidiunCategoryUserPermissionLevel.MODERATOR:
 						return ResourceManager.getInstance().getString('cms', 'permLvlModerator');
 						break;
 				}
@@ -52,13 +52,13 @@
 			 * */
 			private function getStatus(item:Object, column:DataGridColumn):String {
 				switch (item.status) {
-					case KalturaCategoryUserStatus.ACTIVE:
+					case VidiunCategoryUserStatus.ACTIVE:
 						return ResourceManager.getInstance().getString('cms', 'catUserStatusActive');
 						break;
-					case KalturaCategoryUserStatus.PENDING:
+					case VidiunCategoryUserStatus.PENDING:
 						return ResourceManager.getInstance().getString('cms', 'catUserStatusPending');
 						break;
-					case KalturaCategoryUserStatus.NOT_ACTIVE:
+					case VidiunCategoryUserStatus.NOT_ACTIVE:
 						return ResourceManager.getInstance().getString('cms', 'catUserStatusArchived');
 						break;
 				}
@@ -71,10 +71,10 @@
 			 * */
 			private function getUpdateMethod(item:Object, column:DataGridColumn):String {
 				switch (item.updateMethod) {
-					case KalturaUpdateMethodType.AUTOMATIC:
+					case VidiunUpdateMethodType.AUTOMATIC:
 						return ResourceManager.getInstance().getString('cms', 'updateMethodAuto');
 						break;
-					case KalturaUpdateMethodType.MANUAL:
+					case VidiunUpdateMethodType.MANUAL:
 						return ResourceManager.getInstance().getString('cms', 'updateMethodManual');
 						break;
 				}
@@ -170,37 +170,37 @@
 	
 	<table:columns>
 		<mx:DataGridColumn width="32" minWidth="32" 
-						   headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer" />
+						   headerRenderer="com.vidiun.controls.table.SelectionRenderer"
+						   itemRenderer="com.vidiun.controls.table.SelectionRenderer" />
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="90"
 						   headerText="{resourceManager.getString('cms', 'uthName')}"
 						   labelFunction="getUserName" dataTipField="userId"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="84"
 						   headerText="{resourceManager.getString('cms', 'uthPerm')}"
 						   labelFunction="getPermissionLevel"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="54"
 						   headerText="{resourceManager.getString('cms', 'uthStatus')}"
 						   labelFunction="getStatus"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" 
 						   headerText="{resourceManager.getString('cms', 'uthMethod')}"
 						   labelFunction="getUpdateMethod"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" 
 						   headerText="{resourceManager.getString('cms', 'uthUpdatedOn')}"
 						   labelFunction="getUpdateDate"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="id" width="180"
 						   headerText="{resourceManager.getString('cms', 'uthActions')}"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.cdw.components.catusrtable.ActionsRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.cdw.components.catusrtable.ActionsRenderer"/>
 		
 	</table:columns>
 </table:SelectionTable>

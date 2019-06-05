@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 width="100%" styleName="acpPopUpSectionBox" implements="com.kaltura.edw.view.window.accessControl.IRestrictionsPanel">
+		 width="100%" styleName="acpPopUpSectionBox" implements="com.vidiun.edw.view.window.accessControl.IRestrictionsPanel">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCountryRestrictionType;
-			import com.kaltura.utils.KCountriesUtil;
-			import com.kaltura.vo.KalturaAccessControl;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaCountryRestriction;
-			import com.kaltura.windows.popUpWindows.AddRemoveCountriesPopUpWindow;
+			import com.vidiun.types.VidiunCountryRestrictionType;
+			import com.vidiun.utils.VCountriesUtil;
+			import com.vidiun.vo.VidiunAccessControl;
+			import com.vidiun.vo.VidiunBaseRestriction;
+			import com.vidiun.vo.VidiunCountryRestriction;
+			import com.vidiun.windows.popUpWindows.AddRemoveCountriesPopUpWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -16,7 +16,7 @@
 			/**
 			 * the access control object being edited
 			 * */	
-			public var profile:KalturaAccessControl;
+			public var profile:VidiunAccessControl;
 			
 			[Bindable]
 			/**
@@ -37,11 +37,11 @@
 			
 			public function setRestrictions():void {
 				var restrictionFound:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in profile.restrictions) {
-					if (restriction is KalturaCountryRestriction) {
+				for each (var restriction:VidiunBaseRestriction in profile.restrictions) {
+					if (restriction is VidiunCountryRestriction) {
 						restrictionFound = true;
 						var arr:ArrayCollection;
-						if ((restriction as KalturaCountryRestriction).countryRestrictionType == KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST) {
+						if ((restriction as VidiunCountryRestriction).countryRestrictionType == VidiunCountryRestrictionType.ALLOW_COUNTRY_LIST) {
 							approvedCountriesRadioBtn.selected = true;
 							arr = allowedCountriesArr;
 						}
@@ -50,7 +50,7 @@
 							arr = notAllowedCountriesArr;
 						}
 						
-						setCountriesFromString(arr, (restriction as KalturaCountryRestriction).countryList);
+						setCountriesFromString(arr, (restriction as VidiunCountryRestriction).countryList);
 						break;
 					}
 				}
@@ -60,8 +60,8 @@
 			
 			public function updateRestrictions():void {
 				if (allCountriesRaddioBtn.selected != true) {
-					var countryRestriction:KalturaCountryRestriction = new KalturaCountryRestriction();
-					countryRestriction.countryRestrictionType = approvedCountriesRadioBtn.selected ? KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST : KalturaCountryRestrictionType.RESTRICT_COUNTRY_LIST;
+					var countryRestriction:VidiunCountryRestriction = new VidiunCountryRestriction();
+					countryRestriction.countryRestrictionType = approvedCountriesRadioBtn.selected ? VidiunCountryRestrictionType.ALLOW_COUNTRY_LIST : VidiunCountryRestrictionType.RESTRICT_COUNTRY_LIST;
 					
 					var list:List = (approvedCountriesRadioBtn.selected == true) ? approvedCountriesList : notApprovedCountriesList;
 					countryRestriction.countryList = getCountriesList(list.dataProvider as ArrayCollection);
@@ -98,7 +98,7 @@
 			private function setCountriesFromString(ac:ArrayCollection, itemStr:String):void {
 				var arr:Array = itemStr.split(',');
 				for each (var countryCode:String in arr) {
-					ac.addItem({name: KCountriesUtil.instance.getCountryName(countryCode), code: countryCode});
+					ac.addItem({name: VCountriesUtil.instance.getCountryName(countryCode), code: countryCode});
 				}
 			}
 			
@@ -143,7 +143,7 @@
 								  enabled="{approvedCountriesRadioBtn.selected}"/>
 						<mx:List width="100%" id="approvedCountriesList"
 								 enabled="{approvedCountriesRadioBtn.selected}" dataProvider="{allowedCountriesArr}"
-								 rowCount="5" itemRenderer="com.kaltura.renderers.CountryListItemRenderer"
+								 rowCount="5" itemRenderer="com.vidiun.renderers.CountryListItemRenderer"
 								 selectable="false"/>
 					</mx:HBox>
 				</mx:VBox>
@@ -166,7 +166,7 @@
 								  enabled="{notApprovedCountriesRadioBtn.selected}"/>
 						<mx:List width="100%" id="notApprovedCountriesList" dataProvider="{notAllowedCountriesArr}"
 								 enabled="{notApprovedCountriesRadioBtn.selected}" rowCount="5"
-								 itemRenderer="com.kaltura.renderers.CountryListItemRenderer" selectable="false"/>
+								 itemRenderer="com.vidiun.renderers.CountryListItemRenderer" selectable="false"/>
 					</mx:HBox>
 				</mx:VBox>
 				<mx:HBox>

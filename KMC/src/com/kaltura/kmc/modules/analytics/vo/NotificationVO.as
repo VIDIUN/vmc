@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.vo
+package com.vidiun.vmc.modules.analytics.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
 

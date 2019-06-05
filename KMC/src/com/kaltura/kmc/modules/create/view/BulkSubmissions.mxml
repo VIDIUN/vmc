@@ -2,7 +2,7 @@
 <!---
  	this component handles all bulk submissions in upload module
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center" styleName="addPanelButtonBox" xmlns:controls="com.kaltura.controls.*" >
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center" styleName="addPanelButtonBox" xmlns:controls="com.vidiun.controls.*" >
 	<mx:Metadata>
 		/**
 		 * request to hide the panel
@@ -11,10 +11,10 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.create.BulkUploader;
-			import com.kaltura.kmc.modules.create.types.BulkTypes;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.create.BulkUploader;
+			import com.vidiun.vmc.modules.create.types.BulkTypes;
 			
 			import modules.AddEntryPanel;
 			
@@ -26,9 +26,9 @@
 			import mx.managers.PopUpManager;
 			
 			/**
-			 * KalturaClient for API calls
+			 * VidiunClient for API calls
 			 * */
-			public var client:KalturaClient;
+			public var client:VidiunClient;
 
 			[Bindable]
 			/**
@@ -139,11 +139,11 @@
 			
 			private function gotoBulkLog(evet:Event = null):void {
 				// go to log
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "bulk", 
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "bulk", 
 					null, true));
 				// refresh log 
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "bulk", 
-					{kmcFunction: "content.refreshBulk"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "bulk", 
+					{vmcFunction: "content.refreshBulk"}, true));
 				// remove alert
 				PopUpManager.removePopUp(_submissionAlert);
 			}
@@ -151,8 +151,8 @@
 			
 			private function refreshOrClose(event:CloseEvent):void {
 				// refresh log
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", 
-					{kmcFunction: "content.refreshBulk"}, true));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", 
+					{vmcFunction: "content.refreshBulk"}, true));
 			}
 			
 			
@@ -179,7 +179,7 @@
 			 * Opens a desktop file selection pop-up, allowing csv/xml files selection
 			 * @param type tyoe of object for bulk upload
 			 * 
-			 * @see com.kaltura.kmc.modules.create.types.BulkTypes 
+			 * @see com.vidiun.vmc.modules.create.types.BulkTypes 
 			 * */
 			public function addBulk(type:String):void {
 				dispatchEvent(new Event("hidePanel"));

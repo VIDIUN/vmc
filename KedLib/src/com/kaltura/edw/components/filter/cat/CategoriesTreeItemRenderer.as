@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.filter.cat {
-	import com.kaltura.edw.components.filter.CategoriesTree;
-	import com.kaltura.edw.vo.CategoryVO;
+package com.vidiun.edw.components.filter.cat {
+	import com.vidiun.edw.components.filter.CategoriesTree;
+	import com.vidiun.edw.vo.CategoryVO;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;

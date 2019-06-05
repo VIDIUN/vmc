@@ -1,6 +1,6 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.controls.Paging;
+	import com.vidiun.controls.Paging;
 	
 	import mx.collections.ArrayCollection;
 	

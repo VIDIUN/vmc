@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,16 +25,16 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.liveStream
+package com.vidiun.commands.liveStream
 {
-		import com.kaltura.vo.KalturaLiveStreamConfiguration;
-	import com.kaltura.delegates.liveStream.LiveStreamAddLiveStreamPushPublishConfigurationDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunLiveStreamConfiguration;
+	import com.vidiun.delegates.liveStream.LiveStreamAddLiveStreamPushPublishConfigurationDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Add new pushPublish configuration to entry
 	**/
-	public class LiveStreamAddLiveStreamPushPublishConfiguration extends KalturaCall
+	public class LiveStreamAddLiveStreamPushPublishConfiguration extends VidiunCall
 	{
 		public var filterFields : String;
 		
@@ -42,9 +42,9 @@ package com.kaltura.commands.liveStream
 		* @param entryId String
 		* @param protocol String
 		* @param url String
-		* @param liveStreamConfiguration KalturaLiveStreamConfiguration
+		* @param liveStreamConfiguration VidiunLiveStreamConfiguration
 		**/
-		public function LiveStreamAddLiveStreamPushPublishConfiguration( entryId : String,protocol : String,url : String = null,liveStreamConfiguration : KalturaLiveStreamConfiguration=null )
+		public function LiveStreamAddLiveStreamPushPublishConfiguration( entryId : String,protocol : String,url : String = null,liveStreamConfiguration : VidiunLiveStreamConfiguration=null )
 		{
 			service= 'livestream';
 			action= 'addLiveStreamPushPublishConfiguration';
@@ -59,7 +59,7 @@ package com.kaltura.commands.liveStream
 			keyArr.push('url');
 			valueArr.push(url);
 			if (liveStreamConfiguration) { 
-				keyValArr = kalturaObject2Arrays(liveStreamConfiguration, 'liveStreamConfiguration');
+				keyValArr = vidiunObject2Arrays(liveStreamConfiguration, 'liveStreamConfiguration');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

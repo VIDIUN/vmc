@@ -1,6 +1,6 @@
-package com.kaltura.edw.model
+package com.vidiun.edw.model
 {
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,7 +14,7 @@ package com.kaltura.edw.model
 		/**
 		 * filter for rulebased playlists
 		 * */
-		public var onTheFlyFilter:KalturaMediaEntryFilterForPlaylist;
+		public var onTheFlyFilter:VidiunMediaEntryFilterForPlaylist;
 		
 		/**
 		 * number of entries in a rule-based playlist

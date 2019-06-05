@@ -29,10 +29,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 @ignore
 */
-package com.kaltura.kmvc
+package com.vidiun.vmvc
 {
 	/**
-	 * Stores KMvC message codes.
+	 * Stores VMvC message codes.
 	 * 
 	 * <p>All messages/error codes must match the regular expression:
 	 *
@@ -45,7 +45,7 @@ package com.kaltura.kmvc
 	 * 3. A single character severity indicator
 	 *    (E: error, W: warning, I: informational).</p>
 	 */
-	public class KMvCMessageCodes
+	public class VMvCMessageCodes
 	{
 	   public static const SINGLETON_EXCEPTION : String = "C0001E";
 	   public static const SERVICE_NOT_FOUND : String = "C0002E";

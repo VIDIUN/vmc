@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.vidiun.commands.accessControl.AccessControlAdd;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.account.control.events.AccessControlEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vo.AccessControlProfileVO;
 	
 	import flash.external.ExternalInterface;
 	
@@ -22,9 +22,9 @@ package com.kaltura.kmc.modules.account.control.command
 		{
 			var accessControl:AccessControlProfileVO = event.data;
 			var addNewAccessControl:AccessControlAdd = new AccessControlAdd(accessControl.profile);
-		 	addNewAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			addNewAccessControl.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(addNewAccessControl);
+		 	addNewAccessControl.addEventListener(VidiunEvent.COMPLETE, result);
+			addNewAccessControl.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(addNewAccessControl);
 		}
 		
 		public function result(data:Object):void

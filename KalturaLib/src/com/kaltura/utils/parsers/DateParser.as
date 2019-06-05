@@ -1,4 +1,4 @@
-package com.kaltura.utils.parsers
+package com.vidiun.utils.parsers
 {
 	
 	public class DateParser

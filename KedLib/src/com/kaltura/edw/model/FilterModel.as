@@ -1,8 +1,8 @@
-package com.kaltura.edw.model {
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.vo.KMCMetadataProfileVO;
+package com.vidiun.edw.model {
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.components.fltr.cat.data.ICategoriesDataManger;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.vo.VMCMetadataProfileVO;
 	
 	import mx.collections.ArrayCollection;
 
@@ -132,7 +132,7 @@ package com.kaltura.edw.model {
 
 
 		/**
-		 * list of <code>KalturaFlavorParams</code>
+		 * list of <code>VidiunFlavorParams</code>
 		 * */
 		public var flavorParams:ArrayCollection = new ArrayCollection();
 
@@ -149,7 +149,7 @@ package com.kaltura.edw.model {
 
 
 		/**
-		 * list of KMCMetadataProfileVO of the categories
+		 * list of VMCMetadataProfileVO of the categories
 		 */
 		public var categoryMetadataProfiles:ArrayCollection;
 
@@ -159,7 +159,7 @@ package com.kaltura.edw.model {
 		public var categoryFormBuilders:ArrayCollection;
 
 		/**
-		 * list of KMCMetadataProfileVO of the enries
+		 * list of VMCMetadataProfileVO of the enries
 		 * */
 		public var metadataProfiles:ArrayCollection;
 

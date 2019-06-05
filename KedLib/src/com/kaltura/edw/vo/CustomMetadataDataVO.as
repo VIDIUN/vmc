@@ -1,7 +1,7 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.vo.KalturaMetadata;
+	import com.vidiun.edw.model.MetadataDataObject;
+	import com.vidiun.vo.VidiunMetadata;
 
 	[Bindable]
 	/**
@@ -18,7 +18,7 @@ package com.kaltura.edw.vo
 		
 		public var finalViewMxml:XML;
 		
-		public var metadata:KalturaMetadata;
+		public var metadata:VidiunMetadata;
 		
 	}
 }

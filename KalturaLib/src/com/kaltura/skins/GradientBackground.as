@@ -1,4 +1,4 @@
-package com.kaltura.skins
+package com.vidiun.skins
 {
 	import flash.geom.Matrix;
 

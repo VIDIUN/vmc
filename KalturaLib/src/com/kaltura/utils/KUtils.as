@@ -1,10 +1,10 @@
-package com.kaltura.utils
+package com.vidiun.utils
 {
 	/**
-	 * A class that contains Kaltura specific functions
+	 * A class that contains Vidiun specific functions
 	 *
 	 */
-	public class KUtils
+	public class VUtils
 	{
 		public static function hostFromCode(hostCode:String):String
 		{
@@ -15,12 +15,12 @@ package com.kaltura.utils
 			switch (hostCode)
 			{
 				case "0":
-					hostUrl = "kaldev.kaltura.com";
+					hostUrl = "viddev.vidiun.com";
 				break;
-				// default server is www.kaltura.com
+				// default server is www.vidiun.com
 				case null:
 				case "1":
-					hostUrl = "www.kaltura.com";
+					hostUrl = "www.vidiun.com";
 				break;
 
 				case "2":
@@ -28,7 +28,7 @@ package com.kaltura.utils
 				break;
 
 				case "3":
-					hostUrl = "sandbox.kaltura.com";
+					hostUrl = "sandbox.vidiun.com";
 				break;
 
 				default: // a url

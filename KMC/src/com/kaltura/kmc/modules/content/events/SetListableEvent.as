@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.vo.ListableVo;
+	import com.vidiun.edw.vo.ListableVo;
 
 	public class SetListableEvent extends CairngormEvent
 	{

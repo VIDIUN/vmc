@@ -1,4 +1,4 @@
-package com.kaltura.utils.externalInterface
+package com.vidiun.utils.externalInterface
 {
 	/**
 	 * value object used to describe a javascript hook for a widget.

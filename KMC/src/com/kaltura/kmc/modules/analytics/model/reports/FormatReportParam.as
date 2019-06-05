@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.analytics.model.reports {
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.utils.FormattingUtil;
-	import com.kaltura.utils.KTimeUtil;
+package com.vidiun.vmc.modules.analytics.model.reports {
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vmc.modules.analytics.utils.FormattingUtil;
+	import com.vidiun.utils.VTimeUtil;
 	
 	import mx.formatters.DateFormatter;
 	import mx.formatters.NumberBaseRoundType;
@@ -55,7 +55,7 @@ package com.kaltura.kmc.modules.analytics.model.reports {
 				case "sum_time_viewed":
 				case "avg_time_viewed":
 					// format as HH:MM:SS
-					return KTimeUtil.formatTime2(Number(value) * 60);
+					return VTimeUtil.formatTime2(Number(value) * 60);
 					break;
 				case "event_date_id":
 					return new Date(Number(value) * 1000).toDateString();

@@ -2,28 +2,28 @@
 <!---
 access control tab of EntryDetailsWin
 -->
-<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.kaltura.edw.business.IDrilldownPanel"
-		   xmlns:control="com.kaltura.edw.control.*" label="{resourceManager.getString('drilldown', 'accessControl')}">
+<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.vidiun.edw.business.IDrilldownPanel"
+		   xmlns:control="com.vidiun.edw.control.*" label="{resourceManager.getString('drilldown', 'accessControl')}">
 	
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.AccessControlEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.model.util.CompositeKBaseEntry;
-			import com.kaltura.edw.model.util.EntryAccessControlUtil;
-			import com.kaltura.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.*;
-			import com.kaltura.vo.*;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.events.AccessControlEvent;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.FilterDataPack;
+			import com.vidiun.edw.model.util.CompositeVBaseEntry;
+			import com.vidiun.edw.model.util.EntryAccessControlUtil;
+			import com.vidiun.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.types.*;
+			import com.vidiun.vo.*;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -36,22 +36,22 @@ access control tab of EntryDetailsWin
 			/**
 			 * @copy #selectedEntry
 			 * */
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 			
 			private var _dpModel:IDataPackRepository;
 			
 			/**
 			 * the entry being presented / edited in entry drilldown
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 			
 			
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				_selectedEntry = value;
 				// if composite, set all entries to default profile
-				if (value is CompositeKBaseEntry) {
+				if (value is CompositeVBaseEntry) {
 					value.accessControlId = acProfsCB.dataProvider[0].profile.id;
 				}
 			}
@@ -119,7 +119,7 @@ access control tab of EntryDetailsWin
 			public function save():void {
 				_isChanged = false;
 				// only chages value on the entry
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 			
 			
@@ -139,7 +139,7 @@ access control tab of EntryDetailsWin
 				var defualtProfile:AccessControlProfileVO;
 				// create dropdown dp
 				for each (var acProfile:AccessControlProfileVO in _accessControlData) {
-					if (acProfile.profile.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
+					if (acProfile.profile.isDefault == VidiunNullableBoolean.TRUE_VALUE) {
 						defualtProfile = acProfile;
 					}
 					else {
@@ -223,32 +223,32 @@ access control tab of EntryDetailsWin
 					var foundCountriesRestriction:Boolean = false;
 					var foundAdvancedRestriction:Boolean = false;
 					acAdvancedLabel.text = '';
-					for each (var rstrct:KalturaBaseRestriction in selectedAC.profile.restrictions) {
-						if (rstrct is KalturaSiteRestriction) {
+					for each (var rstrct:VidiunBaseRestriction in selectedAC.profile.restrictions) {
+						if (rstrct is VidiunSiteRestriction) {
 							foundSitesRestriction = true;
-							acAuthoSitesLabel.text = EntryAccessControlUtil.getSiteRestrictionText(rstrct as KalturaSiteRestriction);
+							acAuthoSitesLabel.text = EntryAccessControlUtil.getSiteRestrictionText(rstrct as VidiunSiteRestriction);
 						}
-						else if (rstrct is KalturaIpAddressRestriction) {
+						else if (rstrct is VidiunIpAddressRestriction) {
 							foundIPsRestriction = true;
-							acAuthoIPsLabel.text = EntryAccessControlUtil.getIPRestrictionText(rstrct as KalturaIpAddressRestriction);
+							acAuthoIPsLabel.text = EntryAccessControlUtil.getIPRestrictionText(rstrct as VidiunIpAddressRestriction);
 						}
-						else if (rstrct is KalturaLimitFlavorsRestriction) {
+						else if (rstrct is VidiunLimitFlavorsRestriction) {
 							foundFlavorsRestriction = true;
-							acAuthoFlavorsLabel.text = EntryAccessControlUtil.getFlavorRestrictionText(rstrct as KalturaLimitFlavorsRestriction);
+							acAuthoFlavorsLabel.text = EntryAccessControlUtil.getFlavorRestrictionText(rstrct as VidiunLimitFlavorsRestriction);
 						}
-						else if (rstrct is KalturaCountryRestriction) {
+						else if (rstrct is VidiunCountryRestriction) {
 							foundCountriesRestriction = true;
-							acAuthoCountriesLabel.text = EntryAccessControlUtil.getCountryRestrictionText(rstrct as KalturaCountryRestriction);
+							acAuthoCountriesLabel.text = EntryAccessControlUtil.getCountryRestrictionText(rstrct as VidiunCountryRestriction);
 						}
 						
-						if (rstrct is KalturaSessionRestriction) { 
+						if (rstrct is VidiunSessionRestriction) { 
 							foundAdvancedRestriction = true;
-							acAdvancedLabel.text += resourceManager.getString('drilldown', 'KS_SHORT_CUT') + ", ";
+							acAdvancedLabel.text += resourceManager.getString('drilldown', 'VS_SHORT_CUT') + ", ";
 						}
-						if (rstrct is KalturaPreviewRestriction) {
+						if (rstrct is VidiunPreviewRestriction) {
 							foundAdvancedRestriction = true;
 							acAdvancedLabel.text += resourceManager.getString('drilldown', 'PREVIEW');
-							var len:int = (rstrct as KalturaPreviewRestriction).previewLength;
+							var len:int = (rstrct as VidiunPreviewRestriction).previewLength;
 							var min:int = Math.floor(len / 60);
 							var sec:int = len % 60;
 							acAdvancedLabel.text += "(" + min + "m:" + sec + "s), ";

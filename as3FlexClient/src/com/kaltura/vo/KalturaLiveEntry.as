@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,14 +25,14 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaLiveEntryRecordingOptions;
+	import com.vidiun.vo.VidiunLiveEntryRecordingOptions;
 
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.vidiun.vo.VidiunMediaEntry;
 
 	[Bindable]
-	public dynamic class KalturaLiveEntry extends KalturaMediaEntry
+	public dynamic class VidiunLiveEntry extends VidiunMediaEntry
 	{
 		/**
 		* The message to be presented when the stream is offline
@@ -41,13 +41,13 @@ package com.kaltura.vo
 
 		/**
 		* Recording Status Enabled/Disabled
-		* @see com.kaltura.types.KalturaRecordStatus
+		* @see com.vidiun.types.VidiunRecordStatus
 		**/
 		public var recordStatus : int = int.MIN_VALUE;
 
 		/**
 		* DVR Status Enabled/Disabled
-		* @see com.kaltura.types.KalturaDVRStatus
+		* @see com.vidiun.types.VidiunDVRStatus
 		**/
 		public var dvrStatus : int = int.MIN_VALUE;
 
@@ -73,7 +73,7 @@ package com.kaltura.vo
 
 		/**
 		* Flag denoting whether entry should be published by the media server
-		* @see com.kaltura.types.KalturaLivePublishStatus
+		* @see com.vidiun.types.VidiunLivePublishStatus
 		**/
 		public var pushPublishEnabled : int = int.MIN_VALUE;
 
@@ -99,11 +99,11 @@ package com.kaltura.vo
 
 		/**
 		**/
-		public var recordingOptions : KalturaLiveEntryRecordingOptions;
+		public var recordingOptions : VidiunLiveEntryRecordingOptions;
 
 		/**
 		* the status of the entry of type EntryServerNodeStatus
-		* @see com.kaltura.types.KalturaEntryServerNodeStatus
+		* @see com.vidiun.types.VidiunEntryServerNodeStatus
 		**/
 		public var liveStatus : int = int.MIN_VALUE;
 
@@ -113,17 +113,17 @@ package com.kaltura.vo
 		public var segmentDuration : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaNullableBoolean
+		* @see com.vidiun.types.VidiunNullableBoolean
 		**/
 		public var explicitLive : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaViewMode
+		* @see com.vidiun.types.VidiunViewMode
 		**/
 		public var viewMode : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaRecordingStatus
+		* @see com.vidiun.types.VidiunRecordingStatus
 		**/
 		public var recordingStatus : int = int.MIN_VALUE;
 
@@ -161,10 +161,10 @@ package com.kaltura.vo
 			var result:String = '';
 			switch (arrayName) {
 				case 'liveStreamConfigurations':
-					result = 'KalturaLiveStreamConfiguration';
+					result = 'VidiunLiveStreamConfiguration';
 					break;
 				case 'publishConfigurations':
-					result = 'KalturaLiveStreamPushPublishConfiguration';
+					result = 'VidiunLiveStreamPushPublishConfiguration';
 					break;
 				case 'recordingOptions':
 					result = '';

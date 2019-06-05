@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.customData {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.metadata.MetadataAdd;
-	import com.kaltura.commands.metadata.MetadataUpdate;
-	import com.kaltura.edw.business.MetadataDataParser;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.MetadataDataEvent;
-	import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaBaseEntry;
+package com.vidiun.edw.control.commands.customData {
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.metadata.MetadataAdd;
+	import com.vidiun.commands.metadata.MetadataUpdate;
+	import com.vidiun.edw.business.MetadataDataParser;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.MetadataDataEvent;
+	import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+	import com.vidiun.edw.model.datapacks.FilterDataPack;
+	import com.vidiun.edw.model.datapacks.PermissionsDataPack;
+	import com.vidiun.edw.vo.CustomMetadataDataVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunMetadataObjectType;
+	import com.vidiun.vo.VMCMetadataProfileVO;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,10 +23,10 @@ package com.kaltura.edw.control.commands.customData {
 	 * @author atarsh
 	 *
 	 */
-	public class UpdateMetadataDataCommand extends KedCommand {
+	public class UpdateMetadataDataCommand extends VedCommand {
 
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			// custom data info
 			var cddp:CustomDataDataPack = _model.getDataPack(CustomDataDataPack) as CustomDataDataPack;
 			// use mr to update metadata for all profiles at once
@@ -37,7 +37,7 @@ package com.kaltura.edw.control.commands.customData {
 				var metadataProfiles:ArrayCollection = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel.metadataProfiles;
 				for (var j:int = 0; j < cddp.metadataInfoArray.length; j++) {
 					var metadataInfo:CustomMetadataDataVO = cddp.metadataInfoArray[j] as CustomMetadataDataVO;
-					var profile:KMCMetadataProfileVO = metadataProfiles[j] as KMCMetadataProfileVO;
+					var profile:VMCMetadataProfileVO = metadataProfiles[j] as VMCMetadataProfileVO;
 					if (metadataInfo && profile && profile.profile) {
 						var newMetadataXML:XML = MetadataDataParser.toMetadataXML(metadataInfo, profile);
 						//metadata exists--> update request
@@ -51,7 +51,7 @@ package com.kaltura.edw.control.commands.customData {
 						}
 						else if (newMetadataXML.children().length() > 0) {
 							var metadataAdd:MetadataAdd = new MetadataAdd(profile.profile.id,
-								KalturaMetadataObjectType.ENTRY,
+								VidiunMetadataObjectType.ENTRY,
 								keepId,
 								newMetadataXML.toXMLString());
 							mr.addAction(metadataAdd);
@@ -63,8 +63,8 @@ package com.kaltura.edw.control.commands.customData {
 			if (mr.actions.length > 0) {
 				_model.increaseLoadCounter();
 				// add listeners and post call
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
 				
 				_client.post(mr);
 			}

@@ -2,39 +2,39 @@
 <!---
 	 adding or editing a rule based playlist
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" showCloseButton="true" xmlns:mx="http://www.adobe.com/2006/mxml"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" showCloseButton="true" xmlns:mx="http://www.adobe.com/2006/mxml"
 				 help="{onHelp()}" creationComplete="creationCompleteHandler()" verticalScrollPolicy="off"
 				 horizontalAlign="center" width="780" height="585" layout="vertical" styleName="TitleWindowType2"
 				 close="{onClose()}" 
-				 xmlns:window="com.kaltura.kmc.modules.content.view.window.*"
-				 implements="com.kaltura.edw.business.IDataOwner" xmlns:components="com.hillelcoren.components.*">
+				 xmlns:window="com.vidiun.vmc.modules.content.view.window.*"
+				 implements="com.vidiun.edw.business.IDataOwner" xmlns:components="com.hillelcoren.components.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.autocomplete.controllers.KACTagsController;
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.playlist.PlaylistEntries;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.PlaylistModel;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-			import com.kaltura.kmc.modules.content.events.NewFilterEvent;
-			import com.kaltura.kmc.modules.content.events.RuleBasedTypeEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.types.KalturaPlaylistType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.types.KalturaTaggedObjectType;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-			import com.kaltura.vo.KalturaPlaylist;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.autocomplete.controllers.VACTagsController;
+			import com.vidiun.edw.business.IDataOwner;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.playlist.PlaylistEntries;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.LoadEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.PlaylistModel;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.EntriesEvent;
+			import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
+			import com.vidiun.vmc.modules.content.events.NewFilterEvent;
+			import com.vidiun.vmc.modules.content.events.RuleBasedTypeEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.types.VidiunPlaylistType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.types.VidiunTaggedObjectType;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+			import com.vidiun.vo.VidiunPlaylist;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -44,7 +44,7 @@
 			import mx.managers.PopUpManager;
 			import mx.validators.ValidationResult;
 
-			public var client:KalturaClient;
+			public var client:VidiunClient;
 
 			[Bindable]
 			/**
@@ -80,12 +80,12 @@
 			/**
 			 * the playlist currently being edited
 			 * */
-			public var editPlaylist:KalturaPlaylist;
+			public var editPlaylist:VidiunPlaylist;
 
 			/**
 			 * when creating a playlist from "manage" page, the filter used to create it.
 			 * */
-			public var onTheFlyFilter:KalturaMediaEntryFilterForPlaylist;
+			public var onTheFlyFilter:VidiunMediaEntryFilterForPlaylist;
 
 			/**
 			 * allow opening entry drilldown on entry name click
@@ -105,7 +105,7 @@
 
 			[Bindable]
 			/**
-			 * KalturaMediaEntryFilterForPlaylist objects
+			 * VidiunMediaEntryFilterForPlaylist objects
 			 * */
 			private var _filters:ArrayCollection = new ArrayCollection();
 
@@ -114,10 +114,10 @@
 
 
 			private function creationCompleteHandler():void {
-				new KACTagsController(tagsComplete, client, KalturaTaggedObjectType.ENTRY);
+				new VACTagsController(tagsComplete, client, VidiunTaggedObjectType.ENTRY);
 				// load the data required by filter 
 				var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, this, filterData);
-				KedController.getInstance().dispatch(fe);
+				VedController.getInstance().dispatch(fe);
 			}
 
 
@@ -140,7 +140,7 @@
 //					simpleRule.validateNow();
 				}
 				else {
-					simpleRule.ruleToEdit = new KalturaMediaEntryFilterForPlaylist();
+					simpleRule.ruleToEdit = new VidiunMediaEntryFilterForPlaylist();
 				}
 //				simpleRule.runRule();
 				PermissionManager.getInstance().applyAllAttributes(this, "ruleBasedPlaylistDrilldown_add");
@@ -170,10 +170,10 @@
 					previewRuleBasedPlaylist();
 				}
 				else {
-					if (editPlaylist.filters[0] is KalturaMediaEntryFilterForPlaylist) {
-						simpleRule.ruleToEdit = editPlaylist.filters[0] as KalturaMediaEntryFilterForPlaylist;
-						simpleRule.entries.limit = (editPlaylist.filters[0] as KalturaMediaEntryFilterForPlaylist).limit;
-						simpleRule.entries.setSelectedOrderBy((editPlaylist.filters[0] as KalturaMediaEntryFilterForPlaylist).orderBy);
+					if (editPlaylist.filters[0] is VidiunMediaEntryFilterForPlaylist) {
+						simpleRule.ruleToEdit = editPlaylist.filters[0] as VidiunMediaEntryFilterForPlaylist;
+						simpleRule.entries.limit = (editPlaylist.filters[0] as VidiunMediaEntryFilterForPlaylist).limit;
+						simpleRule.entries.setSelectedOrderBy((editPlaylist.filters[0] as VidiunMediaEntryFilterForPlaylist).orderBy);
 					}
 //					simpleRule.runRule();
 					_filterTouched = true;
@@ -198,7 +198,7 @@
 
 
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_rule_playlist'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_rule_playlist'));
 			}
 
 
@@ -269,7 +269,7 @@
 			/**
 			 * add another rule (at the top of the list) or edit current rule
 			 */
-			private function popRule(filterVo:KalturaMediaEntryFilterForPlaylist = null):void {
+			private function popRule(filterVo:VidiunMediaEntryFilterForPlaylist = null):void {
 				addRuleWin = new AddRuleWin();
 				addRuleWin.title = filterVo == null ? 
 					resourceManager.getString('cms', 'addRule') :
@@ -314,8 +314,8 @@
 				_ruleIndex = filtersList.selectedIndex;
 
 				if (_ruleIndex != -1) {
-					var rule:KalturaMediaEntryFilterForPlaylist = filtersList.selectedItem as
-						KalturaMediaEntryFilterForPlaylist;
+					var rule:VidiunMediaEntryFilterForPlaylist = filtersList.selectedItem as
+						VidiunMediaEntryFilterForPlaylist;
 					popRule(rule);
 				}
 				else {
@@ -365,18 +365,18 @@
 
 			/**
 			 * create a new playlist object with screen params and save it.
-			 * @param filtersArray	a list of KalturaMediaEntryFilterForPlaylist defining the playlist
+			 * @param filtersArray	a list of VidiunMediaEntryFilterForPlaylist defining the playlist
 			 * */
 			private function saveNewPlaylist(filtersArray:Array):void {
-				var newPlaylist:KalturaPlaylist = new KalturaPlaylist();
+				var newPlaylist:VidiunPlaylist = new VidiunPlaylist();
 				newPlaylist.name = playlistName.text;
 				// always pass the max limit, this way the sum of filters limits will apply. 
 				newPlaylist.totalResults = PlaylistEntries.MAX_ENTRIES_IN_PL; 
-				newPlaylist.playlistType = KalturaPlaylistType.DYNAMIC;
+				newPlaylist.playlistType = VidiunPlaylistType.DYNAMIC;
 				newPlaylist.description = playlistDescription.text;
 				newPlaylist.tags = getPlaylistTags();
 				newPlaylist.filters = filtersArray;
-				var addEntryEvent:KMCEntryEvent = new KMCEntryEvent(KMCEntryEvent.ADD_PLAYLIST, newPlaylist);
+				var addEntryEvent:VMCEntryEvent = new VMCEntryEvent(VMCEntryEvent.ADD_PLAYLIST, newPlaylist);
 				addEntryEvent.dispatch();
 			}
 
@@ -387,13 +387,13 @@
 					// don't override existing values)
 					editPlaylist.totalResults = PlaylistEntries.MAX_ENTRIES_IN_PL;
 				}
-				editPlaylist.playlistType = KalturaPlaylistType.DYNAMIC;
+				editPlaylist.playlistType = VidiunPlaylistType.DYNAMIC;
 				editPlaylist.description = playlistDescription.text;
 				editPlaylist.tags = getPlaylistTags();
 				editPlaylist.filters = filtersArray;
 				var entriesEvent:EntriesEvent = new EntriesEvent(EntriesEvent.UPDATE_PLAYLISTS, new ArrayCollection([editPlaylist]));
 				entriesEvent.dispatch();
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_EDIT_PLAYLIST,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT,VidiunStatsVmcEventType.CONTENT_EDIT_PLAYLIST,
 					"RulePlayList>EditPlayList>" + editPlaylist.id,
 					editPlaylist.id);
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_EDIT_PLAYLIST, GoogleAnalyticsConsts.CONTENT);
@@ -414,12 +414,12 @@
 
 			/**
 			 * Retrieve an array of all filters from all rules
-			 * @return list of KalturaMediaEntryFilterForPlaylist objects
+			 * @return list of VidiunMediaEntryFilterForPlaylist objects
 			 */
 			private function getRulesArray():Array {
 				var filters:Array = new Array();
 				for (var i:uint = 0; i < _filters.source.length; i++) {
-					filters.push((_filters.source[i] as KalturaMediaEntryFilterForPlaylist));
+					filters.push((_filters.source[i] as VidiunMediaEntryFilterForPlaylist));
 				}
 				return filters;
 			}
@@ -433,11 +433,11 @@
 				var cgEvent:CairngormEvent = new RuleBasedTypeEvent(RuleBasedTypeEvent.MULTY_RULES);
 				cgEvent.dispatch();
 
-				var playlist:KalturaPlaylist = new KalturaPlaylist();
+				var playlist:VidiunPlaylist = new VidiunPlaylist();
 				playlist.totalResults = PlaylistEntries.MAX_ENTRIES_IN_PL;
 				playlist.filters = getRulesArray();
 
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.GET_RULE_BASED_PLAYLIST, playlist);
+				cgEvent = new VMCEntryEvent(VMCEntryEvent.GET_RULE_BASED_PLAYLIST, playlist);
 				cgEvent.dispatch();
 			}
 
@@ -478,7 +478,7 @@
 			 * reset the _model duration & total items in playlist preview
 			 * */
 			private function clear():void {
-				var cgEvent:CairngormEvent = new KMCEntryEvent(KMCEntryEvent.RESET_RULE_BASED_DATA, null);
+				var cgEvent:CairngormEvent = new VMCEntryEvent(VMCEntryEvent.RESET_RULE_BASED_DATA, null);
 				cgEvent.dispatch();
 				
 				simpleRule.clear();
@@ -582,15 +582,15 @@
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString('cms','type')}" 
 									   width="60" paddingLeft="4"
-									   itemRenderer="com.kaltura.kmc.modules.content.view.itemrenderers.playlists.RuleTypeRenderer">
+									   itemRenderer="com.vidiun.vmc.modules.content.view.itemrenderers.playlists.RuleTypeRenderer">
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString('cms','orderBy')}"
 									   width="60" paddingLeft="4"
-									   itemRenderer="com.kaltura.kmc.modules.content.view.itemrenderers.playlists.FilterTypeRenderer">
+									   itemRenderer="com.vidiun.vmc.modules.content.view.itemrenderers.playlists.FilterTypeRenderer">
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString('cms','limit')}"
 									   width="60" paddingLeft="4"
-									   itemRenderer="com.kaltura.kmc.modules.content.view.itemrenderers.playlists.EntriesLimitRenderer">
+									   itemRenderer="com.vidiun.vmc.modules.content.view.itemrenderers.playlists.EntriesLimitRenderer">
 					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>

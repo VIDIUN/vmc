@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*" 
+<table:SelectionTable xmlns:table="com.vidiun.controls.table.*" 
 	xmlns:mx="http://www.adobe.com/2006/mxml" rowHeight="36"
 			 headerRelease="headerReleaseHandler(event)" 
 			 creationComplete="creationCompleteHandler(event)" >
 	<mx:Metadata>
 		[Event(name="orderByChanged", type="flash.events.Event")] 
 		[Event(name="selectionChanged", type="flash.events.Event")] 
-		[Event(name="showDetails", type="com.kaltura.edw.events.GeneralNonCairngormEvent")] 
-		[Event(name="moveCategory", type="com.kaltura.edw.events.GeneralNonCairngormEvent")] 
-		[Event(name="deleteCategory", type="com.kaltura.edw.events.GeneralNonCairngormEvent")] 
+		[Event(name="showDetails", type="com.vidiun.edw.events.GeneralNonCairngormEvent")] 
+		[Event(name="moveCategory", type="com.vidiun.edw.events.GeneralNonCairngormEvent")] 
+		[Event(name="deleteCategory", type="com.vidiun.edw.events.GeneralNonCairngormEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.controls.table.SelectionRenderer;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.components.et.EntryTableLabelFunctions;
-			import com.kaltura.edw.components.fltr.EntriesFilter;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.view.categories.renderers.ActionsRenderer;
-			import com.kaltura.kmc.modules.content.view.categories.renderers.NameRenderer;
-			import com.kaltura.types.KalturaCategoryOrderBy;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
+			import com.vidiun.controls.table.SelectionRenderer;
+			import com.vidiun.dataStructures.HashMap;
+			import com.vidiun.edw.components.et.EntryTableLabelFunctions;
+			import com.vidiun.edw.components.fltr.EntriesFilter;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.content.events.CategoryEvent;
+			import com.vidiun.vmc.modules.content.view.categories.renderers.ActionsRenderer;
+			import com.vidiun.vmc.modules.content.view.categories.renderers.NameRenderer;
+			import com.vidiun.types.VidiunCategoryOrderBy;
+			import com.vidiun.vo.VidiunCategory;
+			import com.vidiun.vo.VidiunMediaEntryFilter;
 			
 			import mx.controls.Alert;
 			import mx.events.DataGridEvent;
@@ -63,10 +63,10 @@
 			// ---------------------------------------------
 			
 			
-			private var _orderBy:String = KalturaCategoryOrderBy.CREATED_AT_DESC;
+			private var _orderBy:String = VidiunCategoryOrderBy.CREATED_AT_DESC;
 			
 			/**
-			 * table ordering, optional values listed in <code>KalturaCategoryOrderBy</code>
+			 * table ordering, optional values listed in <code>VidiunCategoryOrderBy</code>
 			 * */
 			public function get orderBy():String {
 				return _orderBy;
@@ -86,19 +86,19 @@
 					var sortDir:Boolean = columnsSortMap.getValue(headerText) as Boolean;
 					switch (event.itemRenderer.data.headerText) {
 						case resourceManager.getString('cms', 'createAt'):
-							_orderBy = sortDir ? KalturaCategoryOrderBy.CREATED_AT_ASC : KalturaCategoryOrderBy.CREATED_AT_DESC;
+							_orderBy = sortDir ? VidiunCategoryOrderBy.CREATED_AT_ASC : VidiunCategoryOrderBy.CREATED_AT_DESC;
 							break;
 //						case resourceManager.getString('entrytable', 'idHeader'):
-//							_orderBy = sortDir ? KalturaCategoryOrderBy.PLAYS_ASC : KalturaCategoryOrderBy.PLAYS_DESC;
+//							_orderBy = sortDir ? VidiunCategoryOrderBy.PLAYS_ASC : VidiunCategoryOrderBy.PLAYS_DESC;
 //							break;
 						case resourceManager.getString('cms', 'name'):
-							_orderBy = sortDir ? KalturaCategoryOrderBy.NAME_ASC : KalturaCategoryOrderBy.NAME_DESC;
+							_orderBy = sortDir ? VidiunCategoryOrderBy.NAME_ASC : VidiunCategoryOrderBy.NAME_DESC;
 							break;
 						case resourceManager.getString('cms', 'itemCountTitle'):
-							_orderBy = sortDir ? KalturaCategoryOrderBy.DIRECT_ENTRIES_COUNT_ASC : KalturaCategoryOrderBy.DIRECT_ENTRIES_COUNT_DESC;
+							_orderBy = sortDir ? VidiunCategoryOrderBy.DIRECT_ENTRIES_COUNT_ASC : VidiunCategoryOrderBy.DIRECT_ENTRIES_COUNT_DESC;
 							break;
 						case resourceManager.getString('cms', 'subCategoriesTitle'):
-							_orderBy = sortDir ? KalturaCategoryOrderBy.DIRECT_SUB_CATEGORIES_COUNT_ASC : KalturaCategoryOrderBy.DIRECT_SUB_CATEGORIES_COUNT_DESC;
+							_orderBy = sortDir ? VidiunCategoryOrderBy.DIRECT_SUB_CATEGORIES_COUNT_ASC : VidiunCategoryOrderBy.DIRECT_SUB_CATEGORIES_COUNT_DESC;
 							break;
 						default:
 							Alert.show(resourceManager.getString('cms', 'cannotOrderByIt', [event.itemRenderer.data.headerText]), resourceManager.getString('cms', 'cannotOrderByItTitle'));
@@ -221,30 +221,30 @@
 			
 			
 			private function openDrilldown(e:Event):void {
-				// (e.target.data is KalturaCategory)
+				// (e.target.data is VidiunCategory)
 				var nce:GeneralNonCairngormEvent = new GeneralNonCairngormEvent(CategoriesTable.SHOW_DETAILS);
-				nce.data = e.target.data as KalturaCategory;
+				nce.data = e.target.data as VidiunCategory;
 				dispatchEvent(nce);
 			}
 			
 			private function deleteCategory(e:Event):void {
 				var nce:GeneralNonCairngormEvent = new GeneralNonCairngormEvent(CategoriesTable.DELETE_CATEGORY);
-				nce.data = e.target.data as KalturaCategory;
+				nce.data = e.target.data as VidiunCategory;
 				dispatchEvent(nce);
 			}
 			
 			private function moveCategory(e:Event):void {
 				var nce:GeneralNonCairngormEvent = new GeneralNonCairngormEvent(CategoriesTable.MOVE_CATEGORY);
-				nce.data = e.target.data as KalturaCategory;
+				nce.data = e.target.data as VidiunCategory;
 				dispatchEvent(nce);
 			}
 			
 			private function viewEntries(e:Event):void {
-				// set attic.kmef to relevant filter, and move to entries screen
-				var kmef:KalturaMediaEntryFilter = EntriesFilter.generateBaseFilter();
-				kmef.categoriesIdsMatchOr = (e.target.data as KalturaCategory).id.toString();
+				// set attic.vmef to relevant filter, and move to entries screen
+				var vmef:VidiunMediaEntryFilter = EntriesFilter.generateBaseFilter();
+				vmef.categoriesIdsMatchOr = (e.target.data as VidiunCategory).id.toString();
 				
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmef: kmef}));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content", "manage", {vmef: vmef}));
 			}
 			
 
@@ -252,32 +252,32 @@
 	</mx:Script>
 	<table:columns>
 		<mx:DataGridColumn width="32" minWidth="32" paddingLeft="4" paddingRight="4"
-						   headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer" />
+						   headerRenderer="com.vidiun.controls.table.SelectionRenderer"
+						   itemRenderer="com.vidiun.controls.table.SelectionRenderer" />
 		
 		<mx:DataGridColumn id="cid" dataField="id" paddingLeft="4" paddingRight="4"
 						   width="90" headerText="{resourceManager.getString('cms', 'idHeader')}" 
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn id="cname" dataField="name" paddingLeft="4" paddingRight="4"
 						   headerText="{resourceManager.getString('cms', 'name')}" 
-						   itemRenderer="com.kaltura.kmc.modules.content.view.categories.renderers.NameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.categories.renderers.NameRenderer"/>
 		
 		<mx:DataGridColumn id="cCreated" dataField="createdAt" paddingLeft="4" paddingRight="4"
 						   width="100" headerText="{resourceManager.getString('cms', 'createAt')}" 
 						   labelFunction="{EntryTableLabelFunctions.formatDate}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn id="subcats" dataField="directSubCategoriesCount" paddingLeft="10" paddingRight="4"
 						   width="140" headerText="{resourceManager.getString('cms', 'subCategoriesTitle')}" 
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn id="items" dataField="directEntriesCount" paddingLeft="10" paddingRight="4"
 						   width="100" headerText="{resourceManager.getString('cms', 'itemCountTitle')}" 
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.vidiun.edw.components.et.ir.GeneralRenderer"/>
 		
 		<mx:DataGridColumn id="actions" width="140" paddingLeft="10" paddingRight="4"
 						   headerText="{resourceManager.getString('cms', 'actions')}"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.categories.renderers.ActionsRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.categories.renderers.ActionsRenderer"/>
 	</table:columns>
 </table:SelectionTable>

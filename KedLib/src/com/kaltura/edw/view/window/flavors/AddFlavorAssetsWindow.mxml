@@ -4,36 +4,36 @@
 	The same window with different configurations will be used for upload, link and import.
 -->
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-		xmlns:containers="com.kaltura.containers.*" 
-		xmlns:flavors="com.kaltura.kmc.modules.content.view.window.flavors.*"
-		xmlns:validators="com.kaltura.validators.*" 
+		xmlns:containers="com.vidiun.containers.*" 
+		xmlns:flavors="com.vidiun.vmc.modules.content.view.window.flavors.*"
+		xmlns:validators="com.vidiun.validators.*" 
 		width="550" styleName="TitleWindowType2" visible="false"
 		showCloseButton="true" close="closeHandler(event)"
 		showHelpButton="true" help="helpHandler(event)"
 		creationComplete="titlewindow1_creationCompleteHandler(event)" 
-		xmlns:flavors1="com.kaltura.edw.view.window.flavors.*" >
+		xmlns:flavors1="com.vidiun.edw.view.window.flavors.*" >
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.control.events.MediaEvent;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.edw.vo.ConversionProfileWithFlavorParamsVo;
-			import com.kaltura.edw.vo.UploadFileVo;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaAssetParamsOrigin;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaFlavorReadyBehaviorType;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.vo.KalturaAssetParamsResourceContainer;
-			import com.kaltura.vo.KalturaAssetsParamsResourceContainers;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaRemoteStorageResource;
-			import com.kaltura.vo.KalturaStorageProfile;
-			import com.kaltura.vo.KalturaUrlResource;
+			import com.vidiun.edw.control.events.MediaEvent;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.edw.vo.ConversionProfileWithFlavorParamsVo;
+			import com.vidiun.edw.vo.UploadFileVo;
+			import com.vidiun.vmvc.control.VMvCController;
+			import com.vidiun.managers.FileUploadManager;
+			import com.vidiun.types.VidiunAssetParamsOrigin;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunFlavorReadyBehaviorType;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.vo.VidiunAssetParamsResourceContainer;
+			import com.vidiun.vo.VidiunAssetsParamsResourceContainers;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunConversionProfileAssetParams;
+			import com.vidiun.vo.VidiunMediaEntry;
+			import com.vidiun.vo.VidiunRemoteStorageResource;
+			import com.vidiun.vo.VidiunStorageProfile;
+			import com.vidiun.vo.VidiunUrlResource;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -78,7 +78,7 @@
 			/**
 			 * application controller;
 			 * */
-			public var controller:KMvCController
+			public var controller:VMvCController
 			
 			[Bindable]
 			/**
@@ -118,7 +118,7 @@
 			/**
 			 * @copy #entry
 			 * */
-			private var _entry:KalturaBaseEntry;
+			private var _entry:VidiunBaseEntry;
 			
 			[Bindable]
 			/**
@@ -134,7 +134,7 @@
 			public var storageProfiles:ArrayCollection;
 			
 			[Bindable]
-			private var _selectedStorageProfile:KalturaStorageProfile;
+			private var _selectedStorageProfile:VidiunStorageProfile;
 			
 			[Bindable]
 			/**
@@ -253,9 +253,9 @@
 				var cpaps:Array = (cnvrtProfCb.selectedItem as ConversionProfileWithFlavorParamsVo).flavors.source;
 				
 				// scan the flavors list and see if any required flavors are missing
-				for each(var cpap:KalturaConversionProfileAssetParams in cpaps) {
+				for each(var cpap:VidiunConversionProfileAssetParams in cpaps) {
 					var bFound:Boolean = false;
-					if (cpap.readyBehavior == KalturaFlavorReadyBehaviorType.REQUIRED && cpap.origin == KalturaAssetParamsOrigin.INGEST) {
+					if (cpap.readyBehavior == VidiunFlavorReadyBehaviorType.REQUIRED && cpap.origin == VidiunAssetParamsOrigin.INGEST) {
 						for each (var fuv:UploadFileVo in filesList) {
 							if (fuv.flavorParamId == cpap.assetParamsId.toString()) {
 								bFound = true;
@@ -312,8 +312,8 @@
 			
 			
 			/**
-			 * trigger media.updateContent with matching KalturaURLResource or
-			 * KalturaRemoteStorageResource objects
+			 * trigger media.updateContent with matching VidiunURLResource or
+			 * VidiunRemoteStorageResource objects
 			 * */
 			protected function submitImportLink():void {
 				if (windowState == AddFlavorAssetsWindow.MULTI_FILES_STATE) {
@@ -335,24 +335,24 @@
 				// remote storage id
 				var remoteStorageId:int = (cnvrtProfCb.selectedItem as ConversionProfileWithFlavorParamsVo).profile.storageProfileId;
 				// the actual resource we send is a list of the containers for the resources we want to replace.                
-				var mediaResource:KalturaAssetsParamsResourceContainers = new KalturaAssetsParamsResourceContainers();
+				var mediaResource:VidiunAssetsParamsResourceContainers = new VidiunAssetsParamsResourceContainers();
 				mediaResource.resources = new Array();
 				
 				for each (var ufv:UploadFileVo in filesList) {
 					// the first resource of the flavor we want to replace
-					var subSubResource:KalturaUrlResource;
+					var subSubResource:VidiunUrlResource;
 					if (_windowAction == AddFlavorAssetsWindow.ACTION_IMPORT) {
-						subSubResource = new KalturaUrlResource();
+						subSubResource = new VidiunUrlResource();
 						subSubResource.url = ufv.fileName;
 					}
 					else if (_windowAction == AddFlavorAssetsWindow.ACTION_LINK) {
-						subSubResource = new KalturaRemoteStorageResource();
+						subSubResource = new VidiunRemoteStorageResource();
 						subSubResource.url = ufv.fileName;
-						(subSubResource as KalturaRemoteStorageResource).storageProfileId = remoteStorageId;
+						(subSubResource as VidiunRemoteStorageResource).storageProfileId = remoteStorageId;
 					}
 					
 					// container for the resource we want to replace
-					var subResource:KalturaAssetParamsResourceContainer = new KalturaAssetParamsResourceContainer();
+					var subResource:VidiunAssetParamsResourceContainer = new VidiunAssetParamsResourceContainer();
 					subResource.resource = subSubResource;
 					subResource.assetParamsId = parseInt(ufv.flavorParamId);
 					
@@ -361,7 +361,7 @@
 					
 				}
 				// dispatch the event with required data
-				var ce:MediaEvent = new MediaEvent(MediaEvent.UPDATE_MEDIA, _entry as KalturaMediaEntry);
+				var ce:MediaEvent = new MediaEvent(MediaEvent.UPDATE_MEDIA, _entry as VidiunMediaEntry);
 				ce.data = {conversionProfileId:cnvrtProfId, resource:mediaResource};
 				controller.dispatch(ce);
 			}
@@ -372,26 +372,26 @@
 			 * @param ufv	vo that represents the flavor being updated / added
 			 * */
 			protected function handleSingleFlavour(ufv:UploadFileVo):void {
-				var resource:KalturaUrlResource;
+				var resource:VidiunUrlResource;
 				var dffe:MediaEvent;
 				// create resource
 				if (_windowAction == AddFlavorAssetsWindow.ACTION_IMPORT) {
-					resource = new KalturaUrlResource();
+					resource = new VidiunUrlResource();
 				}
 				else if (_windowAction == AddFlavorAssetsWindow.ACTION_LINK) {
-					resource = new KalturaRemoteStorageResource();
-					(resource as KalturaRemoteStorageResource).storageProfileId = _selectedStorageProfile.id;
+					resource = new VidiunRemoteStorageResource();
+					(resource as VidiunRemoteStorageResource).storageProfileId = _selectedStorageProfile.id;
 				}
 				resource.url = ufv.fileName;
 				// dispatch call
 				if (ufv.flavorAssetId != null) {
-					dffe = new MediaEvent(MediaEvent.UPDATE_SINGLE_FLAVOR, _entry as KalturaMediaEntry);
+					dffe = new MediaEvent(MediaEvent.UPDATE_SINGLE_FLAVOR, _entry as VidiunMediaEntry);
 					dffe.data = {flavorAssetId: ufv.flavorAssetId, resource:resource};
 					controller.dispatch(dffe);
 				}
 				else {
 					// if no flavorAssetId this is new flavour
-					dffe = new MediaEvent(MediaEvent.ADD_SINGLE_FLAVOR, _entry as KalturaMediaEntry);
+					dffe = new MediaEvent(MediaEvent.ADD_SINGLE_FLAVOR, _entry as VidiunMediaEntry);
 					dffe.data = {flavorParamsId: ufv.flavorParamId, resource:resource};
 					controller.dispatch(dffe);
 				}
@@ -413,7 +413,7 @@
 					var files:Array = new Array();
 					for (var i:int = 0; i<n; i++) {
 						ufv = filesList[i] as UploadFileVo;
-						files.push(uploader.createFuv(_entry.id, (_entry as KalturaMediaEntry).mediaType, ufv.fileData, ufv.flavorParamId, ufv.flavorAssetId, cnvrtProfId));
+						files.push(uploader.createFuv(_entry.id, (_entry as VidiunMediaEntry).mediaType, ufv.fileData, ufv.flavorParamId, ufv.flavorAssetId, cnvrtProfId));
 					}
 					// decide the correct action (add / update)
 					uploader.updateEntryContent(_entry.id, files);
@@ -421,7 +421,7 @@
 				else {
 					// only one file
 					ufv = filesList[0] as UploadFileVo;
-					uploader.updateEntryFlavor(_entry.id, uploader.createFuv(_entry.id, (_entry as KalturaMediaEntry).mediaType, ufv.fileData, ufv.flavorParamId, ufv.flavorAssetId, cnvrtProfId), ufv.flavorAssetId == null);
+					uploader.updateEntryFlavor(_entry.id, uploader.createFuv(_entry.id, (_entry as VidiunMediaEntry).mediaType, ufv.fileData, ufv.flavorParamId, ufv.flavorAssetId, cnvrtProfId), ufv.flavorAssetId == null);
 				}
 			}
 			
@@ -447,9 +447,9 @@
 				_fileReferenceList.addEventListener(Event.SELECT, onFlavorsSelected);
 				_fileReferenceList.browse();
 //				var mediaType:int = parseInt(_entry.type);
-//				if (mediaType == KalturaMediaType.VIDEO) 
+//				if (mediaType == VidiunMediaType.VIDEO) 
 //					_fileReferenceList.browse(new Array(getTypeFilter('video',FileTypes.VIDEO_TYPES)));
-//				else if (mediaType == KalturaMediaType.AUDIO)
+//				else if (mediaType == VidiunMediaType.AUDIO)
 //					_fileReferenceList.browse(new Array(getTypeFilter('audio',FileTypes.AUDIO_TYPES)));
 			}
 			
@@ -560,7 +560,7 @@
 			
 			protected function showStorageProfileDetails(event:ListEvent):void {
 				if (storageProfiles) {
-					for each (var sp:KalturaStorageProfile in storageProfiles) {
+					for each (var sp:VidiunStorageProfile in storageProfiles) {
 						if (sp.id == (cnvrtProfCb.selectedItem as ConversionProfileWithFlavorParamsVo).profile.storageProfileId) {
 							_selectedStorageProfile = sp;
 							return;
@@ -607,22 +607,22 @@
 			/**
 			 * the entry being edited
 			 * */
-			public function get entry():KalturaBaseEntry {
+			public function get entry():VidiunBaseEntry {
 				return _entry;
 			}
 
 			/**
 			 * @private
 			 */
-			public function set entry(value:KalturaBaseEntry):void {
+			public function set entry(value:VidiunBaseEntry):void {
 				_entry = value;
 				var mediaType:String = '';
-				if ((value as KalturaMediaEntry).mediaType == KalturaMediaType.AUDIO) {
+				if ((value as VidiunMediaEntry).mediaType == VidiunMediaType.AUDIO) {
 					mediaType = ResourceManager.getInstance().getString('cms', 'audio');
-				} else if ((value as KalturaMediaEntry).mediaType == KalturaMediaType.VIDEO){
+				} else if ((value as VidiunMediaEntry).mediaType == VidiunMediaType.VIDEO){
 					mediaType = ResourceManager.getInstance().getString('cms', 'video');
 				}
-				if (value.status == KalturaEntryStatus.NO_CONTENT) {
+				if (value.status == VidiunEntryStatus.NO_CONTENT) {
 					title = ResourceManager.getInstance().getString('cms', 'windowTitleAdd', [mediaType]);
 				}
 				else {

@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.flavor
+package com.vidiun.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetGetUrl;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.vidiun.commands.flavorAsset.FlavorAssetGetUrl;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunFlavorAssetWithParams;
 	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
-	public class DownloadFlavorAsset extends KedCommand
+	public class DownloadFlavorAsset extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{		
 		 	_model.increaseLoadCounter();
-		 	var obj:KalturaFlavorAssetWithParams = event.data as KalturaFlavorAssetWithParams;
+		 	var obj:VidiunFlavorAssetWithParams = event.data as VidiunFlavorAssetWithParams;
 			var downloadCommand:FlavorAssetGetUrl = new FlavorAssetGetUrl(obj.flavorAsset.id);
-            downloadCommand.addEventListener(KalturaEvent.COMPLETE, result);
-	        downloadCommand.addEventListener(KalturaEvent.FAILED, fault);
+            downloadCommand.addEventListener(VidiunEvent.COMPLETE, result);
+	        downloadCommand.addEventListener(VidiunEvent.FAILED, fault);
     	    _client.post(downloadCommand);  
 		}
 		

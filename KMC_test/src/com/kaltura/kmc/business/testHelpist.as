@@ -1,4 +1,4 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
 	import org.flexunit.Assert;
 
@@ -23,7 +23,7 @@ package com.kaltura.kmc.business
 							<Item key="c" anchor="3" />
 						</Help>;
 			var mp:XMLList = map.Item;
-			Helpist.init(mp, "/baseUrl/", "www.kaltura.com", "http://");
+			Helpist.init(mp, "/baseUrl/", "www.vidiun.com", "http://");
 		}
 		
 		[AfterClass]

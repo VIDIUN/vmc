@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.category.CategoryList;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.model.CategoriesModel;
+	import com.vidiun.types.VidiunCategoryOrderBy;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryFilter;
+	import com.vidiun.vo.VidiunCategoryListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 
-	public class GetSubCategoriesCommand extends KalturaCommand {
+	public class GetSubCategoriesCommand extends VidiunCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			switch (event.type) {
@@ -29,18 +29,18 @@ package com.kaltura.kmc.modules.content.commands.cat
 					_model.increaseLoadCounter();
 					
 					// filter
-					var f:KalturaCategoryFilter = new KalturaCategoryFilter();
+					var f:VidiunCategoryFilter = new VidiunCategoryFilter();
 					f.parentIdEqual = _model.categoriesModel.selectedCategory.id;
-					f.orderBy = KalturaCategoryOrderBy.NAME_DESC;
+					f.orderBy = VidiunCategoryOrderBy.NAME_DESC;
 					// pager
-					var p:KalturaFilterPager = new KalturaFilterPager();
+					var p:VidiunFilterPager = new VidiunFilterPager();
 					p.pageSize = CategoriesModel.SUB_CATEGORIES_LIMIT;
 					p.pageIndex = 1;
 					
 					var listCategories:CategoryList = new CategoryList(f, p);
-					listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-					listCategories.addEventListener(KalturaEvent.FAILED, fault);
-					_model.context.kc.post(listCategories);
+					listCategories.addEventListener(VidiunEvent.COMPLETE, result);
+					listCategories.addEventListener(VidiunEvent.FAILED, fault);
+					_model.context.vc.post(listCategories);
 					break;
 			}
 		}
@@ -50,14 +50,14 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.decreaseLoadCounter();
 			super.result(data);
 			
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:VidiunError = (data as VidiunEvent).error;
 			if (er) { 
 				Alert.show(getErrorText(er), ResourceManager.getInstance().getString('cms', 'error'));
 				return;
 			}
-			if ((data.data as KalturaCategoryListResponse).totalCount <= CategoriesModel.SUB_CATEGORIES_LIMIT) {
+			if ((data.data as VidiunCategoryListResponse).totalCount <= CategoriesModel.SUB_CATEGORIES_LIMIT) {
 				// only set to model if less than 50
-				var ar:Array = (data.data as KalturaCategoryListResponse).objects;
+				var ar:Array = (data.data as VidiunCategoryListResponse).objects;
 				if (ar && ar.length > 1) {
 					if (ar[0].partnerSortValue || ar[1].partnerSortValue) { 
 						ar.sortOn("partnerSortValue", Array.NUMERIC);

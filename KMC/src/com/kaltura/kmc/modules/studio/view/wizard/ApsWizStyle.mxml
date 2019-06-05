@@ -2,15 +2,15 @@
 <!---
 	 graphic interface for changing player colors and font.
 -->
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.kaltura.kmc.modules.studio.view.wizard.*"
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.vidiun.vmc.modules.studio.view.wizard.*"
 		 width="100%" height="100%" backgroundColor="#F7F7F7" horizontalScrollPolicy="off" >
 	<mx:Metadata>
 		[Event(name="detailsChanged", type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.modules.studio.vo.StyleVo;
+			import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
+			import com.vidiun.vmc.modules.studio.vo.StyleVo;
 			
 			import flash.utils.setTimeout;
 			
@@ -29,7 +29,7 @@
 			[Bindable]
 			private var _themes:XMLList;
 
-			public static const REFRESH_KDP:String = "refreshKdp";
+			public static const REFRESH_VDP:String = "refreshVdp";
 
 
 			/**
@@ -42,7 +42,7 @@
 				_styleData.themeFriendlyName = selectedTheme.@name;
 				_styleData.skinPath = selectedTheme.themeSkinPath.toString();
 				setStyleData(selectedTheme);
-				refreshKdp();
+				refreshVdp();
 			}
 
 
@@ -62,13 +62,13 @@
 			}
 
 			
-			private function refreshKdpWrap(evt:Event = null):void {
-				dispatchEvent(new Event(REFRESH_KDP));	
+			private function refreshVdpWrap(evt:Event = null):void {
+				dispatchEvent(new Event(REFRESH_VDP));	
 			}
 			
-			private function refreshKdp(evt:Event = null):void {
+			private function refreshVdp(evt:Event = null):void {
 				dispatchEvent(new Event("detailsChanged"));	
-				setTimeout(refreshKdpWrap, 100);
+				setTimeout(refreshVdpWrap, 100);
 			}
 
 
@@ -167,7 +167,7 @@
 						break;
 					
 				}
-				refreshKdp();
+				refreshVdp();
 			}
 			
 			/**
@@ -175,7 +175,7 @@
 			 * */
 			private function fontChanged(e:Event):void {
 				_styleData.fontName = fontSelector.selectedLabel;
-				refreshKdp();
+				refreshVdp();
 			}
 			
 			public function set playerUiconfVo(value:PlayerUiConfVo):void {
@@ -188,7 +188,7 @@
 	</mx:Script>
 
 	<mx:Metadata>
-		[Event(name="refreshKdp", type="flash.events.Event")] 
+		[Event(name="refreshVdp", type="flash.events.Event")] 
 	</mx:Metadata>
 
 	<mx:HBox id="all" disabledOverlayAlpha="0">

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,9 +25,9 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.types
+package com.vidiun.types
 {
-	public class KalturaPlayReadyPlayEnablerType
+	public class VidiunPlayReadyPlayEnablerType
 	{
 		public static const HELIX : String = "002F9772-38A0-43E5-9F79-0F6361DCC62A";
 		public static const HDCP_WIVU : String = "1B4542E3-B5CF-4C99-B3BA-829AF46C92F8";

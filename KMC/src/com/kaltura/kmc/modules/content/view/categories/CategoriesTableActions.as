@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.view.categories
+package com.vidiun.vmc.modules.content.view.categories
 {
 	public class CategoriesTableActions {
 		

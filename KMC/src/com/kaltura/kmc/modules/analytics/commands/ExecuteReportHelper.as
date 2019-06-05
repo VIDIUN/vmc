@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.analytics.commands {
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.view.renderers.DrillDownLinkButton;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-	import com.kaltura.types.KalturaReportInterval;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaReportInputFilter;
+package com.vidiun.vmc.modules.analytics.commands {
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vmc.modules.analytics.view.renderers.DrillDownLinkButton;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.types.VidiunReportInterval;
+	import com.vidiun.vo.VidiunEndUserReportInputFilter;
+	import com.vidiun.vo.VidiunReportInputFilter;
 	
 	import mx.resources.ResourceManager;
 	import mx.formatters.DateFormatter;
@@ -56,8 +56,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 		 * @param screenType	screen type
 		 * @return	filter object that should be sent to server 
 		 */
-		public static function createFilterFromReport(fvo:FilterVo, screenType:int):KalturaReportInputFilter {
-			var krif:KalturaReportInputFilter;
+		public static function createFilterFromReport(fvo:FilterVo, screenType:int):VidiunReportInputFilter {
+			var vrif:VidiunReportInputFilter;
 			//If we have a user report call we need to have another filter (that support application and users) 
 			//when we generate the report get total call
 			if (_model.entitlementEnabled && 
@@ -68,81 +68,81 @@ package com.kaltura.kmc.modules.analytics.commands {
 					|| screenType == ScreenTypes.VIDEO_DRILL_DOWN_INTERACTIONS 
 					|| screenType == ScreenTypes.END_USER_STORAGE 
 					|| screenType == ScreenTypes.END_USER_STORAGE_DRILL_DOWN)) {
-				krif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.getFilterForScreen(screenType));
+				vrif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.getFilterForScreen(screenType));
 			}
 			else if (screenType == ScreenTypes.PLATFORM
 					|| screenType == ScreenTypes.PLATFORM_DRILL_DOWN
 					|| screenType == ScreenTypes.OS
 					|| screenType == ScreenTypes.BROWSER) {
-				krif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.getFilterForScreen(screenType));
+				vrif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.getFilterForScreen(screenType));
 			}
 			else {
-				krif = ExecuteReportHelper.createFilterFromCurrentReport(_model.getFilterForScreen(screenType));
+				vrif = ExecuteReportHelper.createFilterFromCurrentReport(_model.getFilterForScreen(screenType));
 			}
-			return krif;
+			return vrif;
 		}
 		
 		
 
 		/**
-		 * creates a new KalturaReportInputFilter from the current filter in the KMCModelLocator instance
-		 * @return krif the new KalturaReportInputFilter
+		 * creates a new VidiunReportInputFilter from the current filter in the VMCModelLocator instance
+		 * @return vrif the new VidiunReportInputFilter
 		 *
 		 */
-		public static function createFilterFromCurrentReport(fvo:FilterVo):KalturaReportInputFilter {
-			var krif:KalturaReportInputFilter = new KalturaReportInputFilter();
+		public static function createFilterFromCurrentReport(fvo:FilterVo):VidiunReportInputFilter {
+			var vrif:VidiunReportInputFilter = new VidiunReportInputFilter();
 			var today:Date = new Date();
 			if (fvo) {
 				// filter dates are in seconds, Date.time is in ms, Date.timezoneOffset is in minutes.
 				if (!dateFormatter) initDateFormatter();
 				// use new filters (YYYYMMDD). send local date.
-				krif.fromDay = dateFormatter.format(fvo.fromDate);
-				krif.toDay = dateFormatter.format(fvo.toDate);
-				krif.keywords = fvo.keywords;
-				krif.categories = fvo.categories;
-				krif.searchInTags = true;
-				krif.searchInAdminTags = false;
+				vrif.fromDay = dateFormatter.format(fvo.fromDate);
+				vrif.toDay = dateFormatter.format(fvo.toDate);
+				vrif.keywords = fvo.keywords;
+				vrif.categories = fvo.categories;
+				vrif.searchInTags = true;
+				vrif.searchInAdminTags = false;
 				
 				if (fvo.interval != null){
-					krif.interval = fvo.interval;
+					vrif.interval = fvo.interval;
 				}
 				// add time offset in minutes.
-				krif.timeZoneOffset = today.timezoneOffset;
+				vrif.timeZoneOffset = today.timezoneOffset;
 			}
 
-			return krif;
+			return vrif;
 		}
 		
-		public static function createEndUserFilterFromCurrentReport(fvo:FilterVo):KalturaEndUserReportInputFilter{
-			var keurif:KalturaEndUserReportInputFilter = new KalturaEndUserReportInputFilter();
+		public static function createEndUserFilterFromCurrentReport(fvo:FilterVo):VidiunEndUserReportInputFilter{
+			var veurif:VidiunEndUserReportInputFilter = new VidiunEndUserReportInputFilter();
 			var today:Date = new Date();
 			if (fvo) {
 				// filter dates are in seconds, Date.time is in ms, Date.timezoneOffset is in minutes.
 				if (!dateFormatter) initDateFormatter();
 				// use new filters (YYYYMMDD). send local date.
-				keurif.fromDay = dateFormatter.format(fvo.fromDate);
-				keurif.toDay = dateFormatter.format(fvo.toDate);
+				veurif.fromDay = dateFormatter.format(fvo.fromDate);
+				veurif.toDay = dateFormatter.format(fvo.toDate);
 				
-				keurif.keywords = fvo.keywords;
+				veurif.keywords = fvo.keywords;
 				
 				//if we selected specific application
 				if(fvo.application != ResourceManager.getInstance().getString('analytics', 'all'))
-					keurif.application = fvo.application;
+					veurif.application = fvo.application;
 				
 				if (fvo.interval != null){
-					keurif.interval = fvo.interval;
+					veurif.interval = fvo.interval;
 				}
 				
-				keurif.userIds = fvo.userIds;
-				keurif.playbackContext = fvo.playbackContext;
-				keurif.categories = fvo.categories;
-				keurif.searchInTags = true;
-				keurif.searchInAdminTags = false;
+				veurif.userIds = fvo.userIds;
+				veurif.playbackContext = fvo.playbackContext;
+				veurif.categories = fvo.categories;
+				veurif.searchInTags = true;
+				veurif.searchInAdminTags = false;
 				// add time offset in minutes.
-				keurif.timeZoneOffset = today.timezoneOffset;
+				veurif.timeZoneOffset = today.timezoneOffset;
 			}
 			
-			return keurif; 
+			return veurif; 
 		}
 	}
 }

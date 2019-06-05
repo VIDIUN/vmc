@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.model.types
+package com.vidiun.vmc.modules.content.model.types
 {
 	/**
 	 * the different "entry types" an entry details window can show 

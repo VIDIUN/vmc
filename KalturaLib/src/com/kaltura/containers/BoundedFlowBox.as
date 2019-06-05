@@ -1,6 +1,6 @@
-package com.kaltura.containers
+package com.vidiun.containers
 {
-	import com.kaltura.containers.utilityClasses.BoundedFlowLayout;
+	import com.vidiun.containers.utilityClasses.BoundedFlowLayout;
 	
 	import flash.events.Event;
 	

@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.vo
+package com.vidiun.vmc.modules.content.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.vo.KalturaFlavorAsset;
+	import com.vidiun.vo.VidiunFlavorAsset;
 	
 	import mx.utils.ObjectProxy;
 	
 	public class FlavorAssetVO extends ObjectProxy implements IValueObject
 	{
-		public var asset:KalturaFlavorAsset;
+		public var asset:VidiunFlavorAsset;
 		public function FlavorAssetVO()
 		{
-			asset = new KalturaFlavorAsset();
+			asset = new VidiunFlavorAsset();
 		}
 
 	}

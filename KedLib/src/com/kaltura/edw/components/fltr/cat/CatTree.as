@@ -1,16 +1,16 @@
-package com.kaltura.edw.components.fltr.cat
+package com.vidiun.edw.components.fltr.cat
 {
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.components.TriStateCheckBox;
-	import com.kaltura.edw.components.fltr.FilterComponentEvent;
-	import com.kaltura.edw.components.fltr.IFilterComponent;
-	import com.kaltura.edw.components.fltr.cat.data.*;
-	import com.kaltura.edw.components.fltr.cat.events.CategoriesDataManagerEvent;
-	import com.kaltura.edw.components.fltr.cat.renderers.*;
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.dataStructures.HashMap;
+	import com.vidiun.edw.components.TriStateCheckBox;
+	import com.vidiun.edw.components.fltr.FilterComponentEvent;
+	import com.vidiun.edw.components.fltr.IFilterComponent;
+	import com.vidiun.edw.components.fltr.cat.data.*;
+	import com.vidiun.edw.components.fltr.cat.events.CategoriesDataManagerEvent;
+	import com.vidiun.edw.components.fltr.cat.renderers.*;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+	import com.vidiun.edw.control.CategoriesTreeController;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -28,7 +28,7 @@ package com.kaltura.edw.components.fltr.cat
 	/**
 	 * dispatched when the value of the component have changed 
 	 */	
-	[Event(name="valueChange", type="com.kaltura.edw.components.fltr.FilterComponentEvent")]
+	[Event(name="valueChange", type="com.vidiun.edw.components.fltr.FilterComponentEvent")]
 	
 	
 	/**
@@ -165,12 +165,12 @@ package com.kaltura.edw.components.fltr.cat
 			if (!_disabledCategories || !categories) {
 				return;
 			}
-			var kCat:CategoryVO;
-			var disCat:KalturaCategory;
+			var vCat:CategoryVO;
+			var disCat:VidiunCategory;
 			var bFound:Boolean;
 			
 			for (var i:int=0; i<_disabledCategories.length; i++) {
-				disCat = _disabledCategories[i] as KalturaCategory;
+				disCat = _disabledCategories[i] as VidiunCategory;
 				
 				if (categories.containsKey(disCat.id.toString())) {
 					var catvo:CategoryVO = categories.getValue(disCat.id.toString()) as CategoryVO;
@@ -234,7 +234,7 @@ package com.kaltura.edw.components.fltr.cat
 //		 * add a category from the autocomplete component
 //		 * */
 //		public function addFromAutoComplete(event:GeneralNonCairngormEvent):void {
-//			var cat:KalturaCategory = event.data as KalturaCategory;
+//			var cat:VidiunCategory = event.data as VidiunCategory;
 //			addByCatId(cat.id.toString(), true, cat);
 //		}
 		
@@ -243,9 +243,9 @@ package com.kaltura.edw.components.fltr.cat
 		 * 
 		 * @param catid
 		 * @param keep	if category already selected, don't toggle (remove)
-		 * @param cat	KalturaCategory obejct of the affected category
+		 * @param cat	VidiunCategory obejct of the affected category
 		 */
-		public function addByCatId(catid:String, keep:Boolean = false, cat:KalturaCategory = null):void {
+		public function addByCatId(catid:String, keep:Boolean = false, cat:VidiunCategory = null):void {
 			if (categories.containsKey(catid)) {
 				var catvo:CategoryVO = categories.getValue(catid) as CategoryVO;
 				if (keep && _selectedCategories[catid]) {
@@ -377,9 +377,9 @@ package com.kaltura.edw.components.fltr.cat
 		 */
 		public function clearSelection():void {
 			// use a dummy "root" to clear all selection
-			var kCat:KalturaCategory = new KalturaCategory();
-			kCat.directSubCategoriesCount = 0;
-			var dummy:CategoryVO = new CategoryVO(0, "root", kCat);
+			var vCat:VidiunCategory = new VidiunCategory();
+			vCat.directSubCategoriesCount = 0;
+			var dummy:CategoryVO = new CategoryVO(0, "root", vCat);
 			dummy.children = dataProvider as ArrayCollection;
 			handleSelectionChange(dummy);
 		}
@@ -662,7 +662,7 @@ package com.kaltura.edw.components.fltr.cat
 		
 		private function remarkPreviouslySelected(silent:Boolean):void {
 			// create a dummy root category
-			var dummyRoot:CategoryVO = new CategoryVO(0, "root", new KalturaCategory());
+			var dummyRoot:CategoryVO = new CategoryVO(0, "root", new VidiunCategory());
 			dummyRoot.children = dataProvider as ArrayCollection;
 			// start marking
 			selectFromInitial(dummyRoot, _currentFilter, silent);
@@ -722,7 +722,7 @@ package com.kaltura.edw.components.fltr.cat
 			else {
 				if (_currentFilter.indexOf(item.value + ',') > -1) {
 					removeFromCurrentFilter(item.value);
-					dispatchChange(new CategoryVO(item.value, null, new KalturaCategory()), FilterComponentEvent.EVENT_KIND_REMOVE); 
+					dispatchChange(new CategoryVO(item.value, null, new VidiunCategory()), FilterComponentEvent.EVENT_KIND_REMOVE); 
 				}
 			}
 			

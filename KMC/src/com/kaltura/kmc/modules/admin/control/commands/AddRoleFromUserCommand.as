@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.userRole.UserRoleAdd;
-	import com.kaltura.commands.userRole.UserRoleList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.userRole.UserRoleAdd;
+	import com.vidiun.commands.userRole.UserRoleList;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+	import com.vidiun.net.VidiunCall;
+	import com.vidiun.vo.VidiunUserRole;
 	
 	import mx.collections.ArrayCollection;
 
@@ -16,14 +16,14 @@ package com.kaltura.kmc.modules.admin.control.commands
 		
 		override public function execute(event:CairngormEvent):void {
 			var mr:MultiRequest = new MultiRequest();
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			var call:KalturaCall = new UserRoleAdd((event as RoleEvent).role);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			var call:VidiunCall = new UserRoleAdd((event as RoleEvent).role);
 			mr.addAction(call);
 			call = new UserRoleList(_model.rolesModel.rolesFilter);
 			mr.addAction(call);
 			_model.increaseLoadCounter();
-			_model.kc.post(mr);
+			_model.vc.post(mr);
 		}
 		
 		override protected function result(data:Object):void {
@@ -33,7 +33,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 				// update the roles combobox dataprovider 
 				_model.rolesModel.roles = new ArrayCollection(data.data[1].objects);
 				// trigger the setter to use the returned object as the role for current user
-				_model.usersModel.newRole = data.data[0] as KalturaUserRole;
+				_model.usersModel.newRole = data.data[0] as VidiunUserRole;
 				// just to trigger the closing:
 				_model.usersModel.roleDrilldownMode = DrilldownMode.ADD;
 				_model.usersModel.roleDrilldownMode = DrilldownMode.NONE;

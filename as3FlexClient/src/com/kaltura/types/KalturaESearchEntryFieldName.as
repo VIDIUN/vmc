@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,9 +25,9 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.types
+package com.vidiun.types
 {
-	public class KalturaESearchEntryFieldName
+	public class VidiunESearchEntryFieldName
 	{
 		public static const ENTRY_ID : String = "_id";
 		public static const ENTRY_ACCESS_CONTROL_ID : String = "access_control_id";
@@ -37,15 +37,15 @@ package com.kaltura.types
 		public static const ENTRY_CATEGORY_IDS : String = "category_ids";
 		public static const ENTRY_CONVERSION_PROFILE_ID : String = "conversion_profile_id";
 		public static const ENTRY_CREATED_AT : String = "created_at";
-		public static const ENTRY_CREATOR_ID : String = "creator_kuser_id";
+		public static const ENTRY_CREATOR_ID : String = "creator_vuser_id";
 		public static const ENTRY_CREDIT : String = "credit";
 		public static const ENTRY_DESCRIPTION : String = "description";
 		public static const ENTRY_END_DATE : String = "end_date";
-		public static const ENTRY_ENTITLED_USER_EDIT : String = "entitled_kusers_edit";
-		public static const ENTRY_ENTITLED_USER_PUBLISH : String = "entitled_kusers_publish";
+		public static const ENTRY_ENTITLED_USER_EDIT : String = "entitled_vusers_edit";
+		public static const ENTRY_ENTITLED_USER_PUBLISH : String = "entitled_vusers_publish";
 		public static const ENTRY_TYPE : String = "entry_type";
 		public static const ENTRY_EXTERNAL_SOURCE_TYPE : String = "external_source_type";
-		public static const ENTRY_USER_ID : String = "kuser_id";
+		public static const ENTRY_USER_ID : String = "vuser_id";
 		public static const ENTRY_LENGTH_IN_MSECS : String = "length_in_msecs";
 		public static const ENTRY_MEDIA_TYPE : String = "media_type";
 		public static const ENTRY_MODERATION_STATUS : String = "moderation_status";

@@ -5,32 +5,32 @@ The main window for new player wizard.
 
 -->
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
-		xmlns:wv="com.kaltura.kmc.modules.studio.view.wizard.*" xmlns:containers="com.kaltura.containers.*" 
+		xmlns:wv="com.vidiun.vmc.modules.studio.view.wizard.*" xmlns:containers="com.vidiun.containers.*" 
 		showCloseButton="true" close="onWizardCancel()" help="{help()}" 
 		creationComplete="{onCreationComplete()}" resize="{onResize()}" width="100%"
 		height="100%" minWidth="980" minHeight="510" horizontalScrollPolicy="off"
-		verticalScrollPolicy="off" layout="horizontal" xmlns:controls="com.kaltura.controls.*">
+		verticalScrollPolicy="off" layout="horizontal" xmlns:controls="com.vidiun.controls.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.uiConf.UiConfAdd;
-			import com.kaltura.commands.uiConf.UiConfGet;
-			import com.kaltura.commands.uiConf.UiConfUpdate;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.studio.business.wizard.ApsWizardXmlController;
-			import com.kaltura.kmc.modules.studio.events.ApsNavigationEvent;
-			import com.kaltura.kmc.modules.studio.vo.KeyValVo;
-			import com.kaltura.kmc.modules.studio.vo.PlayerContentVo;
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.modules.studio.vo.StyleVo;
-			import com.kaltura.kmc.modules.studio.vo.TemplateVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-			import com.kaltura.kmc.vo.Context;
-			import com.kaltura.types.KalturaUiConfCreationMode;
-			import com.kaltura.vo.KalturaUiConf;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.commands.uiConf.UiConfAdd;
+			import com.vidiun.commands.uiConf.UiConfGet;
+			import com.vidiun.commands.uiConf.UiConfUpdate;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.studio.business.wizard.ApsWizardXmlController;
+			import com.vidiun.vmc.modules.studio.events.ApsNavigationEvent;
+			import com.vidiun.vmc.modules.studio.vo.KeyValVo;
+			import com.vidiun.vmc.modules.studio.vo.PlayerContentVo;
+			import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
+			import com.vidiun.vmc.modules.studio.vo.StyleVo;
+			import com.vidiun.vmc.modules.studio.vo.TemplateVo;
+			import com.vidiun.vmc.modules.studio.vo.ads.AdvertizingVo;
+			import com.vidiun.vmc.vo.Context;
+			import com.vidiun.types.VidiunUiConfCreationMode;
+			import com.vidiun.vo.VidiunUiConf;
 			
 			import modules.Studio;
 			
@@ -143,7 +143,7 @@ The main window for new player wizard.
 				resizeWizardViewStack();
 				//Event Listners
 				this.parent.addEventListener(Event.RESIZE, onResize);
-				previewPlayerPage.addEventListener(ApsWizPreviewPlayer.REFRESH_KDP, previewKdp);
+				previewPlayerPage.addEventListener(ApsWizPreviewPlayer.REFRESH_VDP, previewVdp);
 				
 				// remove / add tabs according to roles and permissions
 				if (_isNewPlayer) {
@@ -167,18 +167,18 @@ The main window for new player wizard.
 			 * dispatch help event with relevant data
 			 * */
 			private function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_studio_player'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_studio_player'));
 			}
 			
 			
 			/**
-			 * Refresh button was clicked - refresh the KDP
+			 * Refresh button was clicked - refresh the VDP
 			 */
-			private function previewKdp(event:Event = null):void {
+			private function previewVdp(event:Event = null):void {
 				previewPlayerPage.enabled = false;
 				stylePage.enabled = false;
 				featurePage.enabled = false;
-				// only disable relevant panels during KDP load
+				// only disable relevant panels during VDP load
 //				enabled = false;
 				var style:StyleVo = stylePage.getStyleData();
 				var template:TemplateVo = templatePage.templateData;
@@ -197,8 +197,8 @@ The main window for new player wizard.
 				delete newUiConfXML..Plugin.(@id == "shortcuts508")[0];
 				// don't send stats inside Studio
 				delete newUiConfXML..Plugin.(@id == "statistics")[0];
-				previewPlayerPage.unLoadKdp();
-				previewPlayerPage.loadKdp(swfUrl, newUiConfXML);
+				previewPlayerPage.unLoadVdp();
+				previewPlayerPage.loadVdp(swfUrl, newUiConfXML);
 			}
 			
 			
@@ -251,9 +251,9 @@ The main window for new player wizard.
 				setupData();
 				
 				// if this is not a multi playlist or if it is a new multiplaylist - load the player preview
-				var currentUiVars:XMLList = _playerUiConfVO.snapshot.uiVars.children().(String(attribute("key").toString()).indexOf("kpl") > -1);
+				var currentUiVars:XMLList = _playerUiConfVO.snapshot.uiVars.children().(String(attribute("key").toString()).indexOf("vpl") > -1);
 				if (!_playerUiConfVO.isMultiPlaylistTemplate || _isNewPlayer || currentUiVars.length() == 0)
-					previewKdp();
+					previewVdp();
 				else
 					_shouldWaitForPreview = true;
 			}
@@ -264,8 +264,8 @@ The main window for new player wizard.
 			 * @return xml with content tab data
 			 * */
 			private function buildContentXML():XML {
-				//get all vars that holds 'kpl'
-				var xmlList:XMLList = new XMLList(_playerUiConfVO.snapshot..descendants("var").(String(attribute("key").toString()).indexOf("kpl") > -1));
+				//get all vars that holds 'vpl'
+				var xmlList:XMLList = new XMLList(_playerUiConfVO.snapshot..descendants("var").(String(attribute("key").toString()).indexOf("vpl") > -1));
 				var plgroup:XML = <playlistGroup/>
 				plgroup.appendChild(xmlList);
 				return plgroup;
@@ -335,7 +335,7 @@ The main window for new player wizard.
 				if (!_isNewPlayer) {
 					// fill in the uiVars for the last accordion tab 
 					var allUiVars:XMLList = _playerUiConfVO.snapshot.uiVars.children();
-					var featuresKevals:Array = new Array();
+					var featuresVevals:Array = new Array();
 					for (var j:uint = 0; j < allUiVars.length(); j++) {
 						if ((allUiVars[j] as XML).attribute("overrideFlashvar").length() > 0) {
 							// "manual" keyvals have "overrideFlashvar", builtin ones like "autoplay" don't. we only want to show manual here.
@@ -343,10 +343,10 @@ The main window for new player wizard.
 							kv.key = (allUiVars[j] as XML).attribute("key");
 							kv.val = (allUiVars[j] as XML).attribute("value");
 							kv.overridable = (allUiVars[j] as XML).attribute("overrideFlashvar")[0].toString() == "true";
-							featuresKevals.push(kv);
+							featuresVevals.push(kv);
 						}
 					}
-					featurePage.keyvals = new ArrayCollection(featuresKevals);
+					featurePage.keyvals = new ArrayCollection(featuresVevals);
 				}
 				
 				// styles tab:
@@ -372,9 +372,9 @@ The main window for new player wizard.
 			private function loadTemplateUiconf(playerId:String):void {
 				cursorManager.setBusyCursor();
 				var fullUiconfGet:UiConfGet = new UiConfGet(int(playerId));
-				fullUiconfGet.addEventListener(KalturaEvent.COMPLETE, onTemplateUiConfLoaded);
-				fullUiconfGet.addEventListener(KalturaEvent.FAILED, fault);
-				Studio.kc.post(fullUiconfGet)
+				fullUiconfGet.addEventListener(VidiunEvent.COMPLETE, onTemplateUiConfLoaded);
+				fullUiconfGet.addEventListener(VidiunEvent.FAILED, fault);
+				Studio.vc.post(fullUiconfGet)
 			}
 			
 			
@@ -436,11 +436,11 @@ The main window for new player wizard.
 			 * this method is triggered when the player template is loaded.
 			 * set loaded data on the different panels
 			 * */
-			private function onTemplateUiConfLoaded(evt:KalturaEvent):void {
+			private function onTemplateUiConfLoaded(evt:VidiunEvent):void {
 				if (_isNewPlayer) {
 					// use template data as player data
-					var fpXMl:XML = XML((evt.data as KalturaUiConf).confFile);
-					var ss:XML = XML((evt.data as KalturaUiConf).confFileFeatures);
+					var fpXMl:XML = XML((evt.data as VidiunUiConf).confFile);
+					var ss:XML = XML((evt.data as VidiunUiConf).confFileFeatures);
 					/* set the template player id on the snapshot. When saving the new
 					player, this is the value used for template id (fullPlayerId).
 					This is needed because the values saved in the template-uiconfs
@@ -454,18 +454,18 @@ The main window for new player wizard.
 				else {
 					// when we start, playerUiconfVo holds the edited-player's data.
 					// template features with layout data:
-					var templateXml:XML = XML((evt.data as KalturaUiConf).confFileFeatures);
+					var templateXml:XML = XML((evt.data as VidiunUiConf).confFileFeatures);
 					
 					// keep the current skin path, in case the template doesn't declare themeSkinPath-es (backwards comp.)
 					var oldSkinPath:String = _playerUiConfVO.fullplayer.@skinPath.toString(); 
 					// start with a "fresh" player:
-					_playerUiConfVO.fullplayer = XML((evt.data as KalturaUiConf).confFile);
+					_playerUiConfVO.fullplayer = XML((evt.data as VidiunUiConf).confFile);
 					
 					// features of the edited player:
 					var featuresData:XML = _playerUiConfVO.snapshot.featuresData[0];
 					
-					// get all the features that have k_param
-					var templateFeaturesData:XMLList = templateXml.features..descendants().(attribute("k_param").toString().length != 0);
+					// get all the features that have v_param
+					var templateFeaturesData:XMLList = templateXml.features..descendants().(attribute("v_param").toString().length != 0);
 					
 					setFeaturesValuesInTemplate(featuresData, templateFeaturesData);
 					
@@ -577,7 +577,7 @@ The main window for new player wizard.
 					var feature:XML = dataFeature;
 					
 					// the value for this feature
-					var k_value:String = dataFeature.@k_value;
+					var v_value:String = dataFeature.@v_value;
 					
 					// the feature's full name (concat. with parents' names)
 					var fullName:String = dataFeature.@id;
@@ -589,20 +589,20 @@ The main window for new player wizard.
 					}
 					
 					// get the player feature with matching full name:
-					var data:XMLList = featuresData.children().(attribute("k_fullName") == fullName);
+					var data:XMLList = featuresData.children().(attribute("v_fullName") == fullName);
 					if (data.length()) {
 						// change the template value to match the saved value:
-						feature.@k_value = data[0].@k_value.toString();
+						feature.@v_value = data[0].@v_value.toString();
 						if (feature.name() == "feature")
-							feature.@selected = feature.@k_value;
+							feature.@selected = feature.@v_value;
 					}
 				}
 			}
 			
 			
-			private function onSaved(evt:KalturaEvent):void {
+			private function onSaved(evt:VidiunEvent):void {
 				cursorManager.removeBusyCursor();
-				var alert:Alert = Alert.show(ResourceManager.getInstance().getString("aps", "savedPlayer", [(evt.data as KalturaUiConf).name, (evt.data as KalturaUiConf).id]));
+				var alert:Alert = Alert.show(ResourceManager.getInstance().getString("aps", "savedPlayer", [(evt.data as VidiunUiConf).name, (evt.data as VidiunUiConf).id]));
 				alert.addEventListener(CloseEvent.CLOSE, onPlayerSavedAlertClose);
 			}
 			
@@ -749,7 +749,7 @@ The main window for new player wizard.
 			private function buildParamObject(playerXml:XML, snapshotXML:XML):Object {
 				var template:TemplateVo = templatePage.templateData;
 				var params:Object = new Object();
-				params.ks = _context.ks;
+				params.vs = _context.vs;
 				params.partner_id = _context.partner_id;
 				params.subp_id = _context.subp_id;
 				params.uiconf_tags = _playerUiConfVO.tags;
@@ -775,7 +775,7 @@ The main window for new player wizard.
 				params.uiconf_automuted = template.autoMute ? "true" : "false";
 				params.uiconf_creationMode = "2";
 				_templateType = getTemplateType(_playerUiConfVO.fullplayer.@isPlaylist);
-				params.uiconf_tags = "kdp3," + _templateType;
+				params.uiconf_tags = "vdp3," + _templateType;
 				return params;
 			}
 			
@@ -793,7 +793,7 @@ The main window for new player wizard.
 				if (_playerUiConfVO.isMultiPlaylistTemplate) {
 					isPlaylist = "true";
 				}
-				ExternalInterface.call("kmc.preview_embed.updateList", isPlaylist);
+				ExternalInterface.call("vmc.preview_embed.updateList", isPlaylist);
 				
 				dispatchEvent(new ApsNavigationEvent(ApsNavigationEvent.CLOSE_WIZARD));
 			}
@@ -803,11 +803,11 @@ The main window for new player wizard.
 			 * Update a new existing player with the new changed
 			 */
 			private function updateExistingPlayer(playerXml:XML, snapshotXML:XML):void {
-				var uiconf:KalturaUiConf = new KalturaUiConf();
+				var uiconf:VidiunUiConf = new VidiunUiConf();
 				var params:Object = buildParamObject(playerXml, snapshotXML);
 				uiconf.confFile = params.uiconf_confFile;
 				uiconf.confFileFeatures = params.uiconf_confFileFeatures;
-				uiconf.creationMode = KalturaUiConfCreationMode.WIZARD;
+				uiconf.creationMode = VidiunUiConfCreationMode.WIZARD;
 				uiconf.height = params.uiconf_height;
 				uiconf.width = params.uiconf_width;
 				uiconf.swfUrl = params.uiconf_swfUrl;
@@ -817,9 +817,9 @@ The main window for new player wizard.
 				uiconf.useCdn = true;
 				uiconf.objType = params.uiconf_objType;
 				var uiconfUpdate:UiConfUpdate = new UiConfUpdate(params.uiconf_id, uiconf);
-				uiconfUpdate.addEventListener(KalturaEvent.COMPLETE, onSaved);
-				uiconfUpdate.addEventListener(KalturaEvent.FAILED, fault);
-				Studio.kc.post(uiconfUpdate);
+				uiconfUpdate.addEventListener(VidiunEvent.COMPLETE, onSaved);
+				uiconfUpdate.addEventListener(VidiunEvent.FAILED, fault);
+				Studio.vc.post(uiconfUpdate);
 			}
 			
 			
@@ -828,10 +828,10 @@ The main window for new player wizard.
 			 */
 			private function saveNewPlayer(playerXml:XML, snapshotXML:XML):void {
 				var params:Object = buildParamObject(playerXml, snapshotXML);
-				var uiconf:KalturaUiConf = new KalturaUiConf();
+				var uiconf:VidiunUiConf = new VidiunUiConf();
 				uiconf.confFile = params.uiconf_confFile;
 				uiconf.confFileFeatures = params.uiconf_confFileFeatures;
-				uiconf.creationMode = KalturaUiConfCreationMode.WIZARD;
+				uiconf.creationMode = VidiunUiConfCreationMode.WIZARD;
 				uiconf.height = params.uiconf_height;
 				uiconf.width = params.uiconf_width;
 				uiconf.swfUrl = params.uiconf_swfUrl;
@@ -841,13 +841,13 @@ The main window for new player wizard.
 				uiconf.objType = params.uiconf_objType;
 				uiconf.useCdn = true;
 				var uiConfAdd:UiConfAdd = new UiConfAdd(uiconf);
-				uiConfAdd.addEventListener(KalturaEvent.COMPLETE, onSaved);
-				uiConfAdd.addEventListener(KalturaEvent.FAILED, fault);
-				Studio.kc.post(uiConfAdd);
+				uiConfAdd.addEventListener(VidiunEvent.COMPLETE, onSaved);
+				uiConfAdd.addEventListener(VidiunEvent.FAILED, fault);
+				Studio.vc.post(uiConfAdd);
 			}
 			
 			
-			private function fault(evt:KalturaEvent):void {
+			private function fault(evt:VidiunEvent):void {
 				Alert.show("httpFault \n" + evt.error.errorMsg);
 			}
 			
@@ -928,15 +928,15 @@ The main window for new player wizard.
 				var uivars:XML = _playerUiConfVO.snapshot..uiVars[0];
 				var costomPlaylists:XMLList;
 				if (uivars)
-					costomPlaylists = uivars..descendants().(attribute("key") == "playlistAPI.kpl0Name");
+					costomPlaylists = uivars..descendants().(attribute("key") == "playlistAPI.vpl0Name");
 				if (costomPlaylists && costomPlaylists.length() > 0) {
 					var contentXML:XML = buildContentXML();
 					if (contentPage)
 						contentPage.setWidgetPlaylistXML(contentXML);
 					
-					// race condition - available playlists & KDP preview  
+					// race condition - available playlists & VDP preview  
 					if (_shouldWaitForPreview) {
-						previewKdp();
+						previewVdp();
 					}
 					_shouldWaitForPreview = false;
 				}
@@ -944,7 +944,7 @@ The main window for new player wizard.
 			
 			
 			/**
-			 * remember that the KDP was loaded for the 1st time and
+			 * remember that the VDP was loaded for the 1st time and
 			 * enable the semi-live preview behavior
 			 */
 			private function onFirstTimeLoaded(evt:Event = null):void {
@@ -954,18 +954,18 @@ The main window for new player wizard.
 			
 			/**
 			 * Whenever a feature was added or saved, or a color / theme / font was changed,
-			 * update KDP auto preview if requested.
+			 * update VDP auto preview if requested.
 			 */
 			private function onFeatureChanged(evt:Event = null):void {
 				if (_wasFirstPreview) {
 					if (_autoPreview)
-						previewKdp();
+						previewVdp();
 				}
 			}
 			
 			
 			/**
-			 * enable the wizard once KDP loading is done.
+			 * enable the wizard once VDP loading is done.
 			 * */
 			private function onFinishLoading(evt:Event = null):void {
 				previewPlayerPage.enabled = true;
@@ -980,7 +980,7 @@ The main window for new player wizard.
 			 * in appstudio, errors probably origin there.
 			 * */
 			protected function onErrorLoading(event:Event):void {
-				var s:String = ResourceManager.getInstance().getString('aps', 'kdpLayoutError');
+				var s:String = ResourceManager.getInstance().getString('aps', 'vdpLayoutError');
 				alertUser(new ErrorEvent(ApsWizard.ALERT_USER, false, false, s));
 				previewPlayerPage.enabled = true;
 				stylePage.enabled = true;
@@ -1110,14 +1110,14 @@ The main window for new player wizard.
 								   alertUser="{alertUser(event)}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizFeatures id="featurePage" height="{previewPlayerPage.height - 35}"
-								   refreshKdp="onFeatureChanged()" playerUiconfVo="{_playerUiConfVO}"
+								   refreshVdp="onFeatureChanged()" playerUiconfVo="{_playerUiConfVO}"
 								   label="{resourceManager.getString('aps','featureTab')}"
 								   alertUser="{alertUser(event)}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizAdvertizing id="advertizingPage" playerUiconfVo="{_playerUiConfVO}"
 									  label="{resourceManager.getString('aps','advertising')}" detailsChanged="{_isChanged=true}"/>
 				
-				<wv:ApsWizStyle id="stylePage" height="100%" refreshKdp="onFeatureChanged()"
+				<wv:ApsWizStyle id="stylePage" height="100%" refreshVdp="onFeatureChanged()"
 								label="{resourceManager.getString('aps','style')}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizardContent id="contentPage" height="100%" width="100%" 

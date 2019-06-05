@@ -1,6 +1,6 @@
-package com.kaltura.controls.trashcan
+package com.vidiun.controls.trashcan
 {
-	import com.kaltura.controls.trashcan.events.TrashcanEvent;
+	import com.vidiun.controls.trashcan.events.TrashcanEvent;
 
 	import flash.events.MouseEvent;
 	import flash.filters.BitmapFilterQuality;
@@ -15,14 +15,14 @@ package com.kaltura.controls.trashcan
 
 	/**
 	* dispatched when an item was dropped to indicate a deletion of item.
-	* @eventType com.kaltura.controls.trashcan.events.TrashcanEvent.REMOVE_ITEM
+	* @eventType com.vidiun.controls.trashcan.events.TrashcanEvent.REMOVE_ITEM
 	*/
-	[Event(name="removeItem", type="com.kaltura.controls.trashcan.events.TrashcanEvent")]
+	[Event(name="removeItem", type="com.vidiun.controls.trashcan.events.TrashcanEvent")]
 	/**
 	* dispatched when the clear all button was clicked.
-	* @eventType com.kaltura.controls.trashcan.events.TrashcanEvent.REMOVE_ALL
+	* @eventType com.vidiun.controls.trashcan.events.TrashcanEvent.REMOVE_ALL
 	*/
-	[Event(name="removeAll", type="com.kaltura.controls.trashcan.events.TrashcanEvent")]
+	[Event(name="removeAll", type="com.vidiun.controls.trashcan.events.TrashcanEvent")]
 
 	public class TrashcanBase extends HBox
 	{

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.model.search
+package com.vidiun.vmc.modules.content.model.search
 {
-	import com.kaltura.utils.pager.Pager;
+	import com.vidiun.utils.pager.Pager;
 	
 	[Bindable]
 	public class SearchResults

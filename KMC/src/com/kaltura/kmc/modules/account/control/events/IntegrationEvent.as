@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.vidiun.vmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	
@@ -11,7 +11,7 @@ package com.kaltura.kmc.modules.account.control.events
 		
 		/**
 		 * save the given category
-		 * event.data is KalturaCategory to save 
+		 * event.data is VidiunCategory to save 
 		 */		
 		public static const UPDATE_CATEGORY:String = "account_update_category";
 		

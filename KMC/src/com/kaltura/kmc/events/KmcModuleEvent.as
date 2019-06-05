@@ -1,12 +1,12 @@
-package com.kaltura.kmc.events {
+package com.vidiun.vmc.events {
 	import flash.events.Event;
 
 	import mx.modules.ModuleLoader;
 	/**
-	 * Class <code>KmcModuleEvent</code> represents events thrown by 
-	 * <code>KmcModuleLoader</code> to handle module loading.
+	 * Class <code>VmcModuleEvent</code> represents events thrown by 
+	 * <code>VmcModuleLoader</code> to handle module loading.
 	 */
-	public class KmcModuleEvent extends Event {
+	public class VmcModuleEvent extends Event {
 		public static const MODULE_LOADED:String = "moduleLoaded";
 		public static const MODULE_LOAD_ERROR:String = "moduleLoadError";
 		public static const MODULE_LOAD_PROGRESS:String = "moduleLoadProgress";
@@ -17,7 +17,7 @@ package com.kaltura.kmc.events {
 		
 
 
-		public function KmcModuleEvent(type:String, moduleLoader:ModuleLoader, errorText:String = "",  bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function VmcModuleEvent(type:String, moduleLoader:ModuleLoader, errorText:String = "",  bubbles:Boolean = false, cancelable:Boolean = false) {
 			_moduleLoader = moduleLoader;
 			_errorText = errorText;
 			super(type, bubbles, cancelable);

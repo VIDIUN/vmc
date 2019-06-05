@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	
@@ -29,11 +29,11 @@ package com.kaltura.kmc.modules.content.events
 		
 		public static const ENABLE_AKAMAI_LIVE: String = "content_ENABLE_AKAMAI_LIVE";
 		
-		public static const ENABLE_KALTURA_LIVE: String = "content_ENABLE_KALTURA_LIVE";
+		public static const ENABLE_VIDIUN_LIVE: String = "content_ENABLE_VIDIUN_LIVE";
 		
-		public static const ENABLE_KALTURA_RECORDING: String = "content_ENABLE_KALTURA_RECORDING";
+		public static const ENABLE_VIDIUN_RECORDING: String = "content_ENABLE_VIDIUN_RECORDING";
 		
-		public static const ENABLE_KALTURA_MULTICAST:String = "content_ENABLE_KALTURA_MULTICAST";
+		public static const ENABLE_VIDIUN_MULTICAST:String = "content_ENABLE_VIDIUN_MULTICAST";
 		
 		public static const SET_ENTRY_CATEGORIES_LIMIT:String = "content_SET_ENTRY_CATEGORIES_LIMIT";
 		

@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.account.vo {
+package com.vidiun.vmc.modules.account.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.kmc.modules.account.model.Notifications;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaPartner;
+	import com.vidiun.vmc.modules.account.model.Notifications;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunPartner;
 	
 	import mx.collections.ArrayCollection;
 
@@ -21,9 +21,9 @@ package com.kaltura.kmc.modules.account.vo {
 
 
 		/**
-		 * KalturaPartner object with relevant data
+		 * VidiunPartner object with relevant data
 		 */
-		public var partner:KalturaPartner;
+		public var partner:VidiunPartner;
 
 		/**
 		 * NotificationVO objects
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.account.vo {
 			var newPVo:PartnerVO = new PartnerVO();
 			newPVo.partnerId = this.partnerId;
 			
-			newPVo.partner = new KalturaPartner();
+			newPVo.partner = new VidiunPartner();
 			ObjectUtil.copyObject(partner, newPVo.partner);
 			
 			newPVo.notifications = new ArrayCollection(new Array(int(this.notifications.length)));

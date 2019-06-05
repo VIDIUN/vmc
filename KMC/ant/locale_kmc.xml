@@ -3,7 +3,7 @@
 <project name="Locale Compiler" default="build">
 	
 	<!-- the module (folder name) for which we compile locale -->
-    <property name="MODULE" value="kmc"/>
+    <property name="MODULE" value="vmc"/>
 	
 	<!-- include flex tasks -->
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
@@ -22,15 +22,15 @@
             <source-path path-element="${basedir}/locale/{locale}"/>
         	<source-path path-element="${basedir}/locale/{locale}/create"/>
         	<source-path path-element="${basedir}/../vendors/Cairngorm/locale/{locale}"/>
-        	<source-path path-element="${basedir}/../KalturaLib/locale/{locale}"/>
+        	<source-path path-element="${basedir}/../VidiunLib/locale/{locale}"/>
 
 			<!-- List of resource bundles to compile in the resourceModule -->
-			<include-resource-bundles>kmc</include-resource-bundles>
+			<include-resource-bundles>vmc</include-resource-bundles>
         	<include-resource-bundles>create</include-resource-bundles>
         	<include-resource-bundles>common</include-resource-bundles>
         	<include-resource-bundles>CairngormMessages</include-resource-bundles>
-        	<include-resource-bundles>kplayer</include-resource-bundles>
-        	<include-resource-bundles>kplayerelements</include-resource-bundles>
+        	<include-resource-bundles>vplayer</include-resource-bundles>
+        	<include-resource-bundles>vplayerelements</include-resource-bundles>
         	<!-- the following resource bundles are taken from the locale framework_rb.swc -->
         	<include-resource-bundles>SharedResources</include-resource-bundles>
         	<include-resource-bundles>formatters</include-resource-bundles>

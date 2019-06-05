@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.playlist.events
+package com.vidiun.edw.components.playlist.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.vidiun.edw.events.VedDataEvent;
 	
-	public class ManualPlaylistWindowEvent extends KedDataEvent {
+	public class ManualPlaylistWindowEvent extends VedDataEvent {
 		
 		/**
 		 * the value of the "type" attribute for the close event.

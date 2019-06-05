@@ -2,7 +2,7 @@
 <mx:ColumnChart xmlns:mx="http://www.adobe.com/2006/mxml" showDataTips="true" dataTipFunction="getDataTip" height="200">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.analytics.utils.FormattingUtil;
+			import com.vidiun.vmc.modules.analytics.utils.FormattingUtil;
 
 			import mx.collections.ArrayCollection;
 			import mx.formatters.DateFormatter;

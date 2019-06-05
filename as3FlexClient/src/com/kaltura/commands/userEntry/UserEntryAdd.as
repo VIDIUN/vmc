@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.userEntry
+package com.vidiun.commands.userEntry
 {
-		import com.kaltura.vo.KalturaUserEntry;
-	import com.kaltura.delegates.userEntry.UserEntryAddDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunUserEntry;
+	import com.vidiun.delegates.userEntry.UserEntryAddDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* Adds a user_entry to the Kaltura DB.
+	* Adds a user_entry to the Vidiun DB.
 	**/
-	public class UserEntryAdd extends KalturaCall
+	public class UserEntryAdd extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param userEntry KalturaUserEntry
+		* @param userEntry VidiunUserEntry
 		**/
-		public function UserEntryAdd( userEntry : KalturaUserEntry )
+		public function UserEntryAdd( userEntry : VidiunUserEntry )
 		{
 			service= 'userentry';
 			action= 'add';
@@ -49,7 +49,7 @@ package com.kaltura.commands.userEntry
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(userEntry, 'userEntry');
+				keyValArr = vidiunObject2Arrays(userEntry, 'userEntry');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

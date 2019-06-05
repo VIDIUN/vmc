@@ -2,13 +2,13 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
 			/**
 			 * return the limit property
 			 */
 			public function renderLimit(data:Object):String {
-				var kmefpl:KalturaMediaEntryFilterForPlaylist = data as KalturaMediaEntryFilterForPlaylist;
-				return kmefpl.limit.toString();
+				var vmefpl:VidiunMediaEntryFilterForPlaylist = data as VidiunMediaEntryFilterForPlaylist;
+				return vmefpl.limit.toString();
 			}
 		]]>
 	</mx:Script>

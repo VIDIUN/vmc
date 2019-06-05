@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.vo.ThumbnailWithDimensions;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class ThumbnailAssetEvent extends KMvCEvent
+	public class ThumbnailAssetEvent extends VMvCEvent
 	{
 		public static const LIST:String = "content_listThumbnailAsset";
 		public static const SET_AS_DEFAULT:String = "content_setAsDefaultThumbAsset";

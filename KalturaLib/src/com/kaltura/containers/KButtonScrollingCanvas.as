@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package com.kaltura.containers
+package com.vidiun.containers
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -44,7 +44,7 @@ package com.kaltura.containers
 	[Style(name="downButtonStyleName", type="String", inherit="no")]
 
 
-	public class KButtonScrollingCanvas extends Canvas
+	public class VButtonScrollingCanvas extends Canvas
 	{
 		[Embed (source="../assets/assets.swf", symbol="up_arrow")]
 		private static var DEFAULT_UP_BUTTON:Class;
@@ -100,7 +100,7 @@ package com.kaltura.containers
 
 		public static var DEFAULT_BUTTON_WIDTH:Number = 50;
 
-		public function KButtonScrollingCanvas()
+		public function VButtonScrollingCanvas()
 		{
 			super();
 		}
@@ -210,7 +210,7 @@ package com.kaltura.containers
 			super.initialize();
 
 			//initialize the default styles
-			KButtonScrollingCanvas.initializeStyles();
+			VButtonScrollingCanvas.initializeStyles();
 		}
 
 		override protected function createChildren():void {
@@ -325,7 +325,7 @@ package com.kaltura.containers
 			if(s) return s;
 
 
-			return KButtonScrollingCanvas.DEFAULT_BUTTON_WIDTH;
+			return VButtonScrollingCanvas.DEFAULT_BUTTON_WIDTH;
 		}
 		public function set buttonWidth(value:Number):void {
 			this.setStyle("buttonWidth", value);

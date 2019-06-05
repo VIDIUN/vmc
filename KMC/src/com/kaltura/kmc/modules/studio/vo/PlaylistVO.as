@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.vidiun.vmc.modules.studio.vo
 {
-	import com.kaltura.kmc.modules.studio.model.types.PlaylistTypes;
+	import com.vidiun.vmc.modules.studio.model.types.PlaylistTypes;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -32,7 +32,7 @@ package com.kaltura.kmc.modules.studio.vo
 			plst.partnerId = this.partnerId;
 			plst.subpId  = this.subpId;
 			plst.puserId = this.puserId;
-			plst.kshowId = this.kshowId;
+			plst.vshowId = this.vshowId;
 			plst.tags = this.tags;
 			plst.status = this.status;
 			plst.type = this.type;

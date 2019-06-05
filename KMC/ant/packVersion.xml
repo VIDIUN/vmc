@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="pack compiled files into the version folder" basedir="../" default="build">
 	
-	<property name="KMC_VERSION" value="v5.37.27"/>
-	<property name="KDP_VERSION" value="v3.9.9"/>
+	<property name="VMC_VERSION" value="v5.37.27"/>
+	<property name="VDP_VERSION" value="v3.9.9"/>
 	<property name="HTML5_VERSION" value="v1.9.6"/>
-	<property name="KCLIP_VERSION" value="v1.2"/>
-	<property name="KCW_VERSION" value="v2.2.4"/>
-	<property name="KCW_VERSION_ONPREM" value="v2.2.4"/>
+	<property name="VCLIP_VERSION" value="v1.2"/>
+	<property name="VCW_VERSION" value="v2.2.4"/>
+	<property name="VCW_VERSION_ONPREM" value="v2.2.4"/>
 	
-	<property name="PACK_DEPLOY_DIR" value="${basedir}/../${KMC_VERSION}"/>
+	<property name="PACK_DEPLOY_DIR" value="${basedir}/../${VMC_VERSION}"/>
 	
 	<property name="LOCALE_SOURCE_DIR" value="${basedir}/html-template"/>
 	<property name="PACK_SOURCE_DIR" value="${basedir}/bin-release"/>
 	
 	
 	<target name="build" depends="clean, init, update_config, update_onprem_config, copy_assets, copy_locale, copy_modules, copy_xml">
-		<echo>Version ${KMC_VERSION} packed successfully</echo>
+		<echo>Version ${VMC_VERSION} packed successfully</echo>
 	</target>
 	
 	<target name="copy_root" description="copy required files to the version root directory">
@@ -23,8 +23,8 @@
 			<fileset dir="${SOURCE_DIR}" includes="**/*"/>
 		</copy-->
 		
-		<copy file="${PACK_SOURCE_DIR}/kmc.swf" 
-			tofile="${PACK_DEPLOY_DIR}/kmc.swf" />
+		<copy file="${PACK_SOURCE_DIR}/vmc.swf" 
+			tofile="${PACK_DEPLOY_DIR}/vmc.swf" />
 		
 		<copy file="${PACK_SOURCE_DIR}/framework_3.6.0.16995.swf" 
 			tofile="${PACK_DEPLOY_DIR}/framework_3.6.0.16995.swf" />
@@ -50,19 +50,19 @@
 	</target>
 	
 	<target name="update_config" description="update version numbers in config file" depends="create_onprem_config">
-		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@KMC_VERSION@@" value="${KMC_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@KDP_VERSION@@" value="${KDP_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@VMC_VERSION@@" value="${VMC_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@VDP_VERSION@@" value="${VDP_VERSION}"/>
 		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@HTML5_VERSION@@" value="${HTML5_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@KCLIP_VERSION@@" value="${KCLIP_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@KCW_VERSION@@" value="${KCW_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@VCLIP_VERSION@@" value="${VCLIP_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.ini" token="@@VCW_VERSION@@" value="${VCW_VERSION}"/>
 	</target>
 	
 	<target name="update_onprem_config" description="create config file for on-prem deployment" depends="create_onprem_config">
-		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@KMC_VERSION@@" value="${KMC_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@KDP_VERSION@@" value="${KDP_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@VMC_VERSION@@" value="${VMC_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@VDP_VERSION@@" value="${VDP_VERSION}"/>
 		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@HTML5_VERSION@@" value="${HTML5_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@KCLIP_VERSION@@" value="${KCLIP_VERSION}"/>
-		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@KCW_VERSION@@" value="${KCW_VERSION_ONPREM}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@VCLIP_VERSION@@" value="${VCLIP_VERSION}"/>
+		<replace file="${PACK_DEPLOY_DIR}/config.template.ini" token="@@VCW_VERSION@@" value="${VCW_VERSION_ONPREM}"/>
 	</target>
 	
 	<target name="copy_assets" description="copy required files to the version assets directory">
@@ -73,8 +73,8 @@
 		<basename property="WS_DIRECTORY_NAME" file="${basedir}/../"/>
 		<echo>WS_DIRECTORY_NAME: ${WS_DIRECTORY_NAME}</echo>
 			
-		<copy file="${PACK_SOURCE_DIR}/workspaces/${WS_DIRECTORY_NAME}/KMC/assets/kmc_skin.swf" 
-			tofile="${PACK_DEPLOY_DIR}/assets/kmc_skin.swf" />
+		<copy file="${PACK_SOURCE_DIR}/workspaces/${WS_DIRECTORY_NAME}/VMC/assets/vmc_skin.swf" 
+			tofile="${PACK_DEPLOY_DIR}/assets/vmc_skin.swf" />
     </target>
 	
 	<target name="copy_locale" description="copy locale files to the version locale directory">
@@ -87,8 +87,8 @@
 		<copy todir="${PACK_DEPLOY_DIR}/modules">
 			<fileset dir="${PACK_SOURCE_DIR}/modules" includes="**/*"/>
 		</copy>
-		<copy todir="${PACK_DEPLOY_DIR}/modules/ked">
-			<fileset dir="${PACK_SOURCE_DIR}/modules/ked" includes="**/*"/>
+		<copy todir="${PACK_DEPLOY_DIR}/modules/ved">
+			<fileset dir="${PACK_SOURCE_DIR}/modules/ved" includes="**/*"/>
 		</copy>
     </target>
 	
@@ -110,7 +110,7 @@
 		<mkdir dir="${PACK_DEPLOY_DIR}/assets" description="Make sure there is assets directory"/>
 		<mkdir dir="${PACK_DEPLOY_DIR}/locale" description="Make sure there is locale directory"/>
 		<mkdir dir="${PACK_DEPLOY_DIR}/modules" description="Make sure there is modules directory"/>
-		<mkdir dir="${PACK_DEPLOY_DIR}/modules/ked" description="Make sure there is directory for ked modules"/>
+		<mkdir dir="${PACK_DEPLOY_DIR}/modules/ved" description="Make sure there is directory for ved modules"/>
 		<mkdir dir="${PACK_DEPLOY_DIR}/xml" description="Make sure there is xml directory"/>
 	</target>
 </project>

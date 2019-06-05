@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.utils.ListConversionProfilesUtil;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParamsFilter;
-	import com.kaltura.vo.KalturaConversionProfileAssetParamsListResponse;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.conversionProfile.ConversionProfileList;
+	import com.vidiun.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.modules.account.utils.ListConversionProfilesUtil;
+	import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
+	import com.vidiun.vo.VidiunConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfileAssetParamsFilter;
+	import com.vidiun.vo.VidiunConversionProfileAssetParamsListResponse;
+	import com.vidiun.vo.VidiunConversionProfileListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -35,37 +35,37 @@ package com.kaltura.kmc.modules.account.control.command {
 			var lcp:ConversionProfileList = new ConversionProfileList(_model.liveCPFilter, _model.liveCPPager);
 			mr.addAction(lcp);
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:VidiunFilterPager = new VidiunFilterPager();
 			p.pageSize = 1000;	// this is a very large number that should be enough to get all items
-			var cpapFilter:KalturaConversionProfileAssetParamsFilter = new KalturaConversionProfileAssetParamsFilter();
+			var cpapFilter:VidiunConversionProfileAssetParamsFilter = new VidiunConversionProfileAssetParamsFilter();
 			cpapFilter.conversionProfileIdFilter = _model.liveCPFilter;
 			var cpaplist:ConversionProfileAssetParamsList = new ConversionProfileAssetParamsList(cpapFilter, p);
 			mr.addAction(cpaplist);
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);
 		}
 
 
 		public function result(event:Object):void {
-			var er:KalturaError;
+			var er:VidiunError;
 			if (event.data[0].error) {
-				er = event.data[0].error as KalturaError;
+				er = event.data[0].error as VidiunError;
 				if (er) {
 					Alert.show(er.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
 				}
 			}
 			else if (event.data[1].error) {
-				er = event.data[1].error as KalturaError;
+				er = event.data[1].error as VidiunError;
 				if (er) {
 					Alert.show(er.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
 				}
 			}
 			else {
-				var response:KalturaConversionProfileListResponse = event.data[0] as KalturaConversionProfileListResponse;
+				var response:VidiunConversionProfileListResponse = event.data[0] as VidiunConversionProfileListResponse;
 				var ac:ArrayCollection = ListConversionProfilesUtil.handleConversionProfilesList(response.objects);
-				_model.liveCPAPs = (event.data[1] as KalturaConversionProfileAssetParamsListResponse).objects;
+				_model.liveCPAPs = (event.data[1] as VidiunConversionProfileAssetParamsListResponse).objects;
 				ListConversionProfilesUtil.addAssetParams(ac, _model.liveCPAPs);
 				_model.liveConversionProfiles = ac;
 				_model.totalLiveConversionProfiles = ac.length; 

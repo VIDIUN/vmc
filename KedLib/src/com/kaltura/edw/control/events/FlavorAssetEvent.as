@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunFlavorAssetWithParams;
 	
-	public class FlavorAssetEvent extends KMvCEvent
+	public class FlavorAssetEvent extends VMvCEvent
 	{
 		public static const CREATE_FLAVOR_ASSET : String = "content_createFlavorAsset";
 		public static const DELETE_FLAVOR_ASSET : String = "content_deleteFlavorAsset";
@@ -11,7 +11,7 @@ package com.kaltura.edw.control.events
 		public static const PREVIEW_FLAVOR_ASSET : String = "content_previewFlavorAsset";
 		public static const VIEW_WV_ASSET_DETAILS : String = "content_viewWVAssetDetails";
 		
-		public function FlavorAssetEvent(type:String, dataVo:KalturaFlavorAssetWithParams, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function FlavorAssetEvent(type:String, dataVo:VidiunFlavorAssetWithParams, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			this.data = dataVo;

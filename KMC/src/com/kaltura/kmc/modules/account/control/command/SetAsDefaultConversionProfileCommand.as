@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.commands.conversionProfile.ConversionProfileSetAsDefault;
-	import com.kaltura.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.utils.ListConversionProfilesUtil;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParamsListResponse;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.conversionProfile.ConversionProfileList;
+	import com.vidiun.commands.conversionProfile.ConversionProfileSetAsDefault;
+	import com.vidiun.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vmc.modules.account.utils.ListConversionProfilesUtil;
+	import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
+	import com.vidiun.types.VidiunConversionProfileType;
+	import com.vidiun.vo.VidiunConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfileAssetParamsListResponse;
+	import com.vidiun.vo.VidiunConversionProfileFilter;
+	import com.vidiun.vo.VidiunConversionProfileListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -35,21 +35,21 @@ package com.kaltura.kmc.modules.account.control.command
 			
 			_nextEvent = (event as ConversionSettingsEvent).nextEvent;
 			
-			var cp:KalturaConversionProfile = event.data as KalturaConversionProfile;
+			var cp:VidiunConversionProfile = event.data as VidiunConversionProfile;
 			var setDefault:ConversionProfileSetAsDefault = new ConversionProfileSetAsDefault(cp.id);
 			
-			setDefault.addEventListener(KalturaEvent.COMPLETE, result);
-			setDefault.addEventListener(KalturaEvent.FAILED, fault);
+			setDefault.addEventListener(VidiunEvent.COMPLETE, result);
+			setDefault.addEventListener(VidiunEvent.FAILED, fault);
 			
-			_model.context.kc.post(setDefault);
+			_model.context.vc.post(setDefault);
 		}
 		
 		
 		public function result(event:Object):void {
 			_model.loadingFlag = false;
-			var er:KalturaError;
+			var er:VidiunError;
 			if (event.error) {
-				er = event.error as KalturaError;
+				er = event.error as VidiunError;
 				if (er) {
 					Alert.show(er.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
 				}
@@ -64,7 +64,7 @@ package com.kaltura.kmc.modules.account.control.command
 		{
 			_model.loadingFlag = false;
 			if (info && info.error && info.error.errorMsg) {
-				if (info.error.errorMsg.toString().indexOf("Invalid KS") > -1 ) {
+				if (info.error.errorMsg.toString().indexOf("Invalid VS") > -1 ) {
 					JSGate.expired();
 				} 
 				else {

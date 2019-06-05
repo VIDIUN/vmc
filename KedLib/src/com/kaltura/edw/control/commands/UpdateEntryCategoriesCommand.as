@@ -1,45 +1,45 @@
-package com.kaltura.edw.control.commands
+package com.vidiun.edw.control.commands
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryEntry.CategoryEntryAdd;
-	import com.kaltura.commands.categoryEntry.CategoryEntryDelete;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryEntry;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.categoryEntry.CategoryEntryAdd;
+	import com.vidiun.commands.categoryEntry.CategoryEntryDelete;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunCategory;
+	import com.vidiun.vo.VidiunCategoryEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 
-	public class UpdateEntryCategoriesCommand extends KedCommand {
+	public class UpdateEntryCategoriesCommand extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var e:KedEntryEvent = event as KedEntryEvent;
+			var e:VedEntryEvent = event as VedEntryEvent;
 			var mr:MultiRequest = new MultiRequest();
 			var toAdd:Array = e.data[0];	// categories to add to the entry
 			var toRemove:Array = e.data[1];	// categories to remove from the entry
 			
-			var kCat:KalturaCategory;
-			var ce:KalturaCategoryEntry;
+			var vCat:VidiunCategory;
+			var ce:VidiunCategoryEntry;
 			// add
-			for each (kCat in toAdd) {
-				ce = new KalturaCategoryEntry();
-				ce.categoryId = kCat.id;
+			for each (vCat in toAdd) {
+				ce = new VidiunCategoryEntry();
+				ce.categoryId = vCat.id;
 				ce.entryId = e.entryVo.id;
 				mr.addAction(new CategoryEntryAdd(ce));
 			} 
 			// remove
-			for each (kCat in toRemove) {
-				ce = new KalturaCategoryEntry();
-				mr.addAction(new CategoryEntryDelete(e.entryVo.id, kCat.id));
+			for each (vCat in toRemove) {
+				ce = new VidiunCategoryEntry();
+				mr.addAction(new CategoryEntryDelete(e.entryVo.id, vCat.id));
 			} 
 			
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 
 			_client.post(mr);
 		}
@@ -47,9 +47,9 @@ package com.kaltura.edw.control.commands
 		
 		override public function result(data:Object):void {
 			super.result(data);
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:VidiunError = (data as VidiunEvent).error;
 			for each (var o:Object in data.data) {
-				er = o.error as KalturaError;
+				er = o.error as VidiunError;
 				if (er) {
 					Alert.show(er.errorMsg, ResourceManager.getInstance().getString('drilldown', 'error'));
 				}

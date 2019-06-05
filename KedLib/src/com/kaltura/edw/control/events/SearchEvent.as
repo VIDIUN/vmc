@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.vo.ListableVo;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class SearchEvent extends KMvCEvent
+	public class SearchEvent extends VMvCEvent
 	{
 		
 		

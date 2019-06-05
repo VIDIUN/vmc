@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onCreationComplete()" verticalGap="0"
-		 xmlns:et="com.kaltura.edw.components.et.*">
+		 xmlns:et="com.vidiun.edw.components.et.*">
 	
 	<mx:Metadata>
-		[Event(name="showEntryDetails", type="com.kaltura.edw.events.KedDataEvent")] 
+		[Event(name="showEntryDetails", type="com.vidiun.edw.events.VedDataEvent")] 
 		[Event(name="moveItem", type="flash.events.Event")] 
 		[Event(name="updatedData", type="flash.events.Event")] 
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.components.et.events.EntryTableEvent;
-			import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.vo.LocalizedVo;
-			import com.kaltura.types.KalturaPlayableEntryOrderBy;
-			import com.kaltura.utils.KTimeUtil;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.vidiun.edw.components.et.EntryTableColumns;
+			import com.vidiun.edw.components.et.events.EntryTableEvent;
+			import com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.vo.LocalizedVo;
+			import com.vidiun.types.VidiunPlayableEntryOrderBy;
+			import com.vidiun.utils.VTimeUtil;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunMediaEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -106,7 +106,7 @@
 					var oldIndex:uint = playlistEntriesList.selectedIndex;
 					if ((oldIndex == (_dataProvider as ArrayCollection).length - 1))
 						return;
-					var o:KalturaBaseEntry = _dataProvider.removeItemAt(oldIndex) as KalturaBaseEntry;
+					var o:VidiunBaseEntry = _dataProvider.removeItemAt(oldIndex) as VidiunBaseEntry;
 					_dataProvider.addItemAt(o, (oldIndex + 1));
 					playlistEntriesList.selectedItem = o;
 				}
@@ -127,7 +127,7 @@
 					var oldIndex:uint = playlistEntriesList.selectedIndex;
 					if (oldIndex == 0)
 						return;
-					var o:KalturaBaseEntry = _dataProvider.removeItemAt(oldIndex) as KalturaBaseEntry;
+					var o:VidiunBaseEntry = _dataProvider.removeItemAt(oldIndex) as VidiunBaseEntry;
 					_dataProvider.addItemAt(o, (oldIndex - 1));
 					playlistEntriesList.selectedItem = o;
 				}
@@ -142,7 +142,7 @@
 					return;
 				}
 				
-				var entry:KalturaBaseEntry;
+				var entry:VidiunBaseEntry;
 				var entries:Array = playlistEntriesList.selectedItems.concat();
 				switch ((event.target as ComboBox).selectedItem) {
 					case MOVE_TO_TOP:
@@ -175,7 +175,7 @@
 			 * it is assumed the entry IS IN the list.
 			 * @param entry		entry to remove
 			 * */
-			private function remove(entry:KalturaBaseEntry):void {
+			private function remove(entry:VidiunBaseEntry):void {
 				var oldIndex:int = _dataProvider.getItemIndex(entry);
 				_dataProvider.removeItemAt(oldIndex);
 			}
@@ -185,7 +185,7 @@
 			 * it is assumed the entry IS IN the list.
 			 * @param entry		entry to move
 			 * */
-			private function moveToBottom(entry:KalturaBaseEntry):void {
+			private function moveToBottom(entry:VidiunBaseEntry):void {
 				var oldIndex:int = _dataProvider.getItemIndex(entry);
 				if (oldIndex == _dataProvider.length - 1) {
 					// item is already at bottom of list
@@ -201,7 +201,7 @@
 			 * it is assumed the entry IS IN the list.
 			 * @param entry		entry to move
 			 * */
-			private function moveToTop(entry:KalturaBaseEntry):void {
+			private function moveToTop(entry:VidiunBaseEntry):void {
 				var oldIndex:int = _dataProvider.getItemIndex(entry);
 				if (oldIndex == 0) {
 					// item is already at top of list
@@ -217,10 +217,10 @@
 
 			private function onCreationComplete():void {
 				if (ORDER_BY_ARR.length == 0) { // only init once
-					ORDER_BY_ARR.addItem(new LocalizedVo(KalturaPlayableEntryOrderBy.PLAYS_DESC, 'ruleBasedPlaylistOrderBy_MostPlayer', 'cms'));
-					ORDER_BY_ARR.addItem(new LocalizedVo(KalturaPlayableEntryOrderBy.RECENT_DESC, 'ruleBasedPlaylistOrderBy_MostRecent', 'cms'));
-					ORDER_BY_ARR.addItem(new LocalizedVo(KalturaPlayableEntryOrderBy.RANK_DESC, 'ruleBasedPlaylistOrderBy_HighstRated', 'cms'));
-					ORDER_BY_ARR.addItem(new LocalizedVo(KalturaPlayableEntryOrderBy.NAME_ASC, 'ruleBasedPlaylistOrderBy_EntryName', 'cms'));
+					ORDER_BY_ARR.addItem(new LocalizedVo(VidiunPlayableEntryOrderBy.PLAYS_DESC, 'ruleBasedPlaylistOrderBy_MostPlayer', 'cms'));
+					ORDER_BY_ARR.addItem(new LocalizedVo(VidiunPlayableEntryOrderBy.RECENT_DESC, 'ruleBasedPlaylistOrderBy_MostRecent', 'cms'));
+					ORDER_BY_ARR.addItem(new LocalizedVo(VidiunPlayableEntryOrderBy.RANK_DESC, 'ruleBasedPlaylistOrderBy_HighstRated', 'cms'));
+					ORDER_BY_ARR.addItem(new LocalizedVo(VidiunPlayableEntryOrderBy.NAME_ASC, 'ruleBasedPlaylistOrderBy_EntryName', 'cms'));
 				}
 				_dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, onDpChange);
 			}
@@ -230,11 +230,11 @@
 				if (dataProvider) {
 					var sum:Number = 0;
 					for (var i:uint; i < dataProvider.length; i++) {
-						KalturaMediaEntry
+						VidiunMediaEntry
 						if (dataProvider[i].hasOwnProperty("duration"))
 							sum += dataProvider[i]["duration"];
 					}
-					playlistDuration.text = KTimeUtil.formatTime2(sum);
+					playlistDuration.text = VTimeUtil.formatTime2(sum);
 				}
 			}
 
@@ -249,9 +249,9 @@
 
 
 			public function setSelectedOrderBy(orderBy:String):void {
-				if (orderBy == KalturaPlayableEntryOrderBy.CREATED_AT_DESC) {
+				if (orderBy == VidiunPlayableEntryOrderBy.CREATED_AT_DESC) {
 					// somewhere during Caasiopeia we broke backwards compat., this is a fix.
-					orderBy = KalturaPlayableEntryOrderBy.RECENT_DESC;
+					orderBy = VidiunPlayableEntryOrderBy.RECENT_DESC;
 				}
 				for (var i:uint = 0; i < ORDER_BY_ARR.length; i++) {
 					if (ORDER_BY_ARR[i].value == orderBy)
@@ -321,8 +321,8 @@
 
 
 			private function playlistEntriesList_showDetailsHandler(event:EntryTableEvent):void {
-				var e:KedDataEvent = new KedDataEvent(ManualPlaylistWindowEvent.SHOW_ENTRY_DETAILS);
-				e.data = event.data as KalturaBaseEntry;
+				var e:VedDataEvent = new VedDataEvent(ManualPlaylistWindowEvent.SHOW_ENTRY_DETAILS);
+				e.data = event.data as VidiunBaseEntry;
 				dispatchEvent(e);
 			}
 
@@ -349,7 +349,7 @@
 
 	<mx:Label text="{tableTitle}" width="100%" styleName="formLabel"/>
 
-	<et:EntryTable id="playlistEntriesList" width="100%" height="100%" kalturaSorting="false"
+	<et:EntryTable id="playlistEntriesList" width="100%" height="100%" vidiunSorting="false"
 				   sortableColumns="{allowSort}" showLinks="{showLinks}" 
 				   showSelection="{showTableSelection}" dataProvider="{dataProvider}"
 				   creationComplete="onEntryTableCreatedComplete()"

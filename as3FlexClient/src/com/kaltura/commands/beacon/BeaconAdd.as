@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.beacon
+package com.vidiun.commands.beacon
 {
-		import com.kaltura.vo.KalturaBeacon;
-	import com.kaltura.delegates.beacon.BeaconAddDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunBeacon;
+	import com.vidiun.delegates.beacon.BeaconAddDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class BeaconAdd extends KalturaCall
+	public class BeaconAdd extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param beacon KalturaBeacon
+		* @param beacon VidiunBeacon
 		* @param shouldLog int
 		**/
-		public function BeaconAdd( beacon : KalturaBeacon,shouldLog : int=0 )
+		public function BeaconAdd( beacon : VidiunBeacon,shouldLog : int=0 )
 		{
 			service= 'beacon_beacon';
 			action= 'add';
@@ -49,7 +49,7 @@ package com.kaltura.commands.beacon
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(beacon, 'beacon');
+				keyValArr = vidiunObject2Arrays(beacon, 'beacon');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('shouldLog');

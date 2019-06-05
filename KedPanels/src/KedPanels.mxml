@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="930" minHeight="595"
-				implements="com.kaltura.edw.business.IDataOwner"
+				implements="com.vidiun.edw.business.IDataOwner"
 				creationComplete="creationCompleteHandler(event)"
 				addedToStage="initTracker(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.uiConf.UiConfGet;
-			import com.kaltura.config.KalturaConfig;
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-			import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaUiConf;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.commands.uiConf.UiConfGet;
+			import com.vidiun.config.VidiunConfig;
+			import com.vidiun.edw.business.IDataOwner;
+			import com.vidiun.edw.control.DataTabController;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.LoadEvent;
+			import com.vidiun.edw.control.events.MetadataProfileEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.CuePointsDataPack;
+			import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+			import com.vidiun.edw.model.datapacks.FilterDataPack;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.utils.ObjectHelpers;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunUiConf;
 			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
@@ -46,14 +46,14 @@
 			private var _flashvars:Object;
 			
 			/**
-			 * timer to flush KalturaCalls queue
+			 * timer to flush VidiunCalls queue
 			 * */
-			private var _kcTimer:Timer;
+			private var _vcTimer:Timer;
 			
 			/**
-			 * Kaltura Client for making API calls
+			 * Vidiun Client for making API calls
 			 * */
-			private var _client:KalturaClient;
+			private var _client:VidiunClient;
 			
 			/**
 			 * list of EDWs opened by this app (to allow replacement, parent, etc)
@@ -63,7 +63,7 @@
 			/**
 			 * configuration object
 			 * */
-			protected var _uiconf:KalturaUiConf;
+			protected var _uiconf:VidiunUiConf;
 			
 			/**
 			 * currently showing locale code
@@ -79,7 +79,7 @@
 				_client = createClient(_flashvars);
 				
 				// load resources
-				loadSkin("assets/kmc_skin.swf");
+				loadSkin("assets/vmc_skin.swf");
 				loadUiconf(_flashvars.uiconf_id);
 			}
 			
@@ -137,7 +137,7 @@
 			 * */
 			protected function onSkinLoaded(event:StyleEvent):void {
 				if (event.type == StyleEvent.ERROR) {
-					Alert.show(event.errorText, ResourceManager.getInstance().getString('kmc', 'skin_load_error_title'));
+					Alert.show(event.errorText, ResourceManager.getInstance().getString('vmc', 'skin_load_error_title'));
 				}
 			}
 			
@@ -148,8 +148,8 @@
 				PopUpManager.addPopUp(edw, this);
 				_popups.push(edw);
 				
-				var kEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _flashvars.entryid);
-				KedController.getInstance().dispatch(kEvent);
+				var vEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _flashvars.entryid);
+				VedController.getInstance().dispatch(vEvent);
 			}
 			
 			/**
@@ -158,25 +158,25 @@
 			private function openEntryDetails():EntryDetailsWin {
 				var edw:EntryDetailsWin = new EntryDetailsWin();
 				edw.styleName = "WinTitleStyle";
-				edw.addEventListener(KedDataEvent.ENTRY_RELOADED, handleKedEvents, false, 0, true);
-				edw.addEventListener(KedDataEvent.CLOSE_WINDOW, handleKedEvents, false, 0, true);
-				edw.addEventListener(KedDataEvent.ENTRY_UPDATED, handleKedEvents, false, 0, true);
-				edw.addEventListener(KedDataEvent.OPEN_REPLACEMENT, handleKedEvents, false, 0, true);
-				edw.addEventListener(KedDataEvent.OPEN_ENTRY, handleKedEvents, false, 0, true);
+				edw.addEventListener(VedDataEvent.ENTRY_RELOADED, handleVedEvents, false, 0, true);
+				edw.addEventListener(VedDataEvent.CLOSE_WINDOW, handleVedEvents, false, 0, true);
+				edw.addEventListener(VedDataEvent.ENTRY_UPDATED, handleVedEvents, false, 0, true);
+				edw.addEventListener(VedDataEvent.OPEN_REPLACEMENT, handleVedEvents, false, 0, true);
+				edw.addEventListener(VedDataEvent.OPEN_ENTRY, handleVedEvents, false, 0, true);
 				edw.isNewEntry = false;//state == EntryDetailsWindowState.NEW_ENTRY;
 				
 				//get the selected entry from the server
 //				if (state != EntryDetailsWindowState.NEW_ENTRY) {
-//					var getSelectedEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null,
+//					var getSelectedEntry:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null,
 //						_entryData.selectedEntry.id);
-//					KedController.getInstance().dispatch(getSelectedEntry);
+//					VedController.getInstance().dispatch(getSelectedEntry);
 //				}
 //				if (state == EntryDetailsWindowState.REPLACEMENT_ENTRY) {
 //					setReplacementDrilldown(edw);
 //				}
 				
 				
-				edw.entryDetailsModel = KMvCModel.getInstance();
+				edw.entryDetailsModel = VMvCModel.getInstance();
 //				if (state != EntryDetailsWindowState.NORMAL_ENTRY)
 				edw.showNextPrevBtns = false;
 //				else if (_model.listableVo)	// only for normal entries
@@ -189,7 +189,7 @@
 			
 			private function initModel():void {
 				var uiconf:XML = new XML (_uiconf.confFile);
-				var model:KMvCModel = KMvCModel.getInstance();
+				var model:VMvCModel = VMvCModel.getInstance();
 				
 				// filter
 				(model.getDataPack(FilterDataPack) as FilterDataPack).filterModel = new FilterModel();
@@ -199,20 +199,20 @@
 				(model.getDataPack(CuePointsDataPack)as CuePointsDataPack).cuepointsSamplesUrl = getFullUrl(uiconf.cuepoints.text().toString());
 				
 				// context
-				var contextData:ContextDataPack = KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
+				var contextData:ContextDataPack = VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
 				contextData.showEmbedCode = true; //_model.showSingleEntryEmbedCode;
 				contextData.landingPage = "testLandingPage.html?entryId={entryId}";//_model.extSynModel.partnerData.landingPage;
 				contextData.openPlayerFunc = _flashvars.openPlayerFunc; 
 				contextData.panelsConfig = uiconf.uiconf.entryDrilldown.panels[0];
-				contextData.drilldownUiconf = uiconf.uiconf.kdp.drilldown.text().toString();
-				contextData.kClipAdsUiconf = uiconf.uiconf.kclip.ads.text().toString();
+				contextData.drilldownUiconf = uiconf.uiconf.vdp.drilldown.text().toString();
+				contextData.vClipAdsUiconf = uiconf.uiconf.vclip.ads.text().toString();
 				contextData.sourceUrl = systemManager.loaderInfo.url.substr(0, systemManager.loaderInfo.url.lastIndexOf("/"));
 				contextData.debugMode = _flashvars.debugmode;
 				contextData.userId = _flashvars.uid;
 				contextData.subpId = _flashvars.subpid;
 				contextData.rootUrl = _flashvars.host;
 				contextData.cdnHost = _flashvars.cdnhost ? _flashvars.cdnhost : _flashvars.host;
-				contextData.kc = _client;
+				contextData.vc = _client;
 			}
 			
 			
@@ -227,52 +227,52 @@
 			
 			
 			/**
-			 * create KalturaClient using given parameters 
+			 * create VidiunClient using given parameters 
 			 * @param params	application parameters
 			 * */
-			private function createClient(params:Object):KalturaClient {
+			private function createClient(params:Object):VidiunClient {
 				// 
-				var configuration:KalturaConfig = new KalturaConfig();
+				var configuration:VidiunConfig = new VidiunConfig();
 				configuration.partnerId = params.partnerid;
 				configuration.ignoreNull = 1;
 				configuration.protocol = params.protocol ? params.protocol : "http://";
 				configuration.domain = params.host;
 				configuration.srvUrl = params.srvurl;
-				configuration.clientTag = "ked:" + VERSION;
-				configuration.ks = params.ks;
+				configuration.clientTag = "ved:" + VERSION;
+				configuration.vs = params.vs;
 				
-				var kalturaClient:KalturaClient = new KalturaClient(configuration);
-				kalturaClient.queueing = true;
-				kalturaClient.addEventListener(KalturaClient.CALL_QUEUED, setTimer);
-				kalturaClient.addEventListener(KalturaClient.QUEUE_FLUSHED, setTimer);
+				var vidiunClient:VidiunClient = new VidiunClient(configuration);
+				vidiunClient.queueing = true;
+				vidiunClient.addEventListener(VidiunClient.CALL_QUEUED, setTimer);
+				vidiunClient.addEventListener(VidiunClient.QUEUE_FLUSHED, setTimer);
 				
-				return kalturaClient;
+				return vidiunClient;
 			}
 			
 			
 			/**
 			 * handle events dispatched by the drilldown
 			 * */
-			private function handleKedEvents(e:KedDataEvent):void {
+			private function handleVedEvents(e:VedDataEvent):void {
 				switch (e.type) {
-					case KedDataEvent.ENTRY_UPDATED:
+					case VedDataEvent.ENTRY_UPDATED:
 						break; 
 
-					case KedDataEvent.ENTRY_RELOADED:
+					case VedDataEvent.ENTRY_RELOADED:
 						break;
 					
-					case KedDataEvent.CLOSE_WINDOW:
+					case VedDataEvent.CLOSE_WINDOW:
 						// close the drilldown
 						var edw:EntryDetailsWin = _popups.pop();
 						PopUpManager.removePopUp(edw);
 						break;
 					
-					case KedDataEvent.OPEN_REPLACEMENT:
+					case VedDataEvent.OPEN_REPLACEMENT:
 						break;
 					
-					case KedDataEvent.OPEN_ENTRY:
-						var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, e.data as KalturaBaseEntry);
-						KedController.getInstance().dispatch(kEvent);
+					case VedDataEvent.OPEN_ENTRY:
+						var vEvent:VMvCEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY, e.data as VidiunBaseEntry);
+						VedController.getInstance().dispatch(vEvent);
 						break;
 				}
 			}
@@ -296,8 +296,8 @@
 			 * */
 			protected function loadUiconf(uiconfId:String):void {
 				var uiconf:UiConfGet = new UiConfGet(int(uiconfId));
-				uiconf.addEventListener(KalturaEvent.COMPLETE, configurationLoadHandler);
-				uiconf.addEventListener(KalturaEvent.FAILED, configurationLoadHandler);
+				uiconf.addEventListener(VidiunEvent.COMPLETE, configurationLoadHandler);
+				uiconf.addEventListener(VidiunEvent.FAILED, configurationLoadHandler);
 				_client.post(uiconf);
 			}
 			
@@ -306,9 +306,9 @@
 			 * use configuration info
 			 * @param e		data from server
 			 * */
-			protected function configurationLoadHandler(e:KalturaEvent):void {
-				if (e.type == KalturaEvent.COMPLETE) {
-					_uiconf = e.data as KalturaUiConf;
+			protected function configurationLoadHandler(e:VidiunEvent):void {
+				if (e.type == VidiunEvent.COMPLETE) {
+					_uiconf = e.data as VidiunUiConf;
 					// update any values from flashvars
 //					_uiconf.confFile = overrideDataByFlashvars(_uiconf.confFile, _flashvars);
 					var confFile:XML = new XML(_uiconf.confFile);
@@ -323,12 +323,12 @@
 			protected function start():void {
 				_popups = new Vector.<EntryDetailsWin>();
 				initModel();
-				var filterData:FilterModel = (KMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
+				var filterData:FilterModel = (VMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 				// get default metadata view
 				if (filterData.enableCustomData) {
 					//if we asked for metadata view, listen to propertyChangeEvent on the DP,
 					// only when appropriate event received ask for drilldown. otherwise open drilldown
-					var cddp:CustomDataDataPack = KMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
+					var cddp:CustomDataDataPack = VMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
 					if (!CustomDataDataPack.metadataDefaultUiconfXML) {
 						cddp.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onMetadataViewUiconfLoaded);
 						var getMetadataUiconf:MetadataProfileEvent = new MetadataProfileEvent(MetadataProfileEvent.GET_METADATA_UICONF);
@@ -342,16 +342,16 @@
 			
 			
 			protected function loadFilterData():void {
-				var filterData:FilterModel = (KMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
+				var filterData:FilterModel = (VMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 				var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, this, filterData);
-				KedController.getInstance().dispatch(fe);
+				VedController.getInstance().dispatch(fe);
 				
 			}
 			
 			
 			protected function onMetadataViewUiconfLoaded(e:PropertyChangeEvent):void {
 				if (e.property == "metadataDefaultUiconfXML" && e.newValue != null) {
-					var cddp:CustomDataDataPack = KMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
+					var cddp:CustomDataDataPack = VMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
 					cddp.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onMetadataViewUiconfLoaded);
 					
 					loadFilterData();
@@ -363,18 +363,18 @@
 			 * */
 			private function setTimer(e:Event):void {
 				switch (e.type) {
-					case KalturaClient.CALL_QUEUED:
-						if (!_kcTimer) {
-							_kcTimer = new Timer(250);
-							_kcTimer.addEventListener(TimerEvent.TIMER, handleTimer, false, 0, true);
+					case VidiunClient.CALL_QUEUED:
+						if (!_vcTimer) {
+							_vcTimer = new Timer(250);
+							_vcTimer.addEventListener(TimerEvent.TIMER, handleTimer, false, 0, true);
 						}
-						if (!_kcTimer.running) {
-							_kcTimer.start();
+						if (!_vcTimer.running) {
+							_vcTimer.start();
 						}
 						break;
-					case KalturaClient.QUEUE_FLUSHED:
-						if (_kcTimer) {
-							_kcTimer.stop();
+					case VidiunClient.QUEUE_FLUSHED:
+						if (_vcTimer) {
+							_vcTimer.stop();
 						}
 						break;
 				}
@@ -392,7 +392,7 @@
 			protected function initTracker(event:Event):void {
 				// GAtracking
 				var ga:GoogleAnalyticsTracker = GoogleAnalyticsTracker.getInstance();
-				ga.init(_flashvars.partnerid, _flashvars.userid, this, "Ked SA/", _flashvars.urchinnumber, "AS3", _flashvars.gaDebug == "true" ? true : false);
+				ga.init(_flashvars.partnerid, _flashvars.userid, this, "Ved SA/", _flashvars.urchinnumber, "AS3", _flashvars.gaDebug == "true" ? true : false);
 			}
 			
 			/**

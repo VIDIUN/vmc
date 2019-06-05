@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.analytics.vo {
-	import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
+package com.vidiun.vmc.modules.analytics.vo {
+	import com.vidiun.vmc.modules.analytics.utils.TimeConsts;
 	
 	import flash.events.EventDispatcher;
 	
@@ -34,7 +34,7 @@ package com.kaltura.kmc.modules.analytics.vo {
 		
 		/**
 		 * days / months
-		 * @see com.kaltura.types.KalturaReportInterval 
+		 * @see com.vidiun.types.VidiunReportInterval 
 		 */
 		public var interval:String;
 

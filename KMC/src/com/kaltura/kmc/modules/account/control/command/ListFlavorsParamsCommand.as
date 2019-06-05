@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.vidiun.vmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.flavorParams.FlavorParamsList;
-	import com.kaltura.edw.model.util.FlavorParamsUtil;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.vo.KalturaFlavorParamsListResponse;
-	import com.kaltura.vo.KalturaLiveParams;
+	import com.vidiun.commands.flavorParams.FlavorParamsList;
+	import com.vidiun.edw.model.util.FlavorParamsUtil;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vo.FlavorVO;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunFlavorParams;
+	import com.vidiun.vo.VidiunFlavorParamsListResponse;
+	import com.vidiun.vo.VidiunLiveParams;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -27,12 +27,12 @@ package com.kaltura.kmc.modules.account.control.command
 		{
 			// only load if we are missing data
 			if (_model.liveFlavorsData.length == 0 || _model.mediaFlavorsData.length == 0) {
-				var pager:KalturaFilterPager = new KalturaFilterPager();
+				var pager:VidiunFilterPager = new VidiunFilterPager();
 				pager.pageSize = ListFlavorsParamsCommand.DEFAULT_PAGE_SIZE;
 			 	var listFlavorParams:FlavorParamsList = new FlavorParamsList(null, pager);
-			 	listFlavorParams.addEventListener(KalturaEvent.COMPLETE, result);
-				listFlavorParams.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(listFlavorParams);
+			 	listFlavorParams.addEventListener(VidiunEvent.COMPLETE, result);
+				listFlavorParams.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(listFlavorParams);
 			}
 			else {
 				// shortcircuit results - refresh arrays to trigger binding
@@ -50,18 +50,18 @@ package com.kaltura.kmc.modules.account.control.command
 		public function result(event:Object):void
 		{
 			_model.loadingFlag = false;
-			var response:KalturaFlavorParamsListResponse = event.data as KalturaFlavorParamsListResponse;
+			var response:VidiunFlavorParamsListResponse = event.data as VidiunFlavorParamsListResponse;
 			var flavorsParams:Array = FlavorParamsUtil.makeManyFlavorParams(response.objects);
 			
 			var mediaFlvorsTmpArrCol:ArrayCollection = new ArrayCollection();
 			var liveFlvorsTmpArrCol:ArrayCollection = new ArrayCollection();
 			
 			var flavor:FlavorVO;
-			for each(var kFlavor:KalturaFlavorParams in flavorsParams) {
+			for each(var vFlavor:VidiunFlavorParams in flavorsParams) {
 				// separate live flavorparams from all other flavor params
 				flavor = new FlavorVO();
-				flavor.kFlavor = kFlavor;
-				if (kFlavor is KalturaLiveParams) {
+				flavor.vFlavor = vFlavor;
+				if (vFlavor is VidiunLiveParams) {
 					liveFlvorsTmpArrCol.addItem(flavor);
 				}
 				else {
@@ -77,7 +77,7 @@ package com.kaltura.kmc.modules.account.control.command
 		
 		public function fault(info:Object):void
 		{
-			if(info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid KS") > -1 )
+			if(info && info.error && info.error.errorMsg && info.error.errorMsg.toString().indexOf("Invalid VS") > -1 )
 			{
 				JSGate.expired();
 				return;

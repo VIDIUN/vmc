@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 @ignore
 */
 
-package com.kaltura.kmvc.model
+package com.vidiun.vmvc.model
 {
    /**
     * Marker interface used to mark the custom ModelLocator.

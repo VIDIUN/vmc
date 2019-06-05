@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,27 +25,27 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaESearchRange;
+	import com.vidiun.vo.VidiunESearchRange;
 
-	import com.kaltura.vo.KalturaESearchBaseItem;
+	import com.vidiun.vo.VidiunESearchBaseItem;
 
 	[Bindable]
-	public dynamic class KalturaESearchItem extends KalturaESearchBaseItem
+	public dynamic class VidiunESearchItem extends VidiunESearchBaseItem
 	{
 		/**
 		**/
 		public var searchTerm : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaESearchItemType
+		* @see com.vidiun.types.VidiunESearchItemType
 		**/
 		public var itemType : int = int.MIN_VALUE;
 
 		/**
 		**/
-		public var range : KalturaESearchRange;
+		public var range : VidiunESearchRange;
 
 		override public function getUpdateableParamKeys():Array
 		{

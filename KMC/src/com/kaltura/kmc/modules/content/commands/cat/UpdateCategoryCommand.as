@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.category.CategoryUpdate;
+	import com.vidiun.edw.control.VedController;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.edw.vo.CategoryVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.PropertyChangeEvent;
 	import mx.resources.ResourceManager;
 	
-	public class UpdateCategoryCommand extends KalturaCommand 
+	public class UpdateCategoryCommand extends VidiunCommand 
 	{
 		
 		override public function execute(event:CairngormEvent):void
@@ -24,9 +24,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var cat:CategoryVO = event.data[0] as CategoryVO;
 			cat.category.setUpdatedFieldsOnly(true);
 		 	var updateCategory:CategoryUpdate = new CategoryUpdate(cat.id, cat.category);
-		 	updateCategory.addEventListener(KalturaEvent.COMPLETE, result);
-			updateCategory.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(updateCategory);	   
+		 	updateCategory.addEventListener(VidiunEvent.COMPLETE, result);
+			updateCategory.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(updateCategory);	   
 		}
 		
 		override public function result(data:Object):void
@@ -51,7 +51,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 
 			if (_model.listableVo) {
 				var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SEARCH_ENTRIES , _model.listableVo);
-				KedController.getInstance().dispatch(searchEvent);
+				VedController.getInstance().dispatch(searchEvent);
 			}
 			
 			// reload categories for tree

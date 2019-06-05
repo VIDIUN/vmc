@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<panels:MultiAttributeFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+<panels:MultiAttributeFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 							 creationComplete="multiattributefilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.BaseFilter;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.edw.components.fltr.BaseFilter;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
 			
 			import mx.controls.Alert;
 			import mx.controls.Button;
@@ -24,9 +24,9 @@
 			private var _currentEndOld:Date = null;
 			
 			
-			override public function set kfilters(value:Array):void {
+			override public function set vfilters(value:Array):void {
 				// update vo:
-				super.kfilters = value;
+				super.vfilters = value;
 				
 				// update ui:
 				var date:Date;

@@ -1,4 +1,4 @@
-package com.kaltura.controls.pagingClasses
+package com.vidiun.controls.pagingClasses
 {
 	import flash.events.Event;
 	

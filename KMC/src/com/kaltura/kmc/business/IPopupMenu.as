@@ -1,4 +1,4 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;

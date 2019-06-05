@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunEntryDistribution;
 	
-	public class EntryDistributionEvent extends KMvCEvent
+	public class EntryDistributionEvent extends VMvCEvent
 	{
 		public static const LIST:String = "content_listEntryDistribution";
 		public static const UPDATE_LIST:String = "content_updateEntryDistributionList";
@@ -15,14 +15,14 @@ package com.kaltura.edw.control.events
 		public static const GET_SENT_DATA:String = "content_getSentDataEntryDistribution";
 		public static const GET_RETURNED_DATA:String = "content_getReturnedDataEntryDistribution";
 		
-		public var entryDistribution:KalturaEntryDistribution;
+		public var entryDistribution:VidiunEntryDistribution;
 		public var distributionsWithProfilesToAddArray:Array;
 		public var distributionsToRemoveArray:Array;
 		
 		public function EntryDistributionEvent( type:String, 
 												distributionsWithProfilesToAddArray:Array = null,
 												distributionsToRemoveArray:Array = null,
-												entryDistribution: KalturaEntryDistribution = null,
+												entryDistribution: VidiunEntryDistribution = null,
 												bubbles:Boolean=false, 
 												cancelable:Boolean=false)
 		{

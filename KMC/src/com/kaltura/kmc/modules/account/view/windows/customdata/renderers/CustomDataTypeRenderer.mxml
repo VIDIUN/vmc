@@ -3,8 +3,8 @@
 		 horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.base.types.MetadataCustomFieldTypes;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.base.types.MetadataCustomFieldTypes;
+			import com.vidiun.vo.MetadataFieldVO;
 			private function setLabel(event:Event):void {
 				var currentField:MetadataFieldVO = MetadataFieldVO(data);
 				switch (currentField.type) {

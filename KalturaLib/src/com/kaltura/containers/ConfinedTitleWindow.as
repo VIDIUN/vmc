@@ -1,4 +1,4 @@
-package com.kaltura.containers
+package com.vidiun.containers
 {
 	import flash.events.Event;
 	

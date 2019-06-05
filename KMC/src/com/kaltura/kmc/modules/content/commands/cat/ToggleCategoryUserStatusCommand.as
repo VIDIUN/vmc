@@ -1,27 +1,27 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryUser.CategoryUserActivate;
-	import com.kaltura.commands.categoryUser.CategoryUserDeactivate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-	import com.kaltura.vo.KalturaCategoryUser;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.categoryUser.CategoryUserActivate;
+	import com.vidiun.commands.categoryUser.CategoryUserDeactivate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+	import com.vidiun.vo.VidiunCategoryUser;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class ToggleCategoryUserStatusCommand extends KalturaCommand {
+	public class ToggleCategoryUserStatusCommand extends VidiunCommand {
 		
 		private var _usrs:Array;
 		private var _eventType:String;
 		
 		override public function execute(event:CairngormEvent):void {
-			// event.data is [KalturaCategoryUser]
+			// event.data is [VidiunCategoryUser]
 			_usrs = event.data;
 			_eventType = event.type;
 			
@@ -43,9 +43,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.increaseLoadCounter();
 			
 			var mr:MultiRequest = new MultiRequest();
-			var cu:KalturaCategoryUser;
+			var cu:VidiunCategoryUser;
 			for (var i:int = 0; i<_usrs.length; i++) {
-				cu = _usrs[i] as KalturaCategoryUser;
+				cu = _usrs[i] as VidiunCategoryUser;
 				if (_eventType == CategoryUserEvent.DEACTIVATE_CATEGORY_USER) {
 					mr.addAction(new CategoryUserDeactivate(cu.categoryId, cu.userId));
 				}
@@ -53,9 +53,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 					mr.addAction(new CategoryUserActivate(cu.categoryId, cu.userId));
 				}
 			} 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);	   
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);	   
 			
 		}
 		

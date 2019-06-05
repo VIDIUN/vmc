@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 
-	public class DistributionProfileEvent extends KMvCEvent
+	public class DistributionProfileEvent extends VMvCEvent
 	{
 		public static const LIST:String = "content_listDistributionProfile";
 		public static const UPDATE:String = "content_updateDistributionProfiles";

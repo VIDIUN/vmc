@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.BaseFlexVo;
+	import com.vidiun.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaAppToken extends BaseFlexVo
+	public dynamic class VidiunAppToken extends BaseFlexVo
 	{
 		/**
 		* The id of the application token
@@ -58,7 +58,7 @@ package com.kaltura.vo
 
 		/**
 		* Application token status
-		* @see com.kaltura.types.KalturaAppTokenStatus
+		* @see com.vidiun.types.VidiunAppTokenStatus
 		**/
 		public var status : int = int.MIN_VALUE;
 
@@ -68,28 +68,28 @@ package com.kaltura.vo
 		public var expiry : int = int.MIN_VALUE;
 
 		/**
-		* Type of KS (Kaltura Session) that created using the current token
-		* @see com.kaltura.types.KalturaSessionType
+		* Type of VS (Vidiun Session) that created using the current token
+		* @see com.vidiun.types.VidiunSessionType
 		**/
 		public var sessionType : int = int.MIN_VALUE;
 
 		/**
-		* User id of KS (Kaltura Session) that created using the current token
+		* User id of VS (Vidiun Session) that created using the current token
 		**/
 		public var sessionUserId : String = null;
 
 		/**
-		* Expiry duration of KS (Kaltura Session) that created using the current token (in seconds)
+		* Expiry duration of VS (Vidiun Session) that created using the current token (in seconds)
 		**/
 		public var sessionDuration : int = int.MIN_VALUE;
 
 		/**
-		* Comma separated privileges to be applied on KS (Kaltura Session) that created using the current token
+		* Comma separated privileges to be applied on VS (Vidiun Session) that created using the current token
 		**/
 		public var sessionPrivileges : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaAppTokenHashType
+		* @see com.vidiun.types.VidiunAppTokenHashType
 		**/
 		public var hashType : String = null;
 

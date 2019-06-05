@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaRelatedFilter;
+	import com.vidiun.vo.VidiunRelatedFilter;
 
 	[Bindable]
-	public dynamic class KalturaMetadataBaseFilter extends KalturaRelatedFilter
+	public dynamic class VidiunMetadataBaseFilter extends VidiunRelatedFilter
 	{
 		/**
 		**/
@@ -57,8 +57,8 @@ package com.kaltura.vo
 		public var metadataProfileVersionLessThanOrEqual : int = int.MIN_VALUE;
 
 		/**
-		* When null, default is KalturaMetadataObjectType::ENTRY
-		* @see com.kaltura.types.KalturaMetadataObjectType
+		* When null, default is VidiunMetadataObjectType::ENTRY
+		* @see com.vidiun.types.VidiunMetadataObjectType
 		**/
 		public var metadataObjectTypeEqual : String = null;
 
@@ -99,7 +99,7 @@ package com.kaltura.vo
 		public var updatedAtLessThanOrEqual : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaMetadataStatus
+		* @see com.vidiun.types.VidiunMetadataStatus
 		**/
 		public var statusEqual : int = int.MIN_VALUE;
 

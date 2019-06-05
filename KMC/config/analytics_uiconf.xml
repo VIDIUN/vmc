@@ -5,6 +5,6 @@
 		<language>en_US</language>
 	</locale>
 	<uiconf>
-		<drilldown>@@KdpDrilldownForAnalyticsUIConfID@@</drilldown>
+		<drilldown>@@VdpDrilldownForAnalyticsUIConfID@@</drilldown>
 	</uiconf>
 </root>

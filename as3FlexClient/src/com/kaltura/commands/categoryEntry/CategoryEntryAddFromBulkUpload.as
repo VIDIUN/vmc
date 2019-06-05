@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.categoryEntry
+package com.vidiun.commands.categoryEntry
 {
-		import com.kaltura.vo.KalturaBulkServiceData;
-		import com.kaltura.vo.KalturaBulkUploadCategoryEntryData;
-	import com.kaltura.delegates.categoryEntry.CategoryEntryAddFromBulkUploadDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunBulkServiceData;
+		import com.vidiun.vo.VidiunBulkUploadCategoryEntryData;
+	import com.vidiun.delegates.categoryEntry.CategoryEntryAddFromBulkUploadDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class CategoryEntryAddFromBulkUpload extends KalturaCall
+	public class CategoryEntryAddFromBulkUpload extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param bulkUploadData KalturaBulkServiceData
-		* @param bulkUploadCategoryEntryData KalturaBulkUploadCategoryEntryData
+		* @param bulkUploadData VidiunBulkServiceData
+		* @param bulkUploadCategoryEntryData VidiunBulkUploadCategoryEntryData
 		**/
-		public function CategoryEntryAddFromBulkUpload( bulkUploadData : KalturaBulkServiceData,bulkUploadCategoryEntryData : KalturaBulkUploadCategoryEntryData=null )
+		public function CategoryEntryAddFromBulkUpload( bulkUploadData : VidiunBulkServiceData,bulkUploadCategoryEntryData : VidiunBulkUploadCategoryEntryData=null )
 		{
 			service= 'categoryentry';
 			action= 'addFromBulkUpload';
@@ -50,11 +50,11 @@ package com.kaltura.commands.categoryEntry
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(bulkUploadData, 'bulkUploadData');
+				keyValArr = vidiunObject2Arrays(bulkUploadData, 'bulkUploadData');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			if (bulkUploadCategoryEntryData) { 
-				keyValArr = kalturaObject2Arrays(bulkUploadCategoryEntryData, 'bulkUploadCategoryEntryData');
+				keyValArr = vidiunObject2Arrays(bulkUploadCategoryEntryData, 'bulkUploadCategoryEntryData');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

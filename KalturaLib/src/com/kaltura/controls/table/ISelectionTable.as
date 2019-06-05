@@ -1,4 +1,4 @@
-package com.kaltura.controls.table
+package com.vidiun.controls.table
 {
 	public interface ISelectionTable
 	{

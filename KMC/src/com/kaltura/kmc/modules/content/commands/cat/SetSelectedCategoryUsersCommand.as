@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
 	
-	public class SetSelectedCategoryUsersCommand extends KalturaCommand {
+	public class SetSelectedCategoryUsersCommand extends VidiunCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			// event.data is [KalturaCategoryUser]
+			// event.data is [VidiunCategoryUser]
 			_model.categoriesModel.selectedCategoryUsers = event.data;
 		}
 	}

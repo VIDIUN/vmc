@@ -1,25 +1,25 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.types.KalturaInheritanceType;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.category.CategoryUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.CategoryUtils;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.types.VidiunInheritanceType;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class SetCategoriesAttributeCommand extends KalturaCommand {
+	public class SetCategoriesAttributeCommand extends VidiunCommand {
 		
 		private var _type:String;	// event type
 		
-		private var _kCats:Array;	// categories ready for update
+		private var _vCats:Array;	// categories ready for update
 		
 		private var _numOfGroups:int = 1;	// numbre of groups to process
 		
@@ -32,57 +32,57 @@ package com.kaltura.kmc.modules.content.commands.cat
 		override public function execute(event:CairngormEvent):void
 		{
 			_type = event.type;
-			_kCats = [];
-			var kCat:KalturaCategory;
+			_vCats = [];
+			var vCat:VidiunCategory;
 			var cats:Array = _model.categoriesModel.selectedCategories;
 			
 			// process cats before update
-			for each (kCat in cats) {
-				if (!kCat.privacyContexts) {
+			for each (vCat in cats) {
+				if (!vCat.privacyContexts) {
 					_nonUpdate = true;
 					continue;
 				}
 				
 				if (_type == CategoryEvent.SET_CATEGORIES_LISTING) {
-					kCat.appearInList = event.data as int;
+					vCat.appearInList = event.data as int;
 				}
 				else if (_type == CategoryEvent.SET_CATEGORIES_CONTRIBUTION) {
-					kCat.contributionPolicy = event.data as int;
+					vCat.contributionPolicy = event.data as int;
 				} 
 				else if (_type == CategoryEvent.SET_CATEGORIES_ACCESS) {
-					kCat.privacy = event.data as int;
+					vCat.privacy = event.data as int;
 				} 
 				else if (_type == CategoryEvent.SET_CATEGORIES_OWNER) {
-//					if (kCat.inheritanceType == KalturaInheritanceType.INHERIT) {
+//					if (vCat.inheritanceType == VidiunInheritanceType.INHERIT) {
 //						_nonUpdate = true;
 //						continue;
 //					}
-					kCat.owner = event.data as String;
+					vCat.owner = event.data as String;
 				}
 				
-				CategoryUtils.resetUnupdateableFields(kCat);
-				kCat.setUpdatedFieldsOnly(true);
-				_kCats.push(kCat);
+				CategoryUtils.resetUnupdateableFields(vCat);
+				vCat.setUpdatedFieldsOnly(true);
+				_vCats.push(vCat);
 			}
 			
 			// is large update?
-			if (_kCats.length > 50) {
-				Alert.show(ResourceManager.getInstance().getString('cms', 'updateLotsOfCategoriesMsg', [_kCats.length]),
+			if (_vCats.length > 50) {
+				Alert.show(ResourceManager.getInstance().getString('cms', 'updateLotsOfCategoriesMsg', [_vCats.length]),
 					ResourceManager.getInstance().getString('cms', 'updateLotsOfEntriesTitle'),
 					Alert.YES | Alert.NO, null, responesFnc);
 				
 			}
-			else if (_kCats.length > 0) {
+			else if (_vCats.length > 0) {
 				var mr:MultiRequest = new MultiRequest();
-				for each (kCat in _kCats) {
-					var update:CategoryUpdate = new CategoryUpdate(kCat.id, kCat);
+				for each (vCat in _vCats) {
+					var update:CategoryUpdate = new CategoryUpdate(vCat.id, vCat);
 					mr.addAction(update);
 				}
 				
 				_model.increaseLoadCounter();
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(mr);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(mr);
 			}
 			
 			if (_nonUpdate) {
@@ -103,8 +103,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 				}
 				
 				// update:
-				_numOfGroups = Math.floor(_kCats.length / 50);
-				var lastGroupSize:int = _kCats.length % 50;
+				_numOfGroups = Math.floor(_vCats.length / 50);
+				var lastGroupSize:int = _vCats.length % 50;
 				if (lastGroupSize != 0) {
 					_numOfGroups++;
 				}
@@ -113,23 +113,23 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var mr:MultiRequest;
 				for (var groupIndex:int = 0; groupIndex < _numOfGroups; groupIndex++) {
 					mr = new MultiRequest();
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(VidiunEvent.COMPLETE, result);
+					mr.addEventListener(VidiunEvent.FAILED, fault);
 					mr.queued = false;
 					
 					groupSize = (groupIndex < (_numOfGroups - 1)) ? 50 : lastGroupSize;
 					for (var entryIndexInGroup:int = 0; entryIndexInGroup < groupSize; entryIndexInGroup++) {
 						var index:int = ((groupIndex * 50) + entryIndexInGroup);
-						var keepId:int = (_kCats[index] as KalturaCategory).id;
-						var kCat:KalturaCategory = _kCats[index] as KalturaCategory;
-						kCat.setUpdatedFieldsOnly(true);
-						CategoryUtils.resetUnupdateableFields(kCat);
+						var keepId:int = (_vCats[index] as VidiunCategory).id;
+						var vCat:VidiunCategory = _vCats[index] as VidiunCategory;
+						vCat.setUpdatedFieldsOnly(true);
+						CategoryUtils.resetUnupdateableFields(vCat);
 						
-						var update:CategoryUpdate = new CategoryUpdate(keepId, kCat);
+						var update:CategoryUpdate = new CategoryUpdate(keepId, vCat);
 						mr.addAction(update);
 					}
 					_model.increaseLoadCounter();
-					_model.context.kc.post(mr);
+					_model.context.vc.post(mr);
 				}
 			}
 			else {

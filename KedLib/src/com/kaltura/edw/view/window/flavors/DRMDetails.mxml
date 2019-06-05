@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							layout="vertical" width="360" showCloseButton="true"
 							close="helptitlewindow1_closeHandler(event)" showHelpButton="false" 
 							title="{resourceManager.getString('drilldown', 'drm_details')}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.vo.KalturaFlavorAssetWithParams;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaWidevineFlavorAsset;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.vo.VidiunFlavorAssetWithParams;
+			import com.vidiun.vo.VidiunFlavorParams;
+			import com.vidiun.vo.VidiunWidevineFlavorAsset;
 			
 			import mx.managers.PopUpManager;
 			
 			
 			[Bindable]
-			private var _flavorAsset:KalturaWidevineFlavorAsset;
+			private var _flavorAsset:VidiunWidevineFlavorAsset;
 			
 			[Bindable]
-			private var _flavorParams:KalturaFlavorParams;
+			private var _flavorParams:VidiunFlavorParams;
 			
 			[Bindable]
 			private var _sources:Array;
 			
 			public function set flavorAssetWithParams(awp:FlavorAssetWithParamsVO):void {
-				_flavorAsset = awp.kalturaFlavorAssetWithParams.flavorAsset as KalturaWidevineFlavorAsset;
-				_flavorParams = awp.kalturaFlavorAssetWithParams.flavorParams;
+				_flavorAsset = awp.vidiunFlavorAssetWithParams.flavorAsset as VidiunWidevineFlavorAsset;
+				_flavorParams = awp.vidiunFlavorAssetWithParams.flavorParams;
 				_sources = awp.sources;
 			}
 			

@@ -2,7 +2,7 @@
 <mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.vo.NotificationVO;
+			import com.vidiun.vmc.modules.account.vo.NotificationVO;
 			
 			
 			

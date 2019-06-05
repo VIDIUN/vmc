@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.mix
+package com.vidiun.edw.control.commands.mix
 {
-	import com.kaltura.commands.mixing.MixingGetMixesByMediaId;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.ContentDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.vidiun.commands.mixing.MixingGetMixesByMediaId;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.model.datapacks.ContentDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.edw.control.commands.VedCommand;
 
-	public class GetEntryRoughcutsCommand extends KedCommand 
+	public class GetEntryRoughcutsCommand extends VedCommand 
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var cdp:ContentDataPack = _model.getDataPack(ContentDataPack) as ContentDataPack;
 			cdp.contentParts = null;
 			
-			var e : KedEntryEvent = event as KedEntryEvent;
+			var e : VedEntryEvent = event as VedEntryEvent;
 			var getMixUsingEntry:MixingGetMixesByMediaId = new MixingGetMixesByMediaId(e.entryVo.id);
 			
-			getMixUsingEntry.addEventListener(KalturaEvent.COMPLETE, result);
-			getMixUsingEntry.addEventListener(KalturaEvent.FAILED, fault);
+			getMixUsingEntry.addEventListener(VidiunEvent.COMPLETE, result);
+			getMixUsingEntry.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(getMixUsingEntry);
 		}

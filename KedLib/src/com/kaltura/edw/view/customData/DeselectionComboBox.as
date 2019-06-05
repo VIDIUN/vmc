@@ -1,4 +1,4 @@
-package com.kaltura.edw.view.customData {
+package com.vidiun.edw.view.customData {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.FocusEvent;

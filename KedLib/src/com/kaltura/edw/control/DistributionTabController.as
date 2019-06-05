@@ -1,15 +1,15 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.GetSingleEntryCommand;
-	import com.kaltura.edw.control.commands.ListFlavorAssetsByEntryIdCommand;
-	import com.kaltura.edw.control.commands.dist.*;
-	import com.kaltura.edw.control.commands.thumb.ListThumbnailAssetCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.GetSingleEntryCommand;
+	import com.vidiun.edw.control.commands.ListFlavorAssetsByEntryIdCommand;
+	import com.vidiun.edw.control.commands.dist.*;
+	import com.vidiun.edw.control.commands.thumb.ListThumbnailAssetCommand;
+	import com.vidiun.edw.control.events.EntryDistributionEvent;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.ThumbnailAssetEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class DistributionTabController extends KMvCController {
+	public class DistributionTabController extends VMvCController {
 		
 		public function DistributionTabController()
 		{
@@ -19,8 +19,8 @@ package com.kaltura.edw.control
 		public function initializeCommands():void {
 			addCommand(ThumbnailAssetEvent.LIST, ListThumbnailAssetCommand);
 			
-			addCommand(KedEntryEvent.GET_FLAVOR_ASSETS, ListFlavorAssetsByEntryIdCommand);
-			addCommand(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
+			addCommand(VedEntryEvent.GET_FLAVOR_ASSETS, ListFlavorAssetsByEntryIdCommand);
+			addCommand(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
 			
 			addCommand(EntryDistributionEvent.LIST, ListEntryDistributionCommand);
 			addCommand(EntryDistributionEvent.UPDATE_LIST, UpdateEntryDistributionsCommand);

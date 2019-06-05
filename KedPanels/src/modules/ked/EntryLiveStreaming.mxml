@@ -3,34 +3,34 @@
 live streaming control tab of EntryDetailsWin
 -->
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
-		   xmlns:control="com.kaltura.edw.control.*"
-		   xmlns:live="com.kaltura.edw.view.live.*"
+		   xmlns:control="com.vidiun.edw.control.*"
+		   xmlns:live="com.vidiun.edw.view.live.*"
 		   width="100%" height="100%" label="{resourceManager.getString('drilldown', 'liveStream')}"
-		   implements="com.kaltura.edw.business.IDrilldownPanel" layout="vertical">
+		   implements="com.vidiun.edw.business.IDrilldownPanel" layout="vertical">
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.edw.business.KedJSGate;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.LiveEvent;
-			import com.kaltura.edw.control.events.ProfileEvent;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.edw.view.window.SettingsExample;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.types.KalturaSourceType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaLiveStreamBitrate;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.business.EntryLiveStreamingHelper;
+			import com.vidiun.edw.business.VedJSGate;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.events.LiveEvent;
+			import com.vidiun.edw.control.events.ProfileEvent;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.datapacks.FlavorsDataPack;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.edw.view.window.SettingsExample;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.types.VidiunSourceType;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunLiveStreamBitrate;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -44,7 +44,7 @@ live streaming control tab of EntryDetailsWin
 			private var _pop:SettingsExample;
 
 			[Bindable]
-			private var _selectedEntry:KalturaLiveStreamEntry;
+			private var _selectedEntry:VidiunLiveStreamEntry;
 
 
 			private var _dpModel:IDataPackRepository;
@@ -57,7 +57,7 @@ live streaming control tab of EntryDetailsWin
 			/**
 			 * @RnP
 			 * */
-			public var enableKalturaLive:Boolean = true;
+			public var enableVidiunLive:Boolean = true;
 			
 			[Bindable]
 			/**
@@ -66,9 +66,9 @@ live streaming control tab of EntryDetailsWin
 			public var showLiveReportsButton:Boolean = true;
 			
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
-				if (value is KalturaLiveStreamEntry) {
-					_selectedEntry = value as KalturaLiveStreamEntry;
+			public function set selectedEntry(value:VidiunBaseEntry):void {
+				if (value is VidiunLiveStreamEntry) {
+					_selectedEntry = value as VidiunLiveStreamEntry;
 				}
 				else {
 					_selectedEntry = null;
@@ -76,7 +76,7 @@ live streaming control tab of EntryDetailsWin
 			}
 
 
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
@@ -108,7 +108,7 @@ live streaming control tab of EntryDetailsWin
 				var success:Boolean = true; // validation result
 				var errorMessage:String;
 				var errorTitle:String;
-				if (_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM) { // nothing to validate for kaltura live
+				if (_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM) { // nothing to validate for vidiun live
 					var bitrates:Array = bitrateConfig.getBitrates();
 					if (!bitrates) {
 						//failed validation
@@ -132,8 +132,8 @@ live streaming control tab of EntryDetailsWin
 
 			public function init():void {
 				PermissionManager.getInstance().applyAllAttributes(this, PanelConsts.LIVE_STREAM_PANEL);
-				// for kaltura live stream - get live profiles
-				if (enableKalturaLive) {// set by RnP
+				// for vidiun live stream - get live profiles
+				if (enableVidiunLive) {// set by RnP
 					if (_cw) {
 						_cw.unwatch();
 					}
@@ -146,7 +146,7 @@ live streaming control tab of EntryDetailsWin
 
 			public function isChanged():Boolean {
 				var result:Boolean;
-				if (_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM) {
+				if (_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM) {
 					// get from conversion profile panel
 					result = convprofConfig.isChanged() || streamConfig.isChanged(); 
 				}
@@ -161,16 +161,16 @@ live streaming control tab of EntryDetailsWin
 
 
 			public function save():void {
-				if (_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM) {
+				if (_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM) {
 					// get from conversion profile panel
 					_selectedEntry.conversionProfileId = convprofConfig.getSelectedProfile();
 
 					// explicit live
 					if (streamConfig.getAutoStartStreaming()) {
-						_selectedEntry.explicitLive = KalturaNullableBoolean.FALSE_VALUE;	
+						_selectedEntry.explicitLive = VidiunNullableBoolean.FALSE_VALUE;	
 					}
 					else {
-						_selectedEntry.explicitLive = KalturaNullableBoolean.TRUE_VALUE;
+						_selectedEntry.explicitLive = VidiunNullableBoolean.TRUE_VALUE;
 					}
 				}
 				else {
@@ -180,7 +180,7 @@ live streaming control tab of EntryDetailsWin
 						_selectedEntry.bitrates = bitrates;
 					}
 				}
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 
 
@@ -332,15 +332,15 @@ live streaming control tab of EntryDetailsWin
 				var bitratesString:String = "";
 				var dimensionsStrings:String = "";
 				var bitrates:Array;
-				if (_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM) {
+				if (_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM) {
 					bitrates = convprofConfig.getBitrates();
 				}
 				else {
 					bitrates = bitrateConfig.getBitrates();
 				}
-				var br:KalturaLiveStreamBitrate;
+				var br:VidiunLiveStreamBitrate;
 				for (var i:int = 0; i<bitrates.length; i++) {
-					br = bitrates[i] as KalturaLiveStreamBitrate;
+					br = bitrates[i] as VidiunLiveStreamBitrate;
 					bitratesString += br.bitrate.toString() + ";";
 					dimensionsStrings += br.width.toString() + "x" + br.height.toString() + ";";
 				}
@@ -353,7 +353,7 @@ live streaming control tab of EntryDetailsWin
 				encode.audio.datarate.appendChild("128");
 				
 				// additional
-				if (_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM || _selectedEntry.sourceType == KalturaSourceType.AKAMAI_UNIVERSAL_LIVE) {
+				if (_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM || _selectedEntry.sourceType == VidiunSourceType.AKAMAI_UNIVERSAL_LIVE) {
 					encode.video.format.appendChild("H.264");
 					encode.video.advanced.profile.appendChild("Baseline");
 					encode.video.advanced.level.appendChild("3.1");
@@ -370,7 +370,7 @@ live streaming control tab of EntryDetailsWin
 			
 			private function openLiveReport(event:MouseEvent):void
 			{
-				KedJSGate.openLiveAnalyticsDrilldown(_selectedEntry.id, _selectedEntry.name);
+				VedJSGate.openLiveAnalyticsDrilldown(_selectedEntry.id, _selectedEntry.name);
 			}
 			
 			private function fixStreamName(name:String):String {
@@ -399,9 +399,9 @@ live streaming control tab of EntryDetailsWin
 	</mx:Script>
 	<control:LivestreamTabController id="controller"/>
 	
-	<mx:VBox visible="{_selectedEntry.sourceType != KalturaSourceType.MANUAL_LIVE_STREAM}"
+	<mx:VBox visible="{_selectedEntry.sourceType != VidiunSourceType.MANUAL_LIVE_STREAM}"
 			 width="100%"
-			 includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.MANUAL_LIVE_STREAM}"
+			 includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.MANUAL_LIVE_STREAM}"
 			 styleName="noPadding">
 		<mx:Label styleName="drillDownLabel"
 				  text="{resourceManager.getString('drilldown', 'brodcastingSettings')}"/>
@@ -441,8 +441,8 @@ live streaming control tab of EntryDetailsWin
 					  text=""/>
 			<mx:Button label="{resourceManager.getString('drilldown', 'regenerateLiveToken')}"
 					   click="regenerateToken(event)"
-					   visible="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
-					   includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"/>
+					   visible="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
+					   includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"/>
 		</mx:HBox>
 	
 		
@@ -467,48 +467,48 @@ live streaming control tab of EntryDetailsWin
 	
 		<mx:Spacer height="20"/>
 		
-		<!-- Kaltura - rtsp urls -->
+		<!-- Vidiun - rtsp urls -->
 		<live:RtspInfo width="100%" 
-					   visible="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}" 
-					   includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
+					   visible="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}" 
+					   includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
 					   selectedEntry="{_selectedEntry}" styleName="noPadding"/>
 	
 		<!-- stream config - Akamai -->
-		<live:AkamaiStreamConfig visible="{_selectedEntry.sourceType == KalturaSourceType.AKAMAI_UNIVERSAL_LIVE}"
+		<live:AkamaiStreamConfig visible="{_selectedEntry.sourceType == VidiunSourceType.AKAMAI_UNIVERSAL_LIVE}"
 								 width="100%"
-								 includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.AKAMAI_UNIVERSAL_LIVE}"
+								 includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.AKAMAI_UNIVERSAL_LIVE}"
 								 selectedEntry="{_selectedEntry}" styleName="noPadding"/>
 		
-		<!-- stream config - Kaltura -->
-		<live:KalturaStreamConfig id="streamConfig" 
-								  visible="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
+		<!-- stream config - Vidiun -->
+		<live:VidiunStreamConfig id="streamConfig" 
+								  visible="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
 								  width="100%"
-								  includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
+								  includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
 								  selectedEntry="{_selectedEntry}" styleName="noPadding"/>
 		
 		<!-- bitrate config -->
 		<live:BitrateConfig id="bitrateConfig"
-							visible="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}"
+							visible="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}"
 							width="100%" extrainfo="onRollOver(3)"
-							includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}"/>
+							includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}"/>
 			
 		<!-- conv prof -->
 		<live:ConversionProfileConfig id="convprofConfig"
-									  visible="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
+									  visible="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
 									  width="100%"
-									  includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM}"
+									  includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM}"
 									  profiles="{liveProfiles}" selectedEntry="{_selectedEntry}"/>
 		
 		<!-- broadcast credentials -->
-		<mx:HBox visible="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}" width="100%"
-				 includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}">
+		<mx:HBox visible="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}" width="100%"
+				 includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}">
 			<mx:Label styleName="drillDownLabel"
 					  text="{resourceManager.getString('drilldown', 'broadcastinCredential')}"/>
 			<mx:Button buttonMode="true" click="{onRollOver(2)}" styleName="help"/>			
 		</mx:HBox>
 	
-		<mx:HBox visible="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}" width="100%"
-				 includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}">
+		<mx:HBox visible="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}" width="100%"
+				 includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}">
 			<mx:Label width="{EntryLiveStreamingHelper.PREFIXES_WIDTH}" styleName="drillDownLabel"
 					  text="{resourceManager.getString('drilldown', 'userName')}"/>
 			<mx:Label id="userName" width="{EntryLiveStreamingHelper.BROADCASTING_WIDTH}"
@@ -517,8 +517,8 @@ live streaming control tab of EntryDetailsWin
 			<mx:Spacer width="30"/>
 		</mx:HBox>
 	
-		<mx:HBox visible="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}" width="100%"
-				 includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}">
+		<mx:HBox visible="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}" width="100%"
+				 includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}">
 			<mx:Label width="{EntryLiveStreamingHelper.PREFIXES_WIDTH}" styleName="drillDownLabel"
 					  text="{resourceManager.getString('drilldown', 'password')}"/>
 			<mx:Label id="password" width="{EntryLiveStreamingHelper.BROADCASTING_WIDTH}"
@@ -529,25 +529,25 @@ live streaming control tab of EntryDetailsWin
 		<mx:Spacer height="20"/>
 	
 		<!-- IPs -->
-		<live:IPsConfig visible="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}"
+		<live:IPsConfig visible="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}"
 						width="100%"
-						includeInLayout="{_selectedEntry.sourceType != KalturaSourceType.LIVE_STREAM}"
+						includeInLayout="{_selectedEntry.sourceType != VidiunSourceType.LIVE_STREAM}"
 						selectedEntry="{_selectedEntry}"/>
 		
 		<mx:HBox width="100%" styleName="noPadding">
 			<mx:Button id="exportBtn" label="{resourceManager.getString('drilldown', 'exportToFme')}"
 					   click="{fmeExport()}"/>
-			<mx:LinkButton visible="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM &amp;&amp; showLiveReportsButton}"
+			<mx:LinkButton visible="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM &amp;&amp; showLiveReportsButton}"
 						   label="{resourceManager.getString('drilldown', 'openLiveReport')}"
 						   click="openLiveReport(event)"
-						   includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.LIVE_STREAM &amp;&amp; showLiveReportsButton}"
+						   includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.LIVE_STREAM &amp;&amp; showLiveReportsButton}"
 						   styleName="liveReportsButton"/>
 		</mx:HBox>
 	</mx:VBox>
 	
 	<!-- manual stream -->
 	<live:Manual id="manualWrap" width="100%" styleName="noPadding" selectedEntry="{_selectedEntry}"
-			 visible="{_selectedEntry.sourceType == KalturaSourceType.MANUAL_LIVE_STREAM}"
-			 includeInLayout="{_selectedEntry.sourceType == KalturaSourceType.MANUAL_LIVE_STREAM}" />
+			 visible="{_selectedEntry.sourceType == VidiunSourceType.MANUAL_LIVE_STREAM}"
+			 includeInLayout="{_selectedEntry.sourceType == VidiunSourceType.MANUAL_LIVE_STREAM}" />
 		
 </mx:Module>

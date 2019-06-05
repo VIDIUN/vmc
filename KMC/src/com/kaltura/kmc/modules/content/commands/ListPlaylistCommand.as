@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.playlist.PlaylistList;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.types.KalturaPlaylistOrderBy;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-	import com.kaltura.vo.KalturaPlaylist;
-	import com.kaltura.vo.KalturaPlaylistFilter;
-	import com.kaltura.vo.KalturaPlaylistListResponse;
+	import com.vidiun.commands.playlist.PlaylistList;
+	import com.vidiun.edw.control.events.SearchEvent;
+	import com.vidiun.edw.vo.ListableVo;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+	import com.vidiun.types.VidiunPlaylistOrderBy;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+	import com.vidiun.vo.VidiunPlaylist;
+	import com.vidiun.vo.VidiunPlaylistFilter;
+	import com.vidiun.vo.VidiunPlaylistListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.rpc.IResponder;
 
-	public class ListPlaylistCommand extends KalturaCommand implements ICommand, IResponder {
+	public class ListPlaylistCommand extends VidiunCommand implements ICommand, IResponder {
 		// Atar: I have no idea why we need this.
-		KalturaMediaEntryFilterForPlaylist;
+		VidiunMediaEntryFilterForPlaylist;
 
 		/**
 		 * External Syndication windows don't send a listableVO, playlist panel does. 
@@ -31,25 +31,25 @@ package com.kaltura.kmc.modules.content.commands {
 		 * */
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			_caller = (event as KMCSearchEvent).listableVo;
+			_caller = (event as VMCSearchEvent).listableVo;
 
 			if (_caller == null) {
-				var pf:KalturaPlaylistFilter = new KalturaPlaylistFilter();
-				pf.orderBy = KalturaPlaylistOrderBy.CREATED_AT_DESC;
-				var pg:KalturaFilterPager = new KalturaFilterPager();
+				var pf:VidiunPlaylistFilter = new VidiunPlaylistFilter();
+				pf.orderBy = VidiunPlaylistOrderBy.CREATED_AT_DESC;
+				var pg:VidiunFilterPager = new VidiunFilterPager();
 				pg.pageSize = 500;
 				var generalPlaylistList:PlaylistList = new PlaylistList(pf, pg);
-				generalPlaylistList.addEventListener(KalturaEvent.COMPLETE, result);
-				generalPlaylistList.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(generalPlaylistList);
+				generalPlaylistList.addEventListener(VidiunEvent.COMPLETE, result);
+				generalPlaylistList.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(generalPlaylistList);
 			}
 			else {
-				var kpf:KalturaPlaylistFilter = KalturaPlaylistFilter(_caller.filterVo);
-				var playlistList:PlaylistList = new PlaylistList(kpf as KalturaPlaylistFilter,
-																 _caller.pagingComponent.kalturaFilterPager);
-				playlistList.addEventListener(KalturaEvent.COMPLETE, result);
-				playlistList.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(playlistList);
+				var vpf:VidiunPlaylistFilter = VidiunPlaylistFilter(_caller.filterVo);
+				var playlistList:PlaylistList = new PlaylistList(vpf as VidiunPlaylistFilter,
+																 _caller.pagingComponent.vidiunFilterPager);
+				playlistList.addEventListener(VidiunEvent.COMPLETE, result);
+				playlistList.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(playlistList);
 			}
 		}
 
@@ -63,8 +63,8 @@ package com.kaltura.kmc.modules.content.commands {
 			if (_caller == null) {
 				// from ext.syn subtab
 				var tempArr:ArrayCollection = new ArrayCollection();
-				var playlistListResult:KalturaPlaylistListResponse = data.data as KalturaPlaylistListResponse;
-				for each (var playList:KalturaPlaylist in playlistListResult.objects) {
+				var playlistListResult:VidiunPlaylistListResponse = data.data as VidiunPlaylistListResponse;
+				for each (var playList:VidiunPlaylist in playlistListResult.objects) {
 					tempArr.addItem(playList);
 				}
 				_model.extSynModel.generalPlayListdata = tempArr;

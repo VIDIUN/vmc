@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.SetListableEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.vidiun.vmc.modules.content.events.SetListableEvent;
+	import com.vidiun.vmc.modules.content.model.CmsModelLocator;
 
-	public class SetCurrentListableCommand extends KalturaCommand {
+	public class SetCurrentListableCommand extends VidiunCommand {
 
 		override public function execute(event:CairngormEvent):void {
 			_model.listableVo = (event as SetListableEvent).listableVo;

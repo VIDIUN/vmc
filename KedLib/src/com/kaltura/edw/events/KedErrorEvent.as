@@ -1,15 +1,15 @@
-package com.kaltura.edw.events
+package com.vidiun.edw.events
 {
 	import flash.events.Event;
 	
-	public class KedErrorEvent extends Event {
+	public class VedErrorEvent extends Event {
 		
-		public static const ERROR:String = "kedError";
+		public static const ERROR:String = "vedError";
 		
 		
 		private var _error:String;
 		
-		public function KedErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
+		public function VedErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
 			super(type, bubbles, cancelable);
 			_error = text;
 		}

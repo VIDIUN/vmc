@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.model
+package com.vidiun.vmc.modules.account.model
 {
 	import mx.resources.ResourceManager;
 	

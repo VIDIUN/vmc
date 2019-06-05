@@ -1383,7 +1383,7 @@ TitleWindow.TitleWindowType2
 	headerColors:#676969,#474848;
 	footerColors:#efefef;
 	dropShadowEnabled:true;shadowDistance:0;shadowDirection:center;
-	titleStyleName:"titleWindowTitleKMC";
+	titleStyleName:"titleWindowTitleVMC";
 	close-button-up-skin:Embed(skinClass='closeBtn_up');
 	close-button-over-skin:Embed(skinClass='closeBtn_over');
 	close-button-down-skin:Embed(skinClass='closeBtn_down');
@@ -1557,7 +1557,7 @@ LinkButton.openCloseBtnClose
 	padding-top:1;
 }
 
-/* Moderation-right side panel,holds the kdp and ban-user details */
+/* Moderation-right side panel,holds the vdp and ban-user details */
 Panel.modPrev
 {
 	borderColor:#b7babc;
@@ -1655,7 +1655,7 @@ TitleWindow.WinTitleStyle
 	shadowDistance:0;
 	shadowDirection:center;
 	shadow-color:#000000;
-	titleStyleName:"titleWindowTitleKMC";
+	titleStyleName:"titleWindowTitleVMC";
 	close-button-up-skin:Embed(skinClass='closeBtn_up');
 	close-button-over-skin:Embed(skinClass='closeBtn_over');
 	close-button-down-skin:Embed(skinClass='closeBtn_down');
@@ -1687,7 +1687,7 @@ TitleWindow.WinTitleStyle2
 	dropShadowEnabled:true;
 	shadowDistance:0;
 	shadowDirection:center;
-	titleStyleName:"titleWindowTitleKMC";
+	titleStyleName:"titleWindowTitleVMC";
 	close-button-up-skin:Embed(skinClass='closeBtn_up');
 	close-button-over-skin:Embed(skinClass='closeBtn_over');
 	close-button-down-skin:Embed(skinClass='closeBtn_down');
@@ -1696,7 +1696,7 @@ TitleWindow.WinTitleStyle2
 	font-size:11;
 }
 
-.titleWindowTitleKMC
+.titleWindowTitleVMC
 {
 	color:#eeeeee;
 	font-anti-alias-type:advanced;
@@ -2325,10 +2325,10 @@ HBox.searchHBox
 	/* image for processing in category filter tree */
 	UpdatingImg : Embed(skinClass='Updating_ico');
 	
-	/* image used instead of KDP for no_content entries in drilldown (metadata, ads) */
+	/* image used instead of VDP for no_content entries in drilldown (metadata, ads) */
 	noContentImg : Embed('assets/images/No-media.png', scaleGridTop="4", scaleGridBottom="190", scaleGridLeft="4", scaleGridRight="336");
 	
-	/* image used instead of KDP for no_content entries in moderation */
+	/* image used instead of VDP for no_content entries in moderation */
 	noContentImgL : Embed('assets/images/No-media_l.png', scaleGridTop="4", scaleGridBottom="251", scaleGridLeft="4", scaleGridRight="276");
 	
 	/* image used in category drilldown>end users access tab*/

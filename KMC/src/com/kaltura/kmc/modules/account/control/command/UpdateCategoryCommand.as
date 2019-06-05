@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.category.CategoryUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.control.events.IntegrationEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -19,17 +19,17 @@ package com.kaltura.kmc.modules.account.control.command {
 
 		public function execute(event:CairngormEvent):void {
 			_model.loadingFlag = true;
-			var kCat:KalturaCategory = event.data as KalturaCategory;
-			kCat.setUpdatedFieldsOnly(true);
-			var update:CategoryUpdate = new CategoryUpdate(kCat.id, kCat);
-			update.addEventListener(KalturaEvent.COMPLETE, result);
-			update.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(update);
+			var vCat:VidiunCategory = event.data as VidiunCategory;
+			vCat.setUpdatedFieldsOnly(true);
+			var update:CategoryUpdate = new CategoryUpdate(vCat.id, vCat);
+			update.addEventListener(VidiunEvent.COMPLETE, result);
+			update.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(update);
 		}
 
 
 		public function result(data:Object):void {
-			var event:KalturaEvent = data as KalturaEvent;
+			var event:VidiunEvent = data as VidiunEvent;
 			_model.loadingFlag = false;
 			if (event.success) {
 				// list categories with context again
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.account.control.command {
 				list.dispatch();
 			}
 			else {
-				Alert.show((data as KalturaEvent).error.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
+				Alert.show((data as VidiunEvent).error.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
 			}
 
 		}
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.account.control.command {
 		public function fault(info:Object):void {
 			if (info && info.error && info.error.errorMsg) {
 				
-			 	if (info.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+			 	if (info.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 					JSGate.expired();
 					return;
 				}

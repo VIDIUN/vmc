@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo.ads
+package com.vidiun.vmc.modules.studio.vo.ads
 {
 	import mx.collections.ArrayCollection;
 

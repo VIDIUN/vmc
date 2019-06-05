@@ -1,13 +1,13 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.usrs.GetEntitledUsersCommand;
-	import com.kaltura.edw.control.commands.usrs.GetEntryUserCommand;
-	import com.kaltura.edw.control.commands.usrs.SetEntryOwnerCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.UsersEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.usrs.GetEntitledUsersCommand;
+	import com.vidiun.edw.control.commands.usrs.GetEntryUserCommand;
+	import com.vidiun.edw.control.commands.usrs.SetEntryOwnerCommand;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.UsersEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class UsersTabController extends KMvCController {
+	public class UsersTabController extends VMvCController {
 		
 		public function UsersTabController() {
 			initializeCommands();

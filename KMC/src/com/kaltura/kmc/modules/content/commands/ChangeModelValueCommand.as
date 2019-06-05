@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.vidiun.vmc.modules.content.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-	import com.kaltura.kmc.modules.content.events.ChangeModelEvent;
-	import com.kaltura.kmvc.model.KMvCModel;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.model.datapacks.PermissionsDataPack;
+	import com.vidiun.vmc.modules.content.events.ChangeModelEvent;
+	import com.vidiun.vmvc.model.VMvCModel;
 
-	public class ChangeModelValueCommand extends KalturaCommand {
+	public class ChangeModelValueCommand extends VidiunCommand {
 
 		override public function execute(event:CairngormEvent):void {
-			var pdp:PermissionsDataPack = KMvCModel.getInstance().getDataPack(PermissionsDataPack) as PermissionsDataPack;
+			var pdp:PermissionsDataPack = VMvCModel.getInstance().getDataPack(PermissionsDataPack) as PermissionsDataPack;
 			
 			switch (event.type) {
 				case ChangeModelEvent.SET_SINGLE_ENTRY_EMBED_STATUS:
@@ -47,17 +47,17 @@ package com.kaltura.kmc.modules.content.commands {
 				case ChangeModelEvent.ENABLE_AKAMAI_LIVE:
 					pdp.enableAkamaiLive = (event as ChangeModelEvent).newValue;
 					break;
-				case ChangeModelEvent.ENABLE_KALTURA_LIVE:
-					pdp.enableKalturaLive = (event as ChangeModelEvent).newValue;
+				case ChangeModelEvent.ENABLE_VIDIUN_LIVE:
+					pdp.enableVidiunLive = (event as ChangeModelEvent).newValue;
 					break;
-				case ChangeModelEvent.ENABLE_KALTURA_RECORDING:
-					pdp.enableKalturaRecording = (event as ChangeModelEvent).newValue;
+				case ChangeModelEvent.ENABLE_VIDIUN_RECORDING:
+					pdp.enableVidiunRecording = (event as ChangeModelEvent).newValue;
 					break;
-				case ChangeModelEvent.ENABLE_KALTURA_MULTICAST:
-					pdp.enableKalturaMulticast = (event as ChangeModelEvent).newValue;
+				case ChangeModelEvent.ENABLE_VIDIUN_MULTICAST:
+					pdp.enableVidiunMulticast = (event as ChangeModelEvent).newValue;
 					break;
 				case ChangeModelEvent.SET_ENTRY_CATEGORIES_LIMIT:
-					var edp:EntryDataPack = KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
+					var edp:EntryDataPack = VMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
 					edp.maxNumCategories = EntryDataPack.DEFAULT_CATEGORIES_NUM;
 					break;
 			}

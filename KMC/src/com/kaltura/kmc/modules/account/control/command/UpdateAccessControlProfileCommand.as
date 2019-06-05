@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.vidiun.vmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.vidiun.commands.accessControl.AccessControlUpdate;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.business.JSGate;
+	import com.vidiun.vmc.modules.account.control.events.AccessControlEvent;
+	import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+	import com.vidiun.vo.AccessControlProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -20,9 +20,9 @@ package com.kaltura.kmc.modules.account.control.command {
 			var accessControl:AccessControlProfileVO = event.data;
 			accessControl.profile.setUpdatedFieldsOnly(true);
 			var updateAccessControl:AccessControlUpdate = new AccessControlUpdate(accessControl.profile.id, accessControl.profile);
-			updateAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			updateAccessControl.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(updateAccessControl);
+			updateAccessControl.addEventListener(VidiunEvent.COMPLETE, result);
+			updateAccessControl.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(updateAccessControl);
 		}
 
 
@@ -40,9 +40,9 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function fault(info:Object):void {
-			var e:KalturaEvent = info as KalturaEvent;
+			var e:VidiunEvent = info as VidiunEvent;
 			if (e && e.error) {
-				if (e.error.errorMsg && e.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
+				if (e.error.errorMsg && e.error.errorMsg.toString().indexOf("Invalid VS") > -1) {
 					JSGate.expired();
 					return;
 				}

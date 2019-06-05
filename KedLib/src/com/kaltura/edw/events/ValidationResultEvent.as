@@ -1,10 +1,10 @@
-package com.kaltura.edw.events {
+package com.vidiun.edw.events {
 
 	/**
 	 * results of a call to <code>IDrilldownPanel.validate()</code> dispatched by the panel.
 	 * @author Atar
 	 */
-	public class ValidationResultEvent extends InternalKedEvent {
+	public class ValidationResultEvent extends InternalVedEvent {
 
 		/**
 		 * defines the value of the type attribute for the <code>validationComplete</code> event  

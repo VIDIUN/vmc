@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.kaltura.kmc.modules.admin.view.*"
-		 xmlns:controls="com.kaltura.controls.*" width="100%" height="100%"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.vidiun.vmc.modules.admin.view.*"
+		 xmlns:controls="com.vidiun.controls.*" width="100%" height="100%"
 		 creationComplete="creationCompleteHandler(event)"
-		 implements="com.kaltura.kmc.modules.admin.view.IAdminSubtab">
+		 implements="com.vidiun.vmc.modules.admin.view.IAdminSubtab">
 	<mx:Metadata >
-		[Event(name="enableHeader",type="com.kaltura.kmc.modules.admin.control.events.GeneralEvent")]
+		[Event(name="enableHeader",type="com.vidiun.vmc.modules.admin.control.events.GeneralEvent")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.admin.control.events.DrilldownEvent;
-			import com.kaltura.kmc.modules.admin.control.events.GeneralEvent;
-			import com.kaltura.kmc.modules.admin.control.events.ListItemsEvent;
-			import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-			import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-			import com.kaltura.kmc.modules.admin.model.RolesModel;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.admin.control.events.DrilldownEvent;
+			import com.vidiun.vmc.modules.admin.control.events.GeneralEvent;
+			import com.vidiun.vmc.modules.admin.control.events.ListItemsEvent;
+			import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
+			import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+			import com.vidiun.vmc.modules.admin.model.RolesModel;
+			import com.vidiun.vo.VidiunFilterPager;
+			import com.vidiun.vo.VidiunUserRole;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -30,9 +30,9 @@
 			import mx.resources.ResourceManager;
 			
 			/**
-			 * permissions that all KMC roles must have and are not edited via role edit form
+			 * permissions that all VMC roles must have and are not edited via role edit form
 			 * */
-			public static const DEFAULT_KMC_PERMISSIONS:String = 'KMC_ACCESS,KMC_READ_ONLY,BASE_USER_SESSION_PERMISSION,WIDGET_SESSION_PERMISSION';
+			public static const DEFAULT_VMC_PERMISSIONS:String = 'VMC_ACCESS,VMC_READ_ONLY,BASE_USER_SESSION_PERMISSION,WIDGET_SESSION_PERMISSION';
 			
 			[Bindable]
 			public var model:RolesModel;
@@ -63,12 +63,12 @@
 			//				superTanker.height = tableHBox.height + paging.height;
 			//			}
 			
-			private function onNavigate(event:KmcNavigationEvent):void
+			private function onNavigate(event:VmcNavigationEvent):void
 			{
 				// close drilldown 
 				closeRoleDrilldown(null);
 				// navigate
-				dispatchEvent(new KmcNavigationEvent(event.type, event.module, event.subtab, event.data, event.bubbles, event.cancelable));
+				dispatchEvent(new VmcNavigationEvent(event.type, event.module, event.subtab, event.data, event.bubbles, event.cancelable));
 			}
 			
 			/**
@@ -91,25 +91,25 @@
 			 * */
 			protected function listRoles(pageNumber:int):void {
 				// list
-				var kfp:KalturaFilterPager = new KalturaFilterPager();
-				if (paging && paging.kalturaFilterPager.pageSize != int.MIN_VALUE) {
-					kfp.pageSize = paging.kalturaFilterPager.pageSize;
+				var vfp:VidiunFilterPager = new VidiunFilterPager();
+				if (paging && paging.vidiunFilterPager.pageSize != int.MIN_VALUE) {
+					vfp.pageSize = paging.vidiunFilterPager.pageSize;
 				}
 				else {
-					kfp.pageSize = 25;
+					vfp.pageSize = 25;
 				}
 				if (pageNumber) {
-					kfp.pageIndex = pageNumber;
+					vfp.pageIndex = pageNumber;
 				}
 				else if (paging) {
-					kfp.pageIndex = paging.kalturaFilterPager.pageIndex;
+					vfp.pageIndex = paging.vidiunFilterPager.pageIndex;
 				}
 				else {
-					kfp.pageIndex = 1;
+					vfp.pageIndex = 1;
 				}
 				
 				var ce:ListItemsEvent;
-				ce = new ListItemsEvent(ListItemsEvent.LIST_ROLES, model.rolesFilter, kfp);
+				ce = new ListItemsEvent(ListItemsEvent.LIST_ROLES, model.rolesFilter, vfp);
 				ce.dispatch();
 			}
 			
@@ -167,7 +167,7 @@
 					PopUpManager.removePopUp(_roleDrilldown);
 					_roleDrilldown.removeEventListener(UserDrilldown.SAVE, saveRoleData);
 					_roleDrilldown.removeEventListener(UserDrilldown.CLOSE, closeRoleDrilldown);
-					_roleDrilldown.removeEventListener(KmcNavigationEvent.NAVIGATE, onNavigate);
+					_roleDrilldown.removeEventListener(VmcNavigationEvent.NAVIGATE, onNavigate);
 					_roleDrilldown = null;
 					var de:DrilldownEvent = new DrilldownEvent(DrilldownEvent.ROLES_SET_STATE, DrilldownMode.NONE);
 					de.dispatch();
@@ -186,28 +186,28 @@
 				rd.init(model.selectedRole, model.drilldownMode, model.partnerPermissionsUiconf, model.partnerPermissions, model.roles);
 				rd.addEventListener(RoleDrilldown.SAVE, saveRoleData);
 				rd.addEventListener(RoleDrilldown.CLOSE, closeRoleDrilldown);
-				rd.addEventListener(KmcNavigationEvent.NAVIGATE, onNavigate);
-				//				rd.addEventListener(KmcHelpEvent.HELP, onHelpClickedInDrilldown);
+				rd.addEventListener(VmcNavigationEvent.NAVIGATE, onNavigate);
+				//				rd.addEventListener(VmcHelpEvent.HELP, onHelpClickedInDrilldown);
 				PopUpManager.addPopUp(rd, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(rd);
 				dispatchEvent(new GeneralEvent("enableHeader", false));
 				return rd;
 			}
 			
-			//			protected function onHelpClickedInDrilldown (e : KmcHelpEvent) : void
+			//			protected function onHelpClickedInDrilldown (e : VmcHelpEvent) : void
 			//			{
-			//				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, e.anchor));
+			//				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, e.anchor));
 			//			}
 			
 			/**
 			 * show the "add user" dialog
 			 * */
 			protected function openAddRoleDialog(event:MouseEvent):void {
-				// set the selected user to a new KalturaUser.
-				var kur:KalturaUserRole = new KalturaUserRole();
-				kur.tags = 'kmc';
-				kur.permissionNames = Roles.DEFAULT_KMC_PERMISSIONS;
-				var ce:CairngormEvent = new RoleEvent(RoleEvent.SELECT_ROLE, kur);
+				// set the selected user to a new VidiunUser.
+				var vur:VidiunUserRole = new VidiunUserRole();
+				vur.tags = 'vmc';
+				vur.permissionNames = Roles.DEFAULT_VMC_PERMISSIONS;
+				var ce:CairngormEvent = new RoleEvent(RoleEvent.SELECT_ROLE, vur);
 				ce.dispatch();
 				
 				ce = new DrilldownEvent(DrilldownEvent.ROLES_SET_STATE, DrilldownMode.ADD);
@@ -269,7 +269,7 @@
 			 * open drilldown for the selected role.
 			 * 
 			 * */
-			protected function onNewRoleChanged(value:KalturaUserRole):void {
+			protected function onNewRoleChanged(value:VidiunUserRole):void {
 				if (value) {
 					openEditRoleDialog(null);
 				}

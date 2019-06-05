@@ -3,31 +3,31 @@
 	 This is the window that opens after you add a new syndication,
 	 explaining how to use the feed.
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" showCloseButton="true"
 				 close="closeWindow(event)" title="{resourceManager.getString('cms', 'confirmationPopupTitle')}"
 				 height="560" width="600" help="{onHelp()}"
-				 xmlns:externalsyndicationsections="com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*">
+				 xmlns:externalsyndicationsections="com.vidiun.vmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.vo.PartnerVO;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaSyndicationFeedEntryCount;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.vo.PartnerVO;
+			import com.vidiun.vo.VidiunBaseSyndicationFeed;
+			import com.vidiun.vo.VidiunFlavorParams;
+			import com.vidiun.vo.VidiunSyndicationFeedEntryCount;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.LinkButton;
 			import mx.managers.PopUpManager;
 			
 			[Bindable]
-			private var _feedCountersData:KalturaSyndicationFeedEntryCount;
+			private var _feedCountersData:VidiunSyndicationFeedEntryCount;
 			[Bindable]
 			private var _showDropEntriesMsg:Boolean = true;
 			[Bindable]
 			private var dropEntriesMsg:String = '';
 			[Bindable]
-			private var _feed:KalturaBaseSyndicationFeed;
+			private var _feed:VidiunBaseSyndicationFeed;
 
 			/**
 			 * partner data
@@ -39,28 +39,28 @@
 			public var flavorParams:ArrayCollection;
 
 			[Bindable]
-			public function get feed():KalturaBaseSyndicationFeed {
+			public function get feed():VidiunBaseSyndicationFeed {
 				return _feed;
 			}
 
 
-			public function set feed(feed:KalturaBaseSyndicationFeed):void {
+			public function set feed(feed:VidiunBaseSyndicationFeed):void {
 				_feed = feed;
 			}
 
 
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_ExternalSyndicationNotification'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_ExternalSyndicationNotification'));
 			}
 
 
 			[Bindable]
-			public function get feedCountersData():KalturaSyndicationFeedEntryCount {
+			public function get feedCountersData():VidiunSyndicationFeedEntryCount {
 				return _feedCountersData;
 			}
 
 
-			public function set feedCountersData(feedCountersData:KalturaSyndicationFeedEntryCount):void {
+			public function set feedCountersData(feedCountersData:VidiunSyndicationFeedEntryCount):void {
 				_feedCountersData = feedCountersData;
 				_showDropEntriesMsg = _feedCountersData.requireTranscodingCount != 0;
 
@@ -85,7 +85,7 @@
 
 			private function getFlavorName():String {
 				var fName:String = '--- ';
-				for each (var flavor:KalturaFlavorParams in flavorParams) {
+				for each (var flavor:VidiunFlavorParams in flavorParams) {
 					if (flavor.id == feed.flavorParamId) {
 						fName = flavor.name;
 						break;
@@ -98,19 +98,19 @@
 
 			private function showFeedConfirmationText(event:Event):void {
 				switch (feed.objectType) {
-					case "KalturaITunesSyndicationFeed":  
+					case "VidiunITunesSyndicationFeed":  
 						viewStack.selectedIndex = 0;
 						break;
 					
-					case "KalturaYahooSyndicationFeed":  
+					case "VidiunYahooSyndicationFeed":  
 						viewStack.selectedIndex = 1;
 						break;
 					
-					case "KalturaTubeMogulSyndicationFeed":  
+					case "VidiunTubeMogulSyndicationFeed":  
 						viewStack.selectedIndex = 2;
 						break;
 					
-					case "KalturaGoogleVideoSyndicationFeed":  
+					case "VidiunGoogleVideoSyndicationFeed":  
 						viewStack.selectedIndex = 3;
 						break;
 					

@@ -1,8 +1,8 @@
-package com.kaltura.edw.vo
+package com.vidiun.edw.vo
 {
 	[Bindable]
 	/**
-	 * AssetVO class represents VO's of Kaltura assets 
+	 * AssetVO class represents VO's of Vidiun assets 
 	 * @author Michal
 	 * 
 	 */	

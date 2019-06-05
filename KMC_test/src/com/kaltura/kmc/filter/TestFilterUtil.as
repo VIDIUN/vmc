@@ -1,9 +1,9 @@
-package com.kaltura.kmc.filter
+package com.vidiun.vmc.filter
 {
-	import com.kaltura.kmc.modules.content.utils.FilterUtil;
-	import com.kaltura.vo.KalturaMetadataSearchItem;
-	import com.kaltura.vo.KalturaSearchComparableCondition;
-	import com.kaltura.vo.KalturaSearchCondition;
+	import com.vidiun.vmc.modules.content.utils.FilterUtil;
+	import com.vidiun.vo.VidiunMetadataSearchItem;
+	import com.vidiun.vo.VidiunSearchComparableCondition;
+	import com.vidiun.vo.VidiunSearchCondition;
 	
 	import flexunit.framework.Assert;
 	
@@ -67,7 +67,7 @@ package com.kaltura.kmc.filter
 		public function testGetMetadataProfileSearchItemWhenEmpty():void
 		{
 			var ar:Array = [];
-			var si:KalturaMetadataSearchItem = FilterUtil.getMetadataProfileSearchItem(ar, 1441); 
+			var si:VidiunMetadataSearchItem = FilterUtil.getMetadataProfileSearchItem(ar, 1441); 
 			Assert.assertObjectEquals(si, ar[0]);
 		}
 		
@@ -79,7 +79,7 @@ package com.kaltura.kmc.filter
 		public function testGetMetadataProfileSearchItemWhenNotEmpty_Add():void
 		{
 			var ar:Array = [];
-			var si:KalturaMetadataSearchItem = new KalturaMetadataSearchItem();
+			var si:VidiunMetadataSearchItem = new VidiunMetadataSearchItem();
 			si.metadataProfileId = 1551;
 			ar.push(si);
 			
@@ -95,10 +95,10 @@ package com.kaltura.kmc.filter
 		public function testGetMetadataProfileSearchItemWhenNotEmpty_Find():void
 		{
 			var ar:Array = [];
-			var si:KalturaMetadataSearchItem = new KalturaMetadataSearchItem();
+			var si:VidiunMetadataSearchItem = new VidiunMetadataSearchItem();
 			si.metadataProfileId = 1441;
 			ar.push(si);
-			si = new KalturaMetadataSearchItem();
+			si = new VidiunMetadataSearchItem();
 			si.metadataProfileId = 1331;
 			ar.push(si);
 			
@@ -116,11 +116,11 @@ package com.kaltura.kmc.filter
 		 */		
 		public function testgetMetadataFieldSearchCondition_new():void
 		{
-			var si:KalturaMetadataSearchItem = new KalturaMetadataSearchItem(); // of the profile
+			var si:VidiunMetadataSearchItem = new VidiunMetadataSearchItem(); // of the profile
 			si.metadataProfileId = 1441;
 			si.items = [];
 			
-			var sc:KalturaSearchCondition = FilterUtil.getMetadataFieldSearchCondition(si, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']"); 
+			var sc:VidiunSearchCondition = FilterUtil.getMetadataFieldSearchCondition(si, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']"); 
 			Assert.assertEquals(sc.field, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']");
 		}
 		
@@ -132,14 +132,14 @@ package com.kaltura.kmc.filter
 		 */		
 		public function testgetMetadataFieldSearchCondition_newWithExisting():void
 		{
-			var psi:KalturaMetadataSearchItem = new KalturaMetadataSearchItem(); // of the profile
+			var psi:VidiunMetadataSearchItem = new VidiunMetadataSearchItem(); // of the profile
 			psi.metadataProfileId = 1441;
 			psi.items = [];
 			
-			var si:KalturaMetadataSearchItem = new KalturaMetadataSearchItem(); // of a field
+			var si:VidiunMetadataSearchItem = new VidiunMetadataSearchItem(); // of a field
 			si.metadataProfileId = 1441;
 			si.items = [];
-			var sc:KalturaSearchCondition = new KalturaSearchCondition();
+			var sc:VidiunSearchCondition = new VidiunSearchCondition();
 			sc.field = "atar";
 			si.items.push(sc);
 			
@@ -154,19 +154,19 @@ package com.kaltura.kmc.filter
 		 */		
 		public function testgetMetadataFieldSearchCondition_existing():void
 		{
-			var psi:KalturaMetadataSearchItem = new KalturaMetadataSearchItem(); // of the profile
+			var psi:VidiunMetadataSearchItem = new VidiunMetadataSearchItem(); // of the profile
 			psi.metadataProfileId = 1441;
 			psi.items = [];
 			
-			var si:KalturaMetadataSearchItem = new KalturaMetadataSearchItem(); // of a field
+			var si:VidiunMetadataSearchItem = new VidiunMetadataSearchItem(); // of a field
 			si.metadataProfileId = 1441;
 			si.items = [];
-			var sc:KalturaSearchCondition = new KalturaSearchCondition();
+			var sc:VidiunSearchCondition = new VidiunSearchCondition();
 			sc.field = "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']";
 			sc.value = "Atar";
 			si.items.push(sc);
 			
-			var sc2:KalturaSearchCondition = FilterUtil.getMetadataFieldSearchCondition(psi, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']"); 
+			var sc2:VidiunSearchCondition = FilterUtil.getMetadataFieldSearchCondition(psi, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']"); 
 			Assert.assertEquals(sc2.field, "/*[local-name()='metadata']/*[local-name()='ObjectSubtype']");
 			Assert.assertFalse(sc2.value == sc.value);
 		}

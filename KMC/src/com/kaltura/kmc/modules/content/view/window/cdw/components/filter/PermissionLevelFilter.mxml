@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" 
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCategoryUserPermissionLevel;
+			import com.vidiun.types.VidiunCategoryUserPermissionLevel;
 			
 			import mx.events.FlexEvent;
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -19,10 +19,10 @@
 			 * return a string that represents the result of selecting "all" button.
 			 * */
 			public static function getEmptyFilterString():String {
-				var levelString:String = KalturaCategoryUserPermissionLevel.MEMBER + ",";
-				levelString += KalturaCategoryUserPermissionLevel.CONTRIBUTOR + ",";
-				levelString += KalturaCategoryUserPermissionLevel.MODERATOR + ",";
-				levelString += KalturaCategoryUserPermissionLevel.MANAGER;
+				var levelString:String = VidiunCategoryUserPermissionLevel.MEMBER + ",";
+				levelString += VidiunCategoryUserPermissionLevel.CONTRIBUTOR + ",";
+				levelString += VidiunCategoryUserPermissionLevel.MODERATOR + ",";
+				levelString += VidiunCategoryUserPermissionLevel.MANAGER;
 				return levelString;
 			}
 			
@@ -36,16 +36,16 @@
 				}
 				else {
 					if (memberBtn.selected) {
-						levelString += KalturaCategoryUserPermissionLevel.MEMBER + ",";
+						levelString += VidiunCategoryUserPermissionLevel.MEMBER + ",";
 					}
 					if (contBtn.selected) {
-						levelString += KalturaCategoryUserPermissionLevel.CONTRIBUTOR + ",";
+						levelString += VidiunCategoryUserPermissionLevel.CONTRIBUTOR + ",";
 					}
 					if (modBtn.selected) {
-						levelString += KalturaCategoryUserPermissionLevel.MODERATOR + ",";
+						levelString += VidiunCategoryUserPermissionLevel.MODERATOR + ",";
 					}
 					if (managerBtn.selected) {
-						levelString += KalturaCategoryUserPermissionLevel.MANAGER + ",";
+						levelString += VidiunCategoryUserPermissionLevel.MANAGER + ",";
 					}
 					//remove last , 
 					levelString = levelString.slice(0, levelString.length - 1);
@@ -69,19 +69,19 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaCategoryUserPermissionLevel.MEMBER:
+							case VidiunCategoryUserPermissionLevel.MEMBER:
 								memberBtn.selected = true;
 								break;
 							
-							case KalturaCategoryUserPermissionLevel.CONTRIBUTOR:
+							case VidiunCategoryUserPermissionLevel.CONTRIBUTOR:
 								contBtn.selected = true;
 								break;
 							
-							case KalturaCategoryUserPermissionLevel.MODERATOR:
+							case VidiunCategoryUserPermissionLevel.MODERATOR:
 								modBtn.selected = true;
 								break;
 							
-							case KalturaCategoryUserPermissionLevel.MANAGER:
+							case VidiunCategoryUserPermissionLevel.MANAGER:
 								managerBtn.selected = true;
 								break;
 						}

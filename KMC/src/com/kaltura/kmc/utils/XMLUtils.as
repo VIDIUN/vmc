@@ -1,4 +1,4 @@
-package com.kaltura.kmc.utils
+package com.vidiun.vmc.utils
 {
 	public class XMLUtils {
 		

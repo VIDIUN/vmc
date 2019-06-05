@@ -1,7 +1,7 @@
-package com.kaltura.edw.model
+package com.vidiun.edw.model
 {
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.vidiun.vo.VidiunDistributionProfile;
+	import com.vidiun.vo.VidiunEntryDistribution;
 
 	/**
 	 * This class represents an entry distribution 
@@ -14,11 +14,11 @@ package com.kaltura.edw.model
 		/**
 		 * describes the entry distribution 
 		 */		
-		public var kalturaEntryDistribution:KalturaEntryDistribution;
+		public var vidiunEntryDistribution:VidiunEntryDistribution;
 		/**
 		 * describes the distribution profile for current entry distribution 
 		 */		
-		public var kalturaDistributionProfile:KalturaDistributionProfile;
+		public var vidiunDistributionProfile:VidiunDistributionProfile;
 		/**
 		 * whether the entry will be automatic distributed or not 
 		 * In case this value is true but the profile is configured otherwhise, this parameter has no meaning 

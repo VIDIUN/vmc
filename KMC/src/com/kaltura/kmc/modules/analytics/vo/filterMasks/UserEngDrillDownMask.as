@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.analytics.vo.filterMasks
+package com.vidiun.vmc.modules.analytics.vo.filterMasks
 {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+	import com.vidiun.vmc.modules.analytics.vo.FilterVo;
 	
 	public class UserEngDrillDownMask extends BaseMask
 	{

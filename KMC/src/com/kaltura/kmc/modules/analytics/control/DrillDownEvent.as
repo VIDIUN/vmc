@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.control
+package com.vidiun.vmc.modules.analytics.control
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -14,7 +14,7 @@ package com.kaltura.kmc.modules.analytics.control
 		
 		/**
 		 * type of required screen, or 0 for default behaviour
-		 * @see com.kaltura.kmc.modules.analytics.model.types.ScreenTypes
+		 * @see com.vidiun.vmc.modules.analytics.model.types.ScreenTypes
 		 */
 		public var newScreen : int;
 		

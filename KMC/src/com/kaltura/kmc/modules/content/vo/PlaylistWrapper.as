@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.vo
+package com.vidiun.vmc.modules.content.vo
 {
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -8,11 +8,11 @@ package com.kaltura.kmc.modules.content.vo
 	{
 		
 	[Bindable]
-	public var playlist:KalturaPlaylist;
+	public var playlist:VidiunPlaylist;
 	[Bindable]
 	public var parts:ArrayCollection;
 	
-		public function PlaylistWrapper(playlist:KalturaPlaylist= null,part:ArrayCollection = null) 
+		public function PlaylistWrapper(playlist:VidiunPlaylist= null,part:ArrayCollection = null) 
 		{
 			this.playlist=playlist;
 			this.parts=part;

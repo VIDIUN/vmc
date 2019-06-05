@@ -1,33 +1,33 @@
-package com.kaltura.edw.control.commands {
+package com.vidiun.edw.control.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.commands.conversionProfile.ConversionProfileList;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.FlavorsDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunConversionProfileType;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.vo.VidiunConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfileFilter;
+	import com.vidiun.vo.VidiunConversionProfileListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
 	[ResourceBundle("live")]
 	
-	public class ListLiveConversionProfilesCommand extends KedCommand {
+	public class ListLiveConversionProfilesCommand extends VedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:VidiunFilterPager = new VidiunFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = 500; // trying to get all conversion profiles here, standard partner has no more than 10
-			var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-			f.typeEqual = KalturaConversionProfileType.LIVE_STREAM;
+			var f:VidiunConversionProfileFilter = new VidiunConversionProfileFilter();
+			f.typeEqual = VidiunConversionProfileType.LIVE_STREAM;
 			var listProfiles:ConversionProfileList = new ConversionProfileList(f, p);
-			listProfiles.addEventListener(KalturaEvent.COMPLETE, result);
-			listProfiles.addEventListener(KalturaEvent.FAILED, fault);
+			listProfiles.addEventListener(VidiunEvent.COMPLETE, result);
+			listProfiles.addEventListener(VidiunEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_client.post(listProfiles);
 		}
@@ -37,12 +37,12 @@ package com.kaltura.edw.control.commands {
 			super.result(data);
 			
 			var result:Array = new Array();
-			for each (var kcp:KalturaConversionProfile in (data.data as KalturaConversionProfileListResponse).objects) {
-				if (kcp.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
-					result.unshift(kcp);
+			for each (var vcp:VidiunConversionProfile in (data.data as VidiunConversionProfileListResponse).objects) {
+				if (vcp.isDefault == VidiunNullableBoolean.TRUE_VALUE) {
+					result.unshift(vcp);
 				}
 				else {
-					result.push(kcp);
+					result.push(vcp);
 				}
 			}
 			var fdp:FlavorsDataPack = _model.getDataPack(FlavorsDataPack) as FlavorsDataPack;

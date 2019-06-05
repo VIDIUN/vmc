@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.businessProcessServer
+package com.vidiun.commands.businessProcessServer
 {
-		import com.kaltura.vo.KalturaBusinessProcessServer;
-	import com.kaltura.delegates.businessProcessServer.BusinessProcessServerAddDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunBusinessProcessServer;
+	import com.vidiun.delegates.businessProcessServer.BusinessProcessServerAddDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* Allows you to add a new Business-Process server object
 	**/
-	public class BusinessProcessServerAdd extends KalturaCall
+	public class BusinessProcessServerAdd extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param businessProcessServer KalturaBusinessProcessServer
+		* @param businessProcessServer VidiunBusinessProcessServer
 		**/
-		public function BusinessProcessServerAdd( businessProcessServer : KalturaBusinessProcessServer )
+		public function BusinessProcessServerAdd( businessProcessServer : VidiunBusinessProcessServer )
 		{
 			service= 'businessprocessnotification_businessprocessserver';
 			action= 'add';
@@ -49,7 +49,7 @@ package com.kaltura.commands.businessProcessServer
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(businessProcessServer, 'businessProcessServer');
+				keyValArr = vidiunObject2Arrays(businessProcessServer, 'businessProcessServer');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

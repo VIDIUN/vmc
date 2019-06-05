@@ -1,6 +1,6 @@
-package com.kaltura.controls.pagingClasses
+package com.vidiun.controls.pagingClasses
 {
-	import com.kaltura.events.PagingEvent;
+	import com.vidiun.events.PagingEvent;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;

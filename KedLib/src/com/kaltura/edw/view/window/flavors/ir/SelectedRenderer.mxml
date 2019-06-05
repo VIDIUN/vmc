@@ -2,7 +2,7 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingLeft="7">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaDropFolderFile;
+			import com.vidiun.vo.VidiunDropFolderFile;
 			
 			import mx.resources.ResourceManager;
 			
@@ -10,7 +10,7 @@
 			override public function set data (value:Object):void {
 				super.data = value;
 				if (value) {
-					btn.enabled = (value as KalturaDropFolderFile).parsedSlug != ResourceManager.getInstance().getString('dropfolders', 'parseFailed');
+					btn.enabled = (value as VidiunDropFolderFile).parsedSlug != ResourceManager.getInstance().getString('dropfolders', 'parseFailed');
 				}
 			} 
 			

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaUpdateMethodType;
+			import com.vidiun.types.VidiunUpdateMethodType;
 			
 			import mx.events.FlexEvent;
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -22,10 +22,10 @@
 				}
 				else {
 					if (manualBtn.selected) {
-						levelString += KalturaUpdateMethodType.MANUAL + ",";
+						levelString += VidiunUpdateMethodType.MANUAL + ",";
 					}
 					if (autoBtn.selected) {
-						levelString += KalturaUpdateMethodType.AUTOMATIC + ",";
+						levelString += VidiunUpdateMethodType.AUTOMATIC + ",";
 					}
 					//remove last , 
 					levelString = levelString.slice(0, levelString.length - 1);
@@ -47,11 +47,11 @@
 					var arr:Array = value.split(',');
 					for each (var code:String in arr) {
 						switch (code) {
-							case KalturaUpdateMethodType.MANUAL:
+							case VidiunUpdateMethodType.MANUAL:
 								manualBtn.selected = true;
 								break;
 							
-							case KalturaUpdateMethodType.AUTOMATIC:
+							case VidiunUpdateMethodType.AUTOMATIC:
 								autoBtn.selected = true;
 								break;
 						}

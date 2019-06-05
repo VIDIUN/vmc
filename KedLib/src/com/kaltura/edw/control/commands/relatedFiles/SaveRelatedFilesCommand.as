@@ -1,21 +1,21 @@
-package com.kaltura.edw.control.commands.relatedFiles
+package com.vidiun.edw.control.commands.relatedFiles
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetAdd;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetDelete;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetSetContent;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.RelatedFileEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.RelatedFileVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaUploadedFileTokenResource;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.attachmentAsset.AttachmentAssetAdd;
+	import com.vidiun.commands.attachmentAsset.AttachmentAssetDelete;
+	import com.vidiun.commands.attachmentAsset.AttachmentAssetSetContent;
+	import com.vidiun.commands.attachmentAsset.AttachmentAssetUpdate;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.RelatedFileEvent;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.vo.RelatedFileVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunUploadedFileTokenResource;
 	
-	public class SaveRelatedFilesCommand extends KedCommand
+	public class SaveRelatedFilesCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			var evt:RelatedFileEvent = event as RelatedFileEvent;
 
 			var mr:MultiRequest = new MultiRequest();
@@ -28,7 +28,7 @@ package com.kaltura.edw.control.commands.relatedFiles
 					mr.addAction(addFile);
 					requestIndex++;
 					//set its content
-					var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+					var resource:VidiunUploadedFileTokenResource = new VidiunUploadedFileTokenResource();
 					resource.token = relatedFile.uploadTokenId;
 					var addContent:AttachmentAssetSetContent = new AttachmentAssetSetContent('0', resource);
 					mr.mapMultiRequestParam(requestIndex-1, "id", requestIndex, "id");
@@ -55,8 +55,8 @@ package com.kaltura.edw.control.commands.relatedFiles
 			
 			if (requestIndex > 1) {
 				_model.increaseLoadCounter();
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(VidiunEvent.COMPLETE, result);
+				mr.addEventListener(VidiunEvent.FAILED, fault);
 				
 				_client.post(mr);
 			}

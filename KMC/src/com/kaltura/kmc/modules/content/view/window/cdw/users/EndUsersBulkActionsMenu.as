@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.view.window.cdw.users
+package com.vidiun.vmc.modules.content.view.window.cdw.users
 {
-	import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-	import com.kaltura.kmc.modules.content.view.controls.bulkactions.BulkEntryActionsMenu;
-	import com.kaltura.kmc.modules.content.view.controls.bulkactions.MenuItemVo;
+	import com.vidiun.vmc.modules.content.events.CategoryUserEvent;
+	import com.vidiun.vmc.modules.content.view.controls.bulkactions.BulkEntryActionsMenu;
+	import com.vidiun.vmc.modules.content.view.controls.bulkactions.MenuItemVo;
 	
 	import flash.display.DisplayObject;
 	

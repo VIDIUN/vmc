@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Module layout="horizontal" xmlns:mx="http://www.adobe.com/2006/mxml" 
-		   creationComplete="onCreationComplete()" implements="com.kaltura.edw.business.IDrilldownPanel"
+		   creationComplete="onCreationComplete()" implements="com.vidiun.edw.business.IDrilldownPanel"
 		   label="{resourceManager.getString('drilldown', 'metadata')}" height="100%"
 		   xmlns:components="com.hillelcoren.components.*" hide="pausePreview()">
 	<mx:Metadata> 
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.vidiun.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.vidiun.edw.events.InternalVedEvent")] 
 	</mx:Metadata>
 
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.controllers.KACTagsController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.edw.business.EntryDataHelper;
-			import com.kaltura.edw.business.EntryFormBuilder;
-			import com.kaltura.edw.business.EntryUtil;
-			import com.kaltura.edw.business.KedJSGate;
-			import com.kaltura.edw.business.MetadataDataParser;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.MetadataDataEvent;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.control.events.ModelEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-			import com.kaltura.edw.view.customData.SingleCustomData;
-			import com.kaltura.edw.view.window.CategoryBrowser;
-			import com.kaltura.edw.vo.CustomMetadataDataVO;
-			import com.kaltura.events.KdpEventTypes;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaDVRStatus;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.types.KalturaRecordStatus;
-			import com.kaltura.types.KalturaSourceType;
-			import com.kaltura.types.KalturaTaggedObjectType;
-			import com.kaltura.utils.KPlayerUtil;
-			import com.kaltura.utils.KTimeUtil;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaLiveEntry;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACCategoryController;
+			import com.vidiun.autocomplete.controllers.VACTagsController;
+			import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.vidiun.edw.business.EntryDataHelper;
+			import com.vidiun.edw.business.EntryFormBuilder;
+			import com.vidiun.edw.business.EntryUtil;
+			import com.vidiun.edw.business.VedJSGate;
+			import com.vidiun.edw.business.MetadataDataParser;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.control.DataTabController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.control.events.MetadataDataEvent;
+			import com.vidiun.edw.control.events.MetadataProfileEvent;
+			import com.vidiun.edw.control.events.ModelEvent;
+			import com.vidiun.edw.events.InternalVedEvent;
+			import com.vidiun.edw.events.ValidationResultEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.CustomDataDataPack;
+			import com.vidiun.edw.model.datapacks.DistributionDataPack;
+			import com.vidiun.edw.model.datapacks.EntryDataPack;
+			import com.vidiun.edw.model.datapacks.FilterDataPack;
+			import com.vidiun.edw.model.datapacks.PermissionsDataPack;
+			import com.vidiun.edw.view.customData.SingleCustomData;
+			import com.vidiun.edw.view.window.CategoryBrowser;
+			import com.vidiun.edw.vo.CustomMetadataDataVO;
+			import com.vidiun.events.VdpEventTypes;
+			import com.vidiun.vmvc.control.VMvCEvent;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunDVRStatus;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.types.VidiunRecordStatus;
+			import com.vidiun.types.VidiunSourceType;
+			import com.vidiun.types.VidiunTaggedObjectType;
+			import com.vidiun.utils.VPlayerUtil;
+			import com.vidiun.utils.VTimeUtil;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunCategory;
+			import com.vidiun.vo.VidiunLiveEntry;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
+			import com.vidiun.vo.VidiunMediaEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -80,17 +80,17 @@
 
 
 			/**
-			 * reference to kdp3Loader.
+			 * reference to vdp3Loader.
 			 * due to performance issue that we fixed, this is static.
 			 * */
-			private static var kdp3StaticSwfLoader:SWFLoader;
+			private static var vdp3StaticSwfLoader:SWFLoader;
 
 
 			/**
 			 * landing page replace string
 			 * @internal
 			 * the landing page is a page on the partner's website where they can view the entry directly.
-			 * this is the token that tells KMC where the entry id should appear in the url.
+			 * this is the token that tells VMC where the entry id should appear in the url.
 			 * */
 			private const ENTRY_PLACEHOLDER:String = '{entryId}';
 
@@ -158,9 +158,9 @@
 			private var _enableCustomData:Boolean = true;
 
 			/**
-			 * RnP (feature): disable alerts in KDP
+			 * RnP (feature): disable alerts in VDP
 			 * */
-			public var disableKDPAlerts:Boolean = true;
+			public var disableVDPAlerts:Boolean = true;
 			
 			[Bindable]
 			/**
@@ -176,34 +176,34 @@
 			/**
 			 * @copy #selectedEntry
 			 * */
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:VidiunBaseEntry;
 
 
 			[Bindable]
 			/**
 			 * the entry to which we apply changes
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():VidiunBaseEntry {
 				return _selectedEntry;
 			}
 
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:VidiunBaseEntry):void {
 				_recordedEntryId = null;
-				if (value is KalturaLiveStreamEntry) {
-					if ((value as KalturaLiveStreamEntry).sourceType == KalturaSourceType.LIVE_STREAM) {
-						if ((value as KalturaLiveStreamEntry).recordedEntryId != null) {
-							_recordedEntryId = (value as KalturaLiveStreamEntry).recordedEntryId;
+				if (value is VidiunLiveStreamEntry) {
+					if ((value as VidiunLiveStreamEntry).sourceType == VidiunSourceType.LIVE_STREAM) {
+						if ((value as VidiunLiveStreamEntry).recordedEntryId != null) {
+							_recordedEntryId = (value as VidiunLiveStreamEntry).recordedEntryId;
 						}
 					}
 				}
 
 				if (value) {
 					// clipping / trimming
-					var val:Boolean = (value is KalturaMediaEntry); // media entry
-					val &&= !(value is KalturaLiveEntry);	// not live entry
-					val &&= (value as KalturaMediaEntry).mediaType != KalturaMediaType.IMAGE;	// not image
-					val &&= value.status == KalturaEntryStatus.READY;	// status ready
+					var val:Boolean = (value is VidiunMediaEntry); // media entry
+					val &&= !(value is VidiunLiveEntry);	// not live entry
+					val &&= (value as VidiunMediaEntry).mediaType != VidiunMediaType.IMAGE;	// not image
+					val &&= value.status == VidiunEntryStatus.READY;	// status ready
 
 					var pdp:PermissionsDataPack = _dpModel.getDataPack(PermissionsDataPack) as PermissionsDataPack;
 
@@ -276,7 +276,7 @@
 			
 			[Bindable]
 			/**
-			 * id of a VOD entry created from a KAltura live entry
+			 * id of a VOD entry created from a VIdiun live entry
 			 * */
 			private var _recordedEntryId:String;
 
@@ -310,7 +310,7 @@
 			public function isChanged():Boolean {
 				var res:Boolean = false;
 				// entry data:
-				var orig:KalturaBaseEntry = _entryData.selectedEntry;
+				var orig:VidiunBaseEntry = _entryData.selectedEntry;
 				res ||= _selectedEntry.name != orig.name;
 				res ||= _selectedEntry.description != orig.description;
 				res ||= !tagsCompare(_selectedEntry.tags, orig.tags);
@@ -327,7 +327,7 @@
 					if (_profilesAC.length && customDataDataPack.metadataInfoArray && customDataDataPack.metadataInfoArray.length) {
 						for (var i:int = 0; i < _profilesAC.length; i++) {
 							var metadataInfo:CustomMetadataDataVO = customDataDataPack.metadataInfoArray.getItemAt(i) as CustomMetadataDataVO;
-							var metadataProfile:KMCMetadataProfileVO = _profilesAC.getItemAt(i) as KMCMetadataProfileVO;
+							var metadataProfile:VMCMetadataProfileVO = _profilesAC.getItemAt(i) as VMCMetadataProfileVO;
 							if (metadataProfile && metadataProfile.profile && metadataInfo) {
 								var newMetadataXML:XML = MetadataDataParser.toMetadataXML(metadataInfo, metadataProfile);
 								if (metadataInfo.metadata) {
@@ -349,12 +349,12 @@
 
 
 			public function save():void {
-				if (_selectedEntry is KalturaLiveStreamEntry) {
-					(_selectedEntry as KalturaLiveStreamEntry).offlineMessage = offlineMessage.text;
+				if (_selectedEntry is VidiunLiveStreamEntry) {
+					(_selectedEntry as VidiunLiveStreamEntry).offlineMessage = offlineMessage.text;
 				}
 
 				// update categories
-				var saveEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_ENTRY_CATEGORIES, _selectedEntry);
+				var saveEvent:VedEntryEvent = new VedEntryEvent(VedEntryEvent.UPDATE_ENTRY_CATEGORIES, _selectedEntry);
 				saveEvent.data = EntryDataHelper.getCategoriesUpdateValues(catComplete.selectedItems, _entryCategories);
 				controller.dispatch(saveEvent);
 				// custom data save
@@ -362,7 +362,7 @@
 				cdEvent.data = _selectedEntry.id;
 				controller.dispatch(cdEvent);
 
-				dispatchEvent(new InternalKedEvent(InternalKedEvent.PANEL_DATA_SAVED));
+				dispatchEvent(new InternalVedEvent(InternalVedEvent.PANEL_DATA_SAVED));
 			}
 
 
@@ -401,20 +401,20 @@
 			public function initData():void {
 				_originalRefid = _selectedEntry.referenceId;
 
-				if (_selectedEntry.status == KalturaEntryStatus.NO_CONTENT) {
+				if (_selectedEntry.status == VidiunEntryStatus.NO_CONTENT) {
 					addImageThumb(noMediaImage);
 					_entryHasContent = false;
 				}
-				else if ((_selectedEntry is KalturaMediaEntry) && (_selectedEntry as KalturaMediaEntry).mediaType == KalturaMediaType.IMAGE) {
+				else if ((_selectedEntry is VidiunMediaEntry) && (_selectedEntry as VidiunMediaEntry).mediaType == VidiunMediaType.IMAGE) {
 					_entryHasContent = true;
 					addImageThumb();
 				}
 				else {
-					kdp3Loader.includeInLayout = kdp3Loader.visible = true;
+					vdp3Loader.includeInLayout = vdp3Loader.visible = true;
 					_entryHasContent = true;
 					//mix or video
 
-					loadKDP();
+					loadVDP();
 				}
 
 				// set landing page string:
@@ -433,16 +433,16 @@
 					controller.dispatch(listCustomData);
 				}
 				
-				if (_selectedEntry is KalturaLiveStreamEntry
-					&& (_selectedEntry as KalturaLiveStreamEntry).sourceType == KalturaSourceType.LIVE_STREAM
-					&& (_selectedEntry as KalturaLiveStreamEntry).dvrStatus == KalturaDVRStatus.ENABLED
-					&& (_selectedEntry as KalturaLiveStreamEntry).recordStatus != KalturaRecordStatus.DISABLED) {
+				if (_selectedEntry is VidiunLiveStreamEntry
+					&& (_selectedEntry as VidiunLiveStreamEntry).sourceType == VidiunSourceType.LIVE_STREAM
+					&& (_selectedEntry as VidiunLiveStreamEntry).dvrStatus == VidiunDVRStatus.ENABLED
+					&& (_selectedEntry as VidiunLiveStreamEntry).recordStatus != VidiunRecordStatus.DISABLED) {
 					// check status
-					var liveStatus:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_LIVESTREAM_STATUS, _selectedEntry);
+					var liveStatus:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_LIVESTREAM_STATUS, _selectedEntry);
 					controller.dispatch(liveStatus);
 				}
 
-				var listCats:KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_ENTRY_CATEGORIES, _selectedEntry);
+				var listCats:VedEntryEvent = new VedEntryEvent(VedEntryEvent.GET_ENTRY_CATEGORIES, _selectedEntry);
 				controller.dispatch(listCats);
 			}
 
@@ -474,14 +474,14 @@
 			
 			public function clear():void {
 
-				var kee:KedEntryEvent = new KedEntryEvent(KedEntryEvent.RESET_ENTRY_CATEGORIES, null);
-				controller.dispatch(kee);
+				var vee:VedEntryEvent = new VedEntryEvent(VedEntryEvent.RESET_ENTRY_CATEGORIES, null);
+				controller.dispatch(vee);
 
 				_originalRefid = null;
 				_entryCategories = null;
-				if (kdp3StaticSwfLoader && kdp3StaticSwfLoader.content) {
-					kdp3StaticSwfLoader.content['sendNotification'](KdpEventTypes.DO_PAUSE);
-					kdp3StaticSwfLoader.content['sendNotification'](KdpEventTypes.CLEAN_MEDIA); //clear the entry from the kdp
+				if (vdp3StaticSwfLoader && vdp3StaticSwfLoader.content) {
+					vdp3StaticSwfLoader.content['sendNotification'](VdpEventTypes.DO_PAUSE);
+					vdp3StaticSwfLoader.content['sendNotification'](VdpEventTypes.CLEAN_MEDIA); //clear the entry from the vdp
 				}
 				
 				// custom data (SingleCustomData) is built from scratch every time final mxml is set, so no need to clear it
@@ -494,9 +494,9 @@
 //					trace("clear custom data:", d1.time - d2.time);
 //				}
 				
-				if (_selectedEntry is KalturaLiveStreamEntry && (_selectedEntry as KalturaLiveStreamEntry).sourceType == KalturaSourceType.LIVE_STREAM) {
-					kee = new KedEntryEvent(KedEntryEvent.RESET_LIVESTREAM_STATUS, null);
-					controller.dispatch(kee);
+				if (_selectedEntry is VidiunLiveStreamEntry && (_selectedEntry as VidiunLiveStreamEntry).sourceType == VidiunSourceType.LIVE_STREAM) {
+					vee = new VedEntryEvent(VedEntryEvent.RESET_LIVESTREAM_STATUS, null);
+					controller.dispatch(vee);
 				}
 			}
 
@@ -540,48 +540,48 @@
 
 			protected function onCreationComplete():void {
 				name_input.setFocus();
-				var kc:KalturaClient = (_dpModel.getDataPack(ContextDataPack) as ContextDataPack).kc;
-				new KACTagsController(tagsComplete, kc, KalturaTaggedObjectType.ENTRY);
-				new KACCategoryController(catComplete, kc);
+				var vc:VidiunClient = (_dpModel.getDataPack(ContextDataPack) as ContextDataPack).vc;
+				new VACTagsController(tagsComplete, vc, VidiunTaggedObjectType.ENTRY);
+				new VACCategoryController(catComplete, vc);
 			}
 
 
 			/**
-			 * Load KDP.
-			 * if we already have a loaded KDP, we add it to the parent of the new (instance) kdploader
-			 * instead of loading a new kdp.
+			 * Load VDP.
+			 * if we already have a loaded VDP, we add it to the parent of the new (instance) vdploader
+			 * instead of loading a new vdp.
 			 */
-			private function loadKDP():void {
+			private function loadVDP():void {
 				//if this is the second time we open the content
-				if (kdp3StaticSwfLoader && kdp3StaticSwfLoader.content) {
+				if (vdp3StaticSwfLoader && vdp3StaticSwfLoader.content) {
 					// parent of instance loader
-					var kdp3LoaderParent:DisplayObjectContainer = kdp3Loader.parent;
-					// add the static loader instead of the instance loader: (if kdp3Loader has content it means we are in the same 
+					var vdp3LoaderParent:DisplayObjectContainer = vdp3Loader.parent;
+					// add the static loader instead of the instance loader: (if vdp3Loader has content it means we are in the same 
 					// drill down session)
-					if (kdp3LoaderParent && !kdp3Loader.content) {
-						kdp3LoaderParent.addChildAt(kdp3StaticSwfLoader, kdp3LoaderParent.getChildIndex(kdp3Loader));
-						kdp3LoaderParent.removeChild(kdp3Loader);
+					if (vdp3LoaderParent && !vdp3Loader.content) {
+						vdp3LoaderParent.addChildAt(vdp3StaticSwfLoader, vdp3LoaderParent.getChildIndex(vdp3Loader));
+						vdp3LoaderParent.removeChild(vdp3Loader);
 					}
-					// listen to kdp ready to show it because on the second time if we won't do that we will see the prev thumb
-					// because this is static KDP (due to performance issue)
-					kdp3StaticSwfLoader.visible = false;
-					kdp3StaticSwfLoader.content.addEventListener(KdpEventTypes.ENTRY_READY, showKDP);
-					kdp3StaticSwfLoader.content["sendNotification"](KdpEventTypes.CHANGE_MEDIA, {entryId: _entryData.selectedEntry.id});
+					// listen to vdp ready to show it because on the second time if we won't do that we will see the prev thumb
+					// because this is static VDP (due to performance issue)
+					vdp3StaticSwfLoader.visible = false;
+					vdp3StaticSwfLoader.content.addEventListener(VdpEventTypes.ENTRY_READY, showVDP);
+					vdp3StaticSwfLoader.content["sendNotification"](VdpEventTypes.CHANGE_MEDIA, {entryId: _entryData.selectedEntry.id});
 				}
 				else {
 					var context:ContextDataPack = _dpModel.getDataPack(ContextDataPack) as ContextDataPack;
-					var newUrl:String = context.protocol + context.cdnHost + "/kwidget/wid/_" + context.kc.partnerId + "/ui_conf_id/" + context.drilldownUiconf + "/nowrapper/1";
-					kdp3Loader.scaleContent = false;
-					kdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain(), SecurityDomain.currentDomain);
-					kdp3Loader.load(newUrl);
+					var newUrl:String = context.protocol + context.cdnHost + "/vwidget/wid/_" + context.vc.partnerId + "/ui_conf_id/" + context.drilldownUiconf + "/nowrapper/1";
+					vdp3Loader.scaleContent = false;
+					vdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain(), SecurityDomain.currentDomain);
+					vdp3Loader.load(newUrl);
 				}
 			}
 
 
 
-			private function showKDP(event:Event = null):void {
-				kdp3StaticSwfLoader.visible = true;
-				kdp3StaticSwfLoader.includeInLayout = true;
+			private function showVDP(event:Event = null):void {
+				vdp3StaticSwfLoader.visible = true;
+				vdp3StaticSwfLoader.includeInLayout = true;
 			}
 
 
@@ -591,26 +591,26 @@
 			 * pause the preview player
 			 * */
 			public function pausePreview():void {
-				if (kdp3StaticSwfLoader && kdp3StaticSwfLoader.content) {
-					kdp3StaticSwfLoader.content['sendNotification'](KdpEventTypes.DO_PAUSE);
+				if (vdp3StaticSwfLoader && vdp3StaticSwfLoader.content) {
+					vdp3StaticSwfLoader.content['sendNotification'](VdpEventTypes.DO_PAUSE);
 				}
 			}
 
 
 			private function addImageThumb(imgSource:Object = null):void {
-				if (kdp3StaticSwfLoader) {
-					// if KDP was never loaded before opening a no content entry
-					kdp3StaticSwfLoader.includeInLayout = kdp3StaticSwfLoader.visible = false;
+				if (vdp3StaticSwfLoader) {
+					// if VDP was never loaded before opening a no content entry
+					vdp3StaticSwfLoader.includeInLayout = vdp3StaticSwfLoader.visible = false;
 				}
-				if (kdp3StaticSwfLoader != kdp3Loader) {
-					// if we start with no content image after we already have a KDP
-					kdp3Loader.includeInLayout = kdp3Loader.visible = false;
+				if (vdp3StaticSwfLoader != vdp3Loader) {
+					// if we start with no content image after we already have a VDP
+					vdp3Loader.includeInLayout = vdp3Loader.visible = false;
 				}
 				if (imgSource) {
 					entryImg.source = imgSource;
 				}
 				else {
-					if ((KMvCModel.getInstance().getDataPack(PermissionsDataPack) as PermissionsDataPack).enableThumbResize) {
+					if ((VMvCModel.getInstance().getDataPack(PermissionsDataPack) as PermissionsDataPack).enableThumbResize) {
 						entryImg.source = _selectedEntry.thumbnailUrl + "/width/290/height/160/bgcolor/F7F7F7/type/2";
 					}
 					else {
@@ -622,8 +622,8 @@
 
 			private function onPreviewClick():void {
 				//stop the player from playing 
-				if (kdp3StaticSwfLoader) {
-					kdp3StaticSwfLoader.content['sendNotification'](KdpEventTypes.DO_PAUSE);
+				if (vdp3StaticSwfLoader) {
+					vdp3StaticSwfLoader.content['sendNotification'](VdpEventTypes.DO_PAUSE);
 				}
 				EntryUtil.openPreview(_selectedEntry, _dpModel, !_showEmbed);
 			}
@@ -637,45 +637,45 @@
 
 
 			/**
-			 * Kdp loaded, initialize it.
+			 * Vdp loaded, initialize it.
 			 */
-			private function onKDP3Loaded(event:Event):void {
-				kdp3Loader.tabChildren = false;
-				kdp3Loader.tabEnabled = false;
+			private function onVDP3Loaded(event:Event):void {
+				vdp3Loader.tabChildren = false;
+				vdp3Loader.tabEnabled = false;
 				name_input.setFocus();
-				kdp3StaticSwfLoader = kdp3Loader;
-				if (kdp3Loader.loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
-					IEventDispatcher(kdp3Loader.loaderInfo["uncaughtErrorEvents"]).addEventListener("uncaughtError", uncaughtErrorHandler, false, 1, true);
+				vdp3StaticSwfLoader = vdp3Loader;
+				if (vdp3Loader.loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
+					IEventDispatcher(vdp3Loader.loaderInfo["uncaughtErrorEvents"]).addEventListener("uncaughtError", uncaughtErrorHandler, false, 1, true);
 
-				//set kdp params
+				//set vdp params
 				var context:ContextDataPack = _dpModel.getDataPack(ContextDataPack) as ContextDataPack;
 				var params:Object = new Object();
 				params.entryId = _entryData.selectedEntry.id;
-				params.ks = context.kc.ks;
-				params.partnerId = context.kc.partnerId;
-				params.subpId = context.kc.partnerId + "00";
+				params.vs = context.vc.vs;
+				params.partnerId = context.vc.partnerId;
+				params.subpId = context.vc.partnerId + "00";
 				params.cdnHost = context.cdnHost;
-				params.disableAlerts = disableKDPAlerts;
+				params.disableAlerts = disableVDPAlerts;
 				params.debugMode = context.debugMode;
 				params.allowCookies = true;
-				params = KPlayerUtil.overrideStrings(params);
-				params = KPlayerUtil.overrideElementStrings(params);
+				params = VPlayerUtil.overrideStrings(params);
+				params = VPlayerUtil.overrideElementStrings(params);
 
-				kdp3StaticSwfLoader.content["flashvars"] = params;
-				//start the loading sqeunce of the kdp	
-				kdp3StaticSwfLoader.content["init"]();
+				vdp3StaticSwfLoader.content["flashvars"] = params;
+				//start the loading sqeunce of the vdp	
+				vdp3StaticSwfLoader.content["init"]();
 			}
 
 
 
 			/**
-			 * open drilldown window with the recorded entry (Kaltura live only)
+			 * open drilldown window with the recorded entry (Vidiun live only)
 			 * */
 			protected function showRecordedEntry(event:MouseEvent):void {
 				// create the new model 
-				var cg:KMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
+				var cg:VMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
 				controller.dispatch(cg);
-				cg = new KedEntryEvent(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _recordedEntryId);
+				cg = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _recordedEntryId);
 				controller.dispatch(cg);
 			}
 
@@ -686,9 +686,9 @@
 			 * */
 			protected function showParentEntry(event:MouseEvent):void {
 				// create the new model 
-				var cg:KMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
+				var cg:VMvCEvent = new ModelEvent(ModelEvent.DUPLICATE_ENTRY_DETAILS_MODEL);
 				controller.dispatch(cg);
-				cg = new KedEntryEvent(KedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _selectedEntry.rootEntryId);
+				cg = new VedEntryEvent(VedEntryEvent.GET_ENTRY_AND_DRILLDOWN, null, _selectedEntry.rootEntryId);
 				controller.dispatch(cg);
 			}
 
@@ -698,7 +698,7 @@
 			 * */
 			protected function openClipping(event:MouseEvent):void {
 				pausePreview();
-				KedJSGate.openClipApp(_selectedEntry.id, "clip");
+				VedJSGate.openClipApp(_selectedEntry.id, "clip");
 			}
 
 
@@ -707,7 +707,7 @@
 			 * */
 			protected function openTrimming(event:MouseEvent):void {
 				pausePreview();
-				KedJSGate.openClipApp(_selectedEntry.id, "trim");
+				VedJSGate.openClipApp(_selectedEntry.id, "trim");
 			}
 
 			
@@ -716,12 +716,12 @@
 			 * */
 			protected function openLiveClipping(event:MouseEvent):void {
 				pausePreview();
-				KedJSGate.openClipApp(_selectedEntry.id, "live");
+				VedJSGate.openClipApp(_selectedEntry.id, "live");
 			}
 
 
 			private function getRefid(refid:String):String {
-				if (refid == KalturaClient.NULL_STRING) {
+				if (refid == VidiunClient.NULL_STRING) {
 					return '';
 				}
 				else
@@ -737,7 +737,7 @@
 					}
 					else {
 						// used to have value, delete it
-						_selectedEntry.referenceId = KalturaClient.NULL_STRING;
+						_selectedEntry.referenceId = VidiunClient.NULL_STRING;
 					}
 				}
 				else {
@@ -758,7 +758,7 @@
 
 			/**
 			 * pass the given categories to the autocomplete component
-			 * @param value array collection of <code>KalturaCategory</code> objects
+			 * @param value array collection of <code>VidiunCategory</code> objects
 			 * */
 			private function setCategoriesOnScreen(value:ArrayCollection):void {
 				catComplete.selectedItems = value;
@@ -770,10 +770,10 @@
 			 * open category editor
 			 * */
 			private function btnCategories_clickHandler(event:MouseEvent):void {
-				var kc:KalturaClient = (_dpModel.getDataPack(ContextDataPack) as ContextDataPack).kc;
+				var vc:VidiunClient = (_dpModel.getDataPack(ContextDataPack) as ContextDataPack).vc;
 				var catBrs:CategoryBrowser = new CategoryBrowser();
 				catBrs.filterModel = (_dpModel.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
-				catBrs.kClient = kc;
+				catBrs.vClient = vc;
 				catBrs.setCategories(catComplete.selectedItems.source);
 				catBrs.addEventListener(Event.CLOSE, closeCatPopup);
 				catBrs.addEventListener("apply", setCatsToAutocomplete);
@@ -788,13 +788,13 @@
 			 * */
 			private function setCatsToAutocomplete(e:Event):void {
 				var tgt:CategoryBrowser = e.target as CategoryBrowser;
-				var cats:Array = tgt.getCategories(); //KalturaCategory objects
-				var cat:KalturaCategory;
-				var kCats:Array = [];
+				var cats:Array = tgt.getCategories(); //VidiunCategory objects
+				var cat:VidiunCategory;
+				var vCats:Array = [];
 				for each (cat in cats) {
-					kCats.push(cat);
+					vCats.push(cat);
 				}
-				catComplete.selectedItems = new ArrayCollection(kCats);
+				catComplete.selectedItems = new ArrayCollection(vCats);
 			}
 
 
@@ -865,7 +865,7 @@
 			[Bindable]
 			/**
 			 * list of profiles presented by the tab.
-			 * <code>KMCMetadataProfileVO</code> objects
+			 * <code>VMCMetadataProfileVO</code> objects
 			 * */
 			private var _profilesAC:ArrayCollection;
 
@@ -878,7 +878,7 @@
 
 			/**
 			 * create the visual representation of each profile
-			 * @param profilesAC list of custom data profiles (<code>KMCMetadataProfileVO</code>)
+			 * @param profilesAC list of custom data profiles (<code>VMCMetadataProfileVO</code>)
 			 * @param formBuildersAC	list of matching form builders (<code>FormBuilder</code>)
 			 * */
 			private function buildProfiles(profilesAC:ArrayCollection, formBuildersAC:ArrayCollection):void {
@@ -892,7 +892,7 @@
 				}
 
 				for (var i:int = 0; i < profilesAC.length; i++) {
-					var curProfile:KMCMetadataProfileVO = profilesAC.getItemAt(i) as KMCMetadataProfileVO;
+					var curProfile:VMCMetadataProfileVO = profilesAC.getItemAt(i) as VMCMetadataProfileVO;
 
 					if (curProfile.profile && curProfile.metadataFieldVOArray && curProfile.metadataFieldVOArray.length > 0) {
 						var curCustomData:SingleCustomData = new SingleCustomData();
@@ -1007,8 +1007,8 @@
 											 prompt="{resourceManager.getString('drilldown','categoriesPrompt')}"/>
 				</mx:HBox>
 				<mx:HBox id="offlineHolder" width="100%" 
-						 visible="{selectedEntry is KalturaLiveStreamEntry}"
-						 includeInLayout="{selectedEntry is KalturaLiveStreamEntry}">
+						 visible="{selectedEntry is VidiunLiveStreamEntry}"
+						 includeInLayout="{selectedEntry is VidiunLiveStreamEntry}">
 					<mx:Label text="{resourceManager.getString('drilldown','offlineMessage')}" width="{LABEL_WIDTH}"
 							  styleName="drillDownLabel"/>
 					<mx:TextArea id="offlineMessage" width="{TEXT_WIDTH}" text="{selectedEntry.offlineMessage}"
@@ -1035,17 +1035,17 @@
 			<mx:Label text="{selectedEntry.id}" selectable="true" styleName="drillDownTitleLabel"/>
 		</mx:HBox>
 		<!-- player -->
-		<mx:HBox width="100%" horizontalAlign="center" id="kdpContainer">
-			<!--<mx:HBox id="kdpContainer" styleName="playerContainer">-->
-			<mx:SWFLoader id="kdp3Loader" width="340" height="194" complete="{onKDP3Loaded(event)}"/>
+		<mx:HBox width="100%" horizontalAlign="center" id="vdpContainer">
+			<!--<mx:HBox id="vdpContainer" styleName="playerContainer">-->
+			<mx:SWFLoader id="vdp3Loader" width="340" height="194" complete="{onVDP3Loaded(event)}"/>
 			<mx:Image id="entryImg" width="340" height="194" maintainAspectRatio="true" horizontalAlign="center" verticalAlign="middle" 
-					  includeInLayout="{!kdp3Loader.includeInLayout}" visible="{!kdp3Loader.visible}"/>
+					  includeInLayout="{!vdp3Loader.includeInLayout}" visible="{!vdp3Loader.visible}"/>
 			<!--</mx:HBox>-->
 		</mx:HBox>
 		<!-- actions -->
 		<mx:HBox width="100%" visible="{_entryHasContent}" includeInLayout="{_entryHasContent}">
 			<mx:LinkButton id="previewAndEmbed" label="{previewLabel}" click="{onPreviewClick()}" styleName="pne"
-						   enabled="{(selectedEntry.status == KalturaEntryStatus.READY) &amp;&amp; _previewEnable}"/>
+						   enabled="{(selectedEntry.status == VidiunEntryStatus.READY) &amp;&amp; _previewEnable}"/>
 			<mx:Spacer width="100%"/>
 			<mx:LinkButton id="btnClipping" click="openClipping(event)" styleName="bold"
 						   enabled="{EntryDataHelper.entryHasSource(_distributionData.flavorParamsAndAssetsByEntryId)}"
@@ -1054,8 +1054,8 @@
 						   enabled="{EntryDataHelper.entryHasSource(_distributionData.flavorParamsAndAssetsByEntryId)}"
 						   label="{resourceManager.getString('drilldown','openTrimming')}"/>
 			<mx:LinkButton id="btnVOD" click="openLiveClipping(event)" styleName="bold"
-						   visible="{_entryData.selectedLiveEntryIsLive == KalturaNullableBoolean.TRUE_VALUE}" 
-						   includeInLayout="{_entryData.selectedLiveEntryIsLive == KalturaNullableBoolean.TRUE_VALUE}"
+						   visible="{_entryData.selectedLiveEntryIsLive == VidiunNullableBoolean.TRUE_VALUE}" 
+						   includeInLayout="{_entryData.selectedLiveEntryIsLive == VidiunNullableBoolean.TRUE_VALUE}"
 						   label="{resourceManager.getString('drilldown', 'openVOD')}"/>
 		</mx:HBox>
 		<!-- no content message -->
@@ -1092,8 +1092,8 @@
 			</mx:HBox>
 			<!-- when this is a recorded entry - the original live entry -->
 			<mx:HBox width="100%" paddingBottom="15" 
-					 visible="{selectedEntry.sourceType == KalturaSourceType.RECORDED_LIVE}"
-					 includeInLayout="{selectedEntry.sourceType == KalturaSourceType.RECORDED_LIVE}" >
+					 visible="{selectedEntry.sourceType == VidiunSourceType.RECORDED_LIVE}"
+					 includeInLayout="{selectedEntry.sourceType == VidiunSourceType.RECORDED_LIVE}" >
 				<mx:Label text="{resourceManager.getString('drilldown','archive')}:" width="{LABEL_WIDTH}"
 						  styleName="drillDownLabel"/>
 				<mx:LinkButton label="{selectedEntry.rootEntryId}" click="showParentEntry(event)" />
@@ -1129,13 +1129,13 @@
 				</mx:VBox>
 	
 				<mx:VBox width="100%" styleName="noPadding">
-					<mx:HBox width="100%" visible="{_entryHasContent &amp;&amp; !(selectedEntry is KalturaLiveStreamEntry)
-							 &amp;&amp; (selectedEntry.mediaType != KalturaMediaType.IMAGE)}" 
-							 	includeInLayout="{_entryHasContent &amp;&amp; !(selectedEntry is KalturaLiveStreamEntry)
-								&amp;&amp; (selectedEntry.mediaType != KalturaMediaType.IMAGE)}">
+					<mx:HBox width="100%" visible="{_entryHasContent &amp;&amp; !(selectedEntry is VidiunLiveStreamEntry)
+							 &amp;&amp; (selectedEntry.mediaType != VidiunMediaType.IMAGE)}" 
+							 	includeInLayout="{_entryHasContent &amp;&amp; !(selectedEntry is VidiunLiveStreamEntry)
+								&amp;&amp; (selectedEntry.mediaType != VidiunMediaType.IMAGE)}">
 						<mx:Label text="{resourceManager.getString('drilldown','duration')}:" width="{RIGHT_LABEL_WIDTH}"
 								  styleName="drillDownLabel"/>
-						<mx:Label text="{KTimeUtil.formatTime2(selectedEntry.duration)}" width="{RIGHT_TEXT_WIDTH2}"
+						<mx:Label text="{VTimeUtil.formatTime2(selectedEntry.duration)}" width="{RIGHT_TEXT_WIDTH2}"
 								  styleName="drillDownSubLabel"/>
 					</mx:HBox>
 					<mx:HBox width="100%" visible="{_entryHasContent &amp;&amp; selectedEntry.moderationCount}"
@@ -1152,8 +1152,8 @@
 						<mx:Label text="{selectedEntry.votes}" width="{RIGHT_TEXT_WIDTH2}" styleName="drillDownSubLabel"/>
 					</mx:HBox>
 	
-					<mx:HBox width="100%" visible="{selectedEntry.rootEntryId != selectedEntry.id &amp;&amp; selectedEntry.sourceType != KalturaSourceType.RECORDED_LIVE}"
-							 includeInLayout="{selectedEntry.rootEntryId != selectedEntry.id &amp;&amp; selectedEntry.sourceType != KalturaSourceType.RECORDED_LIVE}">
+					<mx:HBox width="100%" visible="{selectedEntry.rootEntryId != selectedEntry.id &amp;&amp; selectedEntry.sourceType != VidiunSourceType.RECORDED_LIVE}"
+							 includeInLayout="{selectedEntry.rootEntryId != selectedEntry.id &amp;&amp; selectedEntry.sourceType != VidiunSourceType.RECORDED_LIVE}">
 						<mx:Label text="{resourceManager.getString('drilldown','clippedFrom')}:" width="{RIGHT_LABEL_WIDTH}"
 								  styleName="drillDownLabel"/>
 						<mx:LinkButton label="{selectedEntry.rootEntryId}" click="showParentEntry(event)"

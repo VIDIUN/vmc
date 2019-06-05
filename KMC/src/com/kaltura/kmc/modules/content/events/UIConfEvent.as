@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.content.events
+package com.vidiun.vmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaUiConfFilter;
+	import com.vidiun.vo.VidiunUiConfFilter;
 	
 	public class UIConfEvent extends CairngormEvent
 	{
 		public static const LIST_UI_CONFS : String = "content_listUIConfs";
 		
-		public var uiConfFilter:KalturaUiConfFilter;
+		public var uiConfFilter:VidiunUiConfFilter;
 		
-		public function UIConfEvent(type:String, filterVo:KalturaUiConfFilter, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function UIConfEvent(type:String, filterVo:VidiunUiConfFilter, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			this.uiConfFilter = filterVo;

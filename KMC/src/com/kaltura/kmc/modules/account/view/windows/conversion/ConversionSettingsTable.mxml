@@ -4,11 +4,11 @@
 			 selectable="false" creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
-			import com.kaltura.vo.KalturaThumbParams;
+			import com.vidiun.vmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.vidiun.vmc.modules.account.vo.ConversionProfileVO;
+			import com.vidiun.vo.FlavorVO;
+			import com.vidiun.vo.VidiunConversionProfileAssetParams;
+			import com.vidiun.vo.VidiunThumbParams;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
@@ -59,7 +59,7 @@
 				for each (var id:String in idsArr) {
 					isFlavor = false;
 					for each (vo in dataProvider) {
-						if (vo.kFlavor.id == int(id)) {
+						if (vo.vFlavor.id == int(id)) {
 							currentFlavors.push(id);
 							isFlavor = true;
 							break;
@@ -107,7 +107,7 @@
 				var idsArr:Array = cProfile.profile.flavorParamsIds.split(',');
 
 				for each (var id:String in idsArr) {
-					if (int(id) == flavor.kFlavor.id) {
+					if (int(id) == flavor.vFlavor.id) {
 						return true;
 					}
 				}
@@ -130,7 +130,7 @@
 				var editFlavorPopup:ConversionFlavorSettings = new ConversionFlavorSettings();
 				editFlavorPopup.profileName = cProfile.profile.name;
 				editFlavorPopup.flavorVO = flavor;
-				editFlavorPopup.cpap = getCpap(flavor.kFlavor.id);
+				editFlavorPopup.cpap = getCpap(flavor.vFlavor.id);
 				PopUpManager.addPopUp(editFlavorPopup, (Application.application as DisplayObject), true);
 				PopUpManager.centerPopUp(editFlavorPopup);
 			}
@@ -139,8 +139,8 @@
 			/**
 			 * return a matching cpap from the profile's flavours list
 			 * */
-			protected function getCpap(flavorId:int):KalturaConversionProfileAssetParams {
-				for each (var cpap:KalturaConversionProfileAssetParams in cProfile.flavors) {
+			protected function getCpap(flavorId:int):VidiunConversionProfileAssetParams {
+				for each (var cpap:VidiunConversionProfileAssetParams in cProfile.flavors) {
 					if (cpap.assetParamsId == flavorId) {
 						return cpap;
 					}
@@ -161,19 +161,19 @@
 				else {
 					idsArr = cProfile.profile.flavorParamsIds.split(',');
 				}
-				var cpap:KalturaConversionProfileAssetParams;
+				var cpap:VidiunConversionProfileAssetParams;
 				if (flavorObj.selected) {
-					idsArr.push(flavorObj.kFlavor.id);
+					idsArr.push(flavorObj.vFlavor.id);
 					// push a cpap
-					cpap = new KalturaConversionProfileAssetParams();
+					cpap = new VidiunConversionProfileAssetParams();
 					cpap.conversionProfileId = cProfile.profile.id;
-					cpap.assetParamsId = flavorObj.kFlavor.id;
+					cpap.assetParamsId = flavorObj.vFlavor.id;
 					cProfile.flavors.push(cpap);
 				}
 				else {
 					var index:int = 0;
 					for each (var id:String in idsArr) {
-						if (int(id) == flavorObj.kFlavor.id) {
+						if (int(id) == flavorObj.vFlavor.id) {
 							idsArr.splice(index, 1);
 							break;
 						}
@@ -181,8 +181,8 @@
 					}
 					// remove a cpap
 					for (var i:int = 0; i<cProfile.flavors.length; i++) {
-						cpap = cProfile.flavors[i] as KalturaConversionProfileAssetParams;
-						if (cpap.assetParamsId == flavorObj.kFlavor.id) {
+						cpap = cProfile.flavors[i] as VidiunConversionProfileAssetParams;
+						if (cpap.assetParamsId == flavorObj.vFlavor.id) {
 							cProfile.flavors.splice(i, 1);
 							break;
 						}
@@ -243,22 +243,22 @@
 
 	<mx:columns>
 		<mx:DataGridColumn width="40"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorSelectionRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorSelectionRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transIdCol')}" dataField="id" width="30"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorIdRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorIdRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transConvFlavorsCol')}"
 						   dataField="transcodingFlavor"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorNameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorNameRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transDescCol')}" dataField="description"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorDescriptionRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorDescriptionRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transFormatCol')}" dataField="format"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorFormatRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorFormatRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transCodecCol')}" dataField="codec"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorCodecRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorCodecRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transBitrateCol')}" dataField="bitrate"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorBitrateRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorBitrateRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transDimensionsCol')}"
 						   dataField="dimensions"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorDimensionsRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.account.view.windows.conversion.renderers.FlavorDimensionsRenderer"/>
 	</mx:columns>
 </mx:DataGrid>

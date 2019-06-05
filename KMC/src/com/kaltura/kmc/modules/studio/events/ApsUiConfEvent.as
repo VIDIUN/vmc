@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.studio.events
+package com.vidiun.vmc.modules.studio.events
 {
-	import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
+	import com.vidiun.vmc.modules.studio.vo.PlayerUiConfVo;
 	
 	import flash.events.Event;
 

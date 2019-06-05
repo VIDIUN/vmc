@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.account.vo {
+package com.vidiun.vmc.modules.account.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParams;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfileAssetParams;
 	
 	import mx.utils.ObjectProxy;
 
@@ -17,7 +17,7 @@ package com.kaltura.kmc.modules.account.vo {
 		/**
 		 * conversion profile
 		 */
-		public var profile:KalturaConversionProfile;
+		public var profile:VidiunConversionProfile;
 		
 		/**
 		 * id of the wrapped profile 
@@ -25,10 +25,10 @@ package com.kaltura.kmc.modules.account.vo {
 		public var id:String;
 
 		
-		[ArrayElementType("com.kaltura.vo.KalturaConversionProfileAssetParams")]
+		[ArrayElementType("com.vidiun.vo.VidiunConversionProfileAssetParams")]
 		/**
 		 * flavors associated with the conversion profile <br>
-		 * <code>KalturaConversionProfileAssetParams</code> objects
+		 * <code>VidiunConversionProfileAssetParams</code> objects
 		 * */
 		public var flavors:Array;
 
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.account.vo {
 		 * Constructor.
 		 */
 		public function ConversionProfileVO() {
-			profile = new KalturaConversionProfile();
+			profile = new VidiunConversionProfile();
 		}
 
 

@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.vo
+package com.vidiun.vmc.modules.content.vo
 {
 	public class StreamVo
 	{
-		public static const STREAM_TYPE_KALTURA:String = 'kaltura';
+		public static const STREAM_TYPE_VIDIUN:String = 'vidiun';
 		public static const STREAM_TYPE_MULTICAST:String = 'multicast';
 		public static const STREAM_TYPE_UNIVERSAL:String = 'universal';
 		public static const STREAM_TYPE_MANUAL:String = 'manual';
@@ -37,13 +37,13 @@ package com.kaltura.kmc.modules.content.vo
 		public var password:String;
 		
 		/**
-		 * is DVR enabled for akamai universal streams (hls/hds) and Kaltura streams  
+		 * is DVR enabled for akamai universal streams (hls/hds) and Vidiun streams  
 		 */
 		public var dvrEnabled:Boolean;
 		
-		/* kaltura stream specific */
+		/* vidiun stream specific */
 		/**
-		 * is recording enabled for Kaltura streams  
+		 * is recording enabled for Vidiun streams  
 		 */
 		public var recordingEnabled:Boolean;
 		
@@ -53,7 +53,7 @@ package com.kaltura.kmc.modules.content.vo
 		public var recordingType:String;
 		
 		/**
-		 * conversion profile to be used (Kaltura streams)  
+		 * conversion profile to be used (Vidiun streams)  
 		 */
 		public var conversionProfileId:int;
 		

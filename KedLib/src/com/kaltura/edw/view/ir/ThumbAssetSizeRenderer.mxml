@@ -3,7 +3,7 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
 			public static const KB_MULTIPLIER:int = 1024;
 			[Bindable]
 			private var _size:int;

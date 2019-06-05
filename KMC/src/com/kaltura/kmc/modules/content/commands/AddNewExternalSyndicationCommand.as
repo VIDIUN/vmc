@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedAdd;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedGetEntryCount;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-	import com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationNotificationPopUpWindow;
-	import com.kaltura.vo.KalturaBaseSyndicationFeed;
-	import com.kaltura.vo.KalturaGenericXsltSyndicationFeed;
-	import com.kaltura.vo.KalturaSyndicationFeedEntryCount;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.syndicationFeed.SyndicationFeedAdd;
+	import com.vidiun.commands.syndicationFeed.SyndicationFeedGetEntryCount;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+	import com.vidiun.vmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationNotificationPopUpWindow;
+	import com.vidiun.vo.VidiunBaseSyndicationFeed;
+	import com.vidiun.vo.VidiunGenericXsltSyndicationFeed;
+	import com.vidiun.vo.VidiunSyndicationFeedEntryCount;
 	
 	import flash.display.DisplayObject;
 	
@@ -21,37 +21,37 @@ package com.kaltura.kmc.modules.content.commands
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 	
-	public class AddNewExternalSyndicationCommand extends KalturaCommand implements ICommand, IResponder
+	public class AddNewExternalSyndicationCommand extends VidiunCommand implements ICommand, IResponder
 	{
 		override public function execute(event:CairngormEvent):void
 		{
 			_model.increaseLoadCounter();
 			
 			var mr:MultiRequest = new MultiRequest();
-			var newFeed:KalturaBaseSyndicationFeed = event.data as KalturaBaseSyndicationFeed;
+			var newFeed:VidiunBaseSyndicationFeed = event.data as VidiunBaseSyndicationFeed;
 		 	var addNewFeed:SyndicationFeedAdd = new SyndicationFeedAdd(newFeed);
 		 	mr.addAction(addNewFeed);
 		 	
 		 	var countersAction:SyndicationFeedGetEntryCount = new SyndicationFeedGetEntryCount("{1:result:id}");
 		 	mr.addAction(countersAction);
 		 	
-		 	mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(mr);	   
+		 	mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(mr);	   
 		}
 		
 		override public function result(data:Object):void
 		{
 			super.result(data);
-			if (data.data[0] is KalturaBaseSyndicationFeed) 
+			if (data.data[0] is VidiunBaseSyndicationFeed) 
 			{
-				if (!(data.data[0] is KalturaGenericXsltSyndicationFeed)) {	
+				if (!(data.data[0] is VidiunGenericXsltSyndicationFeed)) {	
 					var extFeedPopUp:ExternalSyndicationNotificationPopUpWindow = new ExternalSyndicationNotificationPopUpWindow();
 					extFeedPopUp.partnerData = _model.extSynModel.partnerData;
 					extFeedPopUp.rootUrl = _model.context.rootUrl;
 					extFeedPopUp.flavorParams = _model.filterModel.flavorParams;
-		   			extFeedPopUp.feed = data.data[0] as KalturaBaseSyndicationFeed;
-		   			extFeedPopUp.feedCountersData = data.data[1] as KalturaSyndicationFeedEntryCount;
+		   			extFeedPopUp.feed = data.data[0] as VidiunBaseSyndicationFeed;
+		   			extFeedPopUp.feedCountersData = data.data[1] as VidiunSyndicationFeedEntryCount;
 					PopUpManager.addPopUp(extFeedPopUp, Application.application as DisplayObject, true);
 					PopUpManager.centerPopUp(extFeedPopUp);
 				} 

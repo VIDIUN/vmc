@@ -5,8 +5,8 @@
 			// -------------------------
 			// "owner" is EntryTable
 			// -------------------------
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunMediaType;
 			
 			
 			

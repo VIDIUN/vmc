@@ -4,8 +4,8 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.analytics.control.DrillDownEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.control.DrillDownEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
 			
 			import flash.net.navigateToURL;
 			

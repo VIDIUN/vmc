@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunMediaEntry;
 
-	public class MediaEvent extends KMvCEvent
+	public class MediaEvent extends VMvCEvent
 	{
 		public static const APPROVE_REPLACEMENT:String = "approveReplacement";
 		public static const CANCEL_REPLACEMENT:String = "cancelReplacement";
@@ -29,13 +29,13 @@ package com.kaltura.edw.control.events
 		
 		
 		
-		public var entry:KalturaMediaEntry;
+		public var entry:VidiunMediaEntry;
 		/**
 		 * whether to open entrydrilldown after response returns
 		 * */
 		public var openDrilldown:Boolean;
 		
-		public function MediaEvent(type:String, entry:KalturaMediaEntry, openDrilldown:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function MediaEvent(type:String, entry:VidiunMediaEntry, openDrilldown:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			this.entry = entry;
 			this.openDrilldown = openDrilldown;

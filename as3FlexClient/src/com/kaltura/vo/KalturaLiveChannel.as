@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.KalturaLiveEntry;
+	import com.vidiun.vo.VidiunLiveEntry;
 
 	[Bindable]
-	public dynamic class KalturaLiveChannel extends KalturaLiveEntry
+	public dynamic class VidiunLiveChannel extends VidiunLiveEntry
 	{
 		/**
 		* Playlist id to be played
@@ -39,7 +39,7 @@ package com.kaltura.vo
 
 		/**
 		* Indicates that the segments should be repeated for ever
-		* @see com.kaltura.types.KalturaNullableBoolean
+		* @see com.vidiun.types.VidiunNullableBoolean
 		**/
 		public var repeat : int = int.MIN_VALUE;
 

@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.captions {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.captionAsset.CaptionAssetGetUrl;
-	import com.kaltura.commands.captionAsset.CaptionAssetList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.CaptionsDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaCaptionAssetStatus;
-	import com.kaltura.types.KalturaFlavorAssetStatus;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaAssetFilter;
-	import com.kaltura.vo.KalturaCaptionAsset;
-	import com.kaltura.vo.KalturaCaptionAssetListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+package com.vidiun.edw.control.commands.captions {
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.captionAsset.CaptionAssetGetUrl;
+	import com.vidiun.commands.captionAsset.CaptionAssetList;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.model.datapacks.CaptionsDataPack;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.edw.vo.EntryCaptionVO;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunCaptionAssetStatus;
+	import com.vidiun.types.VidiunFlavorAssetStatus;
+	import com.vidiun.types.VidiunNullableBoolean;
+	import com.vidiun.vo.VidiunAssetFilter;
+	import com.vidiun.vo.VidiunCaptionAsset;
+	import com.vidiun.vo.VidiunCaptionAssetListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
 
-	public class ListCaptionsCommand extends KedCommand {
+	public class ListCaptionsCommand extends VedCommand {
 		private var _captionsArray:Array;
 		/**
 		 * array of captions in status ready, request download url only for these captions
@@ -24,36 +24,36 @@ package com.kaltura.edw.control.commands.captions {
 		private var _readyCaptionsArray:Array;
 
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var filter:KalturaAssetFilter = new KalturaAssetFilter();
+			var filter:VidiunAssetFilter = new VidiunAssetFilter();
 			filter.entryIdEqual = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:VidiunFilterPager = new VidiunFilterPager();
 			pager.pageSize = 100;
 			var listCaptions:CaptionAssetList = new CaptionAssetList(filter, pager);
-			listCaptions.addEventListener(KalturaEvent.COMPLETE, listResult);
-			listCaptions.addEventListener(KalturaEvent.FAILED, fault);
+			listCaptions.addEventListener(VidiunEvent.COMPLETE, listResult);
+			listCaptions.addEventListener(VidiunEvent.FAILED, fault);
 
 			_client.post(listCaptions);
 		}
 
 
 		private function listResult(data:Object):void {
-			var listResponse:KalturaCaptionAssetListResponse = data.data as KalturaCaptionAssetListResponse;
+			var listResponse:VidiunCaptionAssetListResponse = data.data as VidiunCaptionAssetListResponse;
 			if (listResponse) {
 				var mr:MultiRequest = new MultiRequest();
 				_captionsArray = new Array();
 				_readyCaptionsArray = new Array();
-				for each (var caption:KalturaCaptionAsset in listResponse.objects) {
+				for each (var caption:VidiunCaptionAsset in listResponse.objects) {
 					var entryCaption:EntryCaptionVO = new EntryCaptionVO();
 					entryCaption.caption = caption;
-					entryCaption.kmcStatus = getKMCStatus(caption);
-					entryCaption.serveUrl = _client.protocol + _client.domain + EntryCaptionVO.generalServeURL + "/ks/" + _client.ks + "/captionAssetId/" + caption.id;
-					if (caption.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
-						entryCaption.isKmcDefault = true;
+					entryCaption.vmcStatus = getVMCStatus(caption);
+					entryCaption.serveUrl = _client.protocol + _client.domain + EntryCaptionVO.generalServeURL + "/vs/" + _client.vs + "/captionAssetId/" + caption.id;
+					if (caption.isDefault == VidiunNullableBoolean.TRUE_VALUE) {
+						entryCaption.isVmcDefault = true;
 					}
 					_captionsArray.push(entryCaption);
-					if (caption.status == KalturaFlavorAssetStatus.READY) {
+					if (caption.status == VidiunFlavorAssetStatus.READY) {
 						var getUrl:CaptionAssetGetUrl = new CaptionAssetGetUrl(caption.id);
 						mr.addAction(getUrl);
 						_readyCaptionsArray.push(entryCaption);
@@ -61,8 +61,8 @@ package com.kaltura.edw.control.commands.captions {
 				}
 
 				if (_readyCaptionsArray.length) {
-					mr.addEventListener(KalturaEvent.COMPLETE, handleDownloadUrls);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(VidiunEvent.COMPLETE, handleDownloadUrls);
+					mr.addEventListener(VidiunEvent.FAILED, fault);
 					_client.post(mr);
 				}
 				else //go strait to result
@@ -71,18 +71,18 @@ package com.kaltura.edw.control.commands.captions {
 		}
 
 
-		private function getKMCStatus(caption:KalturaCaptionAsset):String {
+		private function getVMCStatus(caption:VidiunCaptionAsset):String {
 			var result:String;
 			switch (caption.status) {
-				case KalturaCaptionAssetStatus.ERROR:
+				case VidiunCaptionAssetStatus.ERROR:
 					result = EntryCaptionVO.ERROR;
 					break;
-				case KalturaCaptionAssetStatus.READY:
+				case VidiunCaptionAssetStatus.READY:
 					result = EntryCaptionVO.SAVED;
 					break;
-//				case KalturaCaptionAssetStatus.DELETED:
-//				case KalturaCaptionAssetStatus.IMPORTING:
-//				case KalturaCaptionAssetStatus.QUEUED:
+//				case VidiunCaptionAssetStatus.DELETED:
+//				case VidiunCaptionAssetStatus.IMPORTING:
+//				case VidiunCaptionAssetStatus.QUEUED:
 				default:
 					result = EntryCaptionVO.PROCESSING;
 					break;

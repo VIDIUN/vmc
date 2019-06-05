@@ -2,9 +2,9 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" verticalAlign="middle" horizontalScrollPolicy="off" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.window.flavors.FilesTable;
-			import com.kaltura.edw.vo.UploadFileVo;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
+			import com.vidiun.edw.view.window.flavors.FilesTable;
+			import com.vidiun.edw.vo.UploadFileVo;
+			import com.vidiun.vo.VidiunConversionProfileAssetParams;
 			
 			import mx.events.ListEvent;
 			import mx.resources.ResourceManager;
@@ -17,7 +17,7 @@
 				super.data = value;
 				if (value) {
 //					cb.enabled = true;
-					cb.dataProvider = value.flavors; // KalturaFlavorParams objects
+					cb.dataProvider = value.flavors; // VidiunFlavorParams objects
 					if (cb.dropdown) {
 						cb.dropdown.dataProvider = value.flavors;
 					}
@@ -33,7 +33,7 @@
 			 * */
 			protected function selectFlavor(ufv:UploadFileVo):void {
 				var found:Boolean;
-				var o:KalturaConversionProfileAssetParams;
+				var o:VidiunConversionProfileAssetParams;
 				
 				if (!ufv.flavors || ufv.flavors.length == 0) {
 					cb.prompt = ResourceManager.getInstance().getString('cms', 'noFlavorsPrompt');
@@ -78,16 +78,16 @@
 			}
 
 
-			public function get selectedFlavor():KalturaConversionProfileAssetParams {
-				return cb.selectedItem as KalturaConversionProfileAssetParams;
+			public function get selectedFlavor():VidiunConversionProfileAssetParams {
+				return cb.selectedItem as VidiunConversionProfileAssetParams;
 			}
 
-//			public function set selectedFlavor(value:KalturaFlavorParams):void {
+//			public function set selectedFlavor(value:VidiunFlavorParams):void {
 //				cb.selectedItem = value;
 //			}
 		]]>
 	</mx:Script>
 
-	<mx:ComboBox id="cb" itemRenderer="com.kaltura.edw.view.window.flavors.ir.CheckBoxLabelRenderer" 
+	<mx:ComboBox id="cb" itemRenderer="com.vidiun.edw.view.window.flavors.ir.CheckBoxLabelRenderer" 
 				 change="combobox1_changeHandler(event)" labelField="name" width="100%"/>
 </mx:HBox>

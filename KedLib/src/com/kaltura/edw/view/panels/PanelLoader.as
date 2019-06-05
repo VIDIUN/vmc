@@ -1,4 +1,4 @@
-package com.kaltura.edw.view.panels
+package com.vidiun.edw.view.panels
 {
 	import flash.errors.IllegalOperationError;
 
@@ -22,9 +22,9 @@ package com.kaltura.edw.view.panels
 		}
 	}
 }
-import com.kaltura.edw.business.IDrilldownPanel;
-import com.kaltura.edw.view.panels.IPanelLoaderImp;
-import com.kaltura.edw.view.panels.PanelMetadataVO;
+import com.vidiun.edw.business.IDrilldownPanel;
+import com.vidiun.edw.view.panels.IPanelLoaderImp;
+import com.vidiun.edw.view.panels.PanelMetadataVO;
 
 import flash.errors.IOError;
 import flash.system.ApplicationDomain;
@@ -87,7 +87,7 @@ class PanelLoaderImp implements IPanelLoaderImp{
 	}
 	
 	private function onLoadingError(evt:ModuleEvent):void{
-		throw new IOError("Failed to load KED module from url: '" + evt.module.url + "': " + evt.errorText);
+		throw new IOError("Failed to load VED module from url: '" + evt.module.url + "': " + evt.errorText);
 	}
 	
 	private function onModuleReady(evt:ModuleEvent):void{

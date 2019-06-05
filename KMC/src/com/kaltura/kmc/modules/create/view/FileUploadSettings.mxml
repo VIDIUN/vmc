@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-							xmlns:containers="com.kaltura.containers.*"
-							xmlns:view="com.kaltura.kmc.modules.create.view.*"
+							xmlns:containers="com.vidiun.containers.*"
+							xmlns:view="com.vidiun.vmc.modules.create.view.*"
 							width="550" height="400" layout="vertical"
 							showCloseButton="true" close="closeHandler(event)"
 							showHelpButton="true" help="helpHandler(event)"
@@ -14,25 +14,25 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.commands.MultiRequest;
-			import com.kaltura.commands.conversionProfile.ConversionProfileList;
-			import com.kaltura.commands.media.MediaAdd;
-			import com.kaltura.errors.KalturaError;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.create.MultipleMediaFilesSelector;
-			import com.kaltura.kmc.modules.create.vo.UploadFile;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.vo.FileUploadVO;
-			import com.kaltura.vo.KalturaConversionProfile;
-			import com.kaltura.vo.KalturaConversionProfileFilter;
-			import com.kaltura.vo.KalturaConversionProfileListResponse;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.commands.MultiRequest;
+			import com.vidiun.commands.conversionProfile.ConversionProfileList;
+			import com.vidiun.commands.media.MediaAdd;
+			import com.vidiun.errors.VidiunError;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.create.MultipleMediaFilesSelector;
+			import com.vidiun.vmc.modules.create.vo.UploadFile;
+			import com.vidiun.managers.FileUploadManager;
+			import com.vidiun.types.VidiunConversionProfileType;
+			import com.vidiun.types.VidiunMediaType;
+			import com.vidiun.vo.FileUploadVO;
+			import com.vidiun.vo.VidiunConversionProfile;
+			import com.vidiun.vo.VidiunConversionProfileFilter;
+			import com.vidiun.vo.VidiunConversionProfileListResponse;
+			import com.vidiun.vo.VidiunFilterPager;
+			import com.vidiun.vo.VidiunMediaEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -44,13 +44,13 @@
 			import mx.resources.ResourceManager;
 			
 			
-			public var client:KalturaClient;
+			public var client:VidiunClient;
 			
 			
 			[Bindable]
 			/**
 			 * list of available conversion profiles 
-			 * <code>KalturaConversionProfile</code> objects
+			 * <code>VidiunConversionProfile</code> objects
 			 * */
 			private var _conversionProfiles:ArrayCollection;
 			
@@ -104,7 +104,7 @@
 			/**
 			 * get media type according to file extension
 			 * @param fr	the queried file
-			 * @return matching KalturaMediaType enum value, or -1 if no match found
+			 * @return matching VidiunMediaType enum value, or -1 if no match found
 			 * */
 			private function getFileMediaType(fr:FileReference):int {
 				var dot:int = fr.name.lastIndexOf(".");
@@ -113,19 +113,19 @@
 				var types:Array = getTypesInFilter(filterDefinitions.(@name=="video_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.VIDEO;
+						return VidiunMediaType.VIDEO;
 					}
 				}
 				types = getTypesInFilter(filterDefinitions.(@name=="audio_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.AUDIO;
+						return VidiunMediaType.AUDIO;
 					}
 				}
 				types = getTypesInFilter(filterDefinitions.(@name=="image_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.IMAGE;
+						return VidiunMediaType.IMAGE;
 					}
 				}
 				return -1;
@@ -150,31 +150,31 @@
 			}
 			
 			private function listConversionProfiels():void {
-				var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-				f.typeEqual = KalturaConversionProfileType.MEDIA;
-				var p:KalturaFilterPager = new KalturaFilterPager();
+				var f:VidiunConversionProfileFilter = new VidiunConversionProfileFilter();
+				f.typeEqual = VidiunConversionProfileType.MEDIA;
+				var p:VidiunFilterPager = new VidiunFilterPager();
 				p.pageSize = 500;	// very large number that should cover all profiles
 				var cpl:ConversionProfileList = new ConversionProfileList(f, p);
-				cpl.addEventListener(KalturaEvent.COMPLETE, conversionProfilesHandler);
-				cpl.addEventListener(KalturaEvent.FAILED, conversionProfilesHandler);
+				cpl.addEventListener(VidiunEvent.COMPLETE, conversionProfilesHandler);
+				cpl.addEventListener(VidiunEvent.FAILED, conversionProfilesHandler);
 				client.post(cpl);
 			}
 			
-			private function conversionProfilesHandler(e:KalturaEvent):void {
-				if (e.type == KalturaEvent.FAILED) {
+			private function conversionProfilesHandler(e:VidiunEvent):void {
+				if (e.type == VidiunEvent.FAILED) {
 					showError(e.error.errorMsg);
 				}
 				else {
-					var resp:Array = (e.data as KalturaConversionProfileListResponse).objects;
+					var resp:Array = (e.data as VidiunConversionProfileListResponse).objects;
 					var ar:Array = new Array();
-					var def:KalturaConversionProfile;
+					var def:VidiunConversionProfile;
 					for each (var o:Object in resp) {
-						if (o is KalturaConversionProfile) {
-							if ((o as KalturaConversionProfile).isDefault) {
-								def = o as KalturaConversionProfile;
+						if (o is VidiunConversionProfile) {
+							if ((o as VidiunConversionProfile).isDefault) {
+								def = o as VidiunConversionProfile;
 							}
 							else {
-								ar.push(o as KalturaConversionProfile);
+								ar.push(o as VidiunConversionProfile);
 							}
 						}
 					}
@@ -276,19 +276,19 @@
 				submitBtn.enabled = false;
 				var mr:MultiRequest = new MultiRequest();
 				var ma:MediaAdd;
-				var kme:KalturaMediaEntry;
+				var vme:VidiunMediaEntry;
 				
 				for each (var file:UploadFile in _files) {
-					kme = new KalturaMediaEntry();
-					kme.name = file.fileName;
-					kme.mediaType = file.mediaType;
-					kme.conversionProfileId = cnvrtProfCb.selectedItem.id;
+					vme = new VidiunMediaEntry();
+					vme.name = file.fileName;
+					vme.mediaType = file.mediaType;
+					vme.conversionProfileId = cnvrtProfCb.selectedItem.id;
 					
-					ma = new MediaAdd(kme);
+					ma = new MediaAdd(vme);
 					mr.addAction(ma);
 				}
-				mr.addEventListener(KalturaEvent.COMPLETE, addMediaToEntries);
-				mr.addEventListener(KalturaEvent.FAILED, addMediaToEntries);
+				mr.addEventListener(VidiunEvent.COMPLETE, addMediaToEntries);
+				mr.addEventListener(VidiunEvent.FAILED, addMediaToEntries);
 				client.post(mr);
 			}
 			
@@ -297,23 +297,23 @@
 			 * add media files to the newly created entries
 			 * @param e	the event dispatched by the entries creation call
 			 * */
-			protected function addMediaToEntries(e:KalturaEvent):void {
-				e.target.removeEventListener(KalturaEvent.COMPLETE, addMediaToEntries);
-				e.target.removeEventListener(KalturaEvent.FAILED, addMediaToEntries);
+			protected function addMediaToEntries(e:VidiunEvent):void {
+				e.target.removeEventListener(VidiunEvent.COMPLETE, addMediaToEntries);
+				e.target.removeEventListener(VidiunEvent.FAILED, addMediaToEntries);
 				CursorManager.removeBusyCursor();
-				if (e.type == KalturaEvent.FAILED) {
+				if (e.type == VidiunEvent.FAILED) {
 					showError(e.error.errorMsg);
 					return;
 				}
 				else {
 					// internal errors
 					for each (var o:Object in e.data) {
-						if (o is KalturaError) {
+						if (o is VidiunError) {
 							showError(o.errorMsg);
 							return;
 						}
 						else if (o.error) {
-							// in MRs, errors are not KalturaErrors.
+							// in MRs, errors are not VidiunErrors.
 							showError(o.error.message);
 							return;
 						}
@@ -321,7 +321,7 @@
 					// pass FRs to upload manager
 					// we assume an entry for each file, in matching order
 					var uploader:FileUploadManager = FileUploadManager.getInstance();
-					var entry:KalturaMediaEntry;
+					var entry:VidiunMediaEntry;
 					var entries:Array = e.data as Array;
 					var fu:UploadFile;		// local vo
 					var fuv:FileUploadVO;	// uploader vo
@@ -332,7 +332,7 @@
 						uploader.updateEntryContent(entry.id, [fuv]);
 					}
 					// dispatch navigation event
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content"));
+					dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, "content"));
 					// remove popup
 					closeHandler(null);
 				}
@@ -345,7 +345,7 @@
 
 
 			protected function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_desktop_upload'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_desktop_upload'));
 			}
 
 		]]>

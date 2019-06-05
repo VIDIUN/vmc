@@ -6,8 +6,8 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.base.FormBuilderBase;
-			import com.kaltura.edw.model.MetadataDataObject;
+			import com.vidiun.edw.business.base.FormBuilderBase;
+			import com.vidiun.edw.model.MetadataDataObject;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Container;

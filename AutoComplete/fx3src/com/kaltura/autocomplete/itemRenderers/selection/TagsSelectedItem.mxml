@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<base:SelectionItemBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:base="com.kaltura.autocomplete.itemRenderers.selection.base.*" xmlns:classes="com.hillelcoren.components.autoComplete.classes.*"
-						implements="com.kaltura.autocomplete.itemRenderers.selection.base.IEditableSelection" creationComplete="init()">
+<base:SelectionItemBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:base="com.vidiun.autocomplete.itemRenderers.selection.base.*" xmlns:classes="com.hillelcoren.components.autoComplete.classes.*"
+						implements="com.vidiun.autocomplete.itemRenderers.selection.base.IEditableSelection" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
 			import com.hillelcoren.components.autoComplete.classes.ShorterTextInput;

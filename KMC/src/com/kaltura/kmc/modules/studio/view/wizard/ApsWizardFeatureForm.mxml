@@ -4,8 +4,8 @@
 		 creationComplete="onCreationComplete()">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.events.ApsPrefixEvent;
-			import com.kaltura.kmc.modules.studio.vo.ApsOptionItemVo;
+			import com.vidiun.vmc.modules.studio.events.ApsPrefixEvent;
+			import com.vidiun.vmc.modules.studio.vo.ApsOptionItemVo;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -91,16 +91,16 @@
 				var hasPrefix:Boolean;
 				for each (var prefixXml:XML in prefixes) {
 					var affectsOnAttribute:String = prefixXml.attribute("affectsOnAttribute")[0].toString();
-					var attributeXMLAffected:XML = featureFormXML.children().(String(attribute("k_param")).indexOf(affectsOnAttribute) > -1)[0];
-					var current_k_value:String = attributeXMLAffected.attribute("k_value").toString();
-					var original_k_value:String = "{" + current_k_value.split("{")[1];
-					var new_k_value:String = prefixXml.attribute("k_value")[0].toString() + original_k_value;
-					attributeXMLAffected.attribute("k_value")[0] = new_k_value;
+					var attributeXMLAffected:XML = featureFormXML.children().(String(attribute("v_param")).indexOf(affectsOnAttribute) > -1)[0];
+					var current_v_value:String = attributeXMLAffected.attribute("v_value").toString();
+					var original_v_value:String = "{" + current_v_value.split("{")[1];
+					var new_v_value:String = prefixXml.attribute("v_value")[0].toString() + original_v_value;
+					attributeXMLAffected.attribute("v_value")[0] = new_v_value;
 					hasPrefix = true;
 				}
 				if (hasPrefix) {
 					var d:Object = new Object();
-					d.prefix = prefixXml.attribute("k_value")[0].toString();
+					d.prefix = prefixXml.attribute("v_value")[0].toString();
 					d.featureName = _featurePrefixName;
 					d.featureXML = _originalfeatureXML;
 					dispatchEvent(new ApsPrefixEvent(ApsPrefixEvent.NEW_PREFIX_TO_UPDATE, d));
@@ -119,7 +119,7 @@
 			 * */
 			private function cancelFeatureChange(evt:MouseEvent = null):void {
 				featureFormXML.setChildren(_originalfeatureXML.children());
-//				var paramsXmls:XMLList = _originalfeatureXML.descendants().(attribute("k_param").toString().length > 0);
+//				var paramsXmls:XMLList = _originalfeatureXML.descendants().(attribute("v_param").toString().length > 0);
 //				initFeature(_originalfeatureXML);
 				visible = false;
 				dispose();
@@ -233,7 +233,7 @@
 						rb.id = componentXML.@id.toString();
 						rb.name = componentXML.@id.toString();
 						rb.groupName = componentXML.@groupName.toString();
-						rb.selected = componentXML.@k_value.toString() == "true";
+						rb.selected = componentXML.@v_value.toString() == "true";
 						rb.label = componentXML.@label.toString();
 						rb.addEventListener(Event.CHANGE, onRadioChanged, false, 0, true);
 						ui = rb;
@@ -246,7 +246,7 @@
 							BindingUtils.bindProperty(cb, "includeInLayout", parentToListenTo, "selected");
 							cb.setStyle("paddingLeft", 15);
 						}
-						if (componentXML.@k_value.toString() == "true") {
+						if (componentXML.@v_value.toString() == "true") {
 							cb.selected = true;
 						}
 						cb.addEventListener(Event.CHANGE, onCheckboxChange, false, 0, true);
@@ -264,7 +264,7 @@
 						var selectedIndex:uint = 0;
 						//hooking the combobox dataprovider selected index
 						for (var i:uint = 0; i < comboChildrens.length(); i++) {
-							if (XML(comboChildrens[i]).data[0].toString() == componentXML.@k_value.toString()) {
+							if (XML(comboChildrens[i]).data[0].toString() == componentXML.@v_value.toString()) {
 								selectedIndex = i;
 							}
 						}
@@ -291,8 +291,8 @@
 						break;
 					case "Input":
 						var input:TextInput = new TextInput();
-						if (componentXML.@k_value.toString() != "") {
-							input.text = componentXML.@k_value.toString();
+						if (componentXML.@v_value.toString() != "") {
+							input.text = componentXML.@v_value.toString();
 						}
 						input.addEventListener(Event.CHANGE, onInputChange, false, 0, true)
 						input.id = componentXML.@id.toString();
@@ -303,8 +303,8 @@
 						break;
 					case "ColorPicker":
 						var picker:ColorPicker = new ColorPicker();
-						if (componentXML.@k_value.toString() != "") {
-							picker.selectedColor = parseInt(componentXML.@k_value.toString());
+						if (componentXML.@v_value.toString() != "") {
+							picker.selectedColor = parseInt(componentXML.@v_value.toString());
 						}
 						picker.addEventListener(Event.CHANGE, onColorPickerChanged, false, 0, true)
 						picker.id = componentXML.@id.toString();
@@ -324,8 +324,8 @@
 							numericStepper.maximum = 10000000;
 						if (componentXML.@minimum)
 							numericStepper.minimum = componentXML.@minimum;
-						if (componentXML.@k_value)
-							numericStepper.value = componentXML.@k_value;
+						if (componentXML.@v_value)
+							numericStepper.value = componentXML.@v_value;
 						numericStepper.addEventListener(NumericStepperEvent.CHANGE, onNumericStepperChange, false, 0, true);
 						numericStepper.addEventListener(FocusEvent.FOCUS_OUT, numericChange);
 						ui = numericStepper;
@@ -339,14 +339,14 @@
 				var comboName:String = evt.target.name;
 				var newValue:String = evt.target.selectedItem.data.toString();
 				featureFormXML..ComboBox.(@id == comboName)[0].@selected = newValue;
-				featureFormXML..ComboBox.(@id == comboName)[0].@k_value = newValue;
+				featureFormXML..ComboBox.(@id == comboName)[0].@v_value = newValue;
 			}
 			
 			private function onColorPickerChanged(evt:ColorPickerEvent):void {
 				var pickerName:String = evt.target.name;
 				var newValue:String = evt.target.selectedColor.toString();
 				featureFormXML..ColorPicker.(@id == pickerName)[0].@selected = newValue;
-				featureFormXML..ColorPicker.(@id == pickerName)[0].@k_value = newValue;
+				featureFormXML..ColorPicker.(@id == pickerName)[0].@v_value = newValue;
 			}
 
 
@@ -361,7 +361,7 @@
 				var cbList:XMLList = featureFormXML..CheckBox.(attribute("id").toString().indexOf("Screen") > 0);
 				for each (var xml:XML in cbList) {
 					if (xml.@id == checkboxName) {
-						xml.@k_value = evt.target.selected;
+						xml.@v_value = evt.target.selected;
 						xml.@selected = evt.target.selected;
 					}
 				}
@@ -371,12 +371,12 @@
 					}
 					var parentScreenXML:XML = featureFormXML..CheckBox.(attribute("id").toString() == "showOnVideoControllers")[0];
 					parentScreenXML.@selected = evt.target.selected;
-					parentScreenXML.@k_value = evt.target.selected;
+					parentScreenXML.@v_value = evt.target.selected;
 				}
 			}
 
 			/**
-			 * set k_value and selected value of other group elements to false, 
+			 * set v_value and selected value of other group elements to false, 
 			 * and those of the selected button to true, and main group value
 			 * */
 			private function onRadioChanged(evt:Event):void {
@@ -385,14 +385,14 @@
 				for each (var btn:XML in groupItems) {
 					if (btn.@id == btnName) { 
 //						btn.@selected = "true";
-						btn.@k_value = "true";
+						btn.@v_value = "true";
 						// set value on group:
 						var group:XML = featureFormXML..RadioButtonGroup.(@id == evt.target.groupName)[0];
-						group.@k_value = btn.@value;
+						group.@v_value = btn.@value;
 					}
 					else {
 //						btn.@selected = "false";
-						btn.@k_value = "false";
+						btn.@v_value = "false";
 					}
 				}
 				
@@ -406,7 +406,7 @@
 				var screens:XMLList = featureFormXML..CheckBox.(attribute("id").toString().indexOf("Screen") > -1 && !attribute("id").toString().indexOf("Controller") == 0);
 				for each (var xml:XML in screens) {
 					xml.@selected = "false";
-					xml.@k_value = "false";
+					xml.@v_value = "false";
 				}
 			}
 
@@ -437,10 +437,10 @@
 			private function inputChange(evt:TimerEvent):void {
 				_inputTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, inputChange);
 				if (_lastNumeric) {
-					featureFormXML..NumericStepper.(@id == _lastNumeric.name)[0].@k_value = _lastNumeric.value;
+					featureFormXML..NumericStepper.(@id == _lastNumeric.name)[0].@v_value = _lastNumeric.value;
 				}
 				//assign the new value to the feature XML 
-				(featureFormXML.Input.(@id == _lastInput.name)[0] as XML).@k_value = _lastInput.text as String;
+				(featureFormXML.Input.(@id == _lastInput.name)[0] as XML).@v_value = _lastInput.text as String;
 
 			}
 
@@ -458,7 +458,7 @@
 			private function numericChange(evt:Event = null):void {
 				_numericTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, numericChange);
 				if (_lastNumeric) {
-					featureFormXML..NumericStepper.(@id == _lastNumeric.name)[0].@k_value = _lastNumeric.value;
+					featureFormXML..NumericStepper.(@id == _lastNumeric.name)[0].@v_value = _lastNumeric.value;
 				}
 			}
 
@@ -475,7 +475,7 @@
 					var screens:XMLList = featureFormXML..CheckBox.(attribute("id").toString().indexOf("Screen") > -1 && !attribute("id").toString().indexOf("Controller") == 0);
 					for each (var xml:XML in screens) {
 						xml.@selected = "false";
-						xml.@k_value = "false";
+						xml.@v_value = "false";
 					}
 				}
 				visible = false;

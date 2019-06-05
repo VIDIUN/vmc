@@ -1,4 +1,4 @@
-package com.kaltura.applications.kClipInterface
+package com.vidiun.applications.vClipInterface
 {
 	public interface ITrimmingAPI extends IClipperAPI
 	{

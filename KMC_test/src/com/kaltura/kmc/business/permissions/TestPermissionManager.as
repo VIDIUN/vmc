@@ -1,6 +1,6 @@
-package com.kaltura.kmc.business.permissions {
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.vo.KalturaPermissionListResponse;
+package com.vidiun.vmc.business.permissions {
+	import com.vidiun.edw.business.permissions.PermissionManager;
+	import com.vidiun.vo.VidiunPermissionListResponse;
 	
 	import flexunit.framework.Assert;
 
@@ -19,7 +19,7 @@ package com.kaltura.kmc.business.permissions {
 						</permission>
 					</permissionGroup>
 					<permissionGroup text="Content Ingestion" id="CONTENT_INGEST_BASE">
-						<permission text="KCW" id="CONTENT_INGEST_UPLOAD">
+						<permission text="VCW" id="CONTENT_INGEST_UPLOAD">
 							<ui id="content.manage.createManualBtn" enabled="false" />
 							<ui id="content.manage.createRulebasedBtn" visible="false" includeInLayout="false" />
 						</permission>
@@ -75,7 +75,7 @@ package com.kaltura.kmc.business.permissions {
 		[BeforeClass]
 		public static function setUp():void {
 			pm = PermissionManager.getInstance();
-			pm.init(test1, 'CONTENT_INGEST_BASE,CONTENT_INGEST_UPLOAD,CONTENT_INGEST_BULK_UPLOAD,ANALYTICS_BASE', new KalturaPermissionListResponse());
+			pm.init(test1, 'CONTENT_INGEST_BASE,CONTENT_INGEST_UPLOAD,CONTENT_INGEST_BULK_UPLOAD,ANALYTICS_BASE', new VidiunPermissionListResponse());
 		}
 		
 		

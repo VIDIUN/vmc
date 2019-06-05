@@ -1,18 +1,18 @@
-package com.kaltura.edw.model.util
+package com.vidiun.edw.model.util
 {
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.vidiun.vo.VidiunBaseEntry;
 	
 	import flash.events.Event;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.events.PropertyChangeEvent;
 	
-	public class CompositeKBaseEntry extends KalturaBaseEntry
+	public class CompositeVBaseEntry extends VidiunBaseEntry
 	{
 		
-		private var _entries:Vector.<KalturaBaseEntry>;
+		private var _entries:Vector.<VidiunBaseEntry>;
 		
-		public function CompositeKBaseEntry(entries:Vector.<KalturaBaseEntry>)
+		public function CompositeVBaseEntry(entries:Vector.<VidiunBaseEntry>)
 		{
 			super();
 			_entries = entries;
@@ -27,7 +27,7 @@ package com.kaltura.edw.model.util
 		}
 		
 		private function setBoundValue(prop:String, value:Object):void{
-			for each(var entry:KalturaBaseEntry in _entries){
+			for each(var entry:VidiunBaseEntry in _entries){
 				entry[prop] = value;
 			}
 		}

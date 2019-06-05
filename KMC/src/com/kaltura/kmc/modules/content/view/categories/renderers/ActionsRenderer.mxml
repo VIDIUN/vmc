@@ -4,7 +4,7 @@
 		 implements="mx.controls.listClasses.IDropInListItemRenderer">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.view.categories.CategoriesTableActions;
+			import com.vidiun.vmc.modules.content.view.categories.CategoriesTableActions;
 			
 			import mx.controls.listClasses.BaseListData;
 			import mx.events.ListEvent;

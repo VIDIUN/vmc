@@ -1,31 +1,31 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.RuleBasedTypeEvent;
-	import com.kaltura.commands.playlist.PlaylistExecuteFromFilters;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.utils.KTimeUtil;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.vidiun.vmc.modules.content.events.RuleBasedTypeEvent;
+	import com.vidiun.commands.playlist.PlaylistExecuteFromFilters;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.utils.VTimeUtil;
+	import com.vidiun.vo.VidiunPlaylist;
 	
 	import mx.rpc.IResponder;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
+	import com.vidiun.vmc.modules.content.events.VMCEntryEvent;
 
-	public class GetRuleBasedPlaylistCommand extends KalturaCommand implements ICommand, IResponder
+	public class GetRuleBasedPlaylistCommand extends VidiunCommand implements ICommand, IResponder
 	{
-		private var _currentPlaylist : KalturaPlaylist;
+		private var _currentPlaylist : VidiunPlaylist;
 		
 		override public function execute(event:CairngormEvent):void
 		{	
 			_model.increaseLoadCounter();
- 			var e : KMCEntryEvent = event as KMCEntryEvent;
-			_currentPlaylist = e.entryVo as KalturaPlaylist;
+ 			var e : VMCEntryEvent = event as VMCEntryEvent;
+			_currentPlaylist = e.entryVo as VidiunPlaylist;
 			if(_currentPlaylist.totalResults == int.MIN_VALUE)
 				_currentPlaylist.totalResults = 50; // Ariel definition - up to 50 per playlist 
 			var playlistGet:PlaylistExecuteFromFilters = new PlaylistExecuteFromFilters(_currentPlaylist.filters,_currentPlaylist.totalResults);
-			playlistGet.addEventListener(KalturaEvent.COMPLETE, result);
-			playlistGet.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(playlistGet);
+			playlistGet.addEventListener(VidiunEvent.COMPLETE, result);
+			playlistGet.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(playlistGet);
 		}
 		
 		override public function result(data:Object):void
@@ -43,7 +43,7 @@ package com.kaltura.kmc.modules.content.commands
 							totalDuration += data.data[nEntries]["duration"];	
 					}
 				}
-				_model.playlistModel.ruleBasedDuration = KTimeUtil.formatTime2(totalDuration);
+				_model.playlistModel.ruleBasedDuration = VTimeUtil.formatTime2(totalDuration);
 				_model.playlistModel.ruleBasedEntriesAmount = nEntries;
 			}
 			

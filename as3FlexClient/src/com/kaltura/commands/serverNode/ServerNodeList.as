@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.serverNode
+package com.vidiun.commands.serverNode
 {
-		import com.kaltura.vo.KalturaServerNodeFilter;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.serverNode.ServerNodeListDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunServerNodeFilter;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.serverNode.ServerNodeListDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	**/
-	public class ServerNodeList extends KalturaCall
+	public class ServerNodeList extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param filter KalturaServerNodeFilter
-		* @param pager KalturaFilterPager
+		* @param filter VidiunServerNodeFilter
+		* @param pager VidiunFilterPager
 		**/
-		public function ServerNodeList( filter : KalturaServerNodeFilter=null,pager : KalturaFilterPager=null )
+		public function ServerNodeList( filter : VidiunServerNodeFilter=null,pager : VidiunFilterPager=null )
 		{
 			service= 'servernode';
 			action= 'list';
@@ -51,12 +51,12 @@ package com.kaltura.commands.serverNode
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = vidiunObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = vidiunObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

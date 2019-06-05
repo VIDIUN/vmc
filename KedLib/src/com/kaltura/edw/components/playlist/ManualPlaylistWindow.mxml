@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:controls="com.kaltura.controls.*"
-				 xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:playlist="com.kaltura.edw.components.playlist.*"
-				 implements="com.kaltura.edw.business.IListable,com.kaltura.edw.business.IDataOwner"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:controls="com.vidiun.controls.*"
+				 xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:playlist="com.vidiun.edw.components.playlist.*"
+				 implements="com.vidiun.edw.business.IListable,com.vidiun.edw.business.IDataOwner"
 				 creationComplete="{onCreationComplete()}" showCloseButton="true" close="{onClose(event)}"
 				 help="{onHelp()}" verticalScrollPolicy="off" horizontalAlign="center" layout="vertical" width="1000"
-				 height="595" styleName="TitleWindowType2" xmlns:et1="com.kaltura.edw.components.et.*"
-				 xmlns:fltr="com.kaltura.edw.components.fltr.*" xmlns:components="com.hillelcoren.components.*">
+				 height="595" styleName="TitleWindowType2" xmlns:et1="com.vidiun.edw.components.et.*"
+				 xmlns:fltr="com.vidiun.edw.components.fltr.*" xmlns:components="com.hillelcoren.components.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.utils.ArrayUtil;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.autocomplete.controllers.KACTagsController;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IListable;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-			import com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.edw.vo.DistributionInfo;
-			import com.kaltura.edw.vo.ListableVo;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaBaseEntryOrderBy;
-			import com.kaltura.types.KalturaEntryModerationStatus;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaPlaylistType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.types.KalturaTaggedObjectType;
-			import com.kaltura.utils.ObjectUtil;
-			import com.kaltura.vo.BaseFlexVo;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaMixEntry;
-			import com.kaltura.vo.KalturaPlaylist;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.autocomplete.controllers.VACTagsController;
+			import com.vidiun.edw.business.Cloner;
+			import com.vidiun.edw.business.IListable;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.et.EntryTableColumns;
+			import com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent;
+			import com.vidiun.edw.components.playlist.types.ManualPlaylistWindowMode;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.edw.vo.DistributionInfo;
+			import com.vidiun.edw.vo.ListableVo;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunBaseEntryOrderBy;
+			import com.vidiun.types.VidiunEntryModerationStatus;
+			import com.vidiun.types.VidiunEntryStatus;
+			import com.vidiun.types.VidiunPlaylistType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.types.VidiunTaggedObjectType;
+			import com.vidiun.utils.ObjectUtil;
+			import com.vidiun.vo.BaseFlexVo;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunMediaEntry;
+			import com.vidiun.vo.VidiunMediaEntryFilter;
+			import com.vidiun.vo.VidiunMixEntry;
+			import com.vidiun.vo.VidiunPlaylist;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -76,8 +76,8 @@
 			public var distributionProfilesArray:Array;
 
 			/**
-			 * the item being edited, either KalturaPlaylist (manual playlist),
-			 * KalturaBaseEntry (entry metadata: linked entries) or KalturaCategory (category metadata: linked entry)
+			 * the item being edited, either VidiunPlaylist (manual playlist),
+			 * VidiunBaseEntry (entry metadata: linked entries) or VidiunCategory (category metadata: linked entry)
 			 * */
 			public var editedItem:BaseFlexVo;
 
@@ -90,7 +90,7 @@
 			 * This attribute will switch between 2 usage of this window:
 			 * 1 - A manual playlist
 			 * 2 - A list for the metadata
-			 * @see com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode
+			 * @see com.vidiun.edw.components.playlist.types.ManualPlaylistWindowMode
 			 */
 			public var context:String = ManualPlaylistWindowMode.NEW_PLAYLIST;
 
@@ -109,7 +109,7 @@
 
 			/**
 			 * list of custom-data linked items
-			 * @see com.kaltura.edw.view.customData.EntryIdLinkTable
+			 * @see com.vidiun.edw.view.customData.EntryIdLinkTable
 			 * @internal
 			 * reference to the array collection on EntryIdLinkTable 
 			 * */
@@ -132,18 +132,18 @@
 			/**
 			 * a copy of the original playlist object, for editing.
 			 * */
-			private var _editPlaylist:KalturaPlaylist;
+			private var _editPlaylist:VidiunPlaylist;
 
 			/**
 			 * the original playlist object
 			 * */
-			private var _originalPlaylist:KalturaPlaylist;
-			private var _orderBy:String = KalturaBaseEntryOrderBy.CREATED_AT_DESC;
+			private var _originalPlaylist:VidiunPlaylist;
+			private var _orderBy:String = VidiunBaseEntryOrderBy.CREATED_AT_DESC;
 
 			[Bindable]
 			private var _listableVo:ListableVo;
 
-			public var client:KalturaClient;
+			public var client:VidiunClient;
 
 
 			public function onRequestedDataLoaded():void {
@@ -217,14 +217,14 @@
 
 				else {
 					// playlist
-					new KACTagsController(tagsComplete, client, KalturaTaggedObjectType.ENTRY);
+					new VACTagsController(tagsComplete, client, VidiunTaggedObjectType.ENTRY);
 					entries.tableTitle = resourceManager.getString('cms', 'playlistResultLabel');
 
-					if (editedItem && (editedItem is KalturaPlaylist)) {
+					if (editedItem && (editedItem is VidiunPlaylist)) {
 						// edit existing playlist
 						title = editedItem.name;
-						_originalPlaylist = editedItem as KalturaPlaylist;
-						_editPlaylist = Cloner.cloneKalturaPlaylist(_originalPlaylist);
+						_originalPlaylist = editedItem as VidiunPlaylist;
+						_editPlaylist = Cloner.cloneVidiunPlaylist(_originalPlaylist);
 						playlistName.text = _editPlaylist.name;
 						playlistDescription.text = _editPlaylist.description;
 						_editPlaylist.parts = _playlistArrayCollection;
@@ -244,16 +244,16 @@
 					}
 				}
 
-				var kFilter:KalturaMediaEntryFilter = filter.kalturaFilter as KalturaMediaEntryFilter;
+				var vFilter:VidiunMediaEntryFilter = filter.vidiunFilter as VidiunMediaEntryFilter;
 				// a unique moderation & Conversion status for custom data
 				if (context == ManualPlaylistWindowMode.EDIT_LINKED_ENTRIES_MODE || context == ManualPlaylistWindowMode.NEW_LINKED_ENTRIES) {
-					kFilter.moderationStatusIn = null;
+					vFilter.moderationStatusIn = null;
 				}
 				else {
 					// view only approved and pending
-					kFilter.moderationStatusIn = KalturaEntryModerationStatus.APPROVED + "," + KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW + "," + KalturaEntryModerationStatus.PENDING_MODERATION + "," + KalturaEntryModerationStatus.AUTO_APPROVED;
+					vFilter.moderationStatusIn = VidiunEntryModerationStatus.APPROVED + "," + VidiunEntryModerationStatus.FLAGGED_FOR_REVIEW + "," + VidiunEntryModerationStatus.PENDING_MODERATION + "," + VidiunEntryModerationStatus.AUTO_APPROVED;
 					// view only ready and converting
-					kFilter.statusIn = KalturaEntryStatus.PRECONVERT + "," + KalturaEntryStatus.READY;
+					vFilter.statusIn = VidiunEntryStatus.PRECONVERT + "," + VidiunEntryStatus.READY;
 				}
 
 				if (filterData.enableCustomData && filterData.metadataProfiles) {
@@ -294,13 +294,13 @@
 			private function gotoPage():void {
 				loadEntries();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>Show Rows");
 			}
 
 
 			public function get filterVo():Object {
-				return filter.kalturaFilter;
+				return filter.vidiunFilter;
 			}
 
 
@@ -310,7 +310,7 @@
 
 
 			public function loadEntries():void {
-				_listableVo = new ListableVo(filter.kalturaFilter, paging, null, this);
+				_listableVo = new ListableVo(filter.vidiunFilter, paging, null, this);
 				_listableVo.filterVo.orderBy = _orderBy;
 
 				var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SEARCH_ENTRIES);
@@ -331,11 +331,11 @@
 				else {
 					for (var i:uint = 0; i < allEntries.selectedItems.length; i++) {
 						var o:Object;
-						if (allEntries.selectedItems[i] is KalturaMixEntry) {
-							o = Cloner.cloneKalturaMixEntry(allEntries.selectedItems[i] as KalturaMixEntry);
+						if (allEntries.selectedItems[i] is VidiunMixEntry) {
+							o = Cloner.cloneVidiunMixEntry(allEntries.selectedItems[i] as VidiunMixEntry);
 						}
-						if (allEntries.selectedItems[i] is KalturaMediaEntry) {
-							o = Cloner.cloneKalturaMediaEntry(allEntries.selectedItems[i] as KalturaMediaEntry);
+						if (allEntries.selectedItems[i] is VidiunMediaEntry) {
+							o = Cloner.cloneVidiunMediaEntry(allEntries.selectedItems[i] as VidiunMediaEntry);
 						}
 						_playlistArrayCollection.addItemAt(o, 0);
 					}
@@ -347,17 +347,17 @@
 
 			/**
 			 * set the values shown in the popup tot he given playlist object
-			 * @param kpl 	the playlist to update
+			 * @param vpl 	the playlist to update
 			 * */
-			private function setPlaylistInfoFromScreen(kpl:KalturaPlaylist):void {
-				kpl.name = playlistName.text;
-				kpl.description = playlistDescription.text;
-				kpl.tags = getPlaylistTags();
+			private function setPlaylistInfoFromScreen(vpl:VidiunPlaylist):void {
+				vpl.name = playlistName.text;
+				vpl.description = playlistDescription.text;
+				vpl.tags = getPlaylistTags();
 				var entriesIds:Array = new Array();
 				for (var i:int = 0; i < _playlistArrayCollection.length; i++) {
 					entriesIds.push(_playlistArrayCollection[i]["id"]);
 				}
-				kpl.playlistContent = entriesIds.join();
+				vpl.playlistContent = entriesIds.join();
 			}
 
 
@@ -388,12 +388,12 @@
 				if (context != ManualPlaylistWindowMode.EDIT_PLAYLIST_MODE) {
 					// new playlist
 					if (validatePlaylist()) {
-						var kalturaPlaylist:KalturaPlaylist = new KalturaPlaylist();
-						setPlaylistInfoFromScreen(kalturaPlaylist);
-						kalturaPlaylist.playlistType = KalturaPlaylistType.STATIC_LIST;
+						var vidiunPlaylist:VidiunPlaylist = new VidiunPlaylist();
+						setPlaylistInfoFromScreen(vidiunPlaylist);
+						vidiunPlaylist.playlistType = VidiunPlaylistType.STATIC_LIST;
 
 						var ap:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SAVE_NEW_PLAYLIST);
-						ap.data = kalturaPlaylist;
+						ap.data = vidiunPlaylist;
 						dispatchEvent(ap);
 					}
 				}
@@ -407,7 +407,7 @@
 					var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SAVE_EXISTING_PLAYLIST);
 					e.data = _editPlaylist;
 					dispatchEvent(e);
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_EDIT_PLAYLIST,
+					VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_EDIT_PLAYLIST,
 						"ManuallPlayList>EditPlayList" + ">" + _editPlaylist.id);
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_EDIT_PLAYLIST +
 						">" + _editPlaylist.id, GoogleAnalyticsConsts.CONTENT);
@@ -459,9 +459,9 @@
 			}
 
 
-			protected function entryTable_showDetailsHandler(event:KedDataEvent):void {
+			protected function entryTable_showDetailsHandler(event:VedDataEvent):void {
 				var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SHOW_ENTRY_DETAILS);
-				e.data = event.data as KalturaBaseEntry;
+				e.data = event.data as VidiunBaseEntry;
 				dispatchEvent(e);
 			}
 
@@ -487,13 +487,13 @@
 	</mx:Script>
 
 	<mx:Metadata>
-		[Event(name="refreshEntriesList", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="close", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="showEntryDetails", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="savePlaylist", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="getPlaylist", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="loadFilterData", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="searchEntries", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="refreshEntriesList", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="close", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="showEntryDetails", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="savePlaylist", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="getPlaylist", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="loadFilterData", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="searchEntries", type="com.vidiun.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
 	</mx:Metadata>
 
 
@@ -542,7 +542,7 @@
 								freeTextSearch="{searchBox}" enableIngestionStatus="false" filterModel="{filterData}"
 								metadataProfiles="{filterData.metadataProfiles}"
 								distributionProfiles="{distributionProfilesArray}" 
-								context="{KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
+								context="{VMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
 								categoriesRoot="{filterData.categoriesGeneral}" allCategories="{filterData.categoriesMapGeneral}"/>
 		</mx:VBox>
 

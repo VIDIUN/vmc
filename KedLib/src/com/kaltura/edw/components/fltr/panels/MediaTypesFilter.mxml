@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" 
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.vidiun.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaMediaType;
+			import com.vidiun.types.VidiunMediaType;
 			
 			import mx.events.FlexEvent;
 			
@@ -14,7 +14,7 @@
 			/**
 			 * Creates an object with keys as media types,
 			 * later used for easy access while parsing this data.
-			 * The optional keys are enumerated in <code>KalturaMediaType</code>
+			 * The optional keys are enumerated in <code>VidiunMediaType</code>
 			 * @param mediaTypes	the string that represents media
 			 * 						types on a filter
 			 * @return an object like {1:true, 201:true, ..}
@@ -32,9 +32,9 @@
 			
 
 			override public function set filter(value:Object):void {
-				// value is a list of KalturaMediaType-s separated by ",".
+				// value is a list of VidiunMediaType-s separated by ",".
 				var mediaTypes:Object  = mediaTypesToObject(value.toString()) ;
-				if (!value || (mediaTypes[KalturaMediaType.VIDEO] && mediaTypes[6] && mediaTypes[KalturaMediaType.AUDIO] && mediaTypes[KalturaMediaType.LIVE_STREAM_FLASH] && mediaTypes[KalturaMediaType.IMAGE])) {
+				if (!value || (mediaTypes[VidiunMediaType.VIDEO] && mediaTypes[6] && mediaTypes[VidiunMediaType.AUDIO] && mediaTypes[VidiunMediaType.LIVE_STREAM_FLASH] && mediaTypes[VidiunMediaType.IMAGE])) {
 					// all types selected
 					selectAllTypesBtn.selected = true;
 					mixType.selected = false;
@@ -47,15 +47,15 @@
 				else {
 					selectAllTypesBtn.selected = false;
 					
-					if (mediaTypes[KalturaMediaType.VIDEO])
+					if (mediaTypes[VidiunMediaType.VIDEO])
 						videoType.selected = true;
 					if (mediaTypes[6])
 						mixType.selected = true;
-					if (mediaTypes[KalturaMediaType.AUDIO])
+					if (mediaTypes[VidiunMediaType.AUDIO])
 						audioType.selected = true;
-					if (mediaTypes[KalturaMediaType.IMAGE])
+					if (mediaTypes[VidiunMediaType.IMAGE])
 						imageType.selected = true;
-					if (mediaTypes[KalturaMediaType.LIVE_STREAM_FLASH])
+					if (mediaTypes[VidiunMediaType.LIVE_STREAM_FLASH])
 						streamType.selected = true;
 				}
 			}
@@ -64,17 +64,17 @@
 				var mediaTypeString:String = '';
 				//if the select all media types is selected - add all media types
 				if (selectAllTypesBtn.selected) {
-					mediaTypeString = KalturaMediaType.VIDEO + "," + KalturaMediaType.IMAGE + "," + KalturaMediaType.AUDIO + ",6," + KalturaMediaType.LIVE_STREAM_FLASH;
+					mediaTypeString = VidiunMediaType.VIDEO + "," + VidiunMediaType.IMAGE + "," + VidiunMediaType.AUDIO + ",6," + VidiunMediaType.LIVE_STREAM_FLASH;
 				}
 				else {
 					if (videoType.selected)
-						mediaTypeString += KalturaMediaType.VIDEO + ",";
+						mediaTypeString += VidiunMediaType.VIDEO + ",";
 					if (imageType.selected)
-						mediaTypeString += KalturaMediaType.IMAGE + ",";
+						mediaTypeString += VidiunMediaType.IMAGE + ",";
 					if (audioType.selected)
-						mediaTypeString += KalturaMediaType.AUDIO + ",";
+						mediaTypeString += VidiunMediaType.AUDIO + ",";
 					if (streamType.selected)
-						mediaTypeString += KalturaMediaType.LIVE_STREAM_FLASH + ",";
+						mediaTypeString += VidiunMediaType.LIVE_STREAM_FLASH + ",";
 					if (mixType.selected) {
 						// mix is not in the enum, so it's hardcoded
 						mediaTypeString += "6,";

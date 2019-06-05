@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.vidiun.edw.control.commands.cuepoints
 {
-	import com.kaltura.commands.cuePoint.CuePointCount;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.CuePointEvent;
-	import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaCuePointFilter;
+	import com.vidiun.commands.cuePoint.CuePointCount;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.CuePointEvent;
+	import com.vidiun.edw.model.datapacks.CuePointsDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunCuePointFilter;
 	
-	public class CountCuePoints extends KedCommand {
+	public class CountCuePoints extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var e : CuePointEvent = event as CuePointEvent;
-			var f:KalturaCuePointFilter = new KalturaCuePointFilter();
+			var f:VidiunCuePointFilter = new VidiunCuePointFilter();
 			f.entryIdEqual = e.data;
 			var cnt:CuePointCount = new CuePointCount(f);
 			
-			cnt.addEventListener(KalturaEvent.COMPLETE, result);
-			cnt.addEventListener(KalturaEvent.FAILED, fault);
+			cnt.addEventListener(VidiunEvent.COMPLETE, result);
+			cnt.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(cnt);	 
 		}

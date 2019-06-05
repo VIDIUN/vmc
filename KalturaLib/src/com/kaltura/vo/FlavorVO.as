@@ -1,6 +1,6 @@
-package com.kaltura.vo {
+package com.vidiun.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.utils.ObjectUtil;
+	import com.vidiun.utils.ObjectUtil;
 	
 	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
@@ -10,7 +10,7 @@ package com.kaltura.vo {
 
 	[Bindable]
 	/**
-	 * wrapper for KalturaFlavorParams 
+	 * wrapper for VidiunFlavorParams 
 	 */	
 	public class FlavorVO extends ObjectProxy implements IValueObject {
 		public static const SELECTED_CHANGED_EVENT:String = "flavorSelectedChanged";
@@ -18,9 +18,9 @@ package com.kaltura.vo {
 		private var _selected:Boolean = false;
 		
 		/**
-		 * the KalturaFlavorParams this vo represents 
+		 * the VidiunFlavorParams this vo represents 
 		 */
-		public var kFlavor:KalturaFlavorParams = new KalturaFlavorParams();
+		public var vFlavor:VidiunFlavorParams = new VidiunFlavorParams();
 		
 
 		/**
@@ -45,13 +45,13 @@ package com.kaltura.vo {
 			var newFlavor:FlavorVO = new FlavorVO();
 			newFlavor.selected = this.selected;
 			newFlavor.editable = this.editable;
-			// need to make kFlavor the same type as current!!
-			var kFlavorClassName:String = getQualifiedClassName(this.kFlavor);
-			var kFlavorClass:Class = getDefinitionByName(kFlavorClassName) as Class; 
-			newFlavor.kFlavor = (new kFlavorClass()) as KalturaFlavorParams;
-			var ar:Array = ObjectUtil.getObjectAllKeys(this.kFlavor);
+			// need to make vFlavor the same type as current!!
+			var vFlavorClassName:String = getQualifiedClassName(this.vFlavor);
+			var vFlavorClass:Class = getDefinitionByName(vFlavorClassName) as Class; 
+			newFlavor.vFlavor = (new vFlavorClass()) as VidiunFlavorParams;
+			var ar:Array = ObjectUtil.getObjectAllKeys(this.vFlavor);
 			for (var i:int = 0; i < ar.length; i++) {
-				newFlavor.kFlavor[ar[i]] = kFlavor[ar[i]];
+				newFlavor.vFlavor[ar[i]] = vFlavor[ar[i]];
 			}
 
 			return newFlavor;

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.model.types
+package com.vidiun.vmc.modules.analytics.model.types
 {
 	public class PartnerStatusType
 	{

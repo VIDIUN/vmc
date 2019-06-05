@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.vidiun.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.vidiun.vmvc.model.IDataPack;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -21,7 +21,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * list of partner's storage profiles, 
-		 * <code>KalturaStorageProfile</code> objects 
+		 * <code>VidiunStorageProfile</code> objects 
 		 */
 		public var storageProfiles:ArrayCollection;
 		
@@ -41,7 +41,7 @@ package com.kaltura.edw.model.datapacks
 		public var flavorParams:Array;
 		
 		/**
-		 * a list of KalturaConversionProfile where type = live 
+		 * a list of VidiunConversionProfile where type = live 
 		 */
 		public var liveConversionProfiles:ArrayCollection;
 		

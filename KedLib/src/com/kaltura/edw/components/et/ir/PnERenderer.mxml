@@ -2,8 +2,8 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.et.EntryTable;
-			import com.kaltura.types.KalturaEntryStatus;
+			import com.vidiun.edw.components.et.EntryTable;
+			import com.vidiun.types.VidiunEntryStatus;
 			
 			public static const PREVIEW_CLICKED:String = "previewClicked";
 			
@@ -11,7 +11,7 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				btn.label = (owner as EntryTable).previewLabel;
-				btn.visible = btn.includeInLayout = value.status == KalturaEntryStatus.READY;
+				btn.visible = btn.includeInLayout = value.status == VidiunEntryStatus.READY;
 			}
 			
 			

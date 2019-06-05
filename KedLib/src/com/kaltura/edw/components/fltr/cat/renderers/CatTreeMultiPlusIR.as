@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.fltr.cat.renderers {
-	import com.kaltura.edw.components.TriStateCheckBox;
-	import com.kaltura.edw.components.fltr.cat.CatSelectionStatus;
-	import com.kaltura.edw.components.fltr.cat.CatTree;
-	import com.kaltura.edw.vo.CategoryVO;
+package com.vidiun.edw.components.fltr.cat.renderers {
+	import com.vidiun.edw.components.TriStateCheckBox;
+	import com.vidiun.edw.components.fltr.cat.CatSelectionStatus;
+	import com.vidiun.edw.components.fltr.cat.CatTree;
+	import com.vidiun.edw.vo.CategoryVO;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;

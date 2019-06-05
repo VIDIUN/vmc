@@ -1,4 +1,4 @@
-package com.kaltura.autocomplete.itemRenderers.selection.base
+package com.vidiun.autocomplete.itemRenderers.selection.base
 {
 	import com.hillelcoren.components.AutoComplete;
 	import com.hillelcoren.components.autoComplete.classes.IconButton;

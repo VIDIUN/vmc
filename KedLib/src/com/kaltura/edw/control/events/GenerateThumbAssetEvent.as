@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.events
+package com.vidiun.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbParams;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunThumbParams;
 
-	public class GenerateThumbAssetEvent extends KMvCEvent
+	public class GenerateThumbAssetEvent extends VMvCEvent
 	{
 		public static const GENERATE:String = "content_generateThumbAsset";
-		public var thumbParams:KalturaThumbParams;
+		public var thumbParams:VidiunThumbParams;
 		public var thumbSourceId:String;
 		
-		public function GenerateThumbAssetEvent(type:String, thumbParams:KalturaThumbParams, thumbSourceId:String , bubbles:Boolean=false, cancelable:Boolean=false)
+		public function GenerateThumbAssetEvent(type:String, thumbParams:VidiunThumbParams, thumbSourceId:String , bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			this.thumbParams = thumbParams;
 			this.thumbSourceId = thumbSourceId;

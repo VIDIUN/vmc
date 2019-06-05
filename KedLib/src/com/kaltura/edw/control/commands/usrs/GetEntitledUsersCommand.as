@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.usrs
+package com.vidiun.edw.control.commands.usrs
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.UsersEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.user.UserGet;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.UsersEvent;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class GetEntitledUsersCommand extends KedCommand {
+	public class GetEntitledUsersCommand extends VedCommand {
 		
 		private var _type:String;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_type = event.type;
 			_model.increaseLoadCounter();
 			
@@ -30,8 +30,8 @@ package com.kaltura.edw.control.commands.usrs
 					
 			}
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(mr);
 		}

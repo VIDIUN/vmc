@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.fltr
+package com.vidiun.edw.components.fltr
 {
-	import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
+	import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
 	
 	import flash.events.Event;
 	

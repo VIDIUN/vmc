@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel">
+		 implements="com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.modules.account.control.events.ContactEvent;
-			import com.kaltura.kmc.modules.account.vo.PackagesVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.vmc.modules.account.control.events.ContactEvent;
+			import com.vidiun.vmc.modules.account.vo.PackagesVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Text;
@@ -33,7 +33,7 @@
 
 
 			private function sendContact():void {
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_CONTACT_US_USAGE, "AccountUpgrade>Contact Us Usage");
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_CONTACT_US_USAGE, "AccountUpgrade>Contact Us Usage");
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.ACCOUNT_CONTACT_US_USAGE, GoogleAnalyticsConsts.ACCOUNT);
 
 				if (checkFirstResultOk(phoneValidator.validate())) {
@@ -41,8 +41,8 @@
 					var services:String = "";
 					services = "none"; //we must sent somthing to the DB 		
 	
-					var kEvent:ContactEvent = new ContactEvent(ContactEvent.CONTACT_US, cuName.text, cuTelephone.text, cuComments.text, services);
-					kEvent.dispatch();
+					var vEvent:ContactEvent = new ContactEvent(ContactEvent.CONTACT_US, cuName.text, cuTelephone.text, cuComments.text, services);
+					vEvent.dispatch();
 				}
 			}
 

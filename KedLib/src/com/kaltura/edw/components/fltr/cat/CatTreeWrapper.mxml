@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="noPadding"
-		 xmlns:cat="com.kaltura.edw.components.fltr.cat.*" 
-		 implements="com.kaltura.edw.components.fltr.IFilterComponent"
+		 xmlns:cat="com.vidiun.edw.components.fltr.cat.*" 
+		 implements="com.vidiun.edw.components.fltr.IFilterComponent"
 		 creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
 		/**
 		* dispatched when the value of the tree component have changed 
 		*/	
-		[Event(name="valueChange", type="com.kaltura.edw.components.fltr.FilterComponentEvent")]
+		[Event(name="valueChange", type="com.vidiun.edw.components.fltr.FilterComponentEvent")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.business.KedJSGate;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.IFilterComponent;
-			import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-			import com.kaltura.edw.components.fltr.cat.events.CatTreePrefsEvent;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.dataStructures.HashMap;
+			import com.vidiun.edw.business.VedJSGate;
+			import com.vidiun.edw.components.fltr.FilterComponentEvent;
+			import com.vidiun.edw.components.fltr.IFilterComponent;
+			import com.vidiun.edw.components.fltr.cat.data.ICategoriesDataManger;
+			import com.vidiun.edw.components.fltr.cat.events.CatTreePrefsEvent;
+			import com.vidiun.edw.components.fltr.indicators.IndicatorVo;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.vo.CategoryVO;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import flash.sampler.getInvocationCount;
 			
@@ -39,7 +39,7 @@
 			public var dataProvider:Object;
 
 			[Bindable]
-			public var kClient:KalturaClient;
+			public var vClient:VidiunClient;
 
 
 			[Bindable]
@@ -47,7 +47,7 @@
 			 * allow multiple instances use the same data provider by using different attributes
 			 * to mark selection in tree.
 			 *
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#selectionAttribute
+			 * @see com.vidiun.edw.components.fltr.cat.CatTree#selectionAttribute
 			 */
 			public var selectionAttribute:String = "selected";
 
@@ -79,7 +79,7 @@
 
 			[Bindable(event="attributeChanged")]
 			/**
-			 * Name of the <code>KalturaFilter</code> attribute this component handles
+			 * Name of the <code>VidiunFilter</code> attribute this component handles
 			 * when in SINGLE_SELECT mode. <br>
 			 * delegate to the tree
 			 */
@@ -117,7 +117,7 @@
 			private var _filter:String;
 
 			/**
-			 * Value for the relevant attribute on <code>KalturaFilter</code>. <br>
+			 * Value for the relevant attribute on <code>VidiunFilter</code>. <br>
 			 * delegate to the tree
 			 */
 			public function set filter(value:Object):void {
@@ -142,10 +142,10 @@
 			 */
 			public function removeItem(item:IndicatorVo):void {
 				if (catsFromAC) {
-					var kCat:KalturaCategory;
+					var vCat:VidiunCategory;
 					for (var i:int=0; i<catsFromAC.length; i++) {
-						kCat = catsFromAC.getItemAt(i) as KalturaCategory;
-						if (kCat.id == item.value) {
+						vCat = catsFromAC.getItemAt(i) as VidiunCategory;
+						if (vCat.id == item.value) {
 							catsFromAC.removeItemAt(i);
 						}
 					}
@@ -161,7 +161,7 @@
 			 * @default true
 			 * (default value matches value on filterModel)
 			 *
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#chunkedData
+			 * @see com.vidiun.edw.components.fltr.cat.CatTree#chunkedData
 			 */
 			public var chunkedData:Boolean = true;
 
@@ -215,14 +215,14 @@
 				_prefsWin.addEventListener(CloseEvent.CLOSE, handlePrefsWin);
 				PopUpManager.addPopUp(_prefsWin, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(_prefsWin);
-				KedJSGate.maskHeader(false);
+				VedJSGate.maskHeader(false);
 			}
 
 
 			private function handlePrefsWin(e:Event):void {
 				if (e.type == CatTreePrefsEvent.PREFS_CHANGED) {
 					// save data in sharedObject
-					var so:SharedObject = SharedObject.getLocal("KMC_catTree_" + prefsIdentifier);
+					var so:SharedObject = SharedObject.getLocal("VMC_catTree_" + prefsIdentifier);
 					so.data.selectionMode = (e as CatTreePrefsEvent).newValue;
 					so.flush();
 					// reset tree
@@ -233,7 +233,7 @@
 					_prefsWin.removeEventListener(CatTreePrefsEvent.PREFS_CHANGED, handlePrefsWin);
 					_prefsWin.removeEventListener(CloseEvent.CLOSE, handlePrefsWin);
 					PopUpManager.removePopUp(_prefsWin);
-					KedJSGate.maskHeader(true);
+					VedJSGate.maskHeader(true);
 					_prefsWin = null
 				}
 			}
@@ -261,8 +261,8 @@
 				}
 				// add from saved ids
 				if (catsFromAC) {
-					for each (var kCat:KalturaCategory in catsFromAC) {
-						catCollection.addItem(kCat);
+					for each (var vCat:VidiunCategory in catsFromAC) {
+						catCollection.addItem(vCat);
 					}
 				}
 				autoCompWrapper.disabledCategories = catCollection;
@@ -277,7 +277,7 @@
 			protected function creationCompleteHandler(event:FlexEvent):void {
 				if (selectionMode != CatTreeSelectionMode.SINGLE_SELECT && _prefsBtn && _prefsBtn.visible) {
 					// get selection mode from SO
-					var so:SharedObject = SharedObject.getLocal("KMC_catTree_" + prefsIdentifier);
+					var so:SharedObject = SharedObject.getLocal("VMC_catTree_" + prefsIdentifier);
 					if (so.data && so.data.selectionMode) {
 						selectionMode = so.data.selectionMode;
 					}
@@ -308,7 +308,7 @@
 			}
 
 			/**
-			 * KalturaCategory objects which were added via autocomplete search
+			 * VidiunCategory objects which were added via autocomplete search
 			 * */
 			private var catsFromAC:ArrayCollection;
 			
@@ -316,7 +316,7 @@
 
 			protected function autoCompWrapper_valueChangeHandler(event:GeneralNonCairngormEvent):void
 			{
-				var cat:KalturaCategory = event.data as KalturaCategory;
+				var cat:VidiunCategory = event.data as VidiunCategory;
 				// remember the category object
 				if (!catsFromAC) {
 					catsFromAC = new ArrayCollection();
@@ -334,5 +334,5 @@
 				 dataProvider="{dataProvider}" categories="{categories}" valueChange="catTree_valueChangeHandler(event)"
 				 selectionMode="{selectionMode}" selectionAttribute="{selectionAttribute}"
 				 chunkedData="{chunkedData}" attribute="{attribute}"/>
-	<cat:CategoryAutocomplete id="autoCompWrapper" kClient="{kClient}" width="100%" valueChange="autoCompWrapper_valueChangeHandler(event)" />
+	<cat:CategoryAutocomplete id="autoCompWrapper" vClient="{vClient}" width="100%" valueChange="autoCompWrapper_valueChangeHandler(event)" />
 </mx:VBox>

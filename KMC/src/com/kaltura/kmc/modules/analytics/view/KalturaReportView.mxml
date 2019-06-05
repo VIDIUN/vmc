@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()" show="onShow()" hide="onHide()"
-		 xmlns:view="com.kaltura.kmc.modules.analytics.view.*" xmlns:map="com.kaltura.kmc.modules.analytics.view.map.*"
-		 xmlns:charts="com.kaltura.kmc.modules.analytics.view.charts.*" xmlns:controls="com.kaltura.controls.*"
-		 xmlns:aggregateBar="com.kaltura.kmc.modules.analytics.view.aggregateBar.*">
+		 xmlns:view="com.vidiun.vmc.modules.analytics.view.*" xmlns:map="com.vidiun.vmc.modules.analytics.view.map.*"
+		 xmlns:charts="com.vidiun.vmc.modules.analytics.view.charts.*" xmlns:controls="com.vidiun.controls.*"
+		 xmlns:aggregateBar="com.vidiun.vmc.modules.analytics.view.aggregateBar.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.analytics.business.IDateRangeManager;
-			import com.kaltura.kmc.modules.analytics.control.PageEvent;
-			import com.kaltura.kmc.modules.analytics.control.ReportDataEvent;
-			import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.Context;
-			import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-			import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
-			import com.kaltura.kmc.modules.analytics.view.window.PreviewEntryWin;
-			import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-			import com.kaltura.types.KalturaReportInterval;
-			import com.kaltura.types.KalturaReportType;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.analytics.business.IDateRangeManager;
+			import com.vidiun.vmc.modules.analytics.control.PageEvent;
+			import com.vidiun.vmc.modules.analytics.control.ReportDataEvent;
+			import com.vidiun.vmc.modules.analytics.control.ReportEvent;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.Context;
+			import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
+			import com.vidiun.vmc.modules.analytics.utils.TimeConsts;
+			import com.vidiun.vmc.modules.analytics.view.window.PreviewEntryWin;
+			import com.vidiun.vmc.modules.analytics.vo.FilterVo;
+			import com.vidiun.types.VidiunReportInterval;
+			import com.vidiun.types.VidiunReportType;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -36,7 +36,7 @@
 			/**
 			 * player used in "old" report's entry section
 			 * */
-			public static var kdp:SWFLoader;
+			public static var vdp:SWFLoader;
 
 
 			/**
@@ -46,9 +46,9 @@
 
 
 			/**
-			 * parameters required for KDP functionality and load
+			 * parameters required for VDP functionality and load
 			 * */
-			public var kdpParams:Context;
+			public var vdpParams:Context;
 
 			[Bindable]
 			/**
@@ -83,13 +83,13 @@
 			[Bindable]
 			/**
 			 * report type
-			 * @see com.kaltura.types.KalturaReportType
+			 * @see com.vidiun.types.VidiunReportType
 			 * */
 			public var reportType:String;
 
 			/**
 			 * screen type
-			 * @see com.kaltura.kmc.modules.analytics.model.types.ScreenTypes
+			 * @see com.vidiun.vmc.modules.analytics.model.types.ScreenTypes
 			 * */
 			public var screenType:int;
 
@@ -140,7 +140,7 @@
 			/**
 			 * default: false
 			 * */
-			public var showKDP:Boolean = false;
+			public var showVDP:Boolean = false;
 
 			[Bindable]
 			/**
@@ -241,7 +241,7 @@
 
 			public function set loadEntry(value:Boolean):void {
 				_loadEntry = value;
-				_isVisibleEntry = !value && showKDP
+				_isVisibleEntry = !value && showVDP
 			}
 
 			// VISIBLE FLAGS
@@ -368,7 +368,7 @@
 			 * */
 			private function handleTimeUnitChange():void {
 				if (showTimeUnits) {
-					_isMonths = filterVo.interval == KalturaReportInterval.MONTHS;
+					_isMonths = filterVo.interval == VidiunReportInterval.MONTHS;
 				}
 				else {
 					_isMonths = false;
@@ -383,17 +383,17 @@
 						tableHeaders[0] = "date_id";
 					}
 				}
-				ktable.headerDataProvider = tableHeaders;
+				vtable.headerDataProvider = tableHeaders;
 			}
 
 
 			/**
-			 * show KDP if required
+			 * show VDP if required
 			 * */
-			private function onSelectedMediaEntryChange(selectdEntry:KalturaBaseEntry):void {
+			private function onSelectedMediaEntryChange(selectdEntry:VidiunBaseEntry):void {
 				if (reportData && reportData.selectedMediaEntry && reportData.selectedMediaEntry.id) {
-					if (showKDP) {
-						addKDP();
+					if (showVDP) {
+						addVDP();
 					}
 				}
 			}
@@ -423,13 +423,13 @@
 				if (_entryChangeWatcher) {
 					_entryChangeWatcher.unwatch();
 				}
-				// work around to hide the old thumbnail until the kdp is ready
-				if (kdp)
-					kdp.visible = false;
+				// work around to hide the old thumbnail until the vdp is ready
+				if (vdp)
+					vdp.visible = false;
 
-				// Clean the KDP content if exist
-				if (kdp && kdp.content)
-					kdp.content["sendNotification"]('cleanMedia');
+				// Clean the VDP content if exist
+				if (vdp && vdp.content)
+					vdp.content["sendNotification"]('cleanMedia');
 			}
 
 
@@ -441,16 +441,16 @@
 				filter.dropoff.buttonMode = true;
 				filter.interactions.buttonMode = true;
 
-				if (showKDP) {
-					if (reportType == KalturaReportType.TOP_CONTENT) {
+				if (showVDP) {
+					if (reportType == VidiunReportType.TOP_CONTENT) {
 						filter.basicDetails.setStyle('textDecoration', 'none');
 						filter.basicDetails.buttonMode = false;
 					}
-					else if (reportType == KalturaReportType.CONTENT_DROPOFF) {
+					else if (reportType == VidiunReportType.CONTENT_DROPOFF) {
 						filter.dropoff.setStyle('textDecoration', 'none');
 						filter.dropoff.buttonMode = false;
 					}
-					else if (reportType == KalturaReportType.CONTENT_INTERACTIONS) {
+					else if (reportType == VidiunReportType.CONTENT_INTERACTIONS) {
 						filter.interactions.setStyle('textDecoration', 'none');
 						filter.interactions.buttonMode = false;
 					}
@@ -466,9 +466,9 @@
 					lineLegend.visible = false;
 					if (showLineChart) {
 						// if linechart requested and only one day - we show barchart instead
-						if ((_isMonths || _isOneDay) && reportType != KalturaReportType.LIVE) {
+						if ((_isMonths || _isOneDay) && reportType != VidiunReportType.LIVE) {
 							// for live report we always want line chart, even if one day
-							if (rdtc.type == KalturaReportType.PLATFORMS) {
+							if (rdtc.type == VidiunReportType.PLATFORMS) {
 								dateBarChart.yFields = rdtc.selectedChartHeaders;
 							}
 							else {
@@ -477,7 +477,7 @@
 							dateBarChart.dataProvider = rdtc.chartDp;
 						}
 						else {
-							if (rdtc.type == KalturaReportType.PLATFORMS) {
+							if (rdtc.type == VidiunReportType.PLATFORMS) {
 								lineChart.yFields = rdtc.selectedChartHeaders;
 								lineLegend.visible = true;
 							}
@@ -489,9 +489,9 @@
 						}
 					}
 					else if (showColumnChart) {
-						if (rdtc.type == KalturaReportType.OPERATING_SYSTEM 
-							|| rdtc.type == KalturaReportType.BROWSERS
-							|| rdtc.type == KalturaReportType.PLATFORMS) {
+						if (rdtc.type == VidiunReportType.OPERATING_SYSTEM 
+							|| rdtc.type == VidiunReportType.BROWSERS
+							|| rdtc.type == VidiunReportType.PLATFORMS) {
 							columnChart.categoryField = "x"; 
 						}
 						columnChart.dataProvider = rdtc.chartDp;
@@ -505,8 +505,8 @@
 
 					set3rdLvlSelection();
 
-					if (ktable && showTable) {
-						ktable.height = 295 + (paging.pageSize - 10) * TABLE_ROW_HEIGHT;
+					if (vtable && showTable) {
+						vtable.height = 295 + (paging.pageSize - 10) * TABLE_ROW_HEIGHT;
 					}
 
 				}
@@ -554,26 +554,26 @@
 
 
 			/**
-			 * add KDP to the stage
+			 * add VDP to the stage
 			 * */
-			private function addKDP():void {
-				if (!kdp) {
-					kdp = new SWFLoader();
-					kdp.width = 350;
-					kdp.height = 292.6;
-					kdp.loaderContext = new LoaderContext(false, new ApplicationDomain(), SecurityDomain.currentDomain);
-					kdp.addEventListener(Event.INIT, onKDP3Loaded);
-					var kdpUrl:String = kdpParams.protocol + kdpParams.rootUrl + "/index.php/kwidget/wid/_" + kdpParams.partnerId + "/uiconf_id/" + _model.kdpUiConf + "/nowrapper/1/";
-					kdp.source = kdpUrl;
-					kdp.scaleContent = false;
-					kdpSection.addChildAt(kdp, 0);
+			private function addVDP():void {
+				if (!vdp) {
+					vdp = new SWFLoader();
+					vdp.width = 350;
+					vdp.height = 292.6;
+					vdp.loaderContext = new LoaderContext(false, new ApplicationDomain(), SecurityDomain.currentDomain);
+					vdp.addEventListener(Event.INIT, onVDP3Loaded);
+					var vdpUrl:String = vdpParams.protocol + vdpParams.rootUrl + "/index.php/vwidget/wid/_" + vdpParams.partnerId + "/uiconf_id/" + _model.vdpUiConf + "/nowrapper/1/";
+					vdp.source = vdpUrl;
+					vdp.scaleContent = false;
+					vdpSection.addChildAt(vdp, 0);
 				}
-				else if (!kdpSection.contains(kdp)) {
-					kdpSection.addChildAt(kdp, 0);
-					kdp.content["sendNotification"]('changeMedia', {entryId: reportData.selectedMediaEntry.id});
+				else if (!vdpSection.contains(vdp)) {
+					vdpSection.addChildAt(vdp, 0);
+					vdp.content["sendNotification"]('changeMedia', {entryId: reportData.selectedMediaEntry.id});
 				}
 				else {
-					kdp.content["sendNotification"]('changeMedia', {entryId: reportData.selectedMediaEntry.id});
+					vdp.content["sendNotification"]('changeMedia', {entryId: reportData.selectedMediaEntry.id});
 				}
 			}
 
@@ -581,50 +581,50 @@
 			/**
 			 * show player.
 			 * */
-			private function showKdp(event:Event):void {
+			private function showVdp(event:Event):void {
 				//we hide it as a workaround to hide the old loaded entry
-				kdp.visible = true;
+				vdp.visible = true;
 			}
 
 
 			/**
-			 * Kdp loaded
+			 * Vdp loaded
 			 */
-			private function onKDP3Loaded(event:Event):void {
-				kdp.content.addEventListener("kdpReady", showKdp);
-				kdp.content.addEventListener("entryReady", showKdp);
+			private function onVDP3Loaded(event:Event):void {
+				vdp.content.addEventListener("vdpReady", showVdp);
+				vdp.content.addEventListener("entryReady", showVdp);
 
 				var params:Object = new Object();
-				params.cdnHost = kdpParams.cdnHost;
-				params.host = kdpParams.hostName;
+				params.cdnHost = vdpParams.cdnHost;
+				params.host = vdpParams.hostName;
 				params.autoPlay = "false";
 				params.loop = "false";
 				params.autoRewind = "false";
 				params.sourceType = "entryId";
-				params.partnerId = kdpParams.partnerId;
-				params.widgetId = "_" + kdpParams.partnerId;
-				params.subpId = kdpParams.subpId;
-				params.uiConfId = _model.kdpUiConf;
-				params.ks = kdpParams.ks;
+				params.partnerId = vdpParams.partnerId;
+				params.widgetId = "_" + vdpParams.partnerId;
+				params.subpId = vdpParams.subpId;
+				params.uiConfId = _model.vdpUiConf;
+				params.vs = vdpParams.vs;
 				params.entryId = reportData.selectedMediaEntry.id;
 				params.allowCookies = true;
 
-				if (kdpParams.debugMode)
+				if (vdpParams.debugMode)
 					params.debugMode = "true";
 
 				// set flashvars
 				event.target.content["flashvars"] = params;
 
-				// start the loading sqeunce of the kdp 
+				// start the loading sqeunce of the vdp 
 				event.target.content["init"]();
 			}
 
 
 			/**
-			 * dispatch help event for the KMC.
+			 * dispatch help event for the VMC.
 			 * */
 			private function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, helpUrl));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, helpUrl));
 			}
 
 
@@ -634,7 +634,7 @@
 			protected function searchNote_linkHandler(event:TextEvent):void {
 				pew = new PreviewEntryWin();
 				pew.context = _model.context;
-				pew.uiconfId = _model.kdpUiConf;
+				pew.uiconfId = _model.vdpUiConf;
 				pew.entry = _model.selectedReportData.selectedMediaEntry;
 
 				PopUpManager.addPopUp(pew, this, true);
@@ -650,7 +650,7 @@
 
 
 			private function getTable():void {
-				var reportTableEvent:ReportEvent = new ReportEvent(ReportEvent.GET_TABLE, reportType, screenType, ktable.orderBy, true, true, true, false, addTableTotals);
+				var reportTableEvent:ReportEvent = new ReportEvent(ReportEvent.GET_TABLE, reportType, screenType, vtable.orderBy, true, true, true, false, addTableTotals);
 				reportTableEvent.dispatch();
 			}
 		]]>
@@ -681,7 +681,7 @@
 				 playbackContextFlag="{playbackContextFlag}" filterUsersFlag="{showUsersFilter}"
 				 filterApplicationsFlag="{showApplicationsFilter}" dateOnlyFlag="{dateOnlyFlag}"
 				 showTimeUnits="{showTimeUnits}" showSearchFilter="{showSearchFilter}"
-				 showDrillDownNav="{showDrillDownNav}" drilldownSubjectId="{reportData.objectIds}" kc="{_model.kc}"
+				 showDrillDownNav="{showDrillDownNav}" drilldownSubjectId="{reportData.objectIds}" vc="{_model.vc}"
 				 dateRangeManager="{dateRanger}" apply="{getReports(event)}"/>
 
 	<mx:Spacer height="5"/>
@@ -701,23 +701,23 @@
 	</mx:HBox>
 
 	<!-- charts -->
-	<charts:KColumnChart id="columnChart" width="100%" enabled="{_isVisibleColumnChart}" visible="{showColumnChart}"
+	<charts:VColumnChart id="columnChart" width="100%" enabled="{_isVisibleColumnChart}" visible="{showColumnChart}"
 						 includeInLayout="{showColumnChart}" />
 
 	<mx:Canvas width="100%">
-		<charts:KLineChart id="lineChart" width="100%" enabled="{_isVisibleLineChart}" showHours="{showGraphHours}"
-						   includeInLayout="{showLineChart &amp;&amp; (!(_isOneDay || _isMonths) || reportType == KalturaReportType.LIVE)}"
-						   visible="{showLineChart &amp;&amp; (!(_isOneDay || _isMonths) || reportType == KalturaReportType.LIVE)}" 
+		<charts:VLineChart id="lineChart" width="100%" enabled="{_isVisibleLineChart}" showHours="{showGraphHours}"
+						   includeInLayout="{showLineChart &amp;&amp; (!(_isOneDay || _isMonths) || reportType == VidiunReportType.LIVE)}"
+						   visible="{showLineChart &amp;&amp; (!(_isOneDay || _isMonths) || reportType == VidiunReportType.LIVE)}" 
 						   minHAxisDate="{filterVo.fromDate}" maxHAxisDate="{filterVo.toDate}"/>
 		<mx:Legend id="lineLegend" dataProvider="{lineChart}" right="{lineLegend.width - 10}" 
 				   styleName="analyticsGraphLegend"/>
 	</mx:Canvas>
 
 	<mx:Canvas width="100%">
-		<charts:KDateColumnChart id="dateBarChart" width="100%"
+		<charts:VDateColumnChart id="dateBarChart" width="100%"
 								 oneDayDate="{_isOneDay &amp;&amp; ! _isMonths ? filterVo.fromDate : null}"
-								 includeInLayout="{showLineChart &amp;&amp; (_isOneDay || _isMonths) &amp;&amp; reportType != KalturaReportType.LIVE}"
-								 visible="{showLineChart &amp;&amp; (_isOneDay || _isMonths) &amp;&amp; reportType != KalturaReportType.LIVE}"/>
+								 includeInLayout="{showLineChart &amp;&amp; (_isOneDay || _isMonths) &amp;&amp; reportType != VidiunReportType.LIVE}"
+								 visible="{showLineChart &amp;&amp; (_isOneDay || _isMonths) &amp;&amp; reportType != VidiunReportType.LIVE}"/>
 		<mx:Legend id="barLegend" dataProvider="{dateBarChart}" right="{barLegend.width - 10}" 
 				   visible="{dateBarChart.visible}" styleName="analyticsGraphLegend" />
 	</mx:Canvas>
@@ -752,14 +752,14 @@
 	<mx:Spacer height="5"/>
 
 
-	<mx:HBox id="kdpSection" width="100%" enabled="{_isVisibleEntry}" visible="{showKDP}" includeInLayout="{showKDP}">
+	<mx:HBox id="vdpSection" width="100%" enabled="{_isVisibleEntry}" visible="{showVDP}" includeInLayout="{showVDP}">
 		<view:EntryDetails height="292.6" width="100%" styleName="blueBox" data="{reportData.selectedMediaEntry}"/>
 	</mx:HBox>
 
 	<!-- table -->
 	<mx:Label text="{resourceManager.getString('analytics', 'tableTitle')}" styleName="pageTitle2"
 			  includeInLayout="{showTable}" visible="{showTable}"/>
-	<view:KTable id="ktable" width="100%" height="295" rowHeight="{TABLE_ROW_HEIGHT}" orderBy="{tableOrderBy}"
+	<view:VTable id="vtable" width="100%" height="295" rowHeight="{TABLE_ROW_HEIGHT}" orderBy="{tableOrderBy}"
 				 supportDrillDown="{_model.tableSupportDrillDown}" nonSortableHeaders="{tableNonSortableHeaders}"
 				 includeInLayout="{showTable}" visible="{showTable}" headerDataProvider="{tableHeaders}"
 				 reportType="{reportType}" reportData="{reportData}" orderByChanged="getTable()"/>

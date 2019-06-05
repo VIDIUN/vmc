@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,19 +25,19 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.BaseFlexVo;
+	import com.vidiun.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaScheduleEventRecurrence extends BaseFlexVo
+	public dynamic class VidiunScheduleEventRecurrence extends BaseFlexVo
 	{
 		/**
 		**/
 		public var name : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaScheduleEventRecurrenceFrequency
+		* @see com.vidiun.types.VidiunScheduleEventRecurrenceFrequency
 		**/
 		public var frequency : String = null;
 
@@ -74,7 +74,7 @@ package com.kaltura.vo
 		public var byHour : String = null;
 
 		/**
-		* Comma separated of KalturaScheduleEventRecurrenceDay
+		* Comma separated of VidiunScheduleEventRecurrenceDay
 		* Each byDay value can also be preceded by a positive (+n) or negative (-n) integer.
 		* If present, this indicates the nth occurrence of the specific day within the MONTHLY or YEARLY RRULE.
 		* For example, within a MONTHLY rule, +1MO (or simply 1MO) represents the first Monday within the month, whereas -1MO represents the last Monday of the month.
@@ -121,7 +121,7 @@ package com.kaltura.vo
 		public var byOffset : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaScheduleEventRecurrenceDay
+		* @see com.vidiun.types.VidiunScheduleEventRecurrenceDay
 		**/
 		public var weekStartDay : String = null;
 

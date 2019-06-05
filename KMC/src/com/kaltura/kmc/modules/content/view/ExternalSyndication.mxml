@@ -5,29 +5,29 @@
 	 syndications and editing them.
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:es="com.kaltura.kmc.modules.content.view.window.externalsyndication.*"
-		 xmlns:controls="com.kaltura.controls.*" 
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
+		 xmlns:es="com.vidiun.vmc.modules.content.view.window.externalsyndication.*"
+		 xmlns:controls="com.vidiun.controls.*" 
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel"
 		 width="100%" height="100%" creationComplete="applyPermissions(event)">
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.content.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-			import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-			import com.kaltura.kmc.modules.content.events.PartnerEvent;
-			import com.kaltura.kmc.modules.content.events.SetSyndicationPagerEvent;
-			import com.kaltura.kmc.modules.content.model.ExtSynModel;
-			import com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.modules.content.events.ConversionSettingsEvent;
+			import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+			import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+			import com.vidiun.vmc.modules.content.events.PartnerEvent;
+			import com.vidiun.vmc.modules.content.events.SetSyndicationPagerEvent;
+			import com.vidiun.vmc.modules.content.model.ExtSynModel;
+			import com.vidiun.vmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -62,17 +62,17 @@
 
 
 			/**
-			 * this panel does not support initial filtering data, the kmef param is ignored.
+			 * this panel does not support initial filtering data, the vmef param is ignored.
 			 * @inheritDoc
 			 * */
-			public function init(kmef:KalturaBaseEntryFilter = null):void {
+			public function init(vmef:VidiunBaseEntryFilter = null):void {
 				if (!watchersCreated) {
 					// only bind once
 					BindingUtils.bindSetter(onPlaylistReady, extSynModel, "generalPlayListdata");
 					watchersCreated = true;
 				}
 				// load playlists
-				var listPlayList:KMCSearchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, null);
+				var listPlayList:VMCSearchEvent = new VMCSearchEvent(VMCSearchEvent.SEARCH_PLAYLIST, null);
 				listPlayList.dispatch();
 				// external syndications are listed after the call for playlists returns
 				// list flavor params
@@ -110,7 +110,7 @@
 				extSynModel.syndicationFeedsFilterPager.pageSize = paging.pageSize;
 				
 				var listExSynEvent:ExternalSyndicationEvent = new ExternalSyndicationEvent(ExternalSyndicationEvent.LIST_EXTERNAL_SYNDICATIONS);
-				listExSynEvent.data = paging.kalturaFilterPager;
+				listExSynEvent.data = paging.vidiunFilterPager;
 				listExSynEvent.dispatch();
 			}
 
@@ -122,7 +122,7 @@
 				extFeedPopUp.flavorParams = flavorParams;
 				extFeedPopUp.extSynModel = extSynModel;
 				extFeedPopUp.rootUrl = rootUrl;
-//				extFeedPopUp.addEventListener(KmcHelpEvent.HELP, dispatchHelp);
+//				extFeedPopUp.addEventListener(VmcHelpEvent.HELP, dispatchHelp);
 
 				PopUpManager.addPopUp(extFeedPopUp, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(extFeedPopUp);
@@ -132,7 +132,7 @@
 //			 * pass the event to whomever is listening 
 //			 * (because events from popups don't naturally propagate to the main app, not the same displaylist)
 //			 * */
-//			private function dispatchHelp(e:KmcHelpEvent):void {
+//			private function dispatchHelp(e:VmcHelpEvent):void {
 //				dispatchEvent(e.clone());
 //			}
 
@@ -145,7 +145,7 @@
 
 				var delStr:String = "";
 				for each (var feed:ExternalSyndicationVO in selectedFeeds) {
-					delStr += '\n' + feed.kSyndicationFeed.name;
+					delStr += '\n' + feed.vSyndicationFeed.name;
 				}
 
 				var msg:String = resourceManager.getString('cms', 'exsDeleteFeedsApprove', [delStr]);
@@ -160,7 +160,7 @@
 					var selectedFeeds:Array = feedsTable.selectedItems;
 					var ids:Array = new Array();
 					for each (var feed:ExternalSyndicationVO in selectedFeeds) {
-						ids.push(feed.kSyndicationFeed.id);
+						ids.push(feed.vSyndicationFeed.id);
 					}
 
 					var deletetFeedsEvent:ExternalSyndicationEvent = new ExternalSyndicationEvent(ExternalSyndicationEvent.DELETE_EXTERNAL_SYNDICATION);
@@ -173,15 +173,15 @@
 			private function gotoPage():void {
 				loadFeeds();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT, VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
 			}
 
 
 			private function onPagerCreationComplete(event:Event):void {
-				var e:CairngormEvent = new SetSyndicationPagerEvent(SetSyndicationPagerEvent.SET_PAGER, paging.kalturaFilterPager);
+				var e:CairngormEvent = new SetSyndicationPagerEvent(SetSyndicationPagerEvent.SET_PAGER, paging.vidiunFilterPager);
 				e.dispatch();
 				paging.selectedPage = 1;
-				paging.kalturaFilterPager.pageSize = paging.rowInPageCb.value as int;
+				paging.vidiunFilterPager.pageSize = paging.rowInPageCb.value as int;
 			}
 
 
@@ -208,7 +208,7 @@
 				</mx:HBox>
 				
 				<controls:Paging id="paging" width="100%" styleName="paging" rowsInPageChange="gotoPage()" 
-								 kalturaFilterPager="{extSynModel.syndicationFeedsFilterPager}"
+								 vidiunFilterPager="{extSynModel.syndicationFeedsFilterPager}"
 								 totalCount="{extSynModel.externalSyndicationFeedsTotalCount}" nextPage="gotoPage()"
 								 prvPage="gotoPage()" getPageNum="gotoPage()" visible="true" showRowsInPage="true"
 								 creationComplete="{onPagerCreationComplete(event)}"/>

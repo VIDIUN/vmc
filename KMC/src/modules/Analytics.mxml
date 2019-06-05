@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*"
-				   preloader="com.kaltura.preloaders.KmcPreloader" backgroundColor="#034F57" layout="absolute"
+<modules:VmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.vidiun.vmc.modules.*"
+				   preloader="com.vidiun.preloaders.VmcPreloader" backgroundColor="#034F57" layout="absolute"
 				   horizontalScrollPolicy="off" verticalScrollPolicy="off"
-				   xmlns:business="com.kaltura.kmc.modules.analytics.business.*"
-				   xmlns:control="com.kaltura.kmc.modules.analytics.control.*" creationComplete="kmcmodule1_creationCompleteHandler(event)"
-				   xmlns:view="com.kaltura.kmc.modules.analytics.view.*" minHeight="520" minWidth="950"
+				   xmlns:business="com.vidiun.vmc.modules.analytics.business.*"
+				   xmlns:control="com.vidiun.vmc.modules.analytics.control.*" creationComplete="vmcmodule1_creationCompleteHandler(event)"
+				   xmlns:view="com.vidiun.vmc.modules.analytics.view.*" minHeight="520" minWidth="950"
 				   >
 	<mx:Metadata>
 		[ResourceBundle("analytics")]
@@ -14,18 +14,18 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.control.CategoryEvent;
-			import com.kaltura.kmc.modules.analytics.control.PartnerEvent;
-			import com.kaltura.kmc.modules.analytics.control.StateEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KUtils;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.modules.analytics.control.CategoryEvent;
+			import com.vidiun.vmc.modules.analytics.control.PartnerEvent;
+			import com.vidiun.vmc.modules.analytics.control.StateEvent;
+			import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.utils.VUtils;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -33,7 +33,7 @@
 			import mx.events.ItemClickEvent;
 			
 			/**
-			 * KMC is responsible to use the value of  
+			 * VMC is responsible to use the value of  
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "analytics";
@@ -88,8 +88,8 @@
 				urchinNumber = _flashvars.urchinnumber;
 				
 				var conf:XML = new XML(_uiconf.confFile);
-				_model.kdpUiConf = conf.uiconf.drilldown.text().toString();
-				_model.kc = _kc;
+				_model.vdpUiConf = conf.uiconf.drilldown.text().toString();
+				_model.vc = _vc;
 				initModelContext(_flashvars);
 				/// set Alert locale for all this application
 				Alert.yesLabel = resourceManager.getString('analytics', 'yes');
@@ -101,7 +101,7 @@
 				var getPartner : PartnerEvent = new PartnerEvent( PartnerEvent.GET_PARTNER_APPLICATIONS );
 				getPartner.dispatch();
 				
-				// initialize the tabs: (need to do this after we have _kc)
+				// initialize the tabs: (need to do this after we have _vc)
 				usage.init();
 				content.init();
 				community.init();
@@ -122,9 +122,9 @@
 				_model.context.userId = objParam.uid;
 				_model.context.partnerId = objParam.partnerid;
 				_model.context.subpId = objParam.subpid;
-				_model.context.ks = objParam.ks;
-				_model.context.rootUrl = KUtils.hostFromCode(objParam.host);
-				_model.context.debugMode = objParam.kdpdebugmode == "true" ? true : false;
+				_model.context.vs = objParam.vs;
+				_model.context.rootUrl = VUtils.hostFromCode(objParam.host);
+				_model.context.debugMode = objParam.vdpdebugmode == "true" ? true : false;
 				_model.context.hostName = objParam.host;
 				_model.context.cdnHost = objParam.cdnhost ? objParam.cdnhost : objParam.host;
 				_model.context.protocol = objParam.protocol ? objParam.protocol : "http://";
@@ -168,7 +168,7 @@
 			}
 			
 			
-			protected function kmcmodule1_creationCompleteHandler(event:FlexEvent):void {
+			protected function vmcmodule1_creationCompleteHandler(event:FlexEvent):void {
 				if (!this.isModuleReady) {
 					secTln.visible = false;
 				}
@@ -185,10 +185,10 @@
 				/* google tracker must be initialized after "addedToStage"
 				because of its debug mode.*/
 				// initialize trackers
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/Reports and Analytics");
+				GoogleAnalyticsTracker.getInstance().setBasePath("VMC/Reports and Analytics");
 				
-				var ka:KAnalyticsTracker = KAnalyticsTracker.getInstance();
-				ka.init(_model.kc, "Content", "2.0", _model.context.userId);
+				var va:VAnalyticsTracker = VAnalyticsTracker.getInstance();
+				va.init(_model.vc, "Content", "2.0", _model.context.userId);
 				
 				// show different initial tab if provided
 				/* this must happen after trackers have been initialized because it logs something */
@@ -243,14 +243,14 @@
 	
 					// trackers:
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ANALYTICS_CONTENT_REPORTS, GoogleAnalyticsConsts.ANALYTICS);
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ANALYTICS,KalturaStatsKmcEventType.REPORTS_AND_ANALYTICS_CONTENT_REPORTS_TAB,
+					VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ANALYTICS,VidiunStatsVmcEventType.REPORTS_AND_ANALYTICS_CONTENT_REPORTS_TAB,
 						"Main Menu>Contents and Reports Tab");
 					JSGate.writeUrlHash(Analytics.NAME, CONTENT);
 				}
 				if (event.index == 1) {
 					// trackers:
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ANALYTICS_USERS_AND_COMMUNITY_REPORTS, GoogleAnalyticsConsts.ANALYTICS);
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ANALYTICS,KalturaStatsKmcEventType.REPORTS_AND_ANALYTICS_USERS_AND_COMMUNITY_REPORTS_TAB,
+					VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ANALYTICS,VidiunStatsVmcEventType.REPORTS_AND_ANALYTICS_USERS_AND_COMMUNITY_REPORTS_TAB,
 						"Main Menu>Users and Community Reports");
 					JSGate.writeUrlHash(Analytics.NAME, USERS_AND_COMMUNITY);
 					
@@ -265,7 +265,7 @@
 				else if (event.index == 2) {
 					// trackers:
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ANALYTICS_BANDWIDTH_USAGE , GoogleAnalyticsConsts.ANALYTICS);
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ANALYTICS,KalturaStatsKmcEventType.REPORTS_AND_ANALYTICS_BANDWIDTH_USAGE_TAB,
+					VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ANALYTICS,VidiunStatsVmcEventType.REPORTS_AND_ANALYTICS_BANDWIDTH_USAGE_TAB,
 						"Main Menu>Bandwidth Usage Tab");
 					JSGate.writeUrlHash(Analytics.NAME, BANDWIDTH_USAGE);
 					
@@ -380,4 +380,4 @@
 		
 	</mx:VBox>
 	
-</modules:KmcModule>
+</modules:VmcModule>

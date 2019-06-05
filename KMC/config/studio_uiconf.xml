@@ -8,15 +8,15 @@
 	<uiconf>@@StudioTemplatesUIConfID@@</uiconf>
 	<content>
 		<!-- entry to show in single player templates -->
-		<entryId>_KMCLOGO1</entryId>
+		<entryId>_VMCLOGO1</entryId>
 		<!-- playlists to show in playlist/multiplaylist player templates -->
 		<playlists>
 			<playlist>
-				<url>/index.php/partnerservices2/executeplaylist?uid=&partner_id={pid}&subp_id={spid}&format=8&ks={ks}&playlist_id=_KMCSPL1</url>
+				<url>/index.php/partnerservices2/executeplaylist?uid=&partner_id={pid}&subp_id={spid}&format=8&vs={vs}&playlist_id=_VMCSPL1</url>
 				<name>playlist1</name>
 			</playlist>
 			<playlist>
-				<url>/index.php/partnerservices2/executeplaylist?uid=&partner_id={pid}&subp_id={spid}&format=8&ks={ks}&playlist_id=_KMCSPL2</url>
+				<url>/index.php/partnerservices2/executeplaylist?uid=&partner_id={pid}&subp_id={spid}&format=8&vs={vs}&playlist_id=_VMCSPL2</url>
 				<name>playlist2</name>
 			</playlist>
 		</playlists>

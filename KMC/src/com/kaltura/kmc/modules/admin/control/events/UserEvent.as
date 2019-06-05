@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.admin.control.events
+package com.vidiun.vmc.modules.admin.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaUser;
+	import com.vidiun.vo.VidiunUser;
 	
 	public class UserEvent extends CairngormEvent {
 		
@@ -13,15 +13,15 @@ package com.kaltura.kmc.modules.admin.control.events
 		public static const SELECT_USER:String = "admin_selectUser";
 		
 		
-		private var _user:KalturaUser;
+		private var _user:VidiunUser;
 		
-		public function UserEvent(type:String, user:KalturaUser = null, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function UserEvent(type:String, user:VidiunUser = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_user = user;
 		}
 
-		public function get user():KalturaUser
+		public function get user():VidiunUser
 		{
 			return _user;
 		}

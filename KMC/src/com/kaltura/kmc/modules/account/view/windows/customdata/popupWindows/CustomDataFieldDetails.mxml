@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
 				 title="{resourceManager.getString('account','customNewFieldPopupTitle')}" 
-				 xmlns:conversionsettingswindow="com.kaltura.kmc.view.windows.conversionsettingswindow.*"
+				 xmlns:conversionsettingswindow="com.vidiun.vmc.view.windows.conversionsettingswindow.*"
 				 close="closeWindow()" showCloseButton="true" creationComplete="onCreationComplete(event)"
 				 help="{help()}" styleName="TitleWindowType2" >
 	<states>
@@ -11,14 +11,14 @@
 	</states>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.base.types.MetadataCustomFieldMaxOccursTypes;
-			import com.kaltura.base.types.MetadataCustomFieldTypes;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.control.events.AddMetadataFieldEvent;
-			import com.kaltura.kmc.modules.account.control.events.MetadataFieldEvent;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.vidiun.base.types.MetadataCustomFieldMaxOccursTypes;
+			import com.vidiun.base.types.MetadataCustomFieldTypes;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.account.control.events.AddMetadataFieldEvent;
+			import com.vidiun.vmc.modules.account.control.events.MetadataFieldEvent;
+			import com.vidiun.vo.VMCMetadataProfileVO;
+			import com.vidiun.vo.MetadataFieldVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -82,11 +82,11 @@
 			/**
 			 * the profile to which this field belongs 
 			 * */
-			public var metadataProfile:KMCMetadataProfileVO;
+			public var metadataProfile:VMCMetadataProfileVO;
 
 
 			private function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_custom_data_field'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_custom_data_field'));
 			}
 
 			/**

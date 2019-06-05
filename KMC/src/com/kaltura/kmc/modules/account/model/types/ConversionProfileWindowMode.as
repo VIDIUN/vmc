@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.account.model.types
+package com.vidiun.vmc.modules.account.model.types
 {
 	/**
 	 * list of optional modes for everything that is derived from conversion profile type 
-	 * (roughly corresponds to com.kaltura.types.KalturaConversionProfileType)
+	 * (roughly corresponds to com.vidiun.types.VidiunConversionProfileType)
 	 * @author atar.shadmi
-	 * @see com.kaltura.types.KalturaConversionProfileType
+	 * @see com.vidiun.types.VidiunConversionProfileType
 	 */
 	public class ConversionProfileWindowMode
 	{

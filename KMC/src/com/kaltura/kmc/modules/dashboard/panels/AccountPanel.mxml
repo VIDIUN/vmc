@@ -4,17 +4,17 @@
 	 Account Panel section
 
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" initialize="onInitialize()" width="100%" height="100%" styleName="accountBox" xmlns:states="com.kaltura.kmc.modules.account.model.states.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" initialize="onInitialize()" width="100%" height="100%" styleName="accountBox" xmlns:states="com.vidiun.vmc.modules.account.model.states.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.dashboard.DashboardManager;
+			import com.vidiun.types.VidiunStatsVmcEventType;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -24,9 +24,9 @@
 			
 			private function contactUs():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_ACCOUNT_CONTACT_US, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_ACCOUNT_CONTACT_US,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.DASHBOARD,VidiunStatsVmcEventType.DASHBOARD_ACCOUNT_CONTACT_US,
 														  "DashBoard>Account Contacts Us")
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
+				dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
 			}
 			
 			private function onInitialize():void
@@ -46,21 +46,21 @@
 			
 		]]>
 	</mx:Script>
-	<mx:Label text="{resourceManager.getString('kdashboard', 'account_title')}" id="accountTitleLabel"
+	<mx:Label text="{resourceManager.getString('vdashboard', 'account_title')}" id="accountTitleLabel"
 			  styleName="accountSubTitleLabel"/>
 	
-	<mx:Label text="{resourceManager.getString('kdashboard', 'trial_usage', [DashboardManager.instance.totalUsage])}"
+	<mx:Label text="{resourceManager.getString('vdashboard', 'trial_usage', [DashboardManager.instance.totalUsage])}"
 			  includeInLayout="{_showUsagePercent}" visible="{_showUsagePercent}" styleName="featureLineLabel"/>
 	<mx:ProgressBar id="usageProgress" includeInLayout="{_showUsagePercent}" visible="{_showUsagePercent}" labelPlacement="bottom" themeColor="#F20D7A"
 					minimum="0" maximum="100" direction="right" mode="manual" width="100%"/>
 	
-	<mx:Label text="{resourceManager.getString('kdashboard', 'total_bandwidth', [DashboardManager.instance.totalBWSoFar])}"
+	<mx:Label text="{resourceManager.getString('vdashboard', 'total_bandwidth', [DashboardManager.instance.totalBWSoFar])}"
 			  styleName="featureLineLabel" visible="{! _showUsagePercent}" includeInLayout="{! _showUsagePercent}"/>
-	<mx:Label text="{resourceManager.getString('kdashboard', 'total_storage', [DashboardManager.instance.hostingGB])}"
+	<mx:Label text="{resourceManager.getString('vdashboard', 'total_storage', [DashboardManager.instance.hostingGB])}"
 			 styleName="featureLineLabel" visible="{! _showUsagePercent}" includeInLayout="{! _showUsagePercent}"/>
 	
-	<mx:Text id="customizeOptionText" text="{resourceManager.getString('kdashboard', 'contact_us_text')}"
+	<mx:Text id="customizeOptionText" text="{resourceManager.getString('vdashboard', 'contact_us_text')}"
 			 styleName="featureLineLabel" width="100%"/>
-	<mx:Button id='contactUsLinkButton' label="{resourceManager.getString('kdashboard', 'contact_us_link')}"
+	<mx:Button id='contactUsLinkButton' label="{resourceManager.getString('vdashboard', 'contact_us_link')}"
 			   click="contactUs()" useHandCursor="true" buttonMode="true" styleName="dashboardBtn"/>
 </mx:VBox>

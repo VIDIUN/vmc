@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.content.control {
+package com.vidiun.vmc.modules.content.control {
 	import com.adobe.cairngorm.control.FrontController;
-	//import com.kaltura.edw.control.commands.*;
-	//import com.kaltura.edw.control.commands.customData.*;
-	//import com.kaltura.edw.control.events.*;
-	import com.kaltura.kmc.modules.content.commands.*;
-	import com.kaltura.kmc.modules.content.commands.live.*;
-	import com.kaltura.kmc.modules.content.commands.bulk.*;
-	import com.kaltura.kmc.modules.content.commands.cat.*;
-	import com.kaltura.kmc.modules.content.commands.cattrack.*;
-	import com.kaltura.kmc.modules.content.commands.dropfolder.*;
-	import com.kaltura.kmc.modules.content.events.*;
+	//import com.vidiun.edw.control.commands.*;
+	//import com.vidiun.edw.control.commands.customData.*;
+	//import com.vidiun.edw.control.events.*;
+	import com.vidiun.vmc.modules.content.commands.*;
+	import com.vidiun.vmc.modules.content.commands.live.*;
+	import com.vidiun.vmc.modules.content.commands.bulk.*;
+	import com.vidiun.vmc.modules.content.commands.cat.*;
+	import com.vidiun.vmc.modules.content.commands.cattrack.*;
+	import com.vidiun.vmc.modules.content.commands.dropfolder.*;
+	import com.vidiun.vmc.modules.content.events.*;
 
 	public class CMSController extends FrontController {
 		public function CMSController() {
@@ -20,15 +20,15 @@ package com.kaltura.kmc.modules.content.control {
 		public function initializeCommands():void {
 			
 			//Search Event
-			addCommand(KMCSearchEvent.DO_SEARCH_ENTRIES, DoSearchSequenceCommand);
-			addCommand(KMCSearchEvent.SEARCH_PLAYLIST, ListPlaylistCommand);
+			addCommand(VMCSearchEvent.DO_SEARCH_ENTRIES, DoSearchSequenceCommand);
+			addCommand(VMCSearchEvent.SEARCH_PLAYLIST, ListPlaylistCommand);
 
 			//Entry Event
-			addCommand(KMCEntryEvent.LIST_ENTRY_MODERATION, ListModerationCommand);
-			addCommand(KMCEntryEvent.ADD_PLAYLIST, AddEntryCommand);
-			addCommand(KMCEntryEvent.GET_PLAYLIST, GetPlaylistCommand);
-			addCommand(KMCEntryEvent.PREVIEW, PreviewCommand);
-			addCommand(KMCEntryEvent.SHOW_LIVE_DASHBOARD, OpenLiveDashboardCommand);
+			addCommand(VMCEntryEvent.LIST_ENTRY_MODERATION, ListModerationCommand);
+			addCommand(VMCEntryEvent.ADD_PLAYLIST, AddEntryCommand);
+			addCommand(VMCEntryEvent.GET_PLAYLIST, GetPlaylistCommand);
+			addCommand(VMCEntryEvent.PREVIEW, PreviewCommand);
+			addCommand(VMCEntryEvent.SHOW_LIVE_DASHBOARD, OpenLiveDashboardCommand);
 
 			//on the fly playlist event
 			addCommand(SetPlaylistTypeEvent.MANUAL_PLAYLIST, SetPlaylistTypeCommand);
@@ -38,9 +38,9 @@ package com.kaltura.kmc.modules.content.control {
 			addCommand(RuleBasedTypeEvent.MULTY_RULES, SetPreviewTypeCommand);
 			addCommand(RuleBasedTypeEvent.ONE_RULE, SetPreviewTypeCommand);
 			//execute playlist to see current entries in a rule based running
-			addCommand(KMCEntryEvent.GET_RULE_BASED_PLAYLIST, GetRuleBasedPlaylistCommand);
+			addCommand(VMCEntryEvent.GET_RULE_BASED_PLAYLIST, GetRuleBasedPlaylistCommand);
 
-			addCommand(KMCEntryEvent.RESET_RULE_BASED_DATA, ResetRuleBasedDataCommand);
+			addCommand(VMCEntryEvent.RESET_RULE_BASED_DATA, ResetRuleBasedDataCommand);
 
 			addCommand(SetListableEvent.SET_NEW_LIST_TO_MODEL, SetCurrentListableCommand);
 
@@ -85,7 +85,7 @@ package com.kaltura.kmc.modules.content.control {
 			addCommand(ConversionSettingsEvent.LIST_FLAVOR_PARAMS, ListFlavorsParamsCommand);
 
 			//FilterEvent
-			addCommand(KMCFilterEvent.SET_FILTER_TO_MODEL, SetFilterToModelCommand);
+			addCommand(VMCFilterEvent.SET_FILTER_TO_MODEL, SetFilterToModelCommand);
 
 			//User Events
 			addCommand(UserEvent.BAN_USER, BanUserCommand);
@@ -116,16 +116,16 @@ package com.kaltura.kmc.modules.content.control {
 			addCommand(ChangeModelEvent.SET_ALLOW_CLIPPING, ChangeModelValueCommand);
 			addCommand(ChangeModelEvent.SET_ALLOW_TRIMMING, ChangeModelValueCommand);
 			addCommand(ChangeModelEvent.ENABLE_AKAMAI_LIVE, ChangeModelValueCommand);
-			addCommand(ChangeModelEvent.ENABLE_KALTURA_LIVE, ChangeModelValueCommand);
-			addCommand(ChangeModelEvent.ENABLE_KALTURA_MULTICAST, ChangeModelValueCommand);
-			addCommand(ChangeModelEvent.ENABLE_KALTURA_RECORDING, ChangeModelValueCommand);
+			addCommand(ChangeModelEvent.ENABLE_VIDIUN_LIVE, ChangeModelValueCommand);
+			addCommand(ChangeModelEvent.ENABLE_VIDIUN_MULTICAST, ChangeModelValueCommand);
+			addCommand(ChangeModelEvent.ENABLE_VIDIUN_RECORDING, ChangeModelValueCommand);
 			addCommand(ChangeModelEvent.SET_ENTRY_CATEGORIES_LIMIT, ChangeModelValueCommand);
 
 
 			// drop folder stuff
-			addCommand(KMCDropFolderEvent.LIST_FOLDERS_AND_FILES, ListDropFoldersAndFiles);
-			addCommand(KMCDropFolderEvent.LIST_ALL_FILES, ListDropFoldersFilesCommand);
-			addCommand(KMCDropFolderEvent.DELETE_FILES, DeleteDropFolderFilesCommand);
+			addCommand(VMCDropFolderEvent.LIST_FOLDERS_AND_FILES, ListDropFoldersAndFiles);
+			addCommand(VMCDropFolderEvent.LIST_ALL_FILES, ListDropFoldersFilesCommand);
+			addCommand(VMCDropFolderEvent.DELETE_FILES, DeleteDropFolderFilesCommand);
 
 			// things that come from the EDW
 			addCommand(UpdateEntryEvent.UPDATE_ENTRY_IN_LIST, UpdateEntryInListCommand);

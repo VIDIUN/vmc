@@ -1,6 +1,6 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.core.KClassFactory;
+	import com.vidiun.core.VClassFactory;
 	
 	import flash.xml.XMLDocument;
 	import flash.xml.XMLNode;
@@ -12,14 +12,14 @@ package com.kaltura.edw.business
 		/**
 		 * create a new instance of RequiredClass with attributes values taken from sourceObj.
 		 * assumption is that sourceObj is an instance of a subclass of RequiredClass which
-		 *  the client failed to create because it is not compiled into KMC (ie different 
+		 *  the client failed to create because it is not compiled into VMC (ie different 
 		 *  distribution profiles, storage profiles, etc)
 		 * @param RequiredClass	class reference
 		 * @param sourceObj	
 		 * @return an instance of class RequiredClass
 		 */
 		public static function createClassInstanceFromObject(RequiredClass:Class, sourceObj:Object):* {
-			return new KClassFactory(RequiredClass).newInstanceFromXML( XMLList(objectToXML(sourceObj)));
+			return new VClassFactory(RequiredClass).newInstanceFromXML( XMLList(objectToXML(sourceObj)));
 		}
 		
 		

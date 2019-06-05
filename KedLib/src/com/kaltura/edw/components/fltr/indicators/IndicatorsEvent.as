@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.fltr.indicators {
+package com.vidiun.edw.components.fltr.indicators {
 	import flash.events.Event;
 
 	public class IndicatorsEvent extends Event {

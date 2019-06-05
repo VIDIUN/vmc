@@ -2,17 +2,17 @@
 <!---
 	 External syndications list in <code>ExternalSyndication</code>.
 -->
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
+<table:SelectionTable xmlns:table="com.vidiun.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
 					  headerRelease="headerReleaseHandler(event)" rowHeight="30"
 					  creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
-			import com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationNameRenderer;
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaBaseSyndicationFeedOrderBy;
+			import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+			import com.vidiun.vmc.modules.content.model.CmsModelLocator;
+			import com.vidiun.vmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
+			import com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationNameRenderer;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.types.VidiunBaseSyndicationFeedOrderBy;
 			
 			import mx.core.Application;
 			import mx.events.DataGridEvent;
@@ -42,22 +42,22 @@
 					var orederByStr:String;
 					switch (headerText) {
 						case resourceManager.getString('cms', 'exsFeedNameColumnHeader'):  {
-							orederByStr = sortDir ? KalturaBaseSyndicationFeedOrderBy.NAME_ASC : KalturaBaseSyndicationFeedOrderBy.NAME_DESC;
+							orederByStr = sortDir ? VidiunBaseSyndicationFeedOrderBy.NAME_ASC : VidiunBaseSyndicationFeedOrderBy.NAME_DESC;
 							break;
 						}
 
 						case resourceManager.getString('cms', 'exsFeedTypeColumnHeader'):  {
-							orederByStr = sortDir ? KalturaBaseSyndicationFeedOrderBy.TYPE_ASC : KalturaBaseSyndicationFeedOrderBy.TYPE_DESC;
+							orederByStr = sortDir ? VidiunBaseSyndicationFeedOrderBy.TYPE_ASC : VidiunBaseSyndicationFeedOrderBy.TYPE_DESC;
 							break;
 						}
 
 						case resourceManager.getString('cms', 'exsFeedcontentColumnHeader'):  {
-							orederByStr = sortDir ? KalturaBaseSyndicationFeedOrderBy.PLAYLIST_ID_ASC : KalturaBaseSyndicationFeedOrderBy.PLAYLIST_ID_DESC;
+							orederByStr = sortDir ? VidiunBaseSyndicationFeedOrderBy.PLAYLIST_ID_ASC : VidiunBaseSyndicationFeedOrderBy.PLAYLIST_ID_DESC;
 							break;
 						}
 
 						case resourceManager.getString('cms', 'exsFeedURLColumnHeader'):  {
-							orederByStr = sortDir ? KalturaBaseSyndicationFeedOrderBy.CREATED_AT_ASC : KalturaBaseSyndicationFeedOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? VidiunBaseSyndicationFeedOrderBy.CREATED_AT_ASC : VidiunBaseSyndicationFeedOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
@@ -90,13 +90,13 @@
 				editSyndicationWin.extSynModel = model.extSynModel;
 				editSyndicationWin.rootUrl = model.context.rootUrl;
 				editSyndicationWin.selectedExSynVo = event.target.data as ExternalSyndicationVO;
-//				editSyndicationWin.addEventListener(KmcHelpEvent.HELP, dispatchHelp, false, 0, true);
+//				editSyndicationWin.addEventListener(VmcHelpEvent.HELP, dispatchHelp, false, 0, true);
 				PopUpManager.addPopUp(editSyndicationWin, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(editSyndicationWin);
 			}
 
 
-//			private function dispatchHelp(event:KmcHelpEvent):void {
+//			private function dispatchHelp(event:VmcHelpEvent):void {
 //				dispatchEvent(event.clone());
 //			}
 
@@ -117,26 +117,26 @@
 
 	<table:columns>
 		<mx:DataGridColumn width="32" minWidth="32" 
-						   headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer" />
+						   headerRenderer="com.vidiun.controls.table.SelectionRenderer"
+						   itemRenderer="com.vidiun.controls.table.SelectionRenderer" />
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('cms','exsFeedIdColumnHeader')}" dataField="id"
 						   width="80"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationIdRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationIdRenderer"/>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('cms','exsFeedNameColumnHeader')}" dataField="name"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationNameRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationNameRenderer"/>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('cms','exsFeedTypeColumnHeader')}" dataField="type"
 						   width="80"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationTypeRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationTypeRenderer"/>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('cms','exsFeedContentColumnHeader')}"
 						   dataField="content"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationContentRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationContentRenderer"/>
 		
 		<mx:DataGridColumn headerText="{resourceManager.getString('cms','exsFeedURLColumnHeader')}" dataField="url"
-						   itemRenderer="com.kaltura.kmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationURLFeedRenderer"/>
+						   itemRenderer="com.vidiun.vmc.modules.content.view.window.externalsyndication.renderers.ExternalSyndicationURLFeedRenderer"/>
 		
 	</table:columns>
 </table:SelectionTable>

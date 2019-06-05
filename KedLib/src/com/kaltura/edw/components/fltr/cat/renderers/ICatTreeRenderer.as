@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.fltr.cat.renderers
+package com.vidiun.edw.components.fltr.cat.renderers
 {
 	/**
 	 * marker interface for categories tree item renderers 

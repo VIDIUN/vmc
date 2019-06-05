@@ -1,15 +1,15 @@
-# kmc
-Kaltura Management Console (aka KMC). For the login project see: https://github.com/kaltura/kmc-login
+# vmc
+Vidiun Management Console (aka VMC). For the login project see: https://github.com/vidiun/vmc-login
 
 ## Compiling locales:
 1. Make sure your Flex SDK3.6 has all required locales (use copyLocale to create missing ones, then copy the framework resource bundles from a more advanced SDK)
-Kaltura internal - you can find an up-to-date SDK here: Public\R&D\Front End\flex sdks
+Vidiun internal - you can find an up-to-date SDK here: Public\R&D\Front End\flex sdks
 2. Use the ant/compileLocale.xml task to compile a specific locale (set LANGUAGE to the required locale code)
 
 ## creating a release build:
 Use the ant task ant/compile.xml 
-Make sure KMC_VERSION is set to the same value as the VERSION var set in KMC.mxml.
-Run the task. It should compile all locale files, then compile the different modules, and end with compiling the KED panels.
+Make sure VMC_VERSION is set to the same value as the VERSION var set in VMC.mxml.
+Run the task. It should compile all locale files, then compile the different modules, and end with compiling the VED panels.
 It will then pack all required files into a folder named as version number.
 
 ### failing to run the ant task: java.lang.OutOfMemoryError: PermGen space

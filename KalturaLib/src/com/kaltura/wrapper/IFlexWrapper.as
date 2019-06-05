@@ -1,4 +1,4 @@
-package com.kaltura.wrapper
+package com.vidiun.wrapper
 {
 	/**
 	 * A marker interface to indicates that a swf is a wrapper for a flex application

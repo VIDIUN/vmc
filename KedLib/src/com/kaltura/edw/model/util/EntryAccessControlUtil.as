@@ -1,25 +1,25 @@
-package com.kaltura.edw.model.util
+package com.vidiun.edw.model.util
 {
 	import mx.collections.ArrayCollection;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.utils.KCountriesUtil;
-	import com.kaltura.vo.KalturaSiteRestriction;
-	import com.kaltura.types.KalturaSiteRestrictionType;
+	import com.vidiun.vo.FlavorVO;
+	import com.vidiun.vo.VidiunFlavorParams;
+	import com.vidiun.utils.VCountriesUtil;
+	import com.vidiun.vo.VidiunSiteRestriction;
+	import com.vidiun.types.VidiunSiteRestrictionType;
 	import mx.resources.ResourceManager;
 	import mx.resources.IResourceManager;
-	import com.kaltura.vo.KalturaIpAddressRestriction;
-	import com.kaltura.types.KalturaIpAddressRestrictionType;
-	import com.kaltura.vo.KalturaLimitFlavorsRestriction;
-	import com.kaltura.types.KalturaLimitFlavorsRestrictionType;
-	import com.kaltura.types.KalturaCountryRestrictionType;
-	import com.kaltura.vo.KalturaCountryRestriction;
-	import com.kaltura.edw.model.FilterModel;
+	import com.vidiun.vo.VidiunIpAddressRestriction;
+	import com.vidiun.types.VidiunIpAddressRestrictionType;
+	import com.vidiun.vo.VidiunLimitFlavorsRestriction;
+	import com.vidiun.types.VidiunLimitFlavorsRestrictionType;
+	import com.vidiun.types.VidiunCountryRestrictionType;
+	import com.vidiun.vo.VidiunCountryRestriction;
+	import com.vidiun.edw.model.FilterModel;
 
 	/**
 	 * This class holds helper methods used in Entry Access Control section. 
 	 * @author atar.shadmi
-	 * @see modules.ked.EntryAccessControl
+	 * @see modules.ved.EntryAccessControl
 	 */
 	public class EntryAccessControlUtil
 	{
@@ -31,9 +31,9 @@ package com.kaltura.edw.model.util
 			_filterModel = value;
 		}
 		
-		public static function getSiteRestrictionText (rstrct:KalturaSiteRestriction):String {
+		public static function getSiteRestrictionText (rstrct:VidiunSiteRestriction):String {
 			var result:String;
-			if (rstrct.siteRestrictionType == KalturaSiteRestrictionType.ALLOW_SITE_LIST) {
+			if (rstrct.siteRestrictionType == VidiunSiteRestrictionType.ALLOW_SITE_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_SITES') + ":  ";
 			}
 			else {
@@ -43,9 +43,9 @@ package com.kaltura.edw.model.util
 			return result;
 		}
 		
-		public static function getIPRestrictionText (rstrct:KalturaIpAddressRestriction):String {
+		public static function getIPRestrictionText (rstrct:VidiunIpAddressRestriction):String {
 			var result:String;
-			if (rstrct.ipAddressRestrictionType == KalturaIpAddressRestrictionType.ALLOW_LIST) {
+			if (rstrct.ipAddressRestrictionType == VidiunIpAddressRestrictionType.ALLOW_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_IPS') + ":  ";
 			}
 			else {
@@ -61,9 +61,9 @@ package com.kaltura.edw.model.util
 		 * @return 
 		 * 
 		 */
-		public static function getFlavorRestrictionText (rstrct:KalturaLimitFlavorsRestriction):String {
+		public static function getFlavorRestrictionText (rstrct:VidiunLimitFlavorsRestriction):String {
 			var result:String;
-			if (rstrct.limitFlavorsRestrictionType == KalturaLimitFlavorsRestrictionType.ALLOW_LIST) {
+			if (rstrct.limitFlavorsRestrictionType == VidiunLimitFlavorsRestrictionType.ALLOW_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_FLAVORS') + ":  ";
 			}
 			else {
@@ -81,9 +81,9 @@ package com.kaltura.edw.model.util
 			return result;
 		}
 		
-		public static function getCountryRestrictionText (rstrct:KalturaCountryRestriction):String {
+		public static function getCountryRestrictionText (rstrct:VidiunCountryRestriction):String {
 			var result:String;
-			if (rstrct.countryRestrictionType == KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST) {
+			if (rstrct.countryRestrictionType == VidiunCountryRestrictionType.ALLOW_COUNTRY_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_COUNTRIES') + ": "
 			}
 			else {
@@ -95,25 +95,25 @@ package com.kaltura.edw.model.util
 		}
 		
 		private static function getFlavorNameById(flavorParamsId:int):String {
-			for each (var kFlavor:KalturaFlavorParams in _filterModel.flavorParams) {
-				if (kFlavor.id == flavorParamsId) {
-					return kFlavor.name;
+			for each (var vFlavor:VidiunFlavorParams in _filterModel.flavorParams) {
+				if (vFlavor.id == flavorParamsId) {
+					return vFlavor.name;
 				}
 			}
 			return '';
 		}
 		
 		/**
-		 * filter model holds KalturaFlavorParams, but the window requires FlavorVOs.
-		 * this method wraps each KalturaFlavorParams in FlavorVO like Account module does.
+		 * filter model holds VidiunFlavorParams, but the window requires FlavorVOs.
+		 * this method wraps each VidiunFlavorParams in FlavorVO like Account module does.
 		 * */
 		public static function wrapInFlavorVo(ac:ArrayCollection):ArrayCollection {
 			var tempArrCol:ArrayCollection = new ArrayCollection();
 			var flavor:FlavorVO;
-			for each(var kFlavor:Object in ac) {
-				if (kFlavor is KalturaFlavorParams) {
+			for each(var vFlavor:Object in ac) {
+				if (vFlavor is VidiunFlavorParams) {
 					flavor = new FlavorVO();
-					flavor.kFlavor = kFlavor as KalturaFlavorParams;
+					flavor.vFlavor = vFlavor as VidiunFlavorParams;
 					tempArrCol.addItem(flavor);
 				}
 			}
@@ -125,7 +125,7 @@ package com.kaltura.edw.model.util
 			var cArr:Array = countriesCodesList.split(',');
 			var countriesList:String = '';
 			for each (var countryCode:String in cArr) {
-				countriesList += KCountriesUtil.instance.getCountryName(countryCode) + ', ';
+				countriesList += VCountriesUtil.instance.getCountryName(countryCode) + ', ';
 			}
 			
 			return countriesList.substr(0, countriesList.length - 2);

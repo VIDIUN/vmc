@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.cuepoints.*;
-	import com.kaltura.edw.control.events.CuePointEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.cuepoints.*;
+	import com.vidiun.edw.control.events.CuePointEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class AdsTabController extends KMvCController {
+	public class AdsTabController extends VMvCController {
 		
 		public function AdsTabController()
 		{

@@ -17,17 +17,17 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.commands.playlist.PlaylistList;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.modules.studio.model.types.PlaylistTypes;
-			import com.kaltura.kmc.modules.studio.view.ApsWizard;
-			import com.kaltura.kmc.modules.studio.vo.PlaylistVO;
-			import com.kaltura.types.KalturaPlaylistOrderBy;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-			import com.kaltura.vo.KalturaPlaylist;
-			import com.kaltura.vo.KalturaPlaylistFilter;
-			import com.kaltura.vo.KalturaPlaylistListResponse;
+			import com.vidiun.commands.playlist.PlaylistList;
+			import com.vidiun.events.VidiunEvent;
+			import com.vidiun.vmc.modules.studio.model.types.PlaylistTypes;
+			import com.vidiun.vmc.modules.studio.view.ApsWizard;
+			import com.vidiun.vmc.modules.studio.vo.PlaylistVO;
+			import com.vidiun.types.VidiunPlaylistOrderBy;
+			import com.vidiun.vo.VidiunFilterPager;
+			import com.vidiun.vo.VidiunMediaEntryFilterForPlaylist;
+			import com.vidiun.vo.VidiunPlaylist;
+			import com.vidiun.vo.VidiunPlaylistFilter;
+			import com.vidiun.vo.VidiunPlaylistListResponse;
 			
 			import modules.Studio;
 			
@@ -74,35 +74,35 @@
 			 * get a list of all the partner's playlists
 			 * */
 			public function listPlaylists():void {
-				var pager:KalturaFilterPager = new KalturaFilterPager();
+				var pager:VidiunFilterPager = new VidiunFilterPager();
 				pager.pageIndex = 1;
 				pager.pageSize = 500;	// large number, should get all
-				var kplfilter:KalturaPlaylistFilter = new KalturaPlaylistFilter();
-				kplfilter.orderBy = KalturaPlaylistOrderBy.CREATED_AT_DESC;
-				var listPlaylist:PlaylistList = new PlaylistList(kplfilter, pager);
-				listPlaylist.addEventListener(KalturaEvent.COMPLETE, onPlaylistsLoaded);
-				listPlaylist.addEventListener(KalturaEvent.FAILED, fault);
-				Studio.kc.post(listPlaylist);
+				var vplfilter:VidiunPlaylistFilter = new VidiunPlaylistFilter();
+				vplfilter.orderBy = VidiunPlaylistOrderBy.CREATED_AT_DESC;
+				var listPlaylist:PlaylistList = new PlaylistList(vplfilter, pager);
+				listPlaylist.addEventListener(VidiunEvent.COMPLETE, onPlaylistsLoaded);
+				listPlaylist.addEventListener(VidiunEvent.FAILED, fault);
+				Studio.vc.post(listPlaylist);
 			}
 
 
 			/**
 			 * All playlists were loaded - place them on the left side table
 			 */
-			private function onPlaylistsLoaded(event:KalturaEvent):void {
-				var kmplf:KalturaMediaEntryFilterForPlaylist;
+			private function onPlaylistsLoaded(event:VidiunEvent):void {
+				var vmplf:VidiunMediaEntryFilterForPlaylist;
 
 				var arr:Array = new Array();
 				var plstVo:PlaylistVO;
 				// create a VO for each playlist and it them to dataProvider
-				// event.data is KalturaPlaylistListResponse
-				for each (var playlist:KalturaPlaylist in event.data.objects) {
+				// event.data is VidiunPlaylistListResponse
+				for each (var playlist:VidiunPlaylist in event.data.objects) {
 					plstVo = new PlaylistVO();
 					plstVo.entryId = playlist.id;
 					plstVo.name = playlist.name.split("'").join("´");
 					plstVo.mediaType = playlist.playlistType.toString();
 					var playlistUrl:String = Studio.flashvars.protocol ? Studio.flashvars.protocol : "http://"; 
-					playlistUrl += Studio.flashvars.host + "/index.php/partnerservices2/executeplaylist?playlist_id=" + playlist.id + "&partner_id=" + playlist.partnerId + "&subp_id=" + (Number(playlist.partnerId) * 100).toString() + "&format=8" + "&ks={ks}";
+					playlistUrl += Studio.flashvars.host + "/index.php/partnerservices2/executeplaylist?playlist_id=" + playlist.id + "&partner_id=" + playlist.partnerId + "&subp_id=" + (Number(playlist.partnerId) * 100).toString() + "&format=8" + "&vs={vs}";
 					plstVo.playlistUrl = encodeURIComponent(playlistUrl);
 					plstVo.duration = playlist.duration;
 					plstVo.createdAt = playlist.createdAt;
@@ -113,7 +113,7 @@
 			}
 
 
-			private function fault(event:KalturaEvent):void {
+			private function fault(event:VidiunEvent):void {
 				var s:String = "Content fault: \n" + event.error.errorMsg;
 				dispatchEvent(new ErrorEvent(ApsWizard.ALERT_USER, false, false, s));
 			}
@@ -241,17 +241,17 @@
 				var pl:XML;
 				for (var i:int = 0; i < _widgetPlstDP.length; i++) {
 					pl = <var />;
-					pl.@key = "playlistAPI.kpl" + i + "Id";
+					pl.@key = "playlistAPI.vpl" + i + "Id";
 					pl.@value = (_widgetPlstDP[i] as PlaylistVO).entryId;
 					plg.appendChild(pl);
 						
 					pl = <var />;
-					pl.@key = "playlistAPI.kpl" + i + "Url";
+					pl.@key = "playlistAPI.vpl" + i + "Url";
 					pl.@value = (_widgetPlstDP[i] as PlaylistVO).playlistUrl;
 					plg.appendChild(pl);
 						
 					pl = <var />;
-					pl.@key = "playlistAPI.kpl" + i + "Name";
+					pl.@key = "playlistAPI.vpl" + i + "Name";
 					pl.@value = (_widgetPlstDP[i] as PlaylistVO).name;
 					plg.appendChild(pl);
 					
@@ -271,7 +271,7 @@
 				for each (var prop:XML in xml.children()) {
 					// Assumption that all the playlists are in _playlistsTableDP (no paging)!!
 					// change in player plugin API - take playlist entry ID if possible
-					if (prop.@key == "kpl" + j + "EntryId" || prop.@key == "playlistAPI.kpl" + j + "Id") {
+					if (prop.@key == "vpl" + j + "EntryId" || prop.@key == "playlistAPI.vpl" + j + "Id") {
 						addPlaylistByEntryId(prop.@value);
 						++j;
 					}

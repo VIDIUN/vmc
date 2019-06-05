@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.vidiun.vo
 {
-	import com.kaltura.vo.BaseFlexVo;
+	import com.vidiun.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaFileSync extends BaseFlexVo
+	public dynamic class VidiunFileSync extends BaseFlexVo
 	{
 		/**
 		**/
@@ -41,7 +41,7 @@ package com.kaltura.vo
 		public var partnerId : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaFileSyncObjectType
+		* @see com.vidiun.types.VidiunFileSyncObjectType
 		**/
 		public var fileObjectType : String = null;
 
@@ -82,12 +82,12 @@ package com.kaltura.vo
 		public var syncTime : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaFileSyncStatus
+		* @see com.vidiun.types.VidiunFileSyncStatus
 		**/
 		public var status : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaFileSyncType
+		* @see com.vidiun.types.VidiunFileSyncType
 		**/
 		public var fileType : int = int.MIN_VALUE;
 
@@ -124,12 +124,12 @@ package com.kaltura.vo
 		public var fileDiscSize : Number = Number.NEGATIVE_INFINITY;
 
 		/**
-		* @see com.kaltura.types.kalturaBoolean
+		* @see com.vidiun.types.vidiunBoolean
 		**/
 		public var isCurrentDc : Boolean;
 
 		/**
-		* @see com.kaltura.types.kalturaBoolean
+		* @see com.vidiun.types.vidiunBoolean
 		**/
 		public var isDir : Boolean;
 

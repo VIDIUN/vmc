@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.model
+package com.vidiun.vmc.modules.content.model
 {
-	import com.kaltura.kmc.modules.content.vo.PartnerVO;
-	import com.kaltura.vo.KalturaBaseSyndicationFeedFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.vmc.modules.content.vo.PartnerVO;
+	import com.vidiun.vo.VidiunBaseSyndicationFeedFilter;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,12 +23,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * a list of players which can be used to display syndicated content.
 		 * */
-		[ArrayElementType("KalturaUiConf")]
+		[ArrayElementType("VidiunUiConf")]
 		public var uiConfData:ArrayCollection = new ArrayCollection();
 		
-		public var syndicationFeedsFilterPager:KalturaFilterPager;
+		public var syndicationFeedsFilterPager:VidiunFilterPager;
 		
-		public var syndicationFeedsFilter:KalturaBaseSyndicationFeedFilter;
+		public var syndicationFeedsFilter:VidiunBaseSyndicationFeedFilter;
 		
 		/**
 		 * total number of syndication feeds for current partner

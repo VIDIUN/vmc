@@ -1,10 +1,10 @@
-package com.kaltura.edw.components.filter.events
+package com.vidiun.edw.components.filter.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.vidiun.edw.events.VedDataEvent;
 	
 	import flash.events.Event;
 	
-	public class FilterEvent extends KedDataEvent {
+	public class FilterEvent extends VedDataEvent {
 		
 		/**
 		 * defines the value of the type property of the newSearch event.
@@ -31,7 +31,7 @@ package com.kaltura.edw.components.filter.events
 		
 		/**
 		 * add entries to category
-		 * event.data is ArrayCollection of KalturaBaseEntry objects to be saved 
+		 * event.data is ArrayCollection of VidiunBaseEntry objects to be saved 
 		 */		
 		public static const UPDATE_ENTRIES:String = "updateEntries";
 		

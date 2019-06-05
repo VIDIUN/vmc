@@ -2,12 +2,12 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.types.KalturaDVRStatus;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.vidiun.edw.business.EntryLiveStreamingHelper;
+			import com.vidiun.types.VidiunDVRStatus;
+			import com.vidiun.vo.VidiunLiveStreamEntry;
 			
 			[Bindable]
-			public var selectedEntry:KalturaLiveStreamEntry;
+			public var selectedEntry:VidiunLiveStreamEntry;
 			
 			private function replaceIndex(str:String):String {
 				return str.replace(/%i/, '1');

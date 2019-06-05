@@ -2,7 +2,7 @@
 <mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" verticalScrollPolicy="auto"
 			 allowMultipleSelection="true" rowHeight="36" dropEnabled="true" dragMoveEnabled="false"
 			 itemClick="setSelection(event);" creationComplete="creationCompleteHandler(event)"
-			 xmlns:renderers="com.kaltura.kmc.modules.admin.view.renderers.*">
+			 xmlns:renderers="com.vidiun.vmc.modules.admin.view.renderers.*">
 	<mx:Metadata>
 		[Event(name="drillDown", type="flash.events.Event")] 
 		[Event(name="deleteUser", type="flash.events.Event")] 
@@ -12,11 +12,11 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.LocalizedVo;
-			import com.kaltura.kmc.events.KmcEvent;
-			import com.kaltura.types.KalturaUserStatus;
-			import com.kaltura.vo.KalturaUser;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.vidiun.edw.vo.LocalizedVo;
+			import com.vidiun.vmc.events.VmcEvent;
+			import com.vidiun.types.VidiunUserStatus;
+			import com.vidiun.vo.VidiunUser;
+			import com.vidiun.vo.VidiunUserRole;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -74,7 +74,7 @@
 			
 			
 			
-			[ArrayElementType("KalturaUserRole")]
+			[ArrayElementType("VidiunUserRole")]
 			/**
 			 * @copy #roles
 			 * */
@@ -146,7 +146,7 @@
 			 * */
 			private function confirmBlock():void {
 				var key:String = "confirm_unblock";
-				if ((selectedItem as KalturaUser).status == KalturaUserStatus.ACTIVE) {
+				if ((selectedItem as VidiunUser).status == VidiunUserStatus.ACTIVE) {
 					key = "confirm_block";
 				}
 				Alert.show(ResourceManager.getInstance().getString('admin', key, [selectedUser.fullName]), ResourceManager.getInstance().getString('admin', key + '_title'), Alert.OK | Alert.CANCEL, null, toggleBlockEntry);
@@ -211,7 +211,7 @@
 			/**
 			 * perform selected action on selected entry
 			 * */
-			public function onActionSelected(event:KmcEvent):void {
+			public function onActionSelected(event:VmcEvent):void {
 				switch (event.data) {
 					case 'edit':
 						editEntry();
@@ -229,8 +229,8 @@
 			// getters / setters
 			// ==================================================================
 
-			public function get selectedUser():KalturaUser {
-				return selectedItem as KalturaUser;
+			public function get selectedUser():VidiunUser {
+				return selectedItem as VidiunUser;
 			}
 			
 			/**
@@ -285,7 +285,7 @@
 
 			/**
 			 * list of all the roles associated with the current partner
-			 * (KalturaUserRole objects)
+			 * (VidiunUserRole objects)
 			 * */
 			public function set roles(value:ArrayCollection):void {
 				_roles = value;
@@ -299,8 +299,8 @@
 				if (!_roles) return '';
 				// need to scan all partner's roles list and get the correct one.
 				for (var i:int = 0; i<_roles.length; i++) {
-					if ((_roles.getItemAt(i) as KalturaUserRole).id == item.roleIds) {
-						return (_roles.getItemAt(i) as KalturaUserRole).name;
+					if ((_roles.getItemAt(i) as VidiunUserRole).id == item.roleIds) {
+						return (_roles.getItemAt(i) as VidiunUserRole).name;
 					}
 				}
 				return item.roleIds;
@@ -333,17 +333,17 @@
 	</mx:Script>
 
 	<mx:columns>
-		<mx:DataGridColumn itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserStatusItemRenderer"
+		<mx:DataGridColumn itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserStatusItemRenderer"
 						   dataField="status" width="55"
 						   headerText="{resourceManager.getString('admin', 'user_status')}"
 						   headerStyleName="adminTableColumn" />
-		<mx:DataGridColumn itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserNameItemRenderer" dataField="fullName"
+		<mx:DataGridColumn itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserNameItemRenderer" dataField="fullName"
 						   headerText="{resourceManager.getString('admin', 'user_name')}"
 						   headerStyleName="adminTableColumn"/>
-		<mx:DataGridColumn itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserSimpleItemRenderer" dataField="id"
+		<mx:DataGridColumn itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserSimpleItemRenderer" dataField="id"
 						   headerText="{resourceManager.getString('admin', 'id')}"
 						   headerStyleName="adminTableColumn"/>
-		<mx:DataGridColumn itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserEmailItemRenderer" dataField="email"
+		<mx:DataGridColumn itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserEmailItemRenderer" dataField="email"
 						   headerText="{resourceManager.getString('admin', 'user_email')}"
 						   headerStyleName="adminTableColumn"/>
 		<mx:DataGridColumn dataField="roleIds"
@@ -357,12 +357,12 @@
 				</mx:Component>
 			</mx:itemRenderer>
 		</mx:DataGridColumn>
-		<mx:DataGridColumn itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserLastLoginItemRenderer" dataField="lastLoginTime"
+		<mx:DataGridColumn itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserLastLoginItemRenderer" dataField="lastLoginTime"
 						   headerText="{resourceManager.getString('admin', 'user_last_login')}"
 						   headerStyleName="adminTableColumn"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('admin', 'user_actions')}"
 						   headerStyleName="adminTableCenteredColumn" width="140"
-						   itemRenderer="com.kaltura.kmc.modules.admin.view.renderers.UserActionItemRenderer" >
+						   itemRenderer="com.vidiun.vmc.modules.admin.view.renderers.UserActionItemRenderer" >
 		</mx:DataGridColumn>
 	</mx:columns>
 </mx:DataGrid>

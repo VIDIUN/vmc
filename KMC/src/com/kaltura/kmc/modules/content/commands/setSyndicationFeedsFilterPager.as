@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.commands
+package com.vidiun.vmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
-	import com.kaltura.kmc.modules.content.events.SetSyndicationPagerEvent;
+	import com.vidiun.vmc.modules.content.events.SetSyndicationPagerEvent;
 	
-	public class setSyndicationFeedsFilterPager extends KalturaCommand implements ICommand {
+	public class setSyndicationFeedsFilterPager extends VidiunCommand implements ICommand {
 		
 		
 		override public function execute(event:CairngormEvent):void

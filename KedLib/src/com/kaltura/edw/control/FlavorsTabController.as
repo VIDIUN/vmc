@@ -1,17 +1,17 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.commands.dropFolder.*;
-	import com.kaltura.edw.control.commands.flavor.*;
-	import com.kaltura.edw.control.events.DropFolderEvent;
-	import com.kaltura.edw.control.events.DropFolderFileEvent;
-	import com.kaltura.edw.control.events.FlavorAssetEvent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.MediaEvent;
-	import com.kaltura.edw.control.events.ProfileEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.*;
+	import com.vidiun.edw.control.commands.dropFolder.*;
+	import com.vidiun.edw.control.commands.flavor.*;
+	import com.vidiun.edw.control.events.DropFolderEvent;
+	import com.vidiun.edw.control.events.DropFolderFileEvent;
+	import com.vidiun.edw.control.events.FlavorAssetEvent;
+	import com.vidiun.edw.control.events.VedEntryEvent;
+	import com.vidiun.edw.control.events.MediaEvent;
+	import com.vidiun.edw.control.events.ProfileEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class FlavorsTabController extends KMvCController {
+	public class FlavorsTabController extends VMvCController {
 		
 		public function FlavorsTabController()
 		{
@@ -22,10 +22,10 @@ package com.kaltura.edw.control
 			addCommand(ProfileEvent.LIST_CONVERSION_PROFILES_AND_FLAVOR_PARAMS, ListConversionProfilesAndFlavorParams);
 			addCommand(ProfileEvent.LIST_STORAGE_PROFILES, ListStorageProfilesCommand);
 			
-			addCommand(KedEntryEvent.GET_REPLACEMENT_ENTRY, GetSingleEntryCommand);
-			addCommand(KedEntryEvent.GET_FLAVOR_ASSETS, ListFlavorAssetsByEntryIdCommand);
-			addCommand(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
-			addCommand(KedEntryEvent.UPDATE_SINGLE_ENTRY, UpdateSingleEntry);
+			addCommand(VedEntryEvent.GET_REPLACEMENT_ENTRY, GetSingleEntryCommand);
+			addCommand(VedEntryEvent.GET_FLAVOR_ASSETS, ListFlavorAssetsByEntryIdCommand);
+			addCommand(VedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, GetSingleEntryCommand);
+			addCommand(VedEntryEvent.UPDATE_SINGLE_ENTRY, UpdateSingleEntry);
 			
 			addCommand(MediaEvent.APPROVE_REPLACEMENT, ApproveMediaEntryReplacementCommand);
 			addCommand(MediaEvent.CANCEL_REPLACEMENT, CancelMediaEntryReplacementCommand);

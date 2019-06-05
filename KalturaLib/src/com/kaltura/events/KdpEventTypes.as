@@ -1,11 +1,11 @@
-package com.kaltura.events
+package com.vidiun.events
 {
 	/**
-	 * KdpEventTypes lists KDP3 (3.4.8) event types for 
+	 * VdpEventTypes lists VDP3 (3.4.8) event types for 
 	 * events a loaded player dispatches and can handle.
 	 * @author Atar
 	 */	
-	public class KdpEventTypes {
+	public class VdpEventTypes {
 		
 		/**
 		 * the first command that register the main proxys and main view mediator
@@ -47,7 +47,7 @@ package com.kaltura.events
 		 */	
 		public static const SOURCE_READY			:String = "sourceReady";
 		/**
-		 * Start the init macro command of the KDP 
+		 * Start the init macro command of the VDP 
 		 */	
 		public static const LOAD_MEDIA				:String	= "loadMedia";
 		/**
@@ -100,11 +100,11 @@ package com.kaltura.events
 		 */
 		static public const DO_PLAY					:String = "doPlay";
 		/**
-		 * Do stop command to the kplayer. Pause and move the playhead to 0
+		 * Do stop command to the vplayer. Pause and move the playhead to 0
 		 */
 		static public const DO_STOP					:String = "doStop";
 		/**
-		 * Do seek command to the kplayer. Addition data - number 
+		 * Do seek command to the vplayer. Addition data - number 
 		 */
 		static public const DO_SEEK					:String = "doSeek";
 		/**
@@ -112,13 +112,13 @@ package com.kaltura.events
 		 */
 		static public const DO_SWITCH					:String = "doSwitch";
 		/**
-		 * Dispahed when the KDP is Ready  
+		 * Dispahed when the VDP is Ready  
 		 */		
-		static public const KDP_READY 				:String = "kdpReady";		
+		static public const VDP_READY 				:String = "vdpReady";		
 		/**
-		 * Dispahed when the KDP is Ready and has no source loaded  
+		 * Dispahed when the VDP is Ready and has no source loaded  
 		 */		
-		static public const KDP_EMPTY 				:String = "kdpEmpty";
+		static public const VDP_EMPTY 				:String = "vdpEmpty";
 		/**
 		 * Dispahed when the init macro command is done and the layout is ready  
 		 */		
@@ -136,11 +136,11 @@ package com.kaltura.events
 		 */		
 		static public const PLAYER_CONTAINER_READY  :String = "playerContainerReady";
 		/**
-		 * Was paused event the kplayer shoots
+		 * Was paused event the vplayer shoots
 		 */
 		static public const PLAYER_PAUSED			:String = "playerPaused";
 		/**
-		 * was played event the kplayer shoots
+		 * was played event the vplayer shoots
 		 */
 		static public const PLAYER_PLAYED			:String = "playerPlayed";
 		/**
@@ -280,7 +280,7 @@ package com.kaltura.events
 		 */		 
 		static public const DO_REPLAY		         :String = "doReplay";
 		/**
-		 * dispatched when capture thumbnail button is clicked in KDP
+		 * dispatched when capture thumbnail button is clicked in VDP
 		 * */
 		public static const CAPTURE_THUMBNAIL:String = "captureThumbnail";
 		

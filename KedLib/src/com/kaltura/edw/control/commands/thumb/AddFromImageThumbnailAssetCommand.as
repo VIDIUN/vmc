@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.thumb
+package com.vidiun.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetAddFromImage;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.UploadFromImageThumbAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.vidiun.commands.thumbAsset.ThumbAssetAddFromImage;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.UploadFromImageThumbAssetEvent;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.edw.vo.ThumbnailWithDimensions;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunThumbAsset;
 
-	public class AddFromImageThumbnailAssetCommand extends KedCommand
+	public class AddFromImageThumbnailAssetCommand extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			var uploadEvent:UploadFromImageThumbAssetEvent = event as UploadFromImageThumbAssetEvent;
 			var uploadFromImage:ThumbAssetAddFromImage = new ThumbAssetAddFromImage(uploadEvent.entryId, uploadEvent.thumbnailFileReference);
-			uploadFromImage.addEventListener(KalturaEvent.COMPLETE, result);
-			uploadFromImage.addEventListener(KalturaEvent.FAILED, fault);
+			uploadFromImage.addEventListener(VidiunEvent.COMPLETE, result);
+			uploadFromImage.addEventListener(VidiunEvent.FAILED, fault);
 			uploadFromImage.queued = false;
 			_client.post(uploadFromImage);
 		}
@@ -25,11 +25,11 @@ package com.kaltura.edw.control.commands.thumb
 		override public function result(data:Object):void {
 			_model.decreaseLoadCounter();
 			super.result(data);
-			insertToThumbsArray(data.data as KalturaThumbAsset);
+			insertToThumbsArray(data.data as VidiunThumbAsset);
 		}
 		
 		
-		private function insertToThumbsArray(thumbAsset:KalturaThumbAsset):void {
+		private function insertToThumbsArray(thumbAsset:VidiunThumbAsset):void {
 			var distDp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var thumbsArray:Array = distDp.distributionInfo.thumbnailDimensions;
 			var newThumb:ThumbnailWithDimensions = new ThumbnailWithDimensions(thumbAsset.width, thumbAsset.height, thumbAsset);

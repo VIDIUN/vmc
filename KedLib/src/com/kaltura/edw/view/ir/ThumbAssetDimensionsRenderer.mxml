@@ -3,7 +3,7 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.ThumbnailWithDimensions;
+			import com.vidiun.edw.vo.ThumbnailWithDimensions;
 			
 			
 			private var _width:int;

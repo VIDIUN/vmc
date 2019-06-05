@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.vo
+package com.vidiun.vmc.modules.account.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
 	[Bindable]

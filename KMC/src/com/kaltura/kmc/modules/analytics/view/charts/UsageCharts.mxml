@@ -23,7 +23,7 @@
 	</mx:states>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.analytics.vo.AccountUsageVO;
+			import com.vidiun.vmc.modules.analytics.vo.AccountUsageVO;
 			
 			import mx.collections.ArrayCollection;
 			

@@ -4,38 +4,38 @@
 	 lists all playlists and allows adding and editing them.
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 xmlns:controls="com.kaltura.controls.*"
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
+		 xmlns:controls="com.vidiun.controls.*"
+		 implements="com.vidiun.vmc.modules.content.business.IContentPanel"
 		 creationComplete="onCreationComplete()"
-		 verticalScrollPolicy="off" xmlns:view="com.kaltura.kmc.modules.content.view.*" 
-		 xmlns:business="com.kaltura.kmc.modules.content.business.*" xmlns:et="com.kaltura.edw.components.et.*" xmlns:filter="com.kaltura.kmc.modules.content.view.pl.filter.*" xmlns:fltr="com.kaltura.edw.components.fltr.*" xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" >
+		 verticalScrollPolicy="off" xmlns:view="com.vidiun.vmc.modules.content.view.*" 
+		 xmlns:business="com.vidiun.vmc.modules.content.business.*" xmlns:et="com.vidiun.edw.components.et.*" xmlns:filter="com.vidiun.vmc.modules.content.view.pl.filter.*" xmlns:fltr="com.vidiun.edw.components.fltr.*" xmlns:indicators="com.vidiun.edw.components.fltr.indicators.*" >
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.edw.vo.ListableVo;
-			import com.kaltura.kmc.modules.content.business.EntryTableActionsManager;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-			import com.kaltura.kmc.modules.content.events.SetListableEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaMediaEntryOrderBy;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.pager.Pager;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaPlaylistFilter;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.components.et.EntryTableColumns;
+			import com.vidiun.edw.control.VedController;
+			import com.vidiun.edw.control.events.VedEntryEvent;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.types.WindowsStates;
+			import com.vidiun.edw.vo.ListableVo;
+			import com.vidiun.vmc.modules.content.business.EntryTableActionsManager;
+			import com.vidiun.vmc.modules.content.events.EntriesEvent;
+			import com.vidiun.vmc.modules.content.events.VMCSearchEvent;
+			import com.vidiun.vmc.modules.content.events.SetListableEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunMediaEntryOrderBy;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.utils.pager.Pager;
+			import com.vidiun.vo.VidiunBaseEntry;
+			import com.vidiun.vo.VidiunBaseEntryFilter;
+			import com.vidiun.vo.VidiunPlaylistFilter;
 
 
 			// =============================================
@@ -53,7 +53,7 @@
 			/**
 			 * last selected entry
 			 * */
-			public var selectedEntry:KalturaBaseEntry;
+			public var selectedEntry:VidiunBaseEntry;
 
 
 			private var _pager:Pager;
@@ -61,7 +61,7 @@
 			/**
 			 * table ordering
 			 * */
-			private var _orderBy:String = KalturaMediaEntryOrderBy.CREATED_AT_DESC;
+			private var _orderBy:String = VidiunMediaEntryOrderBy.CREATED_AT_DESC;
 
 			/**
 			 * defines characters which are illegal as search text
@@ -83,7 +83,7 @@
 			/**
 			 * initial filter data
 			 * */
-			private var _initialFilter:KalturaPlaylistFilter;
+			private var _initialFilter:VidiunPlaylistFilter;
 
 			// =============================================
 			// methods
@@ -125,22 +125,22 @@
 
 				// init:
 				if (_initialFilter) {
-					filter.kalturaFilter = _initialFilter;
+					filter.vidiunFilter = _initialFilter;
 				}
-				else if (!filter.kalturaFilter) {
-					filter.kalturaFilter = new KalturaPlaylistFilter();
+				else if (!filter.vidiunFilter) {
+					filter.vidiunFilter = new VidiunPlaylistFilter();
 				}
 				loadEntries();
-				paging.kalturaFilterPager.pageIndex = 1;
-				paging.kalturaFilterPager.pageSize = paging.rowInPageCb.value as int;
+				paging.vidiunFilterPager.pageIndex = 1;
+				paging.vidiunFilterPager.pageSize = paging.rowInPageCb.value as int;
 			}
 
 			/**
 			 * @inheritDoc
 			 * */
-			public function init(kbef:KalturaBaseEntryFilter = null):void {
-				if (kbef && kbef is KalturaPlaylistFilter) {
-					_initialFilter = kbef as KalturaPlaylistFilter;
+			public function init(vbef:VidiunBaseEntryFilter = null):void {
+				if (vbef && vbef is VidiunPlaylistFilter) {
+					_initialFilter = vbef as VidiunPlaylistFilter;
 				}
 				if (_initFlag) {
 					initPanel();
@@ -155,32 +155,32 @@
 			 * load data according to filter
 			 * */
 			private function loadEntries():void {
-				_listableVo = new ListableVo(filter.kalturaFilter, paging, null);
+				_listableVo = new ListableVo(filter.vidiunFilter, paging, null);
 				if (_orderBy)
 					_listableVo.filterVo.orderBy = _orderBy;
 				// save the new listable vo
 				var cgEvent:SetListableEvent = new SetListableEvent(SetListableEvent.SET_NEW_LIST_TO_MODEL, _listableVo);
 				cgEvent.dispatch();
 				// start search
-				var searchEvent:KMCSearchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, _listableVo);
+				var searchEvent:VMCSearchEvent = new VMCSearchEvent(VMCSearchEvent.SEARCH_PLAYLIST, _listableVo);
 				searchEvent.dispatch();
 			}
 
 
 
 			private function addManualPlaylist():void {
-				var kmvce:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY,
-					new KalturaBaseEntry());
-				KedController.getInstance().dispatch(kmvce);
+				var vmvce:VedEntryEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY,
+					new VidiunBaseEntry());
+				VedController.getInstance().dispatch(vmvce);
 				var cgEvent:CairngormEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_MANUAL_WINDOW);
 				cgEvent.dispatch();
 			}
 
 
 			private function addRuleBasedPlaylist():void {
-				var kmvce:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY,
-					new KalturaBaseEntry());
-				KedController.getInstance().dispatch(kmvce);
+				var vmvce:VedEntryEvent = new VedEntryEvent(VedEntryEvent.SET_SELECTED_ENTRY,
+					new VidiunBaseEntry());
+				VedController.getInstance().dispatch(vmvce);
 				var cgEvent:CairngormEvent  = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_RULE_BASED_WINDOW);
 				cgEvent.dispatch();
 			}
@@ -201,7 +201,7 @@
 			private function gotoPage():void {
 				loadEntries();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE,GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT,VidiunStatsVmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>Show Rows");
 			}
 

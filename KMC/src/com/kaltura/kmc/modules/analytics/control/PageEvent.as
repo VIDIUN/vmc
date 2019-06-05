@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.control
+package com.vidiun.vmc.modules.analytics.control
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
 
 	public class PageEvent extends CairngormEvent
 	{

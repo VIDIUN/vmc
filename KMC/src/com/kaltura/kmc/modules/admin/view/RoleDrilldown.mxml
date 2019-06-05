@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
 							verticalScrollPolicy="off" width="476" showCloseButton="true"
 							close="closeHandler(event)" layout="vertical" help="{onHelp()}"
 							creationComplete="creationCompleteHandler(event)" enabled="{!isLoading}">
@@ -10,14 +10,14 @@
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.utils.ArrayUtil;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.admin.business.AdvancedPermissionGroupManager;
-			import com.kaltura.kmc.modules.admin.business.PermissionGroupManager;
-			import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-			import com.kaltura.utils.ObjectUtil;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.events.VmcNavigationEvent;
+			import com.vidiun.vmc.modules.admin.business.AdvancedPermissionGroupManager;
+			import com.vidiun.vmc.modules.admin.business.PermissionGroupManager;
+			import com.vidiun.vmc.modules.admin.model.DrilldownMode;
+			import com.vidiun.utils.ObjectUtil;
+			import com.vidiun.vo.VidiunUserRole;
 			
 			import mx.collections.ArrayCollection;
 			import mx.containers.VBox;
@@ -68,18 +68,18 @@
 			/**
 			 * @copy #role
 			 * */
-			private var _role:KalturaUserRole;
+			private var _role:VidiunUserRole;
 
 
 			[Bindable]
 			/**
 			 * make changes to this user, so we can revert easily.
 			 * */
-			private var _undoRole:KalturaUserRole;
+			private var _undoRole:VidiunUserRole;
 
 			/**
 			 * all partner's roles
-			 * (KalturaUserRole elements)
+			 * (VidiunUserRole elements)
 			 * */
 			private var _roles:ArrayCollection;
 
@@ -207,7 +207,7 @@
 			 * @param partnerPermissions	all partner's permissions (used for editing roles)
 			 * @param partnerFeatures		special features the partner has
 			 * */
-			public function init(role:KalturaUserRole, mode:String, partnerPermissions:XML, partnerFeatures:String, roles:ArrayCollection):void {
+			public function init(role:VidiunUserRole, mode:String, partnerPermissions:XML, partnerFeatures:String, roles:ArrayCollection):void {
 				_formData = partnerPermissions;
 				_partnerFeatures = partnerFeatures.split(",");
 				_roles = roles;
@@ -372,7 +372,7 @@
 				}
 				if (_mode == DrilldownMode.ADD) {
 					// make sure this name is not used
-					for each (var role:KalturaUserRole in _roles) {
+					for each (var role:VidiunUserRole in _roles) {
 						if (role.name == nameTi.text) {
 							isOk = false;
 							var rm:IResourceManager = ResourceManager.getInstance();
@@ -388,7 +388,7 @@
 			/**
 			 * update _undoRole.permissionNames
 			 * NOTE: when editing role, make sure NOT TO OVERRIDE permissions
-			 * that are not relevant to KMC.
+			 * that are not relevant to VMC.
 			 */
 			protected function saveBtn_clickHandler(event:MouseEvent):void {
 				updateUndoRoleFromForm();
@@ -414,7 +414,7 @@
 				}
 				else {
 					// go to account>upgrade
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
+					dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
 				}
 			}
 
@@ -426,7 +426,7 @@
 				switch (e.detail) {
 					case Alert.YES:
 						// go to account>upgrade
-						dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
+						dispatchEvent(new VmcNavigationEvent(VmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
 						break;
 					case Alert.NO:
 						// do nothing.
@@ -437,7 +437,7 @@
 
 			/**
 			 * processes the forms and returns a new permissions string for the
-			 * role, without changing non-kmc permissions
+			 * role, without changing non-vmc permissions
 			 * @param perms  initial permissions list
 			 * @return updated permission list
 			 * */
@@ -493,7 +493,7 @@
 				var cb:CheckBox;
 				var pm:PermissionGroupManager;
 				// new roles have this value for permissionNames
-				if (permissionList && permissionList != Roles.DEFAULT_KMC_PERMISSIONS) {
+				if (permissionList && permissionList != Roles.DEFAULT_VMC_PERMISSIONS) {
 					var SelectedPermissionIds:Array = permissionList.split(",");
 					// setting the selected / not selected checkboxes
 					for each (var permission:String in SelectedPermissionIds) {
@@ -546,7 +546,7 @@
 			 * dispatch help event with relevant anchor
 			 * */
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_role_drilldown'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_role_drilldown'));
 			}
 
 
@@ -571,12 +571,12 @@
 
 
 			/**
-			 * create a new working copy for the given KalturaUserRole
+			 * create a new working copy for the given VidiunUserRole
 			 */
-			protected function setRole(value:KalturaUserRole):void {
+			protected function setRole(value:VidiunUserRole):void {
 				_role = value;
 				// create working copy
-				_undoRole = new KalturaUserRole();
+				_undoRole = new VidiunUserRole();
 				var atts:Array = ObjectUtil.getObjectAllKeys(value);
 				for (var i:int = 0; i < atts.length; i++) {
 					_undoRole[atts[i]] = value[atts[i]];
@@ -589,7 +589,7 @@
 			 * all changes are being made on <code>_undoRole</code>, which is a
 			 * copy of this object.
 			 * */
-			public function get role():KalturaUserRole {
+			public function get role():VidiunUserRole {
 				return _undoRole;
 			}
 

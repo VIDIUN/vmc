@@ -3,9 +3,9 @@
 	 This popup window is used to add or edit an Access Control Profile VO.
 	 Use the 'newProfileState' state for the 'Add New..' action
 -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
-							xmlns:controllers="com.adobe.controllers.*" xmlns:controls="com.kaltura.controls.*"
-							xmlns:acp="com.kaltura.edw.view.window.accessControl.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*"
+							xmlns:controllers="com.adobe.controllers.*" xmlns:controls="com.vidiun.controls.*"
+							xmlns:acp="com.vidiun.edw.view.window.accessControl.*"
 							title="{rm.getString('windows', 'editAccessControlTitle')}" showCloseButton="true"
 							close="closeWindow(event)" layout="vertical" creationComplete="onCreationComplete(event)"
 							verticalScrollPolicy="off" help="onHelp(event)">
@@ -24,12 +24,12 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.KalturaAccessControl;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.edw.events.GeneralNonCairngormEvent;
+			import com.vidiun.edw.view.EntryDetailsWin;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.vo.AccessControlProfileVO;
+			import com.vidiun.vo.VidiunAccessControl;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -116,7 +116,7 @@
 			private function onCreationComplete(event:Event):void {
 				if (currentState == "newProfileState") {
 					_accessControlProfile = new AccessControlProfileVO();
-					_accessControlProfile.profile = new KalturaAccessControl();
+					_accessControlProfile.profile = new VidiunAccessControl();
 					PermissionManager.getInstance().applyAllAttributes(this, "acDrilldown_add");
 				}
 				else {
@@ -145,7 +145,7 @@
 
 
 			private function setDefaultProfileSettings():void {
-				profileNameTi.enabled = !(_accessControlProfile.profile.isDefault == KalturaNullableBoolean.TRUE_VALUE);
+				profileNameTi.enabled = !(_accessControlProfile.profile.isDefault == VidiunNullableBoolean.TRUE_VALUE);
 			}
 
 			

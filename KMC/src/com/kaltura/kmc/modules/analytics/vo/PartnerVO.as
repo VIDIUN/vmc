@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.vo
+package com.vidiun.vmc.modules.analytics.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.kmc.modules.analytics.model.Notifications;
+	import com.vidiun.vmc.modules.analytics.model.Notifications;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -30,8 +30,8 @@ package com.kaltura.kmc.modules.analytics.vo
  		public var describeYourself : String = "";
  		public var allowMultiNotification : Boolean = true;
  		public var defConversionProfileType : String = "";
-		public var shouldForceUniqueKshow : Boolean = false ;   
-		public var returnDuplicateKshow : Boolean = false;    
+		public var shouldForceUniqueVshow : Boolean = false ;   
+		public var returnDuplicateVshow : Boolean = false;    
 		public var allowQuickEdit : Boolean = false;    
 		public var mergeEntryLists : Boolean = false;    
 		public var userLandingPage : String = "";   
@@ -84,8 +84,8 @@ package com.kaltura.kmc.modules.analytics.vo
 			newPVo.notificationsConfig = this.notificationsConfig;
 			newPVo.allowMultiNotification = this.allowMultiNotification;
 			newPVo.defConversionProfileType = this.defConversionProfileType;
-			newPVo.shouldForceUniqueKshow = this.shouldForceUniqueKshow;
-			newPVo.returnDuplicateKshow = this.returnDuplicateKshow;
+			newPVo.shouldForceUniqueVshow = this.shouldForceUniqueVshow;
+			newPVo.returnDuplicateVshow = this.returnDuplicateVshow;
 			newPVo.allowQuickEdit = this.allowQuickEdit;
 			newPVo.mergeEntryLists = this.mergeEntryLists;
 			newPVo.userLandingPage = this.userLandingPage;
@@ -142,8 +142,8 @@ package com.kaltura.kmc.modules.analytics.vo
 			if( newPVo.describeYourself != this.describeYourself) isIt = false;	
 			if( newPVo.allowMultiNotification != this.allowMultiNotification) isIt = false;			
 			if( newPVo.defConversionProfileType != this.defConversionProfileType) isIt = false;	
-			if( newPVo.shouldForceUniqueKshow != this.shouldForceUniqueKshow) isIt = false;	
-			if( newPVo.returnDuplicateKshow != this.returnDuplicateKshow) isIt = false;	
+			if( newPVo.shouldForceUniqueVshow != this.shouldForceUniqueVshow) isIt = false;	
+			if( newPVo.returnDuplicateVshow != this.returnDuplicateVshow) isIt = false;	
 			if( newPVo.allowQuickEdit != this.allowQuickEdit) isIt = false;	
 			if( newPVo.mergeEntryLists != this.mergeEntryLists) isIt = false;	
 			if( newPVo.userLandingPage != this.userLandingPage) isIt = false;	

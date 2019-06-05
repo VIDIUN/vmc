@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel"
-		 xmlns:validators="com.kaltura.validators.*">
+		 implements="com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel"
+		 xmlns:validators="com.vidiun.validators.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.account.control.events.PartnerEvent;
-			import com.kaltura.kmc.modules.account.control.events.UserEvent;
-			import com.kaltura.kmc.modules.account.vo.AdminVO;
-			import com.kaltura.kmc.modules.account.vo.PartnerVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaPartner;
-			import com.kaltura.vo.KalturaUser;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.modules.account.control.events.PartnerEvent;
+			import com.vidiun.vmc.modules.account.control.events.UserEvent;
+			import com.vidiun.vmc.modules.account.vo.AdminVO;
+			import com.vidiun.vmc.modules.account.vo.PartnerVO;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunPartner;
+			import com.vidiun.vo.VidiunUser;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -33,7 +33,7 @@
 			public var adminData:AdminVO;
 
 
-			[ArrayElementType("com.kaltura.vo.KalturaUser")]
+			[ArrayElementType("com.vidiun.vo.VidiunUser")]
 			/**
 			 * @copy #users
 			 * */
@@ -102,9 +102,9 @@
 
 
 			/**
-			 * this is triggered after save, when only the KalturaPartner on the PartnerVO is replaced 
+			 * this is triggered after save, when only the VidiunPartner on the PartnerVO is replaced 
 			 * */
-			private function onPartnerDataChanged(kp:KalturaPartner):void {
+			private function onPartnerDataChanged(vp:VidiunPartner):void {
 				if (partnerData) {
 					_clonedPartnerData = partnerData.clone();
 				}
@@ -187,7 +187,7 @@
 					var partnerEvent:PartnerEvent = new PartnerEvent(PartnerEvent.UPDATE_PARTNER);
 					partnerEvent.dispatch();
 
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_CHANGE_PARTNER_INFO, "AccountSettings>PartnerInfo>SaveChangesBtn");
+					VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_CHANGE_PARTNER_INFO, "AccountSettings>PartnerInfo>SaveChangesBtn");
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.ACCOUNT_CHANGE_PARTNER_INFO, GoogleAnalyticsConsts.ACCOUNT);
 				}
 			}
@@ -206,7 +206,7 @@
 
 
 			/**
-			 * partner vo has accountOwnerId, use it to select the kalturauser that is
+			 * partner vo has accountOwnerId, use it to select the vidiunuser that is
 			 * the account owner.
 			 * @return id of the account owner in the users (pOwner) data provider array
 			 * */
@@ -214,7 +214,7 @@
 				var uid:String = partnerData.partner.adminUserId;
 				var result:int = -1;
 				for (var i:int = 0; i < _users.length; i++) {
-					if ((_users[i] as KalturaUser).id == uid) {
+					if ((_users[i] as VidiunUser).id == uid) {
 						result = i;
 						break;
 					}
@@ -227,7 +227,7 @@
 			 * change the account owner on the partner vo
 			 * */
 			protected function changeAccountOwner(event:ListEvent):void {
-				partnerData.partner.adminUserId = (event.target.selectedItem as KalturaUser).id;
+				partnerData.partner.adminUserId = (event.target.selectedItem as VidiunUser).id;
 			}
 
 
@@ -277,7 +277,7 @@
 							 change="changeAccountOwner(event)" labelField="fullName" enabled="{infoBox.enabled}"/>
 			</mx:FormItem>
 			<mx:FormItem label="{resourceManager.getString('account', 'email')}">
-				<mx:Label id="pEmail" width="{TXT_WIDTH}" text="{(pOwner.selectedItem as KalturaUser).email}" enabled="{infoBox.enabled}" selectable="true"/>
+				<mx:Label id="pEmail" width="{TXT_WIDTH}" text="{(pOwner.selectedItem as VidiunUser).email}" enabled="{infoBox.enabled}" selectable="true"/>
 			</mx:FormItem>
 			<mx:FormItem label="{resourceManager.getString('account', 'phone')} *" >
 				<mx:TextInput id="pPhone" width="{TXT_WIDTH}" text="{partnerData.partner.phone}"

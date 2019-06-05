@@ -1,6 +1,6 @@
-package com.kaltura.kmc.business
+package com.vidiun.vmc.business
 {
-	import com.kaltura.kmc.events.KmcHelpEvent;
+	import com.vidiun.vmc.events.VmcHelpEvent;
 	
 	import flash.events.Event;
 	import flash.net.URLRequest;
@@ -23,7 +23,7 @@ package com.kaltura.kmc.business
 		
 		/**
 		 * 
-		 * @param map		mapping of keys (KMC) to anchors (help pages)
+		 * @param map		mapping of keys (VMC) to anchors (help pages)
 		 * @param baseURL	concatenated to all help requests, so the help event supplies only the anchor in the help page.
 		 * @param host		host server of help files
 		 * @param protocol	protocol for accessing help files
@@ -53,8 +53,8 @@ package com.kaltura.kmc.business
 				url = "http://";
 			}
 			var key:String;
-			if (e is KmcHelpEvent) {
-				key = (e as KmcHelpEvent).anchor;
+			if (e is VmcHelpEvent) {
+				key = (e as VmcHelpEvent).anchor;
 			}
 			else if (e is String) {
 				key = e;

@@ -3,43 +3,43 @@
 Roku or Opera syndication details.
 used as part of <Code>ExternalSyndicationPopUpWindow</code>
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.vidiun.vmc.modules.content.view.interfaces.IExternalSyndicationFeed"
 		 width="100%">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaOperaSyndicationFeed;
-			import com.kaltura.vo.KalturaRokuSyndicationFeed;
+			import com.vidiun.types.VidiunSyndicationFeedType;
+			import com.vidiun.vo.VidiunBaseSyndicationFeed;
+			import com.vidiun.vo.VidiunOperaSyndicationFeed;
+			import com.vidiun.vo.VidiunRokuSyndicationFeed;
 			
 						
 			/**
-			 * KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER | KalturaSyndicationFeedType.OPERA_TV_SNAP
+			 * VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER | VidiunSyndicationFeedType.OPERA_TV_SNAP
 			 * */
 			public var feedType:int;
 			
-			private var _syndication:KalturaBaseSyndicationFeed;
+			private var _syndication:VidiunBaseSyndicationFeed;
 			
 			
 			public function validate():Boolean {
 				return true;
 			}
 			
-			public function get syndication():KalturaBaseSyndicationFeed {
+			public function get syndication():VidiunBaseSyndicationFeed {
 				if (!_syndication) {
 					switch (feedType) {
-						case KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
-							_syndication = new KalturaRokuSyndicationFeed();
+						case VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
+							_syndication = new VidiunRokuSyndicationFeed();
 							break;
-						case KalturaSyndicationFeedType.OPERA_TV_SNAP:
-							_syndication = new KalturaOperaSyndicationFeed();
+						case VidiunSyndicationFeedType.OPERA_TV_SNAP:
+							_syndication = new VidiunOperaSyndicationFeed();
 							break;
 					}
 				}
 				return _syndication;
 			}
 			
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
+			public function set syndication(syndication:VidiunBaseSyndicationFeed):void {
 				_syndication = syndication;
 			}
 			

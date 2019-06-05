@@ -1,11 +1,11 @@
-package com.kaltura.edw.business
+package com.vidiun.edw.business
 {
-	import com.kaltura.containers.HelpTitleWindow;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.vidiun.containers.HelpTitleWindow;
+	import com.vidiun.edw.model.datapacks.EntryDataPack;
+	import com.vidiun.vmvc.model.VMvCModel;
+	import com.vidiun.types.VidiunEntryStatus;
+	import com.vidiun.types.VidiunMediaType;
+	import com.vidiun.vo.VidiunMediaEntry;
 	
 	import mx.collections.ArrayCollection;
 	

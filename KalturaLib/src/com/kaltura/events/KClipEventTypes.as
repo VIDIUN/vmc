@@ -1,6 +1,6 @@
-package com.kaltura.events
+package com.vidiun.events
 {
-	public class KClipEventTypes {
+	public class VClipEventTypes {
 		
 		/**
 		 * dispatched whenever the playhead is updated 

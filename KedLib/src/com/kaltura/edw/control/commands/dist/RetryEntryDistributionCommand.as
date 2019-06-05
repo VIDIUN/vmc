@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.dist
+package com.vidiun.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionRetrySubmit;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.vidiun.commands.entryDistribution.EntryDistributionRetrySubmit;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.control.events.EntryDistributionEvent;
+	import com.vidiun.edw.model.datapacks.DistributionDataPack;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunEntryDistribution;
 
-	public class RetryEntryDistributionCommand extends KedCommand
+	public class RetryEntryDistributionCommand extends VedCommand
 	{
-		private var _entryDis:KalturaEntryDistribution;
+		private var _entryDis:VidiunEntryDistribution;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
 			_entryDis = (event as EntryDistributionEvent).entryDistribution;
 			var retry:EntryDistributionRetrySubmit = new EntryDistributionRetrySubmit(_entryDis.id);
-			retry.addEventListener(KalturaEvent.COMPLETE, result);
-			retry.addEventListener(KalturaEvent.FAILED, fault);
+			retry.addEventListener(VidiunEvent.COMPLETE, result);
+			retry.addEventListener(VidiunEvent.FAILED, fault);
 			
 			_client.post(retry);
 		}
@@ -25,7 +25,7 @@ package com.kaltura.edw.control.commands.dist
 		override public function result(data:Object):void {
 			_model.decreaseLoadCounter();
 			super.result(data);
-			var updateResult:KalturaEntryDistribution = data.data as KalturaEntryDistribution;
+			var updateResult:VidiunEntryDistribution = data.data as VidiunEntryDistribution;
 			_entryDis.status = updateResult.status;
 
 			//for data binding

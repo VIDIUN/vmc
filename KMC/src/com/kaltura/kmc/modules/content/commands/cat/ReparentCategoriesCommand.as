@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.vidiun.vmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryMove;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CatTrackEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.category.CategoryMove;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CatTrackEvent;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class ReparentCategoriesCommand extends KalturaCommand {
+	public class ReparentCategoriesCommand extends VidiunCommand {
 		
 		
 		private var cats:Array;
@@ -24,7 +24,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 		override public function execute(event:CairngormEvent):void
 		{
 			cats = event.data[0] as Array;
-			newParent = (event.data[1] as KalturaCategory).id;
+			newParent = (event.data[1] as VidiunCategory).id;
 			var rm:IResourceManager = ResourceManager.getInstance();
 			
 			if (!cats || cats.length == 0) {
@@ -33,9 +33,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 				return;
 			}
 			// verify all cats have the same parent:
-			var origParentId:int = (cats[0] as KalturaCategory).parentId;
-			for each (var kCat:KalturaCategory in cats) {
-				if (kCat.parentId != origParentId) {
+			var origParentId:int = (cats[0] as VidiunCategory).parentId;
+			for each (var vCat:VidiunCategory in cats) {
+				if (vCat.parentId != origParentId) {
 					Alert.show(rm.getString('cms', 'bulkMoveDeny'));
 					return;
 				}
@@ -54,14 +54,14 @@ package com.kaltura.kmc.modules.content.commands.cat
 			if (e.detail == Alert.OK) {
 				_model.increaseLoadCounter();
 				var idstr:String = '';;
-				for each (var kCat:KalturaCategory in cats) {
-					idstr += kCat.id + ",";
+				for each (var vCat:VidiunCategory in cats) {
+					idstr += vCat.id + ",";
 				}
 				var move:CategoryMove = new CategoryMove(idstr, newParent);
 				
-				move.addEventListener(KalturaEvent.COMPLETE, result);
-				move.addEventListener(KalturaEvent.FAILED, fault);
-				_model.context.kc.post(move);
+				move.addEventListener(VidiunEvent.COMPLETE, result);
+				move.addEventListener(VidiunEvent.FAILED, fault);
+				_model.context.vc.post(move);
 				
 			}
 		}
@@ -70,7 +70,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			super.result(data);
 			_model.decreaseLoadCounter();
 			var rm:IResourceManager = ResourceManager.getInstance();
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:VidiunError = (data as VidiunEvent).error;
 			if (er) { 
 				Alert.show(getErrorText(er), rm.getString('cms', 'error'));
 				return;

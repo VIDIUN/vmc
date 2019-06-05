@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo.ads {
+package com.vidiun.vmc.modules.studio.vo.ads {
 
 	/**
 	 * holds info about the chosen ad source, if any.

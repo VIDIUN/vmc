@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel" 
-		 xmlns:components="com.kaltura.kmc.modules.account.components.*">
+		 implements="com.vidiun.vmc.modules.account.view.interfaces.IAccountPanel" 
+		 xmlns:components="com.vidiun.vmc.modules.account.components.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.components.EntitlementActionsRenderer;
-			import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-			import com.kaltura.kmc.modules.account.control.events.PartnerEvent;
-			import com.kaltura.kmc.modules.account.view.windows.SetEntitlementsWindow;
-			import com.kaltura.kmc.modules.account.vo.PartnerVO;
-			import com.kaltura.types.KalturaAppearInListType;
-			import com.kaltura.types.KalturaContributionPolicyType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.types.KalturaPrivacyType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.account.components.EntitlementActionsRenderer;
+			import com.vidiun.vmc.modules.account.control.events.IntegrationEvent;
+			import com.vidiun.vmc.modules.account.control.events.PartnerEvent;
+			import com.vidiun.vmc.modules.account.view.windows.SetEntitlementsWindow;
+			import com.vidiun.vmc.modules.account.vo.PartnerVO;
+			import com.vidiun.types.VidiunAppearInListType;
+			import com.vidiun.types.VidiunContributionPolicyType;
+			import com.vidiun.types.VidiunNullableBoolean;
+			import com.vidiun.types.VidiunPrivacyType;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.utils.VArrayUtil;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -88,7 +88,7 @@
 				if (pvo) {
 					_clonedPartnerData = pvo.clone();
 
-					if (partnerData.partner.notify == KalturaNullableBoolean.TRUE_VALUE)
+					if (partnerData.partner.notify == VidiunNullableBoolean.TRUE_VALUE)
 						yesGetNoti.selected = true;
 					else
 						noGetNoti.selected = true;
@@ -130,7 +130,7 @@
 
 
 			public function saveChanges():void {
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_SAVE_SERVER_SETTINGS, "Account>Save Server Settings");
+				VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.ACCOUNT, VidiunStatsVmcEventType.ACCOUNT_SAVE_SERVER_SETTINGS, "Account>Save Server Settings");
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.ACCOUNT_UPDATE_INTEGRATION, GoogleAnalyticsConsts.ACCOUNT);
 				savePartnerInfo();
 			}
@@ -180,9 +180,9 @@
 
 			private function onNotificationsConfigChange(event:Event):void {
 				if (event.target == yesGetNoti)
-					partnerData.partner.notify = KalturaNullableBoolean.TRUE_VALUE; 
+					partnerData.partner.notify = VidiunNullableBoolean.TRUE_VALUE; 
 				else
-					partnerData.partner.notify = KalturaNullableBoolean.FALSE_VALUE;
+					partnerData.partner.notify = VidiunNullableBoolean.FALSE_VALUE;
 			}
 
 
@@ -200,25 +200,25 @@
 				e.stopImmediatePropagation();
 				switch (e.type) {
 					case EntitlementActionsRenderer.REMOVE_CONTEXT:
-						catToClearContext = e.target.data as KalturaCategory;
+						catToClearContext = e.target.data as VidiunCategory;
 						Alert.show(resourceManager.getString('account', 'removeEntNote', [catToClearContext.name]), resourceManager.getString('account', 'important'), Alert.OK|Alert.CANCEL, null, removePrivacyContext);
 						break;
 					case EntitlementActionsRenderer.CHANGE_CONTEXT:
-						openSetEntitlementWindow(e.target.data as KalturaCategory);
+						openSetEntitlementWindow(e.target.data as VidiunCategory);
 						break;
 				}
 			}
 			
-			private var catToClearContext:KalturaCategory;
+			private var catToClearContext:VidiunCategory;
 			
 			private function removePrivacyContext(e:CloseEvent):void {
 				if (e.detail == Alert.OK) {
 					if (getInheritedPrivacyContexts(catToClearContext.privacyContext, catToClearContext.privacyContexts)) {
-						catToClearContext.privacy = KalturaPrivacyType.ALL;
-						catToClearContext.appearInList = KalturaAppearInListType.PARTNER_ONLY;
-						catToClearContext.contributionPolicy = KalturaContributionPolicyType.ALL;
+						catToClearContext.privacy = VidiunPrivacyType.ALL;
+						catToClearContext.appearInList = VidiunAppearInListType.PARTNER_ONLY;
+						catToClearContext.contributionPolicy = VidiunContributionPolicyType.ALL;
 					}
-					catToClearContext.privacyContext = KalturaClient.NULL_STRING;
+					catToClearContext.privacyContext = VidiunClient.NULL_STRING;
 					var cge:CairngormEvent = new IntegrationEvent(IntegrationEvent.UPDATE_CATEGORY);
 					cge.data = catToClearContext;
 					cge.dispatch();
@@ -242,7 +242,7 @@
 				var self:Array = selfContexts.split(",");
 				var all:Array = allContexts.split(",");
 				
-				var res:Array = KArrayUtil.subtract(all, self);
+				var res:Array = VArrayUtil.subtract(all, self);
 				if (res.length) {
 					return res.join(",");
 				}
@@ -251,10 +251,10 @@
 				
 			}
 			
-			private function openSetEntitlementWindow(kCat:KalturaCategory = null):void {
+			private function openSetEntitlementWindow(vCat:VidiunCategory = null):void {
 				var popup:SetEntitlementsWindow = new SetEntitlementsWindow();
-				if (kCat) {
-					popup.category = kCat;
+				if (vCat) {
+					popup.category = vCat;
 				}
 				PopUpManager.addPopUp(popup, this, true);	
 				PopUpManager.centerPopUp(popup);
@@ -265,7 +265,7 @@
 
 			private function readMore_linkHandler(event:TextEvent):void {
 //				navigateToURL(new URLRequest(evt.text));
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_entitlement_more'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_entitlement_more'));
 			}
 
 		]]>
@@ -355,7 +355,7 @@
 					<mx:ComboBox id="appearInUploader" change="onAppearInUploaderChange( event )"
 								 enabled="{advCont.enabled}">
 						<mx:dataProvider>
-							<mx:String>{resourceManager.getString('account', 'kalturaNetwork')}</mx:String>
+							<mx:String>{resourceManager.getString('account', 'vidiunNetwork')}</mx:String>
 							<mx:String>{resourceManager.getString('account', 'siteSearch')}</mx:String>
 							<mx:String>{resourceManager.getString('account', 'doesntAppearInCW')}</mx:String>
 						</mx:dataProvider>

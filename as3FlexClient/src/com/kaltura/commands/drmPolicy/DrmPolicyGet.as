@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.drmPolicy
+package com.vidiun.commands.drmPolicy
 {
-	import com.kaltura.delegates.drmPolicy.DrmPolicyGetDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.vidiun.delegates.drmPolicy.DrmPolicyGetDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
-	* Retrieve a KalturaDrmPolicy object by ID
+	* Retrieve a VidiunDrmPolicy object by ID
 	**/
-	public class DrmPolicyGet extends KalturaCall
+	public class DrmPolicyGet extends VidiunCall
 	{
 		public var filterFields : String;
 		

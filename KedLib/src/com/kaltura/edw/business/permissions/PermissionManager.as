@@ -1,9 +1,9 @@
-package com.kaltura.edw.business.permissions {
-	import com.kaltura.edw.events.KedErrorEvent;
-	import com.kaltura.edw.vo.PermissionVo;
-	import com.kaltura.utils.CastUtil;
-	import com.kaltura.vo.KalturaPermission;
-	import com.kaltura.vo.KalturaPermissionListResponse;
+package com.vidiun.edw.business.permissions {
+	import com.vidiun.edw.events.VedErrorEvent;
+	import com.vidiun.edw.vo.PermissionVo;
+	import com.vidiun.utils.CastUtil;
+	import com.vidiun.vo.VidiunPermission;
+	import com.vidiun.vo.VidiunPermissionListResponse;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.describeType;
@@ -57,13 +57,13 @@ package com.kaltura.edw.business.permissions {
 		 * @param partnerPermissions	partners permissions as returned from the server
 		 * @return array of permission names the role has after filtering
 		 */
-		protected function removeRestrictedPermissions(uiDefinitions:XML, allRolePermissions:Array, partnerPermissions:KalturaPermissionListResponse):Array {
+		protected function removeRestrictedPermissions(uiDefinitions:XML, allRolePermissions:Array, partnerPermissions:VidiunPermissionListResponse):Array {
 			var partnerPermissionsList:Array = parsePartnerPermissions(partnerPermissions);
 			var depended:XMLList = uiDefinitions.descendants().(hasOwnProperty( "@dependsOnFeature" ));
 			// scan the ui definitions and for each permission that depends on another, see if the partner has that permission.
 			for each (var pXml:XML in depended) {
 				var bPartnerHasPermission:Boolean = false;
-				for each (var partnerPermission:KalturaPermission in partnerPermissions.objects) {
+				for each (var partnerPermission:VidiunPermission in partnerPermissions.objects) {
 					if (pXml.@dependsOnFeature == partnerPermission.name) {
 						bPartnerHasPermission = true;
 						break;
@@ -88,7 +88,7 @@ package com.kaltura.edw.business.permissions {
 		 * @param rolePermission	a comma-separated-string of ids of the role's permissions
 		 * @param partnerPermissions	partners permissions as returned from the server
 		 */
-		public function init(uiDefinitions:XML, rolePermissions:String = "", partnerPermissions:KalturaPermissionListResponse = null):void {
+		public function init(uiDefinitions:XML, rolePermissions:String = "", partnerPermissions:VidiunPermissionListResponse = null):void {
 			_partnerUIDefinitions = uiDefinitions.copy();
 			_deniedPermissions = uiDefinitions.copy();
 			var allRolePermissions:Array = rolePermissions.split(",");
@@ -157,9 +157,9 @@ package com.kaltura.edw.business.permissions {
 		 * @return 		denied permissions in partner level
 		 * 
 		 */
-		protected function getPartnerPermissionsUi(uidefs:XML, partnerPermissions:KalturaPermissionListResponse):XMLList {
+		protected function getPartnerPermissionsUi(uidefs:XML, partnerPermissions:VidiunPermissionListResponse):XMLList {
 			// remove nodes from uidefs whose id is the same as anything in partnerPermissions
-			for each (var feature:KalturaPermission in partnerPermissions.objects) {
+			for each (var feature:VidiunPermission in partnerPermissions.objects) {
 				var fname:String = feature.name;
 				var xml:XML = uidefs.permissionGroup.(@id == fname)[0];
 				if (xml) {
@@ -174,13 +174,13 @@ package com.kaltura.edw.business.permissions {
 		 * @param klr	the permissions list response
 		 * @return an array of partner permission ids.
 		 * */
-		protected function parsePartnerPermissions(klr:KalturaPermissionListResponse):Array {
+		protected function parsePartnerPermissions(klr:VidiunPermissionListResponse):Array {
 			if (!klr) {
 				return null;
 			}
 			var result:String = '';
-			for each (var kperm:KalturaPermission in klr.objects) {
-				result += kperm.name + ",";
+			for each (var vperm:VidiunPermission in klr.objects) {
+				result += vperm.name + ",";
 			}
 			// remove last ","
 			result = result.substring(0, result.length - 1);
@@ -338,8 +338,8 @@ package com.kaltura.edw.business.permissions {
 		 * @param errorString	error text to present to the user
 		 */
 		protected function dispatchError(errorString:String):void {
-			var kee:KedErrorEvent = new KedErrorEvent(KedErrorEvent.ERROR, errorString);
-			dispatchEvent(kee);
+			var vee:VedErrorEvent = new VedErrorEvent(VedErrorEvent.ERROR, errorString);
+			dispatchEvent(vee);
 		}
 
 
@@ -378,7 +378,7 @@ package com.kaltura.edw.business.permissions {
 				}
 			}
 			else {
-				// this is the KMC module dropping thingy
+				// this is the VMC module dropping thingy
 				for each (tabName in _hideTabs) {
 					if (tabName.indexOf(".") == -1) {
 						arr.push(tabName);

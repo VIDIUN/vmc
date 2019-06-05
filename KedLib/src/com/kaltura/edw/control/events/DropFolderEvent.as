@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaDropFolder;
+package com.vidiun.edw.control.events {
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.vo.VidiunDropFolder;
 	
 	import mx.controls.Alert;
 
-	public class DropFolderEvent extends KMvCEvent {
+	public class DropFolderEvent extends VMvCEvent {
 
 
 		/**
@@ -31,12 +31,12 @@ package com.kaltura.edw.control.events {
 		public static const SET_SELECTED_FOLDER:String = "df_set_selected_folder";
 		
 		
-		private var _folder:KalturaDropFolder;
+		private var _folder:VidiunDropFolder;
 		
 		private var _flags:uint;
 		
 
-		public function DropFolderEvent(type:String, folder:KalturaDropFolder = null, folderFlags:uint = 0x0, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function DropFolderEvent(type:String, folder:VidiunDropFolder = null, folderFlags:uint = 0x0, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			_folder = folder;
 			_flags = folderFlags;
@@ -46,7 +46,7 @@ package com.kaltura.edw.control.events {
 		/**
 		 * the drop folder this event referes to
 		 */
-		public function get folder():KalturaDropFolder {
+		public function get folder():VidiunDropFolder {
 			return _folder;
 		}
 

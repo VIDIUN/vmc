@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ir:FlavorAssetRendererBase xmlns="com.kaltura.kmc.modules.content.view.window.entrydetailswindowsections.renderers.*" 
-							xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"  xmlns:ir="com.kaltura.edw.view.ir.*">
+<ir:FlavorAssetRendererBase xmlns="com.vidiun.vmc.modules.content.view.window.entrydetailswindowsections.renderers.*" 
+							xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"  xmlns:ir="com.vidiun.edw.view.ir.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.vo.KalturaFlavorAsset;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.vo.VidiunFlavorAsset;
 
 			override public function set data(value:Object):void
 			{
@@ -15,11 +15,11 @@
 
 			private function setCodecLabel():void
 			{
-				var kfa:KalturaFlavorAsset = (data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams.flavorAsset;
-				codecLabel.enabled = (kfa != null);
+				var vfa:VidiunFlavorAsset = (data as FlavorAssetWithParamsVO).vidiunFlavorAssetWithParams.flavorAsset;
+				codecLabel.enabled = (vfa != null);
 
-				if (kfa && kfa.videoCodecId) {
-					codecLabel.text = kfa.videoCodecId;
+				if (vfa && vfa.videoCodecId) {
+					codecLabel.text = vfa.videoCodecId;
 				}
 				else {
 					codecLabel.text = '';

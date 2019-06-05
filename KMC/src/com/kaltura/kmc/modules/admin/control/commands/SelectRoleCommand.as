@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.vidiun.vmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
+	import com.vidiun.vmc.modules.admin.control.events.RoleEvent;
 
 	public class SelectRoleCommand extends BaseCommand {
 		

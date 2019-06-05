@@ -1,7 +1,7 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.vidiun.edw.control.commands.cuepoints
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -12,14 +12,14 @@ package com.kaltura.edw.control.commands.cuepoints
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class DownloadCuePoints extends KedCommand {
+	public class DownloadCuePoints extends VedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{
-//			http://devtests.kaltura.co.cc/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk/filter:entryIdEqual/0_sfdsfsf/pager:pageSize/1000/ks/NzU1Zm
+//			http://devtests.vidiun.co.cc/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk/filter:entryIdEqual/0_sfdsfsf/pager:pageSize/1000/vs/NzU1Zm
 			var serveURL:String = "/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk";
 			var fp:String = "/filter:entryIdEqual/" + event.data + "/filter:orderBy/+startTime/pager:pageSize/1000";
-			var filePath:String = _client.protocol + _client.domain + serveURL + fp + "/ks/" + _client.ks;
+			var filePath:String = _client.protocol + _client.domain + serveURL + fp + "/vs/" + _client.vs;
 			var request:URLRequest = new URLRequest(filePath);
 			var fr:FileReference = new FileReference();
 			fr.addEventListener(Event.CANCEL, downloadHandler);

@@ -11,7 +11,7 @@ adding and removing items to/from the list, according to a given type.
 		</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.vo.ads.CompanionAdVo;
+			import com.vidiun.vmc.modules.studio.vo.ads.CompanionAdVo;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Container;

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.business
+package com.vidiun.vmc.modules.account.business
 {
 	public class CustomDataStringUtil {
 		

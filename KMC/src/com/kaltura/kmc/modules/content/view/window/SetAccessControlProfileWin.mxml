@@ -2,33 +2,33 @@
 <!---
 	 This panel allows changing access control for entries
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
 				 title="{resourceManager.getString('cms', 'setAccessControlTitle')}" layout="vertical"
 				 showCloseButton="true" close="closeWindow(event)" help="onHelp(event)" 
-				 xmlns:view="com.kaltura.edw.view.*">
+				 xmlns:view="com.vidiun.edw.view.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.model.util.CompositeKBaseEntry;
-			import com.kaltura.edw.model.util.EntryAccessControlUtil;
-			import com.kaltura.edw.view.panels.PanelLoader;
-			import com.kaltura.edw.view.panels.PanelMetadataParser;
-			import com.kaltura.edw.view.panels.PanelMetadataVO;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.vidiun.analytics.GoogleAnalyticsConsts;
+			import com.vidiun.analytics.GoogleAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTracker;
+			import com.vidiun.analytics.VAnalyticsTrackerConsts;
+			import com.vidiun.edw.business.Cloner;
+			import com.vidiun.edw.business.IDrilldownPanel;
+			import com.vidiun.edw.constants.PanelConsts;
+			import com.vidiun.edw.model.FilterModel;
+			import com.vidiun.edw.model.datapacks.ContextDataPack;
+			import com.vidiun.edw.model.datapacks.FilterDataPack;
+			import com.vidiun.edw.model.util.CompositeVBaseEntry;
+			import com.vidiun.edw.model.util.EntryAccessControlUtil;
+			import com.vidiun.edw.view.panels.PanelLoader;
+			import com.vidiun.edw.view.panels.PanelMetadataParser;
+			import com.vidiun.edw.view.panels.PanelMetadataVO;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.EntriesEvent;
+			import com.vidiun.vmc.modules.content.events.WindowEvent;
+			import com.vidiun.vmvc.model.IDataPackRepository;
+			import com.vidiun.types.VidiunStatsVmcEventType;
+			import com.vidiun.vo.VidiunBaseEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
@@ -56,7 +56,7 @@
 				_selectedEntries = arr;
 				var tempArrCol:ArrayCollection = new ArrayCollection();
 				for (var i:int = 0; i < _selectedEntries.length; i++) {
-					tempArrCol.addItem(Cloner.cloneKalturaBaseEntry(_selectedEntries[i]));
+					tempArrCol.addItem(Cloner.cloneVidiunBaseEntry(_selectedEntries[i]));
 				}
 
 				_clonedSelectedEntries = tempArrCol;
@@ -90,7 +90,7 @@
 					cgEvent.dispatch();
 	
 					for each (var etr:Object in _clonedSelectedEntries) {
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_EDIT_ENTRY,
+						VAnalyticsTracker.getInstance().sendEvent(VAnalyticsTrackerConsts.CONTENT,VidiunStatsVmcEventType.CONTENT_EDIT_ENTRY,
 																  "setAccessControlProfileIdForEntries", etr.id);
 	
 					}
@@ -100,7 +100,7 @@
 			}
 
 			protected function onHelp(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_bulk_access_control'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_bulk_access_control'));
 			}
 
 			private function onPanelCreated(panel:IDrilldownPanel):void{
@@ -115,8 +115,8 @@
 				removeEventListener(FlexEvent.UPDATE_COMPLETE, onUpdateComplete);
 				_entryACP.dataPackModel = entryDetailsModel;
 				EntryAccessControlUtil.setModel(filterModel);
-				var entryVect:Vector.<KalturaBaseEntry> = Vector.<KalturaBaseEntry>(_clonedSelectedEntries.source);
-				var composite:CompositeKBaseEntry = new CompositeKBaseEntry(entryVect);
+				var entryVect:Vector.<VidiunBaseEntry> = Vector.<VidiunBaseEntry>(_clonedSelectedEntries.source);
+				var composite:CompositeVBaseEntry = new CompositeVBaseEntry(entryVect);
 				_entryACP.selectedEntry = composite;
 			}
 			

@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.analytics.model {
-	import com.kaltura.KalturaClient;
+package com.vidiun.vmc.modules.analytics.model {
+	import com.vidiun.VidiunClient;
 
 	[Bindable]
 	/**
@@ -18,32 +18,32 @@ package com.kaltura.kmc.modules.analytics.model {
 		public var isAnonymous:Boolean;
 		
 		/**
-		 * partner id (passed to KDP) 
+		 * partner id (passed to VDP) 
 		 */		
 		public var partnerId:String;
 		
 		/**
-		 * sub partner id (passed to KDP)
+		 * sub partner id (passed to VDP)
 		 */		
 		public var subpId:String;
 		
 		/**
-		 * session key (passed to KDP)
+		 * session key (passed to VDP)
 		 */		
-		public var ks:String;
+		public var vs:String;
 		
 		
 		public var permissions:int = -1;
 		
 		/**
-		 * should KDP run in debug mode 
+		 * should VDP run in debug mode 
 		 */		
 		public var debugMode:Boolean = false;
 		
 		/**
 		 * The PS3 - new flex client API
 		 */
-		public var kc:KalturaClient;
+		public var vc:VidiunClient;
 
 		/**
 		 * protocol used for communication (like http://)
@@ -51,7 +51,7 @@ package com.kaltura.kmc.modules.analytics.model {
 		public var protocol:String;
 		
 		/**
-		 * protocol (like http://) and then  domain (like www.kaltura.com)
+		 * protocol (like http://) and then  domain (like www.vidiun.com)
 		 * e.g: swf that came from http://www.yourdomain.com/dir/file.swf will have "http://www.yourdomain.com/" as its root url
 		 */
 		public var rootUrl:String;
@@ -63,7 +63,7 @@ package com.kaltura.kmc.modules.analytics.model {
 		public var sourceUrl:String;
 
 		/**
-		 * The hosting server name, e.g. "kaltura.com"
+		 * The hosting server name, e.g. "vidiun.com"
 		 */
 		public var hostName:String;
 

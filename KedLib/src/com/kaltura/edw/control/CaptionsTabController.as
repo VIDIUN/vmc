@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.vidiun.edw.control
 {
-	import com.kaltura.edw.control.commands.UploadTokenCommand;
-	import com.kaltura.edw.control.commands.captions.*;
-	import com.kaltura.edw.control.events.CaptionsEvent;
-	import com.kaltura.edw.control.events.UploadTokenEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.vidiun.edw.control.commands.UploadTokenCommand;
+	import com.vidiun.edw.control.commands.captions.*;
+	import com.vidiun.edw.control.events.CaptionsEvent;
+	import com.vidiun.edw.control.events.UploadTokenEvent;
+	import com.vidiun.vmvc.control.VMvCController;
 	
-	public class CaptionsTabController extends KMvCController {
+	public class CaptionsTabController extends VMvCController {
 		
 		public function CaptionsTabController()
 		{

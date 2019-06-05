@@ -1,10 +1,10 @@
-package com.kaltura.kmc.dropFolder.tests
+package com.vidiun.vmc.dropFolder.tests
 {
-	import com.kaltura.edw.control.events.DropFolderFileEvent;
-	import com.kaltura.edw.control.commands.dropFolder.ListDropFoldersFilesCommand;
-	import com.kaltura.types.KalturaDropFolderFileStatus;
-	import com.kaltura.vo.KalturaDropFolderFile;
-	import com.kaltura.vo.KalturaDropFolderFileListResponse;
+	import com.vidiun.edw.control.events.DropFolderFileEvent;
+	import com.vidiun.edw.control.commands.dropFolder.ListDropFoldersFilesCommand;
+	import com.vidiun.types.VidiunDropFolderFileStatus;
+	import com.vidiun.vo.VidiunDropFolderFile;
+	import com.vidiun.vo.VidiunDropFolderFileListResponse;
 	
 	import flexunit.framework.Assert;
 	
@@ -37,41 +37,41 @@ package com.kaltura.kmc.dropFolder.tests
 		/**
 		 * create a dummy list reponse where some files have no parsed slug 
 		 */
-		protected function createDummy2():KalturaDropFolderFileListResponse {
-			var response:KalturaDropFolderFileListResponse = new KalturaDropFolderFileListResponse();
+		protected function createDummy2():VidiunDropFolderFileListResponse {
+			var response:VidiunDropFolderFileListResponse = new VidiunDropFolderFileListResponse();
 			response.objects = new Array();
-			var dff:KalturaDropFolderFile = new KalturaDropFolderFile();
+			var dff:VidiunDropFolderFile = new VidiunDropFolderFile();
 			dff.createdAt = 105348965;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_1";
 			dff.fileSize = 3145728.1111111111111111111111111;
-			dff.status = KalturaDropFolderFileStatus.NO_MATCH; 
+			dff.status = VidiunDropFolderFileStatus.NO_MATCH; 
 			dff.parsedSlug = "atar";
 			response.objects.push(dff);
 			
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 115348665;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_2";
 			dff.fileSize = 3145728*2;
-			dff.status = KalturaDropFolderFileStatus.NO_MATCH;
+			dff.status = VidiunDropFolderFileStatus.NO_MATCH;
 			dff.parsedSlug = "";
 			response.objects.push(dff);
 			
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 125348565;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_3";
 			dff.fileSize = 3145728*6;
-			dff.status = KalturaDropFolderFileStatus.NO_MATCH;
+			dff.status = VidiunDropFolderFileStatus.NO_MATCH;
 			dff.parsedSlug = "";
 			response.objects.push(dff);
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 135348565;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_4";
 			dff.fileSize = 3145728/4;
-			dff.status = KalturaDropFolderFileStatus.NO_MATCH;
+			dff.status = VidiunDropFolderFileStatus.NO_MATCH;
 			dff.parsedSlug = "atar";
 			response.objects.push(dff);
 			
@@ -81,44 +81,44 @@ package com.kaltura.kmc.dropFolder.tests
 		/**
 		 * create a dummy list reponse 
 		 */
-		protected function createDummy():KalturaDropFolderFileListResponse {
-			var response:KalturaDropFolderFileListResponse = new KalturaDropFolderFileListResponse();
+		protected function createDummy():VidiunDropFolderFileListResponse {
+			var response:VidiunDropFolderFileListResponse = new VidiunDropFolderFileListResponse();
 			response.objects = new Array();
 			
-			var dff:KalturaDropFolderFile = new KalturaDropFolderFile();
+			var dff:VidiunDropFolderFile = new VidiunDropFolderFile();
 			dff.createdAt = 105348965;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_1";
 			dff.fileSize = 3145728.1111111111111111111111111;
-			dff.status = KalturaDropFolderFileStatus.PENDING; 
+			dff.status = VidiunDropFolderFileStatus.PENDING; 
 			dff.parsedSlug = "atar";
 			response.objects.push(dff);
 			
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 115348665;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_2";
 			dff.fileSize = 3145728*2;
-			dff.status = KalturaDropFolderFileStatus.PENDING;
+			dff.status = VidiunDropFolderFileStatus.PENDING;
 			dff.parsedSlug = "atar";
 			response.objects.push(dff);
 			
 			
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 125348565;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_3";
 			dff.fileSize = 3145728*6;
-			dff.status = KalturaDropFolderFileStatus.PENDING;
+			dff.status = VidiunDropFolderFileStatus.PENDING;
 			dff.parsedSlug = "atarsh";
 			response.objects.push(dff);
 			
-			dff = new KalturaDropFolderFile();
+			dff = new VidiunDropFolderFile();
 			dff.createdAt = 135348565;
 			dff.dropFolderId = 6;
 			dff.fileName = "file_4";
 			dff.fileSize = 3145728/4;
-			dff.status = KalturaDropFolderFileStatus.PENDING;
+			dff.status = VidiunDropFolderFileStatus.PENDING;
 			dff.parsedSlug = "atarsh";
 			response.objects.push(dff);
 			
@@ -133,7 +133,7 @@ package com.kaltura.kmc.dropFolder.tests
 		public function testSlugResponseNoParsed():void
 		{
 			_eventType = DropFolderFileEvent.LIST_BY_SELECTED_FOLDER_HIERCH;
-			var response:KalturaDropFolderFileListResponse = createDummy2();
+			var response:VidiunDropFolderFileListResponse = createDummy2();
 			var list:Array = handleDropFolderFileList(response);
 			var defaultName:String = '';//ResourceManager.getInstance().getString('cms', 'parseFailed');
 			
@@ -173,7 +173,7 @@ package com.kaltura.kmc.dropFolder.tests
 		public function testHandleSlugResponse():void
 		{
 			_eventType = DropFolderFileEvent.LIST_BY_SELECTED_FOLDER_HIERCH;
-			var response:KalturaDropFolderFileListResponse = createDummy();
+			var response:VidiunDropFolderFileListResponse = createDummy();
 			var list:Array = handleDropFolderFileList(response);
 			
 			// this if is because we don't know the objects' order in the list.
@@ -212,7 +212,7 @@ package com.kaltura.kmc.dropFolder.tests
 		public function testHandleSimpleResponse():void
 		{
 			_eventType = DropFolderFileEvent.LIST_BY_SELECTED_FOLDER_FLAT;
-			var response:KalturaDropFolderFileListResponse = createDummy();
+			var response:VidiunDropFolderFileListResponse = createDummy();
 			var list:Array = handleDropFolderFileList(response) ;
 			
 			for (var i:int = 0; i<response.objects.length; i++) {

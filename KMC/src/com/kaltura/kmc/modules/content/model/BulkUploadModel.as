@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.model
+package com.vidiun.vmc.modules.content.model
 {
-	import com.kaltura.vo.KalturaBulkUploadFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.vidiun.vo.VidiunBulkUploadFilter;
+	import com.vidiun.vo.VidiunFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,15 +14,15 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * the last filter used in list action in bulk uploads log page 
 		 */		
-		public var lastFilterUsed:KalturaBulkUploadFilter;
+		public var lastFilterUsed:VidiunBulkUploadFilter;
 		
 		/**
 		 * the last pager used in list action in bulk uploads log page 
 		 */		
-		public var lastPagerUsed:KalturaFilterPager;
+		public var lastPagerUsed:VidiunFilterPager;
 		
 		/**
-		 * list of <code>KalturaBulkUpload</code>
+		 * list of <code>VidiunBulkUpload</code>
 		 * used as dataprovider in <code>BulkUpload</code>
 		 * */
 		public var bulkUploads:ArrayCollection = null;

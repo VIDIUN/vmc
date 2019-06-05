@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.vidiun.vmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaCategory;
+	import com.vidiun.commands.category.CategoryAdd;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.content.commands.VidiunCommand;
+	import com.vidiun.vmc.modules.content.events.CategoryEvent;
+	import com.vidiun.vmc.modules.content.events.EntriesEvent;
+	import com.vidiun.utils.ObjectUtil;
+	import com.vidiun.vo.VidiunCategory;
 	
 	import mx.events.PropertyChangeEvent;
 
-	public class AddCategoryCommand extends KalturaCommand {
+	public class AddCategoryCommand extends VidiunCommand {
 		
 		/**
 		 * should (custom) metadata be saved after category creation
@@ -21,17 +21,17 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			_saveMetadata = event.data[1];
-			var newCategory:KalturaCategory = event.data[0] as KalturaCategory;
+			var newCategory:VidiunCategory = event.data[0] as VidiunCategory;
 			var addCategory:CategoryAdd = new CategoryAdd(newCategory);
-			addCategory.addEventListener(KalturaEvent.COMPLETE, result);
-			addCategory.addEventListener(KalturaEvent.FAILED, fault);
-			_model.context.kc.post(addCategory);
+			addCategory.addEventListener(VidiunEvent.COMPLETE, result);
+			addCategory.addEventListener(VidiunEvent.FAILED, fault);
+			_model.context.vc.post(addCategory);
 		}
 
 
 		override public function result(data:Object):void {
 			super.result(data);
-			if (!checkError(data) && data.data is KalturaCategory) {
+			if (!checkError(data) && data.data is VidiunCategory) {
 				// addition worked out fine
 				_model.categoriesModel.processingNewCategory = false;
 
@@ -44,7 +44,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 				}
 				if (_saveMetadata) {
 					cgEvent = new CategoryEvent(CategoryEvent.UPDATE_CATEGORY_METADATA_DATA);
-					cgEvent.data = (data.data as KalturaCategory).id;
+					cgEvent.data = (data.data as VidiunCategory).id;
 					cgEvent.dispatch();
 				}
 				

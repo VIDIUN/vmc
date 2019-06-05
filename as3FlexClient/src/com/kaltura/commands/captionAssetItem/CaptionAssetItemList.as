@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Vidiun Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2017  Kaltura Inc.
+// Copyright (C) 2006-2017  Vidiun Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,26 +25,26 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.captionAssetItem
+package com.vidiun.commands.captionAssetItem
 {
-		import com.kaltura.vo.KalturaCaptionAssetItemFilter;
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.captionAssetItem.CaptionAssetItemListDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.vidiun.vo.VidiunCaptionAssetItemFilter;
+		import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.delegates.captionAssetItem.CaptionAssetItemListDelegate;
+	import com.vidiun.net.VidiunCall;
 
 	/**
 	* List caption asset items by filter and pager
 	**/
-	public class CaptionAssetItemList extends KalturaCall
+	public class CaptionAssetItemList extends VidiunCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param captionAssetId String
-		* @param captionAssetItemFilter KalturaCaptionAssetItemFilter
-		* @param captionAssetItemPager KalturaFilterPager
+		* @param captionAssetItemFilter VidiunCaptionAssetItemFilter
+		* @param captionAssetItemPager VidiunFilterPager
 		**/
-		public function CaptionAssetItemList( captionAssetId : String,captionAssetItemFilter : KalturaCaptionAssetItemFilter=null,captionAssetItemPager : KalturaFilterPager=null )
+		public function CaptionAssetItemList( captionAssetId : String,captionAssetItemFilter : VidiunCaptionAssetItemFilter=null,captionAssetItemPager : VidiunFilterPager=null )
 		{
 			service= 'captionsearch_captionassetitem';
 			action= 'list';
@@ -55,12 +55,12 @@ package com.kaltura.commands.captionAssetItem
 			keyArr.push('captionAssetId');
 			valueArr.push(captionAssetId);
 			if (captionAssetItemFilter) { 
-				keyValArr = kalturaObject2Arrays(captionAssetItemFilter, 'captionAssetItemFilter');
+				keyValArr = vidiunObject2Arrays(captionAssetItemFilter, 'captionAssetItemFilter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 
 			if (captionAssetItemPager) { 
-				keyValArr = kalturaObject2Arrays(captionAssetItemPager, 'captionAssetItemPager');
+				keyValArr = vidiunObject2Arrays(captionAssetItemPager, 'captionAssetItemPager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

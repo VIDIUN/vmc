@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*" 
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.vidiun.containers.*" 
 							layout="vertical" width="400" height="300" creationComplete="creationCompleteHandler(event)" 
 							showCloseButton="true" close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
 							xmlns:components="com.hillelcoren.components.*"
@@ -7,14 +7,14 @@
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.vo.KalturaCategory;
+			import com.vidiun.VidiunClient;
+			import com.vidiun.autocomplete.controllers.VACCategoryController;
+			import com.vidiun.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.vidiun.vmc.business.JSGate;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.account.control.events.IntegrationEvent;
+			import com.vidiun.vmc.modules.account.model.AccountModelLocator;
+			import com.vidiun.vo.VidiunCategory;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -23,9 +23,9 @@
 			import mx.utils.StringUtil;
 
 			
-			private var _category:KalturaCategory;
+			private var _category:VidiunCategory;
 			
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:VidiunCategory):void {
 				_category = value;
 				if (catComplete) {
 					catComplete.selectedItem = value;
@@ -35,7 +35,7 @@
 			}
 			
 			private function creationCompleteHandler(event:FlexEvent):void {
-				new KACCategoryController(catComplete, AccountModelLocator.getInstance().context.kc);
+				new VACCategoryController(catComplete, AccountModelLocator.getInstance().context.vc);
 				if (_category) {
 					category = _category;
 				}
@@ -50,11 +50,11 @@
 
 			private function validate(event:MouseEvent):void {
 				var contexts:String = getPrivacyContextString();
-				var kCat:KalturaCategory = catComplete.selectedItem;
-				if (!kCat) {
+				var vCat:VidiunCategory = catComplete.selectedItem;
+				if (!vCat) {
 					Alert.show(resourceManager.getString('account', 'noCatSelected'), resourceManager.getString('account', 'error'));
 				}
-				else if (!_category && kCat.privacyContext) {
+				else if (!_category && vCat.privacyContext) {
 					Alert.show(resourceManager.getString('account', 'contextAlreadySet'), resourceManager.getString('account', 'error'));
 				}
 				else if (StringUtil.trim(contexts) == '') {
@@ -64,7 +64,7 @@
 					Alert.show(resourceManager.getString('account', 'entLabelShort'), resourceManager.getString('account', 'error'));
 				}
 				else {
-					Alert.show(resourceManager.getString('account', 'setEntNote', [kCat.name]), resourceManager.getString('account', 'important'), Alert.OK|Alert.CANCEL, null, savePrivacyContext);
+					Alert.show(resourceManager.getString('account', 'setEntNote', [vCat.name]), resourceManager.getString('account', 'important'), Alert.OK|Alert.CANCEL, null, savePrivacyContext);
 				}
 			}
 			
@@ -81,10 +81,10 @@
 			
 			private function savePrivacyContext(e:CloseEvent):void {
 				if (e.detail == Alert.OK) {
-					var kCat:KalturaCategory = catComplete.selectedItem;
-					kCat.privacyContext = getPrivacyContextString();
+					var vCat:VidiunCategory = catComplete.selectedItem;
+					vCat.privacyContext = getPrivacyContextString();
 					var cge:CairngormEvent = new IntegrationEvent(IntegrationEvent.UPDATE_CATEGORY);
-					cge.data = kCat;
+					cge.data = vCat;
 					cge.dispatch();
 					closeHandler(null);	
 				}
@@ -97,7 +97,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_cat_entitlement'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_cat_entitlement'));
 			}
 
 		]]>

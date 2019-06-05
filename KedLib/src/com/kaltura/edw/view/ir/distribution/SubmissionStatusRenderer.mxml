@@ -8,24 +8,24 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.view.window.DistributionDetailsWindow;
-			import com.kaltura.edw.view.window.ErrorDetailsWindow;
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaBatchJobErrorTypes;
-			import com.kaltura.types.KalturaDistributionValidationErrorType;
-			import com.kaltura.types.KalturaEntryDistributionFlag;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaDistributionValidationErrorConditionNotMet;
-			import com.kaltura.vo.KalturaDistributionValidationErrorInvalidData;
-			import com.kaltura.vo.KalturaDistributionValidationErrorInvalidMetadata;
-			import com.kaltura.vo.KalturaDistributionValidationErrorMissingFlavor;
-			import com.kaltura.vo.KalturaDistributionValidationErrorMissingMetadata;
-			import com.kaltura.vo.KalturaDistributionValidationErrorMissingThumbnail;
-			import com.kaltura.vo.KalturaEntryDistribution;
+			import com.vidiun.edw.events.VedDataEvent;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.edw.model.datapacks.DistributionDataPack;
+			import com.vidiun.edw.view.window.DistributionDetailsWindow;
+			import com.vidiun.edw.view.window.ErrorDetailsWindow;
+			import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+			import com.vidiun.vmvc.model.VMvCModel;
+			import com.vidiun.types.VidiunBatchJobErrorTypes;
+			import com.vidiun.types.VidiunDistributionValidationErrorType;
+			import com.vidiun.types.VidiunEntryDistributionFlag;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			import com.vidiun.vo.VidiunDistributionValidationErrorConditionNotMet;
+			import com.vidiun.vo.VidiunDistributionValidationErrorInvalidData;
+			import com.vidiun.vo.VidiunDistributionValidationErrorInvalidMetadata;
+			import com.vidiun.vo.VidiunDistributionValidationErrorMissingFlavor;
+			import com.vidiun.vo.VidiunDistributionValidationErrorMissingMetadata;
+			import com.vidiun.vo.VidiunDistributionValidationErrorMissingThumbnail;
+			import com.vidiun.vo.VidiunEntryDistribution;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.LinkButton;
@@ -78,46 +78,46 @@
 			private var _metadataErrorsArray:Array;
 			private var _conditionErrorsArray:Array;
 
-			private var _entryDis:KalturaEntryDistribution;
+			private var _entryDis:VidiunEntryDistribution;
 
 
 			override public function set data(value:Object):void {
 				super.data = value;
-				_entryDis = (value as EntryDistributionWithProfile).kalturaEntryDistribution;
+				_entryDis = (value as EntryDistributionWithProfile).vidiunEntryDistribution;
 				var status:String;
 				var status2:String;
 
 				switch (_entryDis.status) {
-					case KalturaEntryDistributionStatus.PENDING:
+					case VidiunEntryDistributionStatus.PENDING:
 						if (!_entryDis.validationErrors || _entryDis.validationErrors.length == 0)
 							status = READY_FOR_DISTRIBUTION;
-						if (_entryDis.dirtyStatus == KalturaEntryDistributionFlag.SUBMIT_REQUIRED)
+						if (_entryDis.dirtyStatus == VidiunEntryDistributionFlag.SUBMIT_REQUIRED)
 							status = SCHEDULED_FOR_DISTRIBUTION;
 						break;
-					case KalturaEntryDistributionStatus.QUEUED:
+					case VidiunEntryDistributionStatus.QUEUED:
 						status = APPROVED_FOR_DISTRIBUTION;
 						break;
-					case KalturaEntryDistributionStatus.SUBMITTING:
-					case KalturaEntryDistributionStatus.IMPORT_SUBMITTING:
+					case VidiunEntryDistributionStatus.SUBMITTING:
+					case VidiunEntryDistributionStatus.IMPORT_SUBMITTING:
 						status = SUBMITTING;
 						break;
-					case KalturaEntryDistributionStatus.UPDATING:
-					case KalturaEntryDistributionStatus.IMPORT_UPDATING:
+					case VidiunEntryDistributionStatus.UPDATING:
+					case VidiunEntryDistributionStatus.IMPORT_UPDATING:
 						status = UPDATING;
 						break;
-					case KalturaEntryDistributionStatus.DELETING:
+					case VidiunEntryDistributionStatus.DELETING:
 						status = REMOVING;
 						break;
-					case KalturaEntryDistributionStatus.ERROR_DELETING:
+					case VidiunEntryDistributionStatus.ERROR_DELETING:
 						status = REMOVAL_ERROR;
 						break;
-					case KalturaEntryDistributionStatus.ERROR_SUBMITTING:
-					case KalturaEntryDistributionStatus.ERROR_UPDATING:
+					case VidiunEntryDistributionStatus.ERROR_SUBMITTING:
+					case VidiunEntryDistributionStatus.ERROR_UPDATING:
 						status = DISTRIBUTION_ERROR;
 						break;
-					case KalturaEntryDistributionStatus.READY:
+					case VidiunEntryDistributionStatus.READY:
 						status = DISTRIBUTED;
-						if (_entryDis.dirtyStatus == KalturaEntryDistributionFlag.UPDATE_REQUIRED)
+						if (_entryDis.dirtyStatus == VidiunEntryDistributionFlag.UPDATE_REQUIRED)
 							status2 = UPDATE_REQUIRED;
 						break;
 				}
@@ -190,23 +190,23 @@
 				_metadataErrorVisible = false;
 
 				for (var i:int = 0; i < errors.length; i++) {
-					if (errors[i] is KalturaDistributionValidationErrorInvalidData) {
+					if (errors[i] is VidiunDistributionValidationErrorInvalidData) {
 						_metadataErrorsArray.push(errors[i]);
 						_metadataErrorVisible = true;
 					}
-					else if (errors[i] is KalturaDistributionValidationErrorMissingMetadata) {
+					else if (errors[i] is VidiunDistributionValidationErrorMissingMetadata) {
 						_metadataMissingArray.push(errors[i]);
 						_metadataMissingErrorVisible = true;
 					}
-					else if (errors[i] is KalturaDistributionValidationErrorMissingFlavor) {
+					else if (errors[i] is VidiunDistributionValidationErrorMissingFlavor) {
 						_flavorErrorsArray.push(errors[i]);
 						_flavorMissingErrorVisible = true;
 					}
-					else if (errors[i] is KalturaDistributionValidationErrorMissingThumbnail) {
+					else if (errors[i] is VidiunDistributionValidationErrorMissingThumbnail) {
 						_thumbErrorsArray.push(errors[i]);
 						_thumbMissingErrorVisible = true;
 					}
-					else if (errors[i] is KalturaDistributionValidationErrorConditionNotMet) {
+					else if (errors[i] is VidiunDistributionValidationErrorConditionNotMet) {
 						_conditionErrorsArray.push(errors[i]);
 						_conditionErrorVisible = true;
 					}
@@ -219,20 +219,20 @@
 				var errorDetails:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.GENERAL_ERROR, distributionErrorLink.label);
 				var errorLabel:String;
 				switch (_entryDis.errorType) {
-					/* case KalturaBatchJobErrorTypes.APP:
-					case KalturaBatchJobErrorTypes.KALTURA_API:
-					case KalturaBatchJobErrorTypes.KALTURA_CLIENT:
-					errorLabel = resourceManager.getString('drilldown','kalturaError');
+					/* case VidiunBatchJobErrorTypes.APP:
+					case VidiunBatchJobErrorTypes.VIDIUN_API:
+					case VidiunBatchJobErrorTypes.VIDIUN_CLIENT:
+					errorLabel = resourceManager.getString('drilldown','vidiunError');
 					break; */
-					case KalturaBatchJobErrorTypes.HTTP:
+					case VidiunBatchJobErrorTypes.HTTP:
 						errorLabel = resourceManager.getString('drilldown', 'transferError');
 						break;
-					case KalturaBatchJobErrorTypes.CURL:
-					case KalturaBatchJobErrorTypes.RUNTIME:
+					case VidiunBatchJobErrorTypes.CURL:
+					case VidiunBatchJobErrorTypes.RUNTIME:
 						errorLabel = resourceManager.getString('drilldown', 'destintaionError');
 						break;
 					default:
-						errorLabel = resourceManager.getString('drilldown', 'kalturaError');
+						errorLabel = resourceManager.getString('drilldown', 'vidiunError');
 				}
 				errorDetails.setGeneralLabel(errorLabel);
 				PopUpManager.addPopUp(errorDetails, (Application.application as DisplayObject), true);
@@ -242,7 +242,7 @@
 
 			private function onThumbErrorLink():void {
 				var errorWindow:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.MISSING_THUMB_ERROR, resourceManager.getString('drilldown', 'missingThumbnail'));
-				for each (var err:KalturaDistributionValidationErrorMissingThumbnail in _thumbErrorsArray) {
+				for each (var err:VidiunDistributionValidationErrorMissingThumbnail in _thumbErrorsArray) {
 					errorWindow.addErrorDetail(getDimensionsError(err));
 				}
 				PopUpManager.addPopUp(errorWindow, (Application.application as DisplayObject), true);
@@ -259,7 +259,7 @@
 					errorDetails.enableLinks = false;
 				else {
 					errorDetails.enableLinks = true;
-					errorDetails.addEventListener(KedDataEvent.NAVIGATE, onNavigateRequest, false, 0, true);
+					errorDetails.addEventListener(VedDataEvent.NAVIGATE, onNavigateRequest, false, 0, true);
 				}
 				errorDetails.setType(type);
 				errorDetails.title = title;
@@ -268,26 +268,26 @@
 			}
 
 
-			private function onNavigateRequest(e:KedDataEvent):void {
-				var evt:KedDataEvent = new KedDataEvent(KedDataEvent.NAVIGATE, true);
+			private function onNavigateRequest(e:VedDataEvent):void {
+				var evt:VedDataEvent = new VedDataEvent(VedDataEvent.NAVIGATE, true);
 				evt.data = e.data; // where to navigate
 				dispatchEvent(evt);
 			}
 
 
-			private function getDimensionsError(error:KalturaDistributionValidationErrorMissingThumbnail):String {
+			private function getDimensionsError(error:VidiunDistributionValidationErrorMissingThumbnail):String {
 				var st:String = error.dimensions.width + " X " + error.dimensions.height;
 				return st;
 			}
 
 
-			private function getFlavorsError(error:KalturaDistributionValidationErrorMissingFlavor):String {
+			private function getFlavorsError(error:VidiunDistributionValidationErrorMissingFlavor):String {
 				var id:int = parseInt(error.flavorParamsId);
 				var flavorName:String;
-				var flavors:ArrayCollection = ((parentDocument /*EntryDistribution*/.dataPackModel as KMvCModel).getDataPack(DistributionDataPack) as DistributionDataPack).flavorParamsAndAssetsByEntryId;
+				var flavors:ArrayCollection = ((parentDocument /*EntryDistribution*/.dataPackModel as VMvCModel).getDataPack(DistributionDataPack) as DistributionDataPack).flavorParamsAndAssetsByEntryId;
 				for each (var flavorWithParams:FlavorAssetWithParamsVO in flavors) {
-					if (flavorWithParams.kalturaFlavorAssetWithParams.flavorParams.id == id) {
-						flavorName = flavorWithParams.kalturaFlavorAssetWithParams.flavorParams.name;
+					if (flavorWithParams.vidiunFlavorAssetWithParams.flavorParams.id == id) {
+						flavorName = flavorWithParams.vidiunFlavorAssetWithParams.flavorParams.name;
 						break;
 					}
 				}
@@ -298,7 +298,7 @@
 
 			private function onFlavorErrorClick():void {
 				var errorDetails:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.MISSING_FLAVOR_ERROR, resourceManager.getString('drilldown', 'missingFlavor'));
-				for each (var err:KalturaDistributionValidationErrorMissingFlavor in _flavorErrorsArray) {
+				for each (var err:VidiunDistributionValidationErrorMissingFlavor in _flavorErrorsArray) {
 					errorDetails.addErrorDetail(getFlavorsError(err));
 				}
 				PopUpManager.addPopUp(errorDetails, (Application.application as DisplayObject), true);
@@ -309,7 +309,7 @@
 			private function onMissingMetadataErrorLink():void {
 				var errorDetails:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.MISSING_METADATA, resourceManager.getString('drilldown', 'missingMetadata'));
 				errorDetails.showCustomDataBtn = true;
-				for each (var err:KalturaDistributionValidationErrorMissingMetadata in _metadataMissingArray) {
+				for each (var err:VidiunDistributionValidationErrorMissingMetadata in _metadataMissingArray) {
 					errorDetails.addErrorDetail(err.fieldName);
 				}
 				PopUpManager.addPopUp(errorDetails, (Application.application as DisplayObject), true);
@@ -320,9 +320,9 @@
 			private function onMetadataErrorLink():void {
 				var errorDetails:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.METADATA_ERROR, resourceManager.getString('drilldown', 'metadataValidationFailed'));
 				for (var i:int = 0; i < _metadataErrorsArray.length; i++) {
-					if (_metadataErrorsArray[i] is KalturaDistributionValidationErrorInvalidMetadata)
+					if (_metadataErrorsArray[i] is VidiunDistributionValidationErrorInvalidMetadata)
 						errorDetails.showCustomDataBtn = true;
-					errorDetails.addErrorDetail(returnValidationErroString(_metadataErrorsArray[i] as KalturaDistributionValidationErrorInvalidData), true);
+					errorDetails.addErrorDetail(returnValidationErroString(_metadataErrorsArray[i] as VidiunDistributionValidationErrorInvalidData), true);
 				}
 
 				PopUpManager.addPopUp(errorDetails, (Application.application as DisplayObject), true);
@@ -333,7 +333,7 @@
 			private function onConditionErrorLink():void {
 				var errorDetails:ErrorDetailsWindow = createErrorPopup(ErrorDetailsWindow.CONDITION_NOT_MET, resourceManager.getString('drilldown', 'conditionError'));
 				for (var i:int = 0; i < _conditionErrorsArray.length; i++) {
-					errorDetails.addErrorDetail((_conditionErrorsArray[i] as KalturaDistributionValidationErrorConditionNotMet).conditionName, true);
+					errorDetails.addErrorDetail((_conditionErrorsArray[i] as VidiunDistributionValidationErrorConditionNotMet).conditionName, true);
 				}
 				errorDetails.showCustomDataBtn = true;
 
@@ -345,22 +345,22 @@
 			/**
 			 * builds the suitable error string according to error type and uses error validation param
 			 * */
-			private function returnValidationErroString(error:KalturaDistributionValidationErrorInvalidData):String {
+			private function returnValidationErroString(error:VidiunDistributionValidationErrorInvalidData):String {
 				var errorString:String = '- ';
 				switch (error.validationErrorType) {
-					case KalturaDistributionValidationErrorType.STRING_EMPTY:
+					case VidiunDistributionValidationErrorType.STRING_EMPTY:
 						errorString += resourceManager.getString('drilldown', 'metadataValidationRequired', [error.fieldName]);
 						break;
-					case KalturaDistributionValidationErrorType.STRING_TOO_LONG:
+					case VidiunDistributionValidationErrorType.STRING_TOO_LONG:
 						errorString += resourceManager.getString('drilldown', 'metadataValidationTooLong', [error.fieldName, error.validationErrorParam]);
 						break;
-					case KalturaDistributionValidationErrorType.STRING_TOO_SHORT:
+					case VidiunDistributionValidationErrorType.STRING_TOO_SHORT:
 						errorString += resourceManager.getString('drilldown', 'metadataValidationTooShort', [error.fieldName, error.validationErrorParam]);
 						break;
-					case KalturaDistributionValidationErrorType.INVALID_FORMAT:
+					case VidiunDistributionValidationErrorType.INVALID_FORMAT:
 						errorString += resourceManager.getString('drilldown', 'metadataValidationFormat', [error.fieldName, error.validationErrorParam]);
 						break;
-					case KalturaDistributionValidationErrorType.CUSTOM_ERROR:
+					case VidiunDistributionValidationErrorType.CUSTOM_ERROR:
 						errorString = error.fieldName + ' - ' + error.validationErrorParam;
 				}
 				return errorString;

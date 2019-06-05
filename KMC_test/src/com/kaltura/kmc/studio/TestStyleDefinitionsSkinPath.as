@@ -1,6 +1,6 @@
-package com.kaltura.kmc.studio
+package com.vidiun.vmc.studio
 {
-	import com.kaltura.kmc.modules.studio.view.ApsWizard;
+	import com.vidiun.vmc.modules.studio.view.ApsWizard;
 	
 	import flexunit.framework.Assert;
 
@@ -32,8 +32,8 @@ package com.kaltura.kmc.studio
 		 * given (post-dragonfly) dark skinPath, see we get correct paths for both dark and light skins
 		 * */
 		public function testExtractSkinPathsPostDFDark():void {
-			var expectedDark:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/eagle/skin/v3.5.9/skin.swf";
-			var expectedLight:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/eagle/skin/v3.5.9/skin_light.swf";
+			var expectedDark:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/eagle/skin/v3.5.9/skin.swf";
+			var expectedLight:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/eagle/skin/v3.5.9/skin_light.swf";
 			
 			var result:Object = extractSkinPathes(expectedDark);
 			Assert.assertEquals(expectedDark, result.dark);
@@ -46,8 +46,8 @@ package com.kaltura.kmc.studio
 		 * given (post-dragonfly) light skinPath, see we get correct paths for both dark and light skins
 		 * */
 		public function testExtractSkinPathsPostDFLight():void {
-			var expectedDark:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/eagle/skin/v3.5.9/skin.swf";
-			var expectedLight:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/eagle/skin/v3.5.9/skin_light.swf";
+			var expectedDark:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/eagle/skin/v3.5.9/skin.swf";
+			var expectedLight:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/eagle/skin/v3.5.9/skin_light.swf";
 			
 			var result:Object = extractSkinPathes(expectedLight);
 			Assert.assertEquals(expectedDark, result.dark);
@@ -60,8 +60,8 @@ package com.kaltura.kmc.studio
 		 * given (cassiopeia) dark skinPath, see we get correct paths for both dark and light skins
 		 * */
 		public function testExtractSkinPathsCassiopeiaDark():void {
-			var expectedDark:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/cassiopea/skin.swf?a=2";
-			var expectedLight:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/cassiopea/skin_light.swf";
+			var expectedDark:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/cassiopea/skin.swf?a=2";
+			var expectedLight:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/cassiopea/skin_light.swf";
 			
 			var result:Object = extractSkinPathes(expectedDark);
 			Assert.assertEquals(expectedDark, result.dark);
@@ -74,8 +74,8 @@ package com.kaltura.kmc.studio
 		 * given (post-dragonfly) light skinPath, see we get correct paths for both dark and light skins
 		 * */
 		public function testExtractSkinPathsCassiopeiaLight():void {
-			var expectedDark:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/cassiopea/skin.swf?a=2";
-			var expectedLight:String = "/content/uiconf/kaltura/kmc/appstudio/kdp3/cassiopea/skin_light.swf?a=2";
+			var expectedDark:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/cassiopea/skin.swf?a=2";
+			var expectedLight:String = "/content/uiconf/vidiun/vmc/appstudio/vdp3/cassiopea/skin_light.swf?a=2";
 			
 			var result:Object = extractSkinPathes(expectedLight);
 			Assert.assertEquals(expectedDark, result.dark);

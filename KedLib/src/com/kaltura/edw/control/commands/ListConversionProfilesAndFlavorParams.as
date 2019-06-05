@@ -1,45 +1,45 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
-	import com.kaltura.commands.flavorParams.FlavorParamsList;
-	import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-	import com.kaltura.edw.model.util.FlavorParamsUtil;
-	import com.kaltura.edw.vo.ConversionProfileWithFlavorParamsVo;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaAssetParamsOrigin;
-	import com.kaltura.types.KalturaConversionProfileOrderBy;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParams;
-	import com.kaltura.vo.KalturaConversionProfileAssetParamsFilter;
-	import com.kaltura.vo.KalturaConversionProfileAssetParamsListResponse;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.vo.KalturaFlavorParamsListResponse;
-	import com.kaltura.vo.KalturaLiveParams;
+package com.vidiun.edw.control.commands {
+	import com.vidiun.commands.MultiRequest;
+	import com.vidiun.commands.conversionProfile.ConversionProfileList;
+	import com.vidiun.commands.conversionProfileAssetParams.ConversionProfileAssetParamsList;
+	import com.vidiun.commands.flavorParams.FlavorParamsList;
+	import com.vidiun.edw.model.datapacks.FlavorsDataPack;
+	import com.vidiun.edw.model.util.FlavorParamsUtil;
+	import com.vidiun.edw.vo.ConversionProfileWithFlavorParamsVo;
+	import com.vidiun.errors.VidiunError;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmvc.control.VMvCEvent;
+	import com.vidiun.types.VidiunAssetParamsOrigin;
+	import com.vidiun.types.VidiunConversionProfileOrderBy;
+	import com.vidiun.types.VidiunConversionProfileType;
+	import com.vidiun.vo.VidiunConversionProfile;
+	import com.vidiun.vo.VidiunConversionProfileAssetParams;
+	import com.vidiun.vo.VidiunConversionProfileAssetParamsFilter;
+	import com.vidiun.vo.VidiunConversionProfileAssetParamsListResponse;
+	import com.vidiun.vo.VidiunConversionProfileFilter;
+	import com.vidiun.vo.VidiunConversionProfileListResponse;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunFlavorParams;
+	import com.vidiun.vo.VidiunFlavorParamsListResponse;
+	import com.vidiun.vo.VidiunLiveParams;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 
-	public class ListConversionProfilesAndFlavorParams extends KedCommand {
+	public class ListConversionProfilesAndFlavorParams extends VedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:VMvCEvent):void {
 			_model.increaseLoadCounter();
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:VidiunFilterPager = new VidiunFilterPager();
 			p.pageSize = 1000;	// this is a very large number that should be enough to get all items
 
 			var fdp:FlavorsDataPack = _model.getDataPack(FlavorsDataPack) as FlavorsDataPack;
 			
 			var mr:MultiRequest = new MultiRequest();
 			if (!fdp.conversionProfileLoaded) {
-				var cpFilter:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-				cpFilter.orderBy = KalturaConversionProfileOrderBy.CREATED_AT_DESC;
-				cpFilter.typeEqual = KalturaConversionProfileType.MEDIA;
+				var cpFilter:VidiunConversionProfileFilter = new VidiunConversionProfileFilter();
+				cpFilter.orderBy = VidiunConversionProfileOrderBy.CREATED_AT_DESC;
+				cpFilter.typeEqual = VidiunConversionProfileType.MEDIA;
 				var listConversionProfiles:ConversionProfileList = new ConversionProfileList(cpFilter, p);
 				mr.addAction(listConversionProfiles);
 				
@@ -48,22 +48,22 @@ package com.kaltura.edw.control.commands {
 			}
 
 			
-			var f:KalturaConversionProfileAssetParamsFilter = new KalturaConversionProfileAssetParamsFilter();
-			f.originIn = KalturaAssetParamsOrigin.INGEST + "," + KalturaAssetParamsOrigin.CONVERT_WHEN_MISSING;
+			var f:VidiunConversionProfileAssetParamsFilter = new VidiunConversionProfileAssetParamsFilter();
+			f.originIn = VidiunAssetParamsOrigin.INGEST + "," + VidiunAssetParamsOrigin.CONVERT_WHEN_MISSING;
 			var listcpaps:ConversionProfileAssetParamsList = new ConversionProfileAssetParamsList(f, p);
 			mr.addAction(listcpaps);
 
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(VidiunEvent.COMPLETE, result);
+			mr.addEventListener(VidiunEvent.FAILED, fault);
 			_client.post(mr);
 		}
 
 
 		override public function result(event:Object):void {
 			// error handling
-			var er:KalturaError ;
+			var er:VidiunError ;
 			if (event.error) {
-				er = event.error as KalturaError;
+				er = event.error as VidiunError;
 				if (er) {
 					Alert.show(er.errorMsg, "Error");
 				}
@@ -71,7 +71,7 @@ package com.kaltura.edw.control.commands {
 			else {
 				for (var i:int = 0; i<event.data.length; i++) {
 					if (event.data[i].error) {
-						er = event.data[i].error as KalturaError;
+						er = event.data[i].error as VidiunError;
 						if (er) {
 							Alert.show(er.errorMsg, "Error");
 						}
@@ -93,12 +93,12 @@ package com.kaltura.edw.control.commands {
 				}
 				else {
 					startIndex = 2;
-					profs = (event.data[0] as KalturaConversionProfileListResponse).objects;
+					profs = (event.data[0] as VidiunConversionProfileListResponse).objects;
 					fdp.conversionProfiles = profs;
-					var temp:Array = FlavorParamsUtil.makeManyFlavorParams((event.data[1] as KalturaFlavorParamsListResponse).objects); 
+					var temp:Array = FlavorParamsUtil.makeManyFlavorParams((event.data[1] as VidiunFlavorParamsListResponse).objects); 
 					params = new Array();
-					for each (var fp:KalturaFlavorParams in temp) {
-						if (!(fp is KalturaLiveParams)) {
+					for each (var fp:VidiunFlavorParams in temp) {
+						if (!(fp is VidiunLiveParams)) {
 							params.push(fp);
 						}
 					}
@@ -106,14 +106,14 @@ package com.kaltura.edw.control.commands {
 					fdp.conversionProfileLoaded = true;
 				}
 				
-				var cpaps:Array = (event.data[startIndex] as KalturaConversionProfileAssetParamsListResponse).objects;
+				var cpaps:Array = (event.data[startIndex] as VidiunConversionProfileAssetParamsListResponse).objects;
 				
 				var tempArrCol:ArrayCollection = new ArrayCollection();
 
 				for each (var cProfile:Object in profs) {
-					if (cProfile is KalturaConversionProfile) {
+					if (cProfile is VidiunConversionProfile) {
 						var cp:ConversionProfileWithFlavorParamsVo = new ConversionProfileWithFlavorParamsVo();
-						cp.profile = cProfile as KalturaConversionProfile;
+						cp.profile = cProfile as VidiunConversionProfile;
 						addFlavorParams(cp, cpaps, params);
 						tempArrCol.addItem(cp);
 					}
@@ -124,7 +124,7 @@ package com.kaltura.edw.control.commands {
 		}
 			
 		/**
-		 * create a list of <code>KalturaConversionProfileAssetParams</code> that belong to 
+		 * create a list of <code>VidiunConversionProfileAssetParams</code> that belong to 
 		 * the conversion profile on the given VO, and add it to the VO.
 		 * @param cp		VO to be updated
 		 * @param cpaps		objects to filter
@@ -133,9 +133,9 @@ package com.kaltura.edw.control.commands {
 		 */
 		protected function addFlavorParams(cp:ConversionProfileWithFlavorParamsVo, cpaps:Array, params:Array):void {
 			var profid:int = cp.profile.id;
-			for each (var cpap:KalturaConversionProfileAssetParams in cpaps) {
-				if (cpap && cpap.conversionProfileId == profid && cpap.origin != KalturaAssetParamsOrigin.CONVERT) {
-					for each (var ap:KalturaFlavorParams in params) {
+			for each (var cpap:VidiunConversionProfileAssetParams in cpaps) {
+				if (cpap && cpap.conversionProfileId == profid && cpap.origin != VidiunAssetParamsOrigin.CONVERT) {
+					for each (var ap:VidiunFlavorParams in params) {
 						if (ap && ap.id == cpap.assetParamsId) {
 							// add flavor name to the cpap, to be used in dropdown in IR
 							cpap.name = ap.name;
@@ -154,8 +154,8 @@ package com.kaltura.edw.control.commands {
 		 * @param apid	asset params id
 		 * @return 
 		 */
-		protected function getCpap(cpid:int, apid:int, cpaps:Array):KalturaConversionProfileAssetParams {
-			for each (var cpap:KalturaConversionProfileAssetParams in cpaps) {
+		protected function getCpap(cpid:int, apid:int, cpaps:Array):VidiunConversionProfileAssetParams {
+			for each (var cpap:VidiunConversionProfileAssetParams in cpaps) {
 				if (cpap.assetParamsId == apid && cpap.conversionProfileId == cpid) {
 					return cpap;
 				}

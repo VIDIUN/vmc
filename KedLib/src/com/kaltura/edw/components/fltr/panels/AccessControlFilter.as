@@ -1,5 +1,5 @@
-package com.kaltura.edw.components.fltr.panels {
-	import com.kaltura.vo.AccessControlProfileVO;
+package com.vidiun.edw.components.fltr.panels {
+	import com.vidiun.vo.AccessControlProfileVO;
 
 	import mx.collections.ArrayCollection;
 	import mx.controls.CheckBox;

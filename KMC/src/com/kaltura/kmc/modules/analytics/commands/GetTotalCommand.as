@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetTotal;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.reports.FormatReportParam;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.vo.AggregateDataVo;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaReportInputFilter;
-	import com.kaltura.vo.KalturaReportTotal;
+	import com.vidiun.commands.report.ReportGetTotal;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.analytics.control.ReportEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.reports.FormatReportParam;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vmc.modules.analytics.vo.AggregateDataVo;
+	import com.vidiun.vo.VidiunEndUserReportInputFilter;
+	import com.vidiun.vo.VidiunReportInputFilter;
+	import com.vidiun.vo.VidiunReportTotal;
 
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
+	import com.vidiun.vmc.modules.analytics.model.reportdata.ReportData;
 
 	public class GetTotalCommand implements ICommand, IResponder {
 		private var _model:AnalyticsModelLocator = AnalyticsModelLocator.getInstance();
@@ -35,15 +35,15 @@ package com.kaltura.kmc.modules.analytics.commands {
 				_screenType = _model.currentScreenState;
 			}
 
-			var krif:KalturaReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
+			var vrif:VidiunReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
 			var reportGetTotal:ReportGetTotal = new ReportGetTotal((event as ReportEvent).reportType,
-				krif,
+				vrif,
 				ExecuteReportHelper.getObjectIds(_screenType));
 			
 			reportGetTotal.queued = false;
-			reportGetTotal.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetTotal.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(reportGetTotal);
+			reportGetTotal.addEventListener(VidiunEvent.COMPLETE, result);
+			reportGetTotal.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(reportGetTotal);
 		}
 
 
@@ -51,10 +51,10 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingTotalFlag = false;
 			_model.checkLoading();
 			var reportData:ReportData = _model.reportDataMap[_screenType];
-			var krt:KalturaReportTotal = KalturaReportTotal(result.data);
+			var vrt:VidiunReportTotal = VidiunReportTotal(result.data);
 
-			var aggArr:Array = krt.data.split(',');
-			var aggLbls:Array = krt.header.split(',');
+			var aggArr:Array = vrt.data.split(',');
+			var aggLbls:Array = vrt.header.split(',');
 			var arrCol:ArrayCollection = new ArrayCollection();
 			for (var i:int = 0; i < aggArr.length; i++) {
 				// Patches for data removal

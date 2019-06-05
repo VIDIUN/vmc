@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.kaltura.edw.components.fltr.*"
-				 xmlns:panels="com.kaltura.edw.components.fltr.panels.*">
+<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.vidiun.edw.components.fltr.*"
+				 xmlns:panels="com.vidiun.edw.components.fltr.panels.*">
 	<mx:Script>
 		<![CDATA[
 			/**
-			 * reset kalturaFilter so any values that apply 
+			 * reset vidiunFilter so any values that apply 
 			 * to the accordion components will be set
 			 * */
 			private function setFilterValues():void {

@@ -1,18 +1,18 @@
-package com.kaltura.edw.control.commands.flavor
+package com.vidiun.edw.control.commands.flavor
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.view.window.flavors.DRMDetails;
-	import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.vidiun.edw.control.commands.VedCommand;
+	import com.vidiun.edw.view.window.flavors.DRMDetails;
+	import com.vidiun.edw.vo.FlavorAssetWithParamsVO;
+	import com.vidiun.vmvc.control.VMvCEvent;
 	
 	import flash.display.DisplayObject;
 	
 	import mx.core.Application;
 	import mx.managers.PopUpManager;
 
-	public class ViewWVAssetDetails extends KedCommand
+	public class ViewWVAssetDetails extends VedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:VMvCEvent):void
 		{		
 			var win:DRMDetails = new DRMDetails();
 			win.flavorAssetWithParams = event.data as FlavorAssetWithParamsVO;

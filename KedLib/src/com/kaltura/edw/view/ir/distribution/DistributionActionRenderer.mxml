@@ -2,44 +2,44 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalAlign="middle" horizontalAlign="left" paddingLeft="6">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.constants.DistributionActionType;
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.types.KalturaEntryDistributionFlag;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaEntryDistribution;
+			import com.vidiun.edw.constants.DistributionActionType;
+			import com.vidiun.edw.model.EntryDistributionWithProfile;
+			import com.vidiun.types.VidiunEntryDistributionFlag;
+			import com.vidiun.types.VidiunEntryDistributionStatus;
+			import com.vidiun.vo.VidiunEntryDistribution;
 			
 			private static const DISTRIBUTE:String = "distribute";
 			private static const RETRY:String = "retry";
 			private static const UPDATE:String = "update";
 			
 			private var _currentAction:String;
-			private var _entryDis:KalturaEntryDistribution;
+			private var _entryDis:VidiunEntryDistribution;
 			
 			override public function set data(value:Object):void {
 				super.data = value;
-				_entryDis = (value as EntryDistributionWithProfile).kalturaEntryDistribution;
+				_entryDis = (value as EntryDistributionWithProfile).vidiunEntryDistribution;
 				var action:String;
 
 				if (!_entryDis.validationErrors || _entryDis.validationErrors.length == 0) {
 					switch (_entryDis.status) {
-						case KalturaEntryDistributionStatus.PENDING:
-							if (_entryDis.dirtyStatus != KalturaEntryDistributionFlag.SUBMIT_REQUIRED)
+						case VidiunEntryDistributionStatus.PENDING:
+							if (_entryDis.dirtyStatus != VidiunEntryDistributionFlag.SUBMIT_REQUIRED)
 								action = DISTRIBUTE;
 							break;
 						
-						case KalturaEntryDistributionStatus.ERROR_DELETING:
-						case KalturaEntryDistributionStatus.ERROR_SUBMITTING:
-						case KalturaEntryDistributionStatus.ERROR_UPDATING:
+						case VidiunEntryDistributionStatus.ERROR_DELETING:
+						case VidiunEntryDistributionStatus.ERROR_SUBMITTING:
+						case VidiunEntryDistributionStatus.ERROR_UPDATING:
 							action = RETRY;
 							break;
-						case KalturaEntryDistributionStatus.READY:
-							if (_entryDis.dirtyStatus==KalturaEntryDistributionFlag.UPDATE_REQUIRED)
+						case VidiunEntryDistributionStatus.READY:
+							if (_entryDis.dirtyStatus==VidiunEntryDistributionFlag.UPDATE_REQUIRED)
 								action = UPDATE;
 							break;
-						case KalturaEntryDistributionStatus.DELETING:
-						case KalturaEntryDistributionStatus.SUBMITTING:
-						case KalturaEntryDistributionStatus.UPDATING:
-						case KalturaEntryDistributionStatus.QUEUED:
+						case VidiunEntryDistributionStatus.DELETING:
+						case VidiunEntryDistributionStatus.SUBMITTING:
+						case VidiunEntryDistributionStatus.UPDATING:
+						case VidiunEntryDistributionStatus.QUEUED:
 							break;		
 					}
 				}

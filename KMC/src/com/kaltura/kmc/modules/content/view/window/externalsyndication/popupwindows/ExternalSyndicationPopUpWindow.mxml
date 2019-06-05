@@ -2,9 +2,9 @@
 <!---
 	 This is the window in which you add a new syndication.
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
-				 xmlns:exts="com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*"
-				 xmlns:validators="com.kaltura.validators.*" width="690" height="570" verticalScrollPolicy="off"
+<HelpTitleWindow xmlns="com.vidiun.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+				 xmlns:exts="com.vidiun.vmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*"
+				 xmlns:validators="com.vidiun.validators.*" width="690" height="570" verticalScrollPolicy="off"
 				 paddingTop="20" title="{resourceManager.getString('cms','addNewFeedTitle')}" showCloseButton="true"
 				 help="onHelp()" creationComplete="setData()" close="closeWindow(event)" initialize="{init()}">
 	<states>
@@ -17,19 +17,19 @@
 	</states>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-			import com.kaltura.edw.control.events.SearchEvent;
-			import com.kaltura.kmc.modules.content.events.UIConfEvent;
-			import com.kaltura.kmc.modules.content.model.ExtSynModel;
-			import com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed;
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.types.KalturaUiConfObjType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaPlaylist;
-			import com.kaltura.vo.KalturaUiConfFilter;
+			import com.vidiun.edw.business.permissions.PermissionManager;
+			import com.vidiun.vmc.events.VmcHelpEvent;
+			import com.vidiun.vmc.modules.content.events.ExternalSyndicationEvent;
+			import com.vidiun.edw.control.events.SearchEvent;
+			import com.vidiun.vmc.modules.content.events.UIConfEvent;
+			import com.vidiun.vmc.modules.content.model.ExtSynModel;
+			import com.vidiun.vmc.modules.content.view.interfaces.IExternalSyndicationFeed;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.types.VidiunSyndicationFeedType;
+			import com.vidiun.types.VidiunUiConfObjType;
+			import com.vidiun.vo.VidiunBaseSyndicationFeed;
+			import com.vidiun.vo.VidiunPlaylist;
+			import com.vidiun.vo.VidiunUiConfFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -54,13 +54,13 @@
 			 * optional syndication feed types
 			 * */
 			[ArrayElementType("Object")]
-			private const FEED_TYPES:Array = [{label: 'Google', code: KalturaSyndicationFeedType.GOOGLE_VIDEO}, 
-				{label: 'Yahoo!', code: KalturaSyndicationFeedType.YAHOO}, 
-				{label: 'ITunes', code: KalturaSyndicationFeedType.ITUNES}, 
-				{label: 'TubeMogul', code: KalturaSyndicationFeedType.TUBE_MOGUL},
-				{label: ResourceManager.getInstance().getString('cms','roku_direct_publisher'), code: KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER},
-				{label: ResourceManager.getInstance().getString('cms','opera_tv_snap'), code: KalturaSyndicationFeedType.OPERA_TV_SNAP},
-				{label: ResourceManager.getInstance().getString('cms','flexibleFormatFeed'), code: KalturaSyndicationFeedType.KALTURA_XSLT}];
+			private const FEED_TYPES:Array = [{label: 'Google', code: VidiunSyndicationFeedType.GOOGLE_VIDEO}, 
+				{label: 'Yahoo!', code: VidiunSyndicationFeedType.YAHOO}, 
+				{label: 'ITunes', code: VidiunSyndicationFeedType.ITUNES}, 
+				{label: 'TubeMogul', code: VidiunSyndicationFeedType.TUBE_MOGUL},
+				{label: ResourceManager.getInstance().getString('cms','roku_direct_publisher'), code: VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER},
+				{label: ResourceManager.getInstance().getString('cms','opera_tv_snap'), code: VidiunSyndicationFeedType.OPERA_TV_SNAP},
+				{label: ResourceManager.getInstance().getString('cms','flexibleFormatFeed'), code: VidiunSyndicationFeedType.VIDIUN_XSLT}];
 
 			[Bindable]
 			public var flavorParams:ArrayCollection;
@@ -95,8 +95,8 @@
 //				var listPlayList:SearchEvent = new SearchEvent(SearchEvent.SEARCH_PLAYLIST, null);
 //				listPlayList.dispatch();
 
-				var filter:KalturaUiConfFilter = new KalturaUiConfFilter();
-				filter.objTypeEqual = KalturaUiConfObjType.PLAYER;
+				var filter:VidiunUiConfFilter = new VidiunUiConfFilter();
+				filter.objTypeEqual = VidiunUiConfObjType.PLAYER;
 				filter.tagsMultiLikeAnd = 'player';
 
 				var listUIConfEvent:UIConfEvent = new UIConfEvent(UIConfEvent.LIST_UI_CONFS, filter);
@@ -108,7 +108,7 @@
 			 * open help page
 			 * */
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_ExternalSyndicationPopup'));
+				dispatchEvent(new VmcHelpEvent(VmcHelpEvent.HELP, 'section_ExternalSyndicationPopup'));
 			}
 
 
@@ -120,25 +120,25 @@
 					// content:
 					setFeedContent();
 					// feed type:
-					switch(selectedExSynVo.kSyndicationFeed.type) {
-						case KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
+					switch(selectedExSynVo.vSyndicationFeed.type) {
+						case VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER:
 							feedTypeComboBox.selectedIndex = 4;
 							break;
-						case KalturaSyndicationFeedType.OPERA_TV_SNAP:
+						case VidiunSyndicationFeedType.OPERA_TV_SNAP:
 							feedTypeComboBox.selectedIndex = 5;
 							break;
-						case KalturaSyndicationFeedType.KALTURA_XSLT:
+						case VidiunSyndicationFeedType.VIDIUN_XSLT:
 							feedTypeComboBox.selectedIndex = 6;
 							break;
 						default:
-							feedTypeComboBox.selectedIndex = selectedExSynVo.kSyndicationFeed.type - 1;
+							feedTypeComboBox.selectedIndex = selectedExSynVo.vSyndicationFeed.type - 1;
 							break;
 					}
 					
 					currentState = "editFeedSate";
 					// feed data:
 					var syndicationFeedTemplate:IExternalSyndicationFeed = syndicationTypeOptions.selectedChild as IExternalSyndicationFeed;
-					syndicationFeedTemplate.syndication = selectedExSynVo.kSyndicationFeed;
+					syndicationFeedTemplate.syndication = selectedExSynVo.vSyndicationFeed;
 				}
 				if (currentState == "editFeedSate") {
 					PermissionManager.getInstance().applyAllAttributes(this, "externalSyndicationDrilldown_edit");
@@ -154,7 +154,7 @@
 			 * something with playlists and feed content
 			 * */
 			private function setFeedContent():void {
-				var plId:String = selectedExSynVo.kSyndicationFeed.playlistId;
+				var plId:String = selectedExSynVo.vSyndicationFeed.playlistId;
 				// select content radio button:
 				if ((plId == null) || (plId == '')) {
 					// not playlist 
@@ -164,7 +164,7 @@
 					playlistsRadioBtn.selected = true;
 					var index:uint;
 					// select the correct playlist from the playlist combobox
-					for each (var pl:KalturaPlaylist in _playlistsProvider) {
+					for each (var pl:VidiunPlaylist in _playlistsProvider) {
 						if (pl && plId == pl.id) {		
 							playListComboBox.selectedIndex = index;
 							return;
@@ -212,7 +212,7 @@
 
 			private function addNewFeed():void {
 				var syndicationFeedTemplate:IExternalSyndicationFeed = syndicationTypeOptions.selectedChild as IExternalSyndicationFeed;
-				var newFeed:KalturaBaseSyndicationFeed = syndicationFeedTemplate.syndication;
+				var newFeed:VidiunBaseSyndicationFeed = syndicationFeedTemplate.syndication;
 				newFeed.name = StringUtil.trim(generalFeedNameTextInput.text);
 				newFeed.playlistId = getPlaylistID();
 
@@ -224,13 +224,13 @@
 
 
 			private function getPlaylistID():String {
-				return allcontentRadioBtn.selected ? '' : (playListComboBox.selectedItem as KalturaPlaylist).id + '';
+				return allcontentRadioBtn.selected ? '' : (playListComboBox.selectedItem as VidiunPlaylist).id + '';
 			}
 
 
 			private function saveFeedChanges():void {
 				var syndicationFeedTemplate:IExternalSyndicationFeed = syndicationTypeOptions.selectedChild as IExternalSyndicationFeed;
-				var editedFeed:KalturaBaseSyndicationFeed = syndicationFeedTemplate.syndication;
+				var editedFeed:VidiunBaseSyndicationFeed = syndicationFeedTemplate.syndication;
 				editedFeed.name = StringUtil.trim(generalFeedNameTextInput.text);
 				editedFeed.playlistId = getPlaylistID();
 
@@ -267,7 +267,7 @@
 	<mx:VBox width="100%">
 		<mx:HBox width="100%">
 			<mx:Label text="*{resourceManager.getString('cms','feedNameLabel')}" width="{LABEL_WIDTH}" styleName="feedParamLabel"/>
-			<mx:TextInput id='generalFeedNameTextInput' width="100%" text="{selectedExSynVo.kSyndicationFeed.name}"/>
+			<mx:TextInput id='generalFeedNameTextInput' width="100%" text="{selectedExSynVo.vSyndicationFeed.name}"/>
 		</mx:HBox>
 		<mx:HBox width="100%">
 			<mx:Label text="{resourceManager.getString('cms','selectedContentLabel')}" width="{LABEL_WIDTH}"
@@ -298,8 +298,8 @@
 		<exts:ITuneExtSyn width="100%" height="100%" partnerData="{extSynModel.partnerData}"
 						  flavorParams="{flavorParams}"/>
 		<exts:TubeMogulExtSyn width="100%" height="100%" flavorParams="{flavorParams}"/>
-		<exts:ConstantXsltExtSyn width="100%" height="100%" feedType="{KalturaSyndicationFeedType.ROKU_DIRECT_PUBLISHER}"/>
-		<exts:ConstantXsltExtSyn width="100%" height="100%" feedType="{KalturaSyndicationFeedType.OPERA_TV_SNAP}"/>
+		<exts:ConstantXsltExtSyn width="100%" height="100%" feedType="{VidiunSyndicationFeedType.ROKU_DIRECT_PUBLISHER}"/>
+		<exts:ConstantXsltExtSyn width="100%" height="100%" feedType="{VidiunSyndicationFeedType.OPERA_TV_SNAP}"/>
 		<exts:FlexibleExtSyn width="100%" height="100%"/>
 	</mx:ViewStack>
 	<mx:ControlBar horizontalAlign="center" paddingBottom="6" paddingLeft="2" paddingRight="2" paddingTop="6"

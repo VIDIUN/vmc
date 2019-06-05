@@ -1,37 +1,37 @@
-package com.kaltura.analytics
+package com.vidiun.analytics
 {
 //	import com.adobe.crypto.MD5;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.stats.StatsKmcCollect;
-	import com.kaltura.vo.KalturaStatsKmcEvent;
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.stats.StatsVmcCollect;
+	import com.vidiun.vo.VidiunStatsVmcEvent;
 	
 	import flash.net.URLRequestMethod;
 	
-	public class KAnalyticsTracker
+	public class VAnalyticsTracker
 	{
-		private static var _instance:KAnalyticsTracker;
-		private var _kc:KalturaClient;
-	//	private var _sessionId:String;   - No need for it, the server will use the KS of the user.
+		private static var _instance:VAnalyticsTracker;
+		private var _vc:VidiunClient;
+	//	private var _sessionId:String;   - No need for it, the server will use the VS of the user.
 		private var _clientVersion:String;
 		private var _swfName:String;
 		private var _userId:String;
 		
-		public function KAnalyticsTracker(enforcer:Enforcer){}
+		public function VAnalyticsTracker(enforcer:Enforcer){}
 		
-		public static function getInstance():KAnalyticsTracker
+		public static function getInstance():VAnalyticsTracker
 		{
 			if(_instance == null)
 			{
-				_instance = new KAnalyticsTracker(new Enforcer());
+				_instance = new VAnalyticsTracker(new Enforcer());
 			}
 			
 			return _instance;
 		}
         
-        public function init(kc:KalturaClient, swfName:String, clientVersion:String, userId:String):void
+        public function init(vc:VidiunClient, swfName:String, clientVersion:String, userId:String):void
         {
-        	_kc = kc;
- //       	_sessionId = MD5.hash(_kc.ks);
+        	_vc = vc;
+ //       	_sessionId = MD5.hash(_vc.vs);
         	_clientVersion = clientVersion;
         	_userId = userId;
         	_swfName = swfName;
@@ -40,12 +40,12 @@ package com.kaltura.analytics
         public function sendEvent(moduleName:String , eventCode:int, eventPath:String, entryId:String=null, uiconfId:int=int.MIN_VALUE, widgetId:String=null):void
         {
 			// if not intialised, don't log.
-			if (!_kc) return;
-        	var analyticsEvent:KalturaStatsKmcEvent = new KalturaStatsKmcEvent();
-        	analyticsEvent.kmcEventType = eventCode;
-        	analyticsEvent.kmcEventActionPath = eventPath;
+			if (!_vc) return;
+        	var analyticsEvent:VidiunStatsVmcEvent = new VidiunStatsVmcEvent();
+        	analyticsEvent.vmcEventType = eventCode;
+        	analyticsEvent.vmcEventActionPath = eventPath;
 //        	analyticsEvent.sessionId = _sessionId;
-        	analyticsEvent.partnerId = int(_kc.partnerId);
+        	analyticsEvent.partnerId = int(_vc.partnerId);
         	analyticsEvent.clientVer = "1.0:" + moduleName + ":" + _clientVersion;
         	analyticsEvent.userId = _userId;
         	analyticsEvent.eventTimestamp = (new Date().time)/1000;
@@ -55,10 +55,10 @@ package com.kaltura.analytics
         	analyticsEvent.widgetId = widgetId;// when manipulating widgets (relevant for the embed code)
         	
         	
-        	var statsKmcCall:StatsKmcCollect = new StatsKmcCollect(analyticsEvent);
-        	statsKmcCall.method = URLRequestMethod.GET;
-			statsKmcCall.queued = false;
-        	_kc.post(statsKmcCall);
+        	var statsVmcCall:StatsVmcCollect = new StatsVmcCollect(analyticsEvent);
+        	statsVmcCall.method = URLRequestMethod.GET;
+			statsVmcCall.queued = false;
+        	_vc.post(statsVmcCall);
         }
         
        

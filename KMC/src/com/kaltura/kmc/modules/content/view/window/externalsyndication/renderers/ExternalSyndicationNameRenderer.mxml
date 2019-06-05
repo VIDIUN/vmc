@@ -3,7 +3,7 @@
 		 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
+			import com.vidiun.vmc.modules.content.vo.ExternalSyndicationVO;
 			
 			public static const PROFILE_NAME_CLICK:String = "profile_name_click";
 
@@ -14,6 +14,6 @@
 		]]>
 	</mx:Script>
 
-	<mx:LinkButton label="{(data as ExternalSyndicationVO).kSyndicationFeed.name}" click="onClickProfileName(event)"/>
+	<mx:LinkButton label="{(data as ExternalSyndicationVO).vSyndicationFeed.name}" click="onClickProfileName(event)"/>
 </mx:HBox>
 

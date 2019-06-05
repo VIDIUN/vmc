@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.vidiun.vmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetUrlForReportAsCsv;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.view.core.FileManager;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaReportInputFilter;
+	import com.vidiun.commands.report.ReportGetUrlForReportAsCsv;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.vmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.vidiun.vmc.modules.analytics.model.types.ScreenTypes;
+	import com.vidiun.vmc.modules.analytics.view.core.FileManager;
+	import com.vidiun.vo.VidiunEndUserReportInputFilter;
+	import com.vidiun.vo.VidiunFilterPager;
+	import com.vidiun.vo.VidiunReportInputFilter;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -62,39 +62,39 @@ package com.kaltura.kmc.modules.analytics.commands {
 				_model.selectedReportData.title = ResourceManager.getInstance().getString('analytics', 'no_ttl');
 
 			
-			var krif:KalturaReportInputFilter;
+			var vrif:VidiunReportInputFilter;
 			
 			switch (_model.currentScreenState) {
 				case ScreenTypes.END_USER_ENGAGEMENT:
 				case ScreenTypes.END_USER_ENGAGEMENT_DRILL_DOWN:
 				case ScreenTypes.END_USER_STORAGE:
 				case ScreenTypes.END_USER_STORAGE_DRILL_DOWN:
-					krif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.filter);
+					vrif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.filter);
 					//in the reports above we need to send playback context instead of categories - we get it on the filter.
-//					krif.playbackContext = krif.categories;
-//					krif.categories = null;
+//					vrif.playbackContext = vrif.categories;
+//					vrif.categories = null;
 					break;
 					
 				case ScreenTypes.VIDEO_DRILL_DOWN_DEFAULT:
 				case ScreenTypes.VIDEO_DRILL_DOWN_DROP_OFF:
 				case ScreenTypes.VIDEO_DRILL_DOWN_INTERACTIONS:
 					if (_model.entitlementEnabled) {
-						krif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.filter);
+						vrif = ExecuteReportHelper.createEndUserFilterFromCurrentReport(_model.filter);
 						//in the reports above we need to send playback context instead of categories
-						krif.playbackContext = krif.categories;
-						krif.categories = null;
+						vrif.playbackContext = vrif.categories;
+						vrif.categories = null;
 					}
 					else {
-						krif = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
+						vrif = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
 					}
 					break;
 				default:
-					krif = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
+					vrif = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
 					break;
 			}
 			
 			// create a pager to add all entries to log, regardless of viewed entries
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:VidiunFilterPager = new VidiunFilterPager();
 			pager.pageIndex = 1;
 			if (_model.selectedReportData.totalCount > 0) {
 				pager.pageSize = _model.selectedReportData.totalCount;
@@ -106,22 +106,22 @@ package com.kaltura.kmc.modules.analytics.commands {
 			}
 			
 			var export2Csv:ReportGetUrlForReportAsCsv = new ReportGetUrlForReportAsCsv(_model.selectedReportData.title,
-					message2Send, headers, _model.selectedReportData.type, krif, _model.selectedReportData.selectedDim,
+					message2Send, headers, _model.selectedReportData.type, vrif, _model.selectedReportData.selectedDim,
 					pager, _model.selectedReportData.orderBy, _model.selectedReportData.objectIds);
 
-			export2Csv.addEventListener(KalturaEvent.COMPLETE, result);
-			export2Csv.addEventListener(KalturaEvent.FAILED, fault);
-			_model.kc.post(export2Csv);
+			export2Csv.addEventListener(VidiunEvent.COMPLETE, result);
+			export2Csv.addEventListener(VidiunEvent.FAILED, fault);
+			_model.vc.post(export2Csv);
 		}
 
 
 		public function result(data:Object):void {
 			_model.processingCSVFlag = false;
 			_model.checkLoading();
-			var kEvent:KalturaEvent = data as KalturaEvent;
-			kEvent.target.removeEventListener(KalturaEvent.COMPLETE, result);
-			kEvent.target.removeEventListener(KalturaEvent.FAILED, fault);
-			_fileUrl = kEvent.data as String;
+			var vEvent:VidiunEvent = data as VidiunEvent;
+			vEvent.target.removeEventListener(VidiunEvent.COMPLETE, result);
+			vEvent.target.removeEventListener(VidiunEvent.FAILED, fault);
+			_fileUrl = vEvent.data as String;
 			Alert.show(ResourceManager.getInstance().getString('analytics', 'csvReady'),
 				ResourceManager.getInstance().getString('analytics', 'csvReadyTitle'), Alert.OK, null, onClose);
 		}
@@ -137,16 +137,16 @@ package com.kaltura.kmc.modules.analytics.commands {
 		public function fault(info:Object):void {
 			_model.processingCSVFlag = false;
 			_model.checkLoading();
-			var kEvent:KalturaEvent = info as KalturaEvent;
-			kEvent.target.removeEventListener(KalturaEvent.COMPLETE, result);
-			kEvent.target.removeEventListener(KalturaEvent.FAILED, fault);
-			if (kEvent.error.errorCode == "POST_TIMEOUT" || kEvent.error.errorCode == "CONNECTION_TIMEOUT") {
+			var vEvent:VidiunEvent = info as VidiunEvent;
+			vEvent.target.removeEventListener(VidiunEvent.COMPLETE, result);
+			vEvent.target.removeEventListener(VidiunEvent.FAILED, fault);
+			if (vEvent.error.errorCode == "POST_TIMEOUT" || vEvent.error.errorCode == "CONNECTION_TIMEOUT") {
 				// report is taking more than client-timeout to process
 				Alert.show(ResourceManager.getInstance().getString('analytics', 'csvProcessTimeout'),
 					ResourceManager.getInstance().getString('analytics', 'error'));
 			}
 			else {
-				Alert.show(kEvent.error.errorMsg,
+				Alert.show(vEvent.error.errorMsg,
 					ResourceManager.getInstance().getString('analytics', 'error'));
 			}
 		}
